@@ -25,23 +25,21 @@ import java.io.FileInputStream;
 import java.io.IOException;
 
 import info3.game.graphics.GameCanvas;
-import info3.game.sound.AudioPlayer;
-import info3.game.sound.AudioPlayerListener;
 
 public class Sound {
-  GameCanvas m_canvas;
-  String m_name;
-  String m_filename;
+	GameCanvas m_canvas;
+	String m_name;
+	String m_filename;
 
-  Sound(GameCanvas canvas) {
-    m_canvas = canvas;
-  }
+	Sound(GameCanvas canvas) {
+		m_canvas = canvas;
+	}
 
-  public void load(String name, String filename, long duration, float volume) throws IOException {
-    m_name = name;
-    m_filename = filename;
-    File file = new File(filename);
-    FileInputStream fis = new FileInputStream(file);
-    m_canvas.playSound(name, fis, duration,volume);
-  }
+	public void load(String name, String filename, long duration, float volume) throws IOException {
+		m_name = name;
+		m_filename = filename;
+		File file = new File(filename);
+		FileInputStream fis = new FileInputStream(file);
+		m_canvas.playSound(name, fis, duration, volume);
+	}
 }

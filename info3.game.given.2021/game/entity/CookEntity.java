@@ -1,6 +1,6 @@
 package entity;
 
-import position.Direction.dir;
+import position.Direction;
 import position.PositionF;
 
 public class CookEntity extends Entity {
@@ -11,7 +11,7 @@ public class CookEntity extends Entity {
 	}
 
 	// @Override
-	boolean wizz(dir direction) {
+	boolean wizz(Direction direction) {
 		switch (direction) {
 		case NORD: {
 			// float x = position.getX();

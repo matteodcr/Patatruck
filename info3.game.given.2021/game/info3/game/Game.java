@@ -50,13 +50,16 @@ public class Game {
 	JLabel m_text;
 	GameCanvas m_canvas;
 	CanvasListener m_listener;
-	Cowboy m_cowboy;
+	Cowboy m_cowboy1, m_cowboy2;
 	Sound m_music;
+	Color m_background = Color.gray;
+	int m_background_timer = 0;
 
 	Game() throws Exception {
 		// creating a cowboy, that would be a model
 		// in an Model-View-Controller pattern (MVC)
-		m_cowboy = new Cowboy();
+		m_cowboy1 = new Cowboy();
+		m_cowboy2 = new Cowboy();
 		// creating a listener for all the events
 		// from the game canvas, that would be
 		// the controller in the MVC pattern
@@ -93,6 +96,8 @@ public class Game {
 
 		// make the vindow visible
 		m_frame.setVisible(true);
+
+		m_cowboy2.m_x += 100;
 	}
 
 	/*
@@ -111,8 +116,8 @@ public class Game {
 		m_musicName = m_musicNames[m_musicIndex];
 		String filename = "resources/" + m_musicName + ".ogg";
 		m_musicIndex = (m_musicIndex + 1) % m_musicNames.length;
-		try { 
-			RandomAccessFile file = new RandomAccessFile(filename,"r");
+		try {
+			RandomAccessFile file = new RandomAccessFile(filename, "r");
 			RandomFileInputStream fis = new RandomFileInputStream(file);
 			m_canvas.playMusic(fis, 0, 1.0F);
 		} catch (Throwable th) {
@@ -122,7 +127,7 @@ public class Game {
 	}
 
 	private int m_musicIndex = 0;
-	private String[] m_musicNames = new String[] { "Runaway-Food-Truck" }; 
+	private String[] m_musicNames = new String[] { "Runaway-Food-Truck" };
 
 	private long m_textElapsed;
 
@@ -132,7 +137,8 @@ public class Game {
 	 */
 	void tick(long elapsed) {
 
-		m_cowboy.tick(elapsed);
+		m_cowboy1.tick(elapsed);
+		m_cowboy2.tick(elapsed);
 
 		// Update every second
 		// the text on top of the frame: tick and fps
@@ -148,6 +154,58 @@ public class Game {
 			txt = txt + fps + " fps   ";
 			m_text.setText(txt);
 		}
+
+		if (m_background_timer > 0) {
+			m_background_timer--;
+		}
+		if (m_listener.keyboard.contains(0x20) && m_background_timer == 0) { // press space button
+			if (m_background == Color.gray) {
+				m_background = Color.cyan;
+			} else {
+				m_background = Color.gray;
+			}
+			m_background_timer = 100;
+		}
+		moveCharacters();
+	}
+
+	void moveCharacters() {
+		int VK_ENTER = '\n';
+		int VK_ESCAPE = 0x1B;
+		int VK_SPACE = 0x20;
+		int VK_LEFT = 0x25;
+		int VK_UP = 0x26;
+		int VK_RIGHT = 0x27;
+		int VK_DOWN = 0x28;
+		int VK_Z = 0x5A;
+		int VK_Q = 0x51;
+		int VK_S = 0x53;
+		int VK_D = 0x44;
+
+		if (m_listener.keyboard.contains(VK_UP)) {
+			m_cowboy1.m_y -= 1;
+		}
+		if (m_listener.keyboard.contains(VK_DOWN)) {
+			m_cowboy1.m_y += 1;
+		}
+		if (m_listener.keyboard.contains(VK_LEFT)) {
+			m_cowboy1.m_x -= 1;
+		}
+		if (m_listener.keyboard.contains(VK_RIGHT)) {
+			m_cowboy1.m_x += 1;
+		}
+		if (m_listener.keyboard.contains(VK_Z)) {
+			m_cowboy2.m_y -= 1;
+		}
+		if (m_listener.keyboard.contains(VK_S)) {
+			m_cowboy2.m_y += 1;
+		}
+		if (m_listener.keyboard.contains(VK_Q)) {
+			m_cowboy2.m_x -= 1;
+		}
+		if (m_listener.keyboard.contains(VK_D)) {
+			m_cowboy2.m_x += 1;
+		}
 	}
 
 	/*
@@ -161,11 +219,12 @@ public class Game {
 		int height = m_canvas.getHeight();
 
 		// erase background
-		g.setColor(Color.gray);
+		g.setColor(m_background);
 		g.fillRect(0, 0, width, height);
 
 		// paint
-		m_cowboy.paint(g, width, height);
+		m_cowboy1.paint(g, width, height);
+		m_cowboy2.paint(g, width, height);
 	}
 
 }

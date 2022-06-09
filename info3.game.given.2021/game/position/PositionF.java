@@ -1,10 +1,10 @@
 package position;
 
-public class Position {
+public class PositionF {
 	float m_x;
 	float m_y;
 
-	Position(float x, float y) {
+	PositionF(float x, float y) {
 		m_x = x;
 		m_y = y;
 	}

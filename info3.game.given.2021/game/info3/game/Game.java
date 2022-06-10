@@ -215,6 +215,15 @@ public class Game {
 		if (m_listener.keyboard.contains(VK_D)) {
 			m_cowboy2.move(Cowboy.RIGHT);
 		}
+		if (m_listener.keyboard.contains(VK_SPACE)) {
+			m_cowboy1.changeSpeed(1);
+		}
+		if (m_listener.keyboard.contains(VK_ENTER)) {
+			m_cowboy1.changeSpeed(2);
+		}
+		if (m_listener.keyboard.contains(VK_ESCAPE)) {
+			m_cowboy1.changeSpeed(0);
+		}
 	}
 
 	/*

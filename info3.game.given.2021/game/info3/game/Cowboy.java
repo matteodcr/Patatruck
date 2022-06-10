@@ -38,7 +38,7 @@ public class Cowboy {
 	int m_imageIndex;
 	long m_imageElapsed;
 	long m_moveElapsed;
-	int m_x = 0, m_y = -48;
+	int m_x = 0, m_y = 0;
 	int m_width, m_height;
 	int move_timer = 0, move_timer_max = 10;
 
@@ -49,7 +49,7 @@ public class Cowboy {
 	}
 
 	/*
-	 * Simple animation here, the cowbow
+	 * Simple animation here, the cowboy
 	 */
 	public void tick(long elapsed) {
 		m_imageElapsed += elapsed;
@@ -71,11 +71,18 @@ public class Cowboy {
 		}
 	}
 
+	/**
+	 * Paints the cowboy
+	 * 
+	 * @param g
+	 * @param width  width of the border
+	 * @param height height of the border
+	 */
 	public void paint(Graphics g, int width, int height) {
 		m_width = width;
-		m_height = height + 48;
+		m_height = height;
 		// BufferedImage img = m_images[m_imageIndex];
-		g.drawSprite(Sprite.COWBOY1, m_x, m_y + 48);
+		g.drawSprite(Sprite.COWBOY1, m_x, m_y);
 	}
 
 	public static BufferedImage[] loadSprite(String filename, int nrows, int ncols) throws IOException {
@@ -98,6 +105,11 @@ public class Cowboy {
 		return null;
 	}
 
+	/**
+	 * Allows the character to move in one of the 4 directions.
+	 * 
+	 * @param direction (use the static fields to choose)
+	 */
 	void move(int direction) {
 		if (move_timer == 0) {
 			switch (direction) {
@@ -120,7 +132,20 @@ public class Cowboy {
 			default:
 			}
 		}
-
 	}
 
+	/**
+	 * This allow the character to be fast or slow.
+	 * 
+	 * @param speed (1=fast, 2=slow, other=default)
+	 */
+	void changeSpeed(int speed) {
+		if (speed == 1) {
+			this.move_timer_max = 5;
+		} else if (speed == 2) {
+			this.move_timer_max = 15;
+		} else {
+			this.move_timer_max = 10;
+		}
+	}
 }

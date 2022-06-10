@@ -1,0 +1,5 @@
+Pothole(Still) {
+    * (Still):
+    | Cell(H,@) ? Pop :(Still) //verif si joueur passé dessus
+    | True ? Wizz :(Still) //nothing
+}

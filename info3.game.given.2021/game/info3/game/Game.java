@@ -1,7 +1,7 @@
 /*
  * Copyright (C) 2020  Pr. Olivier Gruber
  * Educational software for a basic game development
- * 
+ *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation, either version 3 of the License, or
@@ -21,18 +21,30 @@
 package info3.game;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Graphics;
 import java.io.RandomAccessFile;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
+import info3.game.graphics.AwtGraphics;
 import info3.game.graphics.GameCanvas;
+import info3.game.graphics.Graphics;
+import info3.game.scene.CityScene;
+import info3.game.scene.KitchenScene;
 import info3.game.sound.RandomFileInputStream;
 
 public class Game {
+
+	public static final int WIDTH = 256;
+	public static final int HEIGHT = 144;
+
+	public static final int SCALE_FACTOR = 6;
+
+	/**
+	 * Ticks par seconde
+	 */
+	private static final int TPS = 20;
 
 	static Game game;
 
@@ -52,8 +64,9 @@ public class Game {
 	CanvasListener m_listener;
 	Cowboy m_cowboy1, m_cowboy2;
 	Sound m_music;
-	Color m_background = Color.gray;
-	int m_background_timer = 0;
+
+	private final KitchenScene kitchenScene;
+	private final CityScene cityScene;
 
 	Game() throws Exception {
 		// creating a cowboy, that would be a model
@@ -69,8 +82,12 @@ public class Game {
 		m_canvas = new GameCanvas(m_listener);
 
 		System.out.println("  - creating frame...");
-		Dimension d = new Dimension(1024, 768);
+		Dimension d = new Dimension(WIDTH * SCALE_FACTOR, HEIGHT * SCALE_FACTOR);
 		m_frame = m_canvas.createFrame(d);
+		m_frame.setResizable(false);
+
+		kitchenScene = new KitchenScene(WIDTH, HEIGHT / 2, m_cowboy1);
+		cityScene = new CityScene(WIDTH, HEIGHT / 2, m_cowboy2);
 
 		System.out.println("  - setting up the frame...");
 		setupFrame();
@@ -127,7 +144,7 @@ public class Game {
 	}
 
 	private int m_musicIndex = 0;
-	private String[] m_musicNames = new String[] { "Runaway-Food-Truck" };
+	private String[] m_musicNames = new String[] { "foire_saucisse" };
 
 	private long m_textElapsed;
 
@@ -143,7 +160,7 @@ public class Game {
 		// Update every second
 		// the text on top of the frame: tick and fps
 		m_textElapsed += elapsed;
-		if (m_textElapsed > 1000) {
+		if (m_textElapsed > (1000 / TPS)) {
 			m_textElapsed = 0;
 			float period = m_canvas.getTickPeriod();
 			int fps = m_canvas.getFPS();
@@ -153,19 +170,11 @@ public class Game {
 				txt += " ";
 			txt = txt + fps + " fps   ";
 			m_text.setText(txt);
+
+			kitchenScene.tick();
+			cityScene.tick();
 		}
 
-		if (m_background_timer > 0) {
-			m_background_timer--;
-		}
-		if (m_listener.keyboard.contains(0x20) && m_background_timer == 0) { // press space button
-			if (m_background == Color.gray) {
-				m_background = Color.cyan;
-			} else {
-				m_background = Color.gray;
-			}
-			m_background_timer = 100;
-		}
 		moveCharacters();
 	}
 
@@ -183,28 +192,28 @@ public class Game {
 		int VK_D = 0x44;
 
 		if (m_listener.keyboard.contains(VK_UP)) {
-			m_cowboy1.m_y -= 1;
+			m_cowboy1.move(Cowboy.UP);
 		}
 		if (m_listener.keyboard.contains(VK_DOWN)) {
-			m_cowboy1.m_y += 1;
+			m_cowboy1.move(Cowboy.DOWN);
 		}
 		if (m_listener.keyboard.contains(VK_LEFT)) {
-			m_cowboy1.m_x -= 1;
+			m_cowboy1.move(Cowboy.LEFT);
 		}
 		if (m_listener.keyboard.contains(VK_RIGHT)) {
-			m_cowboy1.m_x += 1;
+			m_cowboy1.move(Cowboy.RIGHT);
 		}
 		if (m_listener.keyboard.contains(VK_Z)) {
-			m_cowboy2.m_y -= 1;
+			m_cowboy2.move(Cowboy.UP);
 		}
 		if (m_listener.keyboard.contains(VK_S)) {
-			m_cowboy2.m_y += 1;
+			m_cowboy2.move(Cowboy.DOWN);
 		}
 		if (m_listener.keyboard.contains(VK_Q)) {
-			m_cowboy2.m_x -= 1;
+			m_cowboy2.move(Cowboy.LEFT);
 		}
 		if (m_listener.keyboard.contains(VK_D)) {
-			m_cowboy2.m_x += 1;
+			m_cowboy2.move(Cowboy.RIGHT);
 		}
 	}
 
@@ -212,19 +221,13 @@ public class Game {
 	 * This request is to paint the Game Canvas, using the given graphics. This is
 	 * called from the GameCanvasListener, called from the GameCanvas.
 	 */
-	void paint(Graphics g) {
-
-		// get the size of the canvas
-		int width = m_canvas.getWidth();
-		int height = m_canvas.getHeight();
-
-		// erase background
-		g.setColor(m_background);
-		g.fillRect(0, 0, width, height);
+	void paint(java.awt.Graphics ag) {
+		Graphics g = new AwtGraphics(ag, WIDTH, HEIGHT, SCALE_FACTOR);
 
 		// paint
-		m_cowboy1.paint(g, width, height);
-		m_cowboy2.paint(g, width, height);
+		int half = g.getHeight() / 2;
+		kitchenScene.render(g.window(0, 0, g.getWidth(), half));
+		cityScene.render(g.window(0, half, g.getWidth(), half));
 	}
 
 }

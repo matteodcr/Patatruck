@@ -1,0 +1,8 @@
+Truck(Init){
+  * (Init):
+  | Key(FU) ? Wizz(N):(Init)
+  | Key(FD) ? Wizz(S):(Init)
+  | Key(FL) ? Wizz(O):(Init)
+  | Key(FR) ? Wizz(E):(Init)
+  | Key(ENTER) ? Pop(F):(Init)
+}

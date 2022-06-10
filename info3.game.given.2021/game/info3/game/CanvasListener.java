@@ -61,6 +61,35 @@ public class CanvasListener implements GameCanvasListener {
 		dico.put(0x44, "D");
 	}
 
+	boolean isUp(String name) {
+		switch (name) {
+		case "ENTER":
+			return keyboard.contains(VK_ENTER);
+		case "ESCAPE":
+			return keyboard.contains(VK_ESCAPE);
+		case "SPACE":
+			return keyboard.contains(VK_SPACE);
+		case "UP":
+			return keyboard.contains(VK_UP);
+		case "RIGHT":
+			return keyboard.contains(VK_RIGHT);
+		case "DOWN":
+			return keyboard.contains(VK_DOWN);
+		case "LEFT":
+			return keyboard.contains(VK_LEFT);
+		case "Z":
+			return keyboard.contains(VK_Z);
+		case "Q":
+			return keyboard.contains(VK_Q);
+		case "S":
+			return keyboard.contains(VK_S);
+		case "D":
+			return keyboard.contains(VK_D);
+		default:
+			return false;
+		}
+	}
+
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		/*
@@ -135,7 +164,7 @@ public class CanvasListener implements GameCanvasListener {
 		// System.out.println("Key pressed: " + e.getKeyChar() + " code=" +
 		// e.getKeyCode());
 		keyboard.add(e.getKeyCode());
-		printKeyboard();
+		// printKeyboard();
 	}
 
 	@Override
@@ -143,7 +172,7 @@ public class CanvasListener implements GameCanvasListener {
 		// System.out.println("Key released: " + e.getKeyChar() + " code=" +
 		// e.getKeyCode());
 		keyboard.remove(e.getKeyCode());
-		printKeyboard();
+		// printKeyboard();
 	}
 
 	public void printKeyboard() {

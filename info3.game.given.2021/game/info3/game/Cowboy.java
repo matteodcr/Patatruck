@@ -20,12 +20,14 @@
  */
 package info3.game;
 
-import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+
+import info3.game.graphics.Graphics;
+import info3.game.graphics.Sprite;
 
 /**
  * A simple class that holds the images of a sprite for an animated cowbow.
@@ -36,8 +38,11 @@ public class Cowboy {
 	int m_imageIndex;
 	long m_imageElapsed;
 	long m_moveElapsed;
-	int m_x = 10, m_y = 10;
+	int m_x = 0, m_y = -48;
 	int m_width, m_height;
+	int move_timer = 0, move_timer_max = 10;
+
+	public static final int UP = 1, RIGHT = 2, DOWN = 3, LEFT = 4;
 
 	Cowboy() throws IOException {
 		m_images = loadSprite("resources/winchester-4x6.png", 4, 6);
@@ -55,23 +60,22 @@ public class Cowboy {
 		m_moveElapsed += elapsed;
 		if (m_moveElapsed > 24 & m_width != 0) {
 			m_moveElapsed = 0;
-			if (m_x < 0) {
-				m_x += m_width;
-			}
-			if (m_y < 0) {
-				m_y += m_height;
-			}
 			m_x = m_x % m_width;
 			m_y = m_y % m_height;
+			if (m_x < 0)
+				m_x = m_width;
+		}
+		move_timer -= elapsed;
+		if (move_timer < 0) {
+			move_timer = 0;
 		}
 	}
 
 	public void paint(Graphics g, int width, int height) {
 		m_width = width;
-		m_height = height;
-		BufferedImage img = m_images[m_imageIndex];
-		int scale = 2;
-		g.drawImage(img, m_x, m_y, scale * img.getWidth(), scale * img.getHeight(), null);
+		m_height = height + 48;
+		// BufferedImage img = m_images[m_imageIndex];
+		g.drawSprite(Sprite.COWBOY1, m_x, m_y + 48);
 	}
 
 	public static BufferedImage[] loadSprite(String filename, int nrows, int ncols) throws IOException {
@@ -92,6 +96,31 @@ public class Cowboy {
 			return images;
 		}
 		return null;
+	}
+
+	void move(int direction) {
+		if (move_timer == 0) {
+			switch (direction) {
+			case UP:
+				m_y -= 1;
+				move_timer = move_timer_max;
+				break;
+			case RIGHT:
+				m_x += 1;
+				move_timer = move_timer_max;
+				break;
+			case DOWN:
+				m_y += 1;
+				move_timer = move_timer_max;
+				break;
+			case LEFT:
+				m_x -= 1;
+				move_timer = move_timer_max;
+				break;
+			default:
+			}
+		}
+
 	}
 
 }

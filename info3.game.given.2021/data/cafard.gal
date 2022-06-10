@@ -1,0 +1,34 @@
+Cafard(DeplacementN){
+ * (DeplacementN): 						
+ | Cell(H,@) 	? Explode() :()				//Le cafard regarde si le joueur est sur sa case, si oui il meurt
+ | Cell(N,@) 	? :(DeplacementS)				//Le cafard regarde si le joueur est sur la case nord, si oui il se déplace vers le sud pour l'éviter
+ | Cell(H,P)	? 4%Pick(H) / 48%Pop / 48%Wizz  :(_)		//Le cafard regarde si la case actuelle contient un pickable, si oui il a 4% de chances de le prendre
+ | Cell(N,V/A)	? Move(N) :(_)					//Le cafard regarde si la case nord est vide ou possède un cafard, il se déplace vers le nord
+ | True      	? Turn(S) :(_)					//Dans ce cas là, le cafard ne pourra pas avancer vers le nord et se tourne vers le sud
+ 
+ * (DeplacementS): 
+ | Cell(S,@) 	? Explode() :()				//Le cafard regarde si le joueur est sur sa case, si oui il meurt
+ | Cell(S,@)	? :(DeplacementN)				//Le cafard regarde si le joueur est sur la case sud, si oui il se déplace vers le nord pour l'éviter
+ | Cell(H,P)	? 4%Pick(H) / 48%Pop / 48%Wizz  :(_)		//Le cafard regarde si la case actuelle contient un pickable, si oui il a 4% de chances de le prendre
+ | Cell(S,V/A)	? Move(S) :(_)					//Le cafard regarde si la case sud est vide ou possède un cafard, si oui il se déplace vers le sud
+ | True      	? Turn(N) :(_)					//Dans ce cas là, le cafard ne pourra pas avancer vers le sud et se tourne vers le nord
+ 
+ * (DeplacementE): 
+ | Cell(H,@)	? Explode() :()				//Le cafard regarde si le joueur est sur sa case, si oui il meurt
+ | Cell(E,@)	? :(DeplacementR)				//Le cafard regarde si le joueur est sur la case Est, si oui il se déplace vers l'ouest pour l'éviter
+ | Cell(H,P)	? 4%Pick(H) / 48%Pop / 48%Wizz  :(_)		//Le cafard regarde si la case actuelle contient un pickable, si oui il a 4% de chances de le prendre
+ | Cell(E,V/A)	? Move(E) :(_)					//Le cafard regarde si la case Est est vide ou possède un cafard, si oui il se déplace vers l'est
+ | True    	? Turn(W) :(_)					//Dans ce cas là, le cafard ne pourra pas avancer vers l'Est et se tourne vers l'ouest
+ 
+ * (DeplacementW): 
+ | Cell(H,@)	? Explode() :()				//Le cafard regarde si le joueur est sur sa case, si oui il meurt
+ | Cell(W,@)	? :(DeplacementL)				//Le cafard regarde si le joueur est sur la case ouest, si oui il se déplace vers l'Est pour l'éviter
+ | Cell(H,P)	? 4%Pick(H) / 48%Pop / 48%Wizz  :(_)		//Le cafard regarde si la case actuelle contient un pickable, si oui il a 4% de chances de le prendre
+ | Cell(W,V/A)	? Move(W) :(_)					//Le cafard regarde si la case ouest est vide ou possède un cafard, si oui il se déplace vers l'ouest
+ | True     	? Turn(E) :(_)					//Dans ce cas là, le cafard ne pourra pas avancer vers l'ouest et se tourne vers l'Est
+ 
+ * (Dupplication): 
+ | True ? 10%Egg(H) / 40%Pop / 40%Wizz :(_)			//Le cafard à 10% de chances de se duppliquer, sinon il fait des annimations graphiques
+  
+ * ()
+}

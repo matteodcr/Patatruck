@@ -2,6 +2,7 @@ package entity;
 
 import java.awt.Graphics;
 
+import info3.game.scene.Scene;
 import position.PositionF;
 
 public abstract class Entity {

@@ -1,5 +1,6 @@
 package entity;
 
+import info3.game.scene.Scene;
 import position.Direction;
 import position.PositionF;
 

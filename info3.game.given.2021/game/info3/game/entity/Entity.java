@@ -8,7 +8,7 @@ import info3.game.scene.Scene;
 public abstract class Entity {
 	Scene parentScene = null;
 	PositionF position;
-	Automaton automate;
+	// FIXME Automaton automate;
 	int deathTime = 0;
 
 	Entity(Scene parent, PositionF pos) {

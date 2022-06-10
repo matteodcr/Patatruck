@@ -11,61 +11,61 @@ public class CafardEntity extends Entity {
 		super(parent, position);
 	}
 
-	boolean wizz() {
-		// effet graphique
-
-	}
-
-	boolean pop() {
-		// effet graphique
-
-	}
-
-	boolean egg() {
-
-	}
+	/*
+	 * TODO boolean wizz() { // effet graphique
+	 * 
+	 * }
+	 * 
+	 * boolean pop() { // effet graphique
+	 * 
+	 * }
+	 * 
+	 * boolean egg() {
+	 * 
+	 * }
+	 */
 
 	boolean move(Direction direction) {
 		switch (direction) {
 		case NORD: {
-			// float x = position.getX();
+			float x = position.getX();
 			float y = position.getY();
+			PositionF newPos = new PositionF(0, -parentScene.getTileWidth());
 			// Tile nextTile = parent.getTile(x, y - parent.getTileWidth()); // On récupère
 			// la tile où le cuisinier veut se déplacer
 			// On gère plus tard les colisions, la vérification que la tile soit libre
-			position.setY(y - parent.getTileWidth());
+			position.add(newPos);
 			return true;
-			break;
 		}
 		case OUEST: {
 			float x = position.getX();
-			// float y = position.getY();
+			float y = position.getY();
+			PositionF newPos = new PositionF(-parentScene.getTileWidth(), 0);
 			// Tile nextTile = parent.getTile(x - parent.getTileWidth(), y); // On récupère
 			// la tile où le cuisinier veut se déplacer
 			// On gère plus tard les colisions, la vérification que la tile soit libre
-			position.setX(x - parent.getTileWidth());
+			position.add(newPos);
 			return true;
-			break;
 		}
 		case EST: {
 			float x = position.getX();
-			// float y = position.getY();
+			float y = position.getY();
+			PositionF newPos = new PositionF(parentScene.getTileWidth(), 0);
 			// Tile nextTile = parent.getTile(x + parent.getTileWidth(), y); // On récupère
 			// la tile où le cuisinier veut se déplacer
 			// On gère plus tard les colisions, la vérification que la tile soit libre
-			position.setX(x + parent.getTileWidth());
+			position.add(newPos);
 			return true;
-			break;
 		}
 		case SUD: {
-			// float x = position.getX();
+			float x = position.getX();
 			float y = position.getY();
+			PositionF newPos = new PositionF(0, parentScene.getTileWidth());
 			// Tile nextTile = parent.getTile(x, y + parent.getTileWidth()); // On récupère
 			// la tile où le cuisinier veut se déplacer
 			// On gère plus tard les colisions, la vérification que la tile soit libre
-			position.setY(y + parent.getTileWidth());
+			position.add(newPos);
 			return true;
-			break;
 		}
 		default:
 			return false;

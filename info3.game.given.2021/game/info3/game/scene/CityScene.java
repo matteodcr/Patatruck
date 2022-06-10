@@ -13,23 +13,28 @@ public class CityScene extends Scene {
 		super(pixelWidth, pixelHeight);
 	}
 
-	@Override public void tick() {
+	@Override
+	public void tick() {
 		vanPosition = vanPosition.add(new PositionF(0.2F, 0.1F));
 	}
 
-	@Override public int getTileWidth() {
+	@Override
+	public int getTileWidth() {
 		return 20;
 	}
 
-	@Override public PositionF getOriginOffset() {
+	@Override
+	public PositionF getOriginOffset() {
 		return vanPosition.add(center.neg()).add(vanPosition);
 	}
 
-	@Override public Tile getTileAt(int gridX, int gridY) {
-		return new CityTile(gridX, gridY);
+	@Override
+	public Tile getTileAt(int gridX, int gridY) {
+		return new CityTile(this, gridX, gridY);
 	}
 
-	@Override protected int getBackgroundColor() {
+	@Override
+	protected int getBackgroundColor() {
 		return 0xeb6c82;
 	}
 

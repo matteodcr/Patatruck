@@ -1,7 +1,6 @@
-package entity.kitchen;
+package info3.game.entity;
 
-import entity.Tile;
-import position.Direction;
+import info3.game.position.Direction;
 
 public abstract class KitchenTile extends Tile {
 	Direction dir;

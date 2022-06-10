@@ -1,7 +1,7 @@
-package entity;
+package info3.game.entity;
 
+import info3.game.position.Direction;
 import info3.game.scene.Scene;
-import position.Direction;
 import position.PositionF;
 
 public class CookEntity extends Entity {

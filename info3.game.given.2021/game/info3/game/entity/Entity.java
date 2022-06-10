@@ -1,9 +1,9 @@
-package entity;
+package info3.game.entity;
 
 import java.awt.Graphics;
 
+import info3.game.position.PositionF;
 import info3.game.scene.Scene;
-import position.PositionF;
 
 public abstract class Entity {
 	Scene parentScene = null;

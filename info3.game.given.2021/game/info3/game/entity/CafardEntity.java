@@ -1,7 +1,8 @@
-package entity;
+package info3.game.entity;
 
-import position.Direction;
-import position.PositionF;
+import info3.game.position.Direction;
+import info3.game.position.PositionF;
+import info3.game.scene.Scene;
 
 public class CafardEntity extends Entity {
 	// Item holding; Class Item TODO

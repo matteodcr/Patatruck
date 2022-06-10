@@ -1,4 +1,4 @@
-package entity.kitchen;
+package info3.game.entity;
 
 public class StockTable extends KitchenTile {
 

@@ -1,0 +1,14 @@
+Voiture(Drive) { -- Route : Jumpable; Croisement : Gate; Autre : Obstacle
+    * (Drive) 
+    | Cell(_,@) ? Pop :(Stop) -- Contact avec le camion => Stop
+    | Cell(F,O) & Cell(R,J) ? Wizz(R) :(Roule) -- Mur devant + libre à droite 
+                                               -- => droite
+    | Cell(F,O) & Cell(L,J) ? Wizz(L) :(Roule) -- Mur devant + libre à gauche 
+                                               -- => gauche
+    | Cell(H,G) ? 10%Wizz(R) / 10%Wizz(L) / Wizz(F) :(Roule) -- Croisement
+    | True ? Wizz(F) :(Roule) -- Avancer
+
+    * (Stop) 
+    | Cell(_,@) ? :(Stop)  -- Contact avec le camion => Stop
+    | True ? Wizz :(Roule) -- Plus de contact => Drive
+}

@@ -50,7 +50,9 @@ public class KitchenScene extends Scene {
 
 	@Override
 	public Tile getTileAt(int gridX, int gridY) {
-		return KitchenGrid[gridX][gridY];
+		if (gridX < 0 || gridY < 0 || gridX >= 10 || gridY >= 4)
+			return null;
+		return KitchenGrid[gridY][gridX];
 	}
 
 	@Override

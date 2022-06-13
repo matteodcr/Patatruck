@@ -36,4 +36,8 @@ public class PositionF {
 		return new PositionI((int) (this.x / b), (int) (this.y / b));
 	}
 
+	public PositionF mul(int tileWidth) {
+		return new PositionF(this.x * tileWidth, this.y * tileWidth);
+	}
+
 }

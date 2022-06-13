@@ -1,6 +1,5 @@
 package info3.game.scene;
 
-import info3.game.Cowboy;
 import info3.game.entity.Tile;
 import info3.game.graphics.Graphics;
 import info3.game.position.PositionF;
@@ -9,12 +8,10 @@ import info3.game.position.PositionI;
 public abstract class Scene {
 
 	protected final int pixelWidth, pixelHeight;
-	Cowboy cowboy;
 
-	public Scene(int pixelWidth, int pixelHeight, Cowboy cowboy) {
+	public Scene(int pixelWidth, int pixelHeight) {
 		this.pixelWidth = pixelWidth;
 		this.pixelHeight = pixelHeight;
-		this.cowboy = cowboy;
 	}
 
 	public void tick() {
@@ -62,7 +59,13 @@ public abstract class Scene {
 					tile.render(subGraphics);
 			}
 		}
-		cowboy.paint(g, pixelWidth, pixelHeight);
 	}
 
+	public int getPixelWidth() {
+		return pixelWidth;
+	}
+
+	public int getPixelHeight() {
+		return pixelHeight;
+	}
 }

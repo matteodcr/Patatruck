@@ -40,7 +40,6 @@ public class Cowboy {
 	long m_moveElapsed;
 	int m_x = 0, m_y = 0;
 	int m_width, m_height;
-	int move_timer = 0, move_timer_max = 10;
 
 	public static final int UP = 1, RIGHT = 2, DOWN = 3, LEFT = 4;
 
@@ -64,10 +63,6 @@ public class Cowboy {
 			m_y = m_y % m_height;
 			if (m_x < 0)
 				m_x = m_width;
-		}
-		move_timer -= elapsed;
-		if (move_timer < 0) {
-			move_timer = 0;
 		}
 	}
 
@@ -111,41 +106,20 @@ public class Cowboy {
 	 * @param direction (use the static fields to choose)
 	 */
 	void move(int direction) {
-		if (move_timer == 0) {
-			switch (direction) {
-			case UP:
-				m_y -= 1;
-				move_timer = move_timer_max;
-				break;
-			case RIGHT:
-				m_x += 1;
-				move_timer = move_timer_max;
-				break;
-			case DOWN:
-				m_y += 1;
-				move_timer = move_timer_max;
-				break;
-			case LEFT:
-				m_x -= 1;
-				move_timer = move_timer_max;
-				break;
-			default:
-			}
-		}
-	}
-
-	/**
-	 * This allow the character to be fast or slow.
-	 * 
-	 * @param speed (1=fast, 2=slow, other=default)
-	 */
-	void changeSpeed(int speed) {
-		if (speed == 1) {
-			this.move_timer_max = 5;
-		} else if (speed == 2) {
-			this.move_timer_max = 15;
-		} else {
-			this.move_timer_max = 10;
+		switch (direction) {
+		case UP:
+			m_y -= 1;
+			break;
+		case RIGHT:
+			m_x += 1;
+			break;
+		case DOWN:
+			m_y += 1;
+			break;
+		case LEFT:
+			m_x -= 1;
+			break;
+		default:
 		}
 	}
 }

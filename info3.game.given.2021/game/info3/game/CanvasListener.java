@@ -61,7 +61,7 @@ public class CanvasListener implements GameCanvasListener {
 		dico.put(0x44, "D");
 	}
 
-	boolean isUp(String name) {
+	public boolean isUp(String name) {
 		switch (name) {
 		case "ENTER":
 			return keyboard.contains(VK_ENTER);

@@ -30,6 +30,7 @@ import javax.swing.JLabel;
 import info3.game.graphics.AwtGraphics;
 import info3.game.graphics.GameCanvas;
 import info3.game.graphics.Graphics;
+import info3.game.position.Direction;
 import info3.game.scene.CityScene;
 import info3.game.scene.KitchenScene;
 import info3.game.sound.RandomFileInputStream;
@@ -62,17 +63,12 @@ public class Game {
 	JLabel m_text;
 	GameCanvas m_canvas;
 	CanvasListener m_listener;
-	Cowboy m_cowboy1, m_cowboy2;
 	Sound m_music;
 
 	private final KitchenScene kitchenScene;
 	private final CityScene cityScene;
 
 	Game() throws Exception {
-		// creating a cowboy, that would be a model
-		// in an Model-View-Controller pattern (MVC)
-		m_cowboy1 = new Cowboy();
-		m_cowboy2 = new Cowboy();
 		// creating a listener for all the events
 		// from the game canvas, that would be
 		// the controller in the MVC pattern
@@ -86,8 +82,8 @@ public class Game {
 		m_frame = m_canvas.createFrame(d);
 		m_frame.setResizable(false);
 
-		kitchenScene = new KitchenScene(WIDTH, HEIGHT / 2, m_cowboy1);
-		cityScene = new CityScene(WIDTH, HEIGHT / 2, m_cowboy2);
+		kitchenScene = new KitchenScene(WIDTH, HEIGHT / 2);
+		cityScene = new CityScene(WIDTH, HEIGHT / 2);
 
 		System.out.println("  - setting up the frame...");
 		setupFrame();
@@ -113,8 +109,6 @@ public class Game {
 
 		// make the vindow visible
 		m_frame.setVisible(true);
-
-		m_cowboy2.m_x += 100;
 	}
 
 	/*
@@ -154,9 +148,6 @@ public class Game {
 	 */
 	void tick(long elapsed) {
 
-		m_cowboy1.tick(elapsed);
-		m_cowboy2.tick(elapsed);
-
 		// Update every second
 		// the text on top of the frame: tick and fps
 		m_textElapsed += elapsed;
@@ -174,55 +165,60 @@ public class Game {
 			kitchenScene.tick();
 			cityScene.tick();
 		}
-
+		kitchenScene.getCook().tick(elapsed);
+		cityScene.getCook().tick(elapsed);
 		moveCharacters();
 	}
 
 	void moveCharacters() {
-		int VK_ENTER = '\n';
-		int VK_ESCAPE = 0x1B;
-		int VK_SPACE = 0x20;
-		int VK_LEFT = 0x25;
-		int VK_UP = 0x26;
-		int VK_RIGHT = 0x27;
-		int VK_DOWN = 0x28;
-		int VK_Z = 0x5A;
-		int VK_Q = 0x51;
-		int VK_S = 0x53;
-		int VK_D = 0x44;
+		if (m_listener.isUp("UP")) {
+			if (this.kitchenScene.getCook().canMove()) {
+				this.kitchenScene.getCook().wizz(Direction.NORD);
+				this.kitchenScene.getCook().hasMoved();
+			}
 
-		if (m_listener.keyboard.contains(VK_UP)) {
-			m_cowboy1.move(Cowboy.UP);
 		}
-		if (m_listener.keyboard.contains(VK_DOWN)) {
-			m_cowboy1.move(Cowboy.DOWN);
+		if (m_listener.isUp("DOWN")) {
+			if (this.kitchenScene.getCook().canMove()) {
+				this.kitchenScene.getCook().wizz(Direction.SUD);
+				this.kitchenScene.getCook().hasMoved();
+			}
 		}
-		if (m_listener.keyboard.contains(VK_LEFT)) {
-			m_cowboy1.move(Cowboy.LEFT);
+		if (m_listener.isUp("LEFT")) {
+			if (this.kitchenScene.getCook().canMove()) {
+				this.kitchenScene.getCook().wizz(Direction.OUEST);
+				this.kitchenScene.getCook().hasMoved();
+			}
 		}
-		if (m_listener.keyboard.contains(VK_RIGHT)) {
-			m_cowboy1.move(Cowboy.RIGHT);
+		if (m_listener.isUp("RIGHT")) {
+			if (this.kitchenScene.getCook().canMove()) {
+				this.kitchenScene.getCook().wizz(Direction.EST);
+				this.kitchenScene.getCook().hasMoved();
+			}
 		}
-		if (m_listener.keyboard.contains(VK_Z)) {
-			m_cowboy2.move(Cowboy.UP);
+		if (m_listener.isUp("Z")) {
+			if (this.cityScene.getCook().canMove()) {
+				this.cityScene.getCook().wizz(Direction.NORD);
+				this.cityScene.getCook().hasMoved();
+			}
 		}
-		if (m_listener.keyboard.contains(VK_S)) {
-			m_cowboy2.move(Cowboy.DOWN);
+		if (m_listener.isUp("S")) {
+			if (this.cityScene.getCook().canMove()) {
+				this.cityScene.getCook().wizz(Direction.SUD);
+				this.cityScene.getCook().hasMoved();
+			}
 		}
-		if (m_listener.keyboard.contains(VK_Q)) {
-			m_cowboy2.move(Cowboy.LEFT);
+		if (m_listener.isUp("Q")) {
+			if (this.cityScene.getCook().canMove()) {
+				this.cityScene.getCook().wizz(Direction.OUEST);
+				this.cityScene.getCook().hasMoved();
+			}
 		}
-		if (m_listener.keyboard.contains(VK_D)) {
-			m_cowboy2.move(Cowboy.RIGHT);
-		}
-		if (m_listener.keyboard.contains(VK_SPACE)) {
-			m_cowboy1.changeSpeed(1);
-		}
-		if (m_listener.keyboard.contains(VK_ENTER)) {
-			m_cowboy1.changeSpeed(2);
-		}
-		if (m_listener.keyboard.contains(VK_ESCAPE)) {
-			m_cowboy1.changeSpeed(0);
+		if (m_listener.isUp("D")) {
+			if (this.cityScene.getCook().canMove()) {
+				this.cityScene.getCook().wizz(Direction.EST);
+				this.cityScene.getCook().hasMoved();
+			}
 		}
 	}
 

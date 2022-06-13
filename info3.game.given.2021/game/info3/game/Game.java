@@ -22,11 +22,15 @@ package info3.game;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.io.File;
 import java.io.RandomAccessFile;
+import java.util.ArrayList;
+import java.util.List;
 
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-
+import info3.automata.ast.AST;
+import info3.automata.parser.AutomataParser;
+import info3.game.automata.AutomataGenerator;
+import info3.game.automata.GAutomaton;
 import info3.game.graphics.AwtGraphics;
 import info3.game.graphics.GameCanvas;
 import info3.game.graphics.Graphics;
@@ -34,6 +38,8 @@ import info3.game.position.Direction;
 import info3.game.scene.CityScene;
 import info3.game.scene.KitchenScene;
 import info3.game.sound.RandomFileInputStream;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
 
 public class Game {
 
@@ -49,7 +55,7 @@ public class Game {
 
 	static Game game;
 
-	public static void main(String args[]) throws Exception {
+	public static void main(String args[]) {
 		try {
 			System.out.println("Game starting...");
 			game = new Game();
@@ -65,14 +71,17 @@ public class Game {
 	CanvasListener m_listener;
 	Sound m_music;
 
+	List<GAutomaton> automata_list; // can be moved
+
 	private final KitchenScene kitchenScene;
 	private final CityScene cityScene;
 
-	Game() throws Exception {
+	Game() {
 		// creating a listener for all the events
 		// from the game canvas, that would be
 		// the controller in the MVC pattern
 		m_listener = new CanvasListener(this);
+		automata_list = loadAutomata("data");
 		// creating the game canvas to render the game,
 		// that would be a part of the view in the MVC pattern
 		m_canvas = new GameCanvas(m_listener);
@@ -233,6 +242,33 @@ public class Game {
 		int half = g.getHeight() / 2;
 		kitchenScene.render(g.window(0, 0, g.getWidth(), half));
 		cityScene.render(g.window(0, half, g.getWidth(), half));
+	}
+
+	/* Generates automata list from .gal file */
+	List<GAutomaton> loadAutomata(String filename) {
+		try {
+			List<GAutomaton> automata = new ArrayList<>();
+			List<GAutomaton> automata_tmp;
+			File folder = new File(filename);
+			for (File file : folder.listFiles()) {
+				if (!file.isDirectory()) {
+					try {
+						AST ast = AutomataParser.from_file(file.getAbsolutePath());
+						AutomataGenerator ast_visitor = new AutomataGenerator();
+						automata_tmp = (List<GAutomaton>) ast.accept(ast_visitor);
+						automata.addAll(automata_tmp);
+						System.out.printf("successfully loaded automata from %s \n", file.getName());
+					} catch (Exception e) {
+						System.err.printf("error while loading file \"%s\"%n", file.getCanonicalFile());
+						e.printStackTrace();
+						System.exit(1);
+					}
+				}
+			}
+			return automata;
+		} catch (Exception ex) {
+			throw new RuntimeException(ex);
+		}
 	}
 
 }

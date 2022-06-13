@@ -103,14 +103,12 @@ public class AutomataGenerator implements IVisitor {
 	// marche pas pr l'instant
 	public Object visit(BinaryOp operator, Object left, Object right) {
 		IFunction new_condition = null;
-		GFunCall funcall_l = ((GFunCall) left);
-		GFunCall funcall_r = ((GFunCall) right);
 		switch (operator.operator) {
 		case "&":
-			new_condition = (IFunction) new AndCondition((IFunction) funcall_l, (IFunction) funcall_r);
+			new_condition = (IFunction) new AndCondition((IFunction) left, (IFunction) right);
 			break;
 		case "/":
-			new_condition = (IFunction) new OrCondition((IFunction) funcall_l, (IFunction) funcall_r);
+			new_condition = (IFunction) new OrCondition((IFunction) left, (IFunction) right);
 			break;
 		default:
 			throw new IllegalStateException("opération binaire de condition non défini");

@@ -5,25 +5,25 @@ import info3.game.position.PositionF;
 import info3.game.scene.Scene;
 
 public class CafardEntity extends Entity {
-	// Item holding; Class Item TODO
+//Wizz()=move()
+//pop()=egg()
 
 	CafardEntity(Scene parent, PositionF position) {
 		super(parent, position);
 	}
 
-	/*
-	 * TODO boolean wizz() { // effet graphique
-	 * 
-	 * }
-	 * 
-	 * boolean pop() { // effet graphique
-	 * 
-	 * }
-	 * 
-	 * boolean egg() {
-	 * 
-	 * }
-	 */
+	boolean wizz(Direction direction) {
+		return move(direction);
+	}
+
+	boolean pop(PositionF position) {
+		return egg(position);
+	}
+
+	boolean egg(PositionF position) {
+		Entity nouveau_carfard = new CafardEntity(this.parentScene, position);
+		return this.parentScene.addEntity(nouveau_carfard);
+	}
 
 	boolean move(Direction direction) {
 		switch (direction) {

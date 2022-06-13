@@ -85,10 +85,10 @@ Planche(vide){
 
 Livraison(vide){
     *(vide)
-    |Cell(H,P) ? Pop:(pret) // si on detecte un pickable dessus, on passe en plein
+    |Cell(H,P) ? Pop:(plein) // si on detecte un pickable dessus, on passe en plein
     |Cell(H,V) ?    :(vide) // sinon on attends
     
-    *(pret)
+    *(plein)
     |Cell(H,P) ? Wizz:(vide) // c'est bon on supprime l'élément
-    |True ?          :(vide)
+    |True ?          :(plein)
 }

@@ -1,5 +1,8 @@
 package info3.game.scene;
 
+import java.util.ArrayList;
+
+import info3.game.entity.Entity;
 import info3.game.entity.Tile;
 import info3.game.graphics.Graphics;
 import info3.game.position.PositionF;
@@ -8,10 +11,19 @@ import info3.game.position.PositionI;
 public abstract class Scene {
 
 	protected final int pixelWidth, pixelHeight;
+	ArrayList<Entity> entity_list = new ArrayList<>();
 
 	public Scene(int pixelWidth, int pixelHeight) {
 		this.pixelWidth = pixelWidth;
 		this.pixelHeight = pixelHeight;
+	}
+
+	public boolean addEntity(Entity entity) {
+		return entity_list.add(entity);
+	}
+
+	public boolean removeEntity(Entity entity) {
+		return entity_list.remove(entity);
 	}
 
 	public void tick() {

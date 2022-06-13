@@ -21,13 +21,21 @@ public class Token implements java.io.Serializable {
 	 */
 	public int kind;
 
-	/** The line number of the first character of this Token. */
+	/**
+	 * The line number of the first character of this Token.
+	 */
 	public int beginLine;
-	/** The column number of the first character of this Token. */
+	/**
+	 * The column number of the first character of this Token.
+	 */
 	public int beginColumn;
-	/** The line number of the last character of this Token. */
+	/**
+	 * The line number of the last character of this Token.
+	 */
 	public int endLine;
-	/** The column number of the last character of this Token. */
+	/**
+	 * The column number of the last character of this Token.
+	 */
 	public int endColumn;
 
 	/**
@@ -102,9 +110,9 @@ public class Token implements java.io.Serializable {
 	 * cases to the switch for all those special cases. For example, if you have a
 	 * subclass of Token called IDToken that you want to create if ofKind is ID,
 	 * simply add something like :
-	 *
+	 * <p>
 	 * case MyParserConstants.ID : return new IDToken(ofKind, image);
-	 *
+	 * <p>
 	 * to the following switch statement. Then you can cast matchedToken variable to
 	 * the appropriate type and use sit in your lexical actions.
 	 */

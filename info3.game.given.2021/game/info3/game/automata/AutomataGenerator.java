@@ -34,11 +34,11 @@ public class AutomataGenerator implements IVisitor {
 
 	/**
 	 * /!\ States appear as source and target of transitions.
-	 * 
+	 * <p>
 	 * A naive implementation would create distinct copies of the same state: - one
 	 * when it is a source, - one when it is a target resulting into disconnected
 	 * automaton with floating transitions.
-	 * 
+	 * <p>
 	 * SOLUTION We need to build a mapping from State name -->
 	 * DoState(id,name,options). Thus, when encountering a state that has already
 	 * been stored in the mapping we can get the state already in the map to

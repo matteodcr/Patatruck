@@ -1,4 +1,4 @@
-TrafficCone(Still) {
+TrafficCone(Still){
   * (Still):
   | Cell(H,_) ? Pop :()
   | True ? Wizz :(Still)

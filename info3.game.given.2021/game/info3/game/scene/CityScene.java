@@ -7,7 +7,6 @@ import info3.game.entity.CookEntity;
 import info3.game.entity.Tile;
 import info3.game.graphics.Graphics;
 import info3.game.position.PositionF;
-import info3.game.position.PositionI;
 
 public class CityScene extends Scene {
 
@@ -55,23 +54,7 @@ public class CityScene extends Scene {
 
 	@Override
 	public void render(Graphics g) {
-		g.fill(getBackgroundColor());
-
-		final int tileWidth = getTileWidth();
-		final PositionF origin = getOriginOffset();
-		PositionI min = getOriginOffset().divFloor(tileWidth).add(new PositionI(-1, -1));
-		PositionI max = min.add(new PositionI(pixelWidth / tileWidth + 3, pixelHeight / tileWidth + 3));
-
-		for (int y = min.getY(); y < max.getY(); y++) {
-			for (int x = min.getX(); x < max.getX(); x++) {
-				Graphics subGraphics = g.window(x * tileWidth - origin.getX(), y * tileWidth - origin.getY(), tileWidth,
-						tileWidth);
-
-				Tile tile = getTileAt(x, y);
-				if (tile != null)
-					tile.render(subGraphics);
-			}
-		}
+		super.render(g);
 		this.cook.render(g);
 	}
 

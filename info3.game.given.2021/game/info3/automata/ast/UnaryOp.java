@@ -14,7 +14,7 @@
  *
  *  Created on: March, 2020
  *      Author: Pr. Olivier Gruber <olivier dot gruber at acm dot org>
- *              Dr. Michaël Périn, Verimag / Univ. Grenoble-Alpes 
+ *              Dr. Michaël Périn, Verimag / Univ. Grenoble-Alpes
  */
 package info3.automata.ast;
 

@@ -24,14 +24,12 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-import javax.imageio.ImageIO;
-
 import info3.game.graphics.Graphics;
 import info3.game.graphics.Sprite;
+import javax.imageio.ImageIO;
 
 /**
  * A simple class that holds the images of a sprite for an animated cowbow.
- *
  */
 public class Cowboy {
 	BufferedImage[] m_images;
@@ -68,7 +66,7 @@ public class Cowboy {
 
 	/**
 	 * Paints the cowboy
-	 * 
+	 *
 	 * @param g
 	 * @param width  width of the border
 	 * @param height height of the border
@@ -102,7 +100,7 @@ public class Cowboy {
 
 	/**
 	 * Allows the character to move in one of the 4 directions.
-	 * 
+	 *
 	 * @param direction (use the static fields to choose)
 	 */
 	void move(int direction) {

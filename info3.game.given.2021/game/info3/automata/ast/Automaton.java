@@ -19,7 +19,9 @@ public class Automaton extends Node {
 		return name;
 	}
 
-	/** VISITOR */
+	/**
+	 * VISITOR
+	 */
 
 	public Object accept(IVisitor visitor) {
 		visitor.enter(this);

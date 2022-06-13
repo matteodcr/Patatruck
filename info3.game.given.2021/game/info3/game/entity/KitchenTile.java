@@ -19,5 +19,4 @@ public abstract class KitchenTile extends Tile {
 	public void setDirection(Direction direction) {
 		this.direction = direction;
 	}
-
 }

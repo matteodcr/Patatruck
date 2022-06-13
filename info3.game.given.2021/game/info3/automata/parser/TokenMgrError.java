@@ -2,7 +2,9 @@
 /* JavaCCOptions: */
 package info3.automata.parser;
 
-/** Token Manager Error. */
+/**
+ * Token Manager Error.
+ */
 public class TokenMgrError extends Error {
 
 	/**
@@ -100,19 +102,20 @@ public class TokenMgrError extends Error {
 	 */
 	protected static String LexicalError(boolean EOFSeen, int lexState, int errorLine, int errorColumn,
 			String errorAfter, char curChar) {
-		return ("Lexical error at line " + errorLine + ", column " + errorColumn + ".  Encountered: "
-				+ (EOFSeen ? "<EOF> "
-						: ("\"" + addEscapes(String.valueOf(curChar)) + "\"") + " (" + (int) curChar + "), ")
-				+ "after : \"" + addEscapes(errorAfter) + "\"");
+		return ("Lexical error at line " + errorLine + ", column " + errorColumn + ".  Encountered: " + (EOFSeen ?
+				"<EOF> " :
+				("\"" + addEscapes(
+						String.valueOf(curChar)) + "\"") + " (" + (int) curChar + "), ") + "after : \"" + addEscapes(
+				errorAfter) + "\"");
 	}
 
 	/**
 	 * You can also modify the body of this method to customize your error messages.
 	 * For example, cases like LOOP_DETECTED and INVALID_LEXICAL_STATE are not of
 	 * end-users concern, so you can return something like :
-	 *
+	 * <p>
 	 * "Internal Error : Please file a bug report .... "
-	 *
+	 * <p>
 	 * from this method for such cases in the release version of your parser.
 	 */
 	public String getMessage() {
@@ -123,17 +126,23 @@ public class TokenMgrError extends Error {
 	 * Constructors of various flavors follow.
 	 */
 
-	/** No arg constructor. */
+	/**
+	 * No arg constructor.
+	 */
 	public TokenMgrError() {
 	}
 
-	/** Constructor with message and reason. */
+	/**
+	 * Constructor with message and reason.
+	 */
 	public TokenMgrError(String message, int reason) {
 		super(message);
 		errorCode = reason;
 	}
 
-	/** Full Constructor. */
+	/**
+	 * Full Constructor.
+	 */
 	public TokenMgrError(boolean EOFSeen, int lexState, int errorLine, int errorColumn, String errorAfter, char curChar,
 			int reason) {
 		this(LexicalError(EOFSeen, lexState, errorLine, errorColumn, errorAfter, curChar), reason);

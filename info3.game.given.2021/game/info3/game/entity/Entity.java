@@ -4,11 +4,10 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-import javax.imageio.ImageIO;
-
 import info3.game.graphics.Graphics;
 import info3.game.position.PositionF;
 import info3.game.scene.Scene;
+import javax.imageio.ImageIO;
 
 public abstract class Entity {
 	Scene parentScene = null;

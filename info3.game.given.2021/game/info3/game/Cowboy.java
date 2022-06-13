@@ -20,12 +20,14 @@
  */
 package info3.game;
 
-import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+
+import info3.game.graphics.Graphics;
+import info3.game.graphics.Sprite;
 
 /**
  * A simple class that holds the images of a sprite for an animated cowbow.
@@ -36,15 +38,17 @@ public class Cowboy {
 	int m_imageIndex;
 	long m_imageElapsed;
 	long m_moveElapsed;
-	int m_x = 10, m_y = 10;
-	int m_width;
+	int m_x = 0, m_y = 0;
+	int m_width, m_height;
+
+	public static final int UP = 1, RIGHT = 2, DOWN = 3, LEFT = 4;
 
 	Cowboy() throws IOException {
 		m_images = loadSprite("resources/winchester-4x6.png", 4, 6);
 	}
 
 	/*
-	 * Simple animation here, the cowbow
+	 * Simple animation here, the cowboy
 	 */
 	public void tick(long elapsed) {
 		m_imageElapsed += elapsed;
@@ -55,15 +59,25 @@ public class Cowboy {
 		m_moveElapsed += elapsed;
 		if (m_moveElapsed > 24 & m_width != 0) {
 			m_moveElapsed = 0;
-			m_x = (m_x + 2) % m_width;
+			m_x = m_x % m_width;
+			m_y = m_y % m_height;
+			if (m_x < 0)
+				m_x = m_width;
 		}
 	}
 
+	/**
+	 * Paints the cowboy
+	 * 
+	 * @param g
+	 * @param width  width of the border
+	 * @param height height of the border
+	 */
 	public void paint(Graphics g, int width, int height) {
 		m_width = width;
-		BufferedImage img = m_images[m_imageIndex];
-		int scale = 2;
-		g.drawImage(img, m_x, m_y, scale * img.getWidth(), scale * img.getHeight(), null);
+		m_height = height;
+		// BufferedImage img = m_images[m_imageIndex];
+		g.drawSprite(Sprite.COWBOY1, m_x, m_y);
 	}
 
 	public static BufferedImage[] loadSprite(String filename, int nrows, int ncols) throws IOException {
@@ -86,4 +100,26 @@ public class Cowboy {
 		return null;
 	}
 
+	/**
+	 * Allows the character to move in one of the 4 directions.
+	 * 
+	 * @param direction (use the static fields to choose)
+	 */
+	void move(int direction) {
+		switch (direction) {
+		case UP:
+			m_y -= 1;
+			break;
+		case RIGHT:
+			m_x += 1;
+			break;
+		case DOWN:
+			m_y += 1;
+			break;
+		case LEFT:
+			m_x -= 1;
+			break;
+		default:
+		}
+	}
 }

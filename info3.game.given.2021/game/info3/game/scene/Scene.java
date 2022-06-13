@@ -30,7 +30,8 @@ public abstract class Scene {
 	public abstract Tile getTileAt(int gridX, int gridY);
 
 	/**
-	 * @return La coordonnée en pixel du point qui s'affiche le plus en haut à gauche de la zone de rendu
+	 * @return La coordonnée en pixel du point qui s'affiche le plus en haut à
+	 *         gauche de la zone de rendu
 	 */
 	public PositionF getOriginOffset() {
 		return PositionF.ZERO;
@@ -60,4 +61,11 @@ public abstract class Scene {
 		}
 	}
 
+	public int getPixelWidth() {
+		return pixelWidth;
+	}
+
+	public int getPixelHeight() {
+		return pixelHeight;
+	}
 }

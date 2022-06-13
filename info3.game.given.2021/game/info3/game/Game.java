@@ -20,16 +20,20 @@
  */
 package info3.game;
 
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.io.RandomAccessFile;
+
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+
 import info3.game.graphics.AwtGraphics;
 import info3.game.graphics.GameCanvas;
 import info3.game.graphics.Graphics;
+import info3.game.position.Direction;
 import info3.game.scene.CityScene;
 import info3.game.scene.KitchenScene;
 import info3.game.sound.RandomFileInputStream;
-
-import javax.swing.*;
-import java.awt.*;
-import java.io.RandomAccessFile;
 
 public class Game {
 
@@ -59,16 +63,12 @@ public class Game {
 	JLabel m_text;
 	GameCanvas m_canvas;
 	CanvasListener m_listener;
-	Cowboy m_cowboy;
 	Sound m_music;
 
 	private final KitchenScene kitchenScene;
 	private final CityScene cityScene;
 
 	Game() throws Exception {
-		// creating a cowboy, that would be a model
-		// in an Model-View-Controller pattern (MVC)
-		m_cowboy = new Cowboy();
 		// creating a listener for all the events
 		// from the game canvas, that would be
 		// the controller in the MVC pattern
@@ -148,8 +148,6 @@ public class Game {
 	 */
 	void tick(long elapsed) {
 
-		m_cowboy.tick(elapsed);
-
 		// Update every second
 		// the text on top of the frame: tick and fps
 		m_textElapsed += elapsed;
@@ -166,6 +164,61 @@ public class Game {
 
 			kitchenScene.tick();
 			cityScene.tick();
+		}
+		kitchenScene.getCook().tick(elapsed);
+		cityScene.getCook().tick(elapsed);
+		moveCharacters();
+	}
+
+	void moveCharacters() {
+		if (m_listener.isUp("UP")) {
+			if (this.kitchenScene.getCook().canMove()) {
+				this.kitchenScene.getCook().wizz(Direction.NORD);
+				this.kitchenScene.getCook().hasMoved();
+			}
+
+		}
+		if (m_listener.isUp("DOWN")) {
+			if (this.kitchenScene.getCook().canMove()) {
+				this.kitchenScene.getCook().wizz(Direction.SUD);
+				this.kitchenScene.getCook().hasMoved();
+			}
+		}
+		if (m_listener.isUp("LEFT")) {
+			if (this.kitchenScene.getCook().canMove()) {
+				this.kitchenScene.getCook().wizz(Direction.OUEST);
+				this.kitchenScene.getCook().hasMoved();
+			}
+		}
+		if (m_listener.isUp("RIGHT")) {
+			if (this.kitchenScene.getCook().canMove()) {
+				this.kitchenScene.getCook().wizz(Direction.EST);
+				this.kitchenScene.getCook().hasMoved();
+			}
+		}
+		if (m_listener.isUp("Z")) {
+			if (this.cityScene.getCook().canMove()) {
+				this.cityScene.getCook().wizz(Direction.NORD);
+				this.cityScene.getCook().hasMoved();
+			}
+		}
+		if (m_listener.isUp("S")) {
+			if (this.cityScene.getCook().canMove()) {
+				this.cityScene.getCook().wizz(Direction.SUD);
+				this.cityScene.getCook().hasMoved();
+			}
+		}
+		if (m_listener.isUp("Q")) {
+			if (this.cityScene.getCook().canMove()) {
+				this.cityScene.getCook().wizz(Direction.OUEST);
+				this.cityScene.getCook().hasMoved();
+			}
+		}
+		if (m_listener.isUp("D")) {
+			if (this.cityScene.getCook().canMove()) {
+				this.cityScene.getCook().wizz(Direction.EST);
+				this.cityScene.getCook().hasMoved();
+			}
 		}
 	}
 

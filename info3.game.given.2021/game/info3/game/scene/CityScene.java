@@ -1,16 +1,26 @@
 package info3.game.scene;
 
+import java.io.IOException;
+
 import info3.game.entity.CityTile;
+import info3.game.entity.CookEntity;
 import info3.game.entity.Tile;
+import info3.game.graphics.Graphics;
 import info3.game.position.PositionF;
 
 public class CityScene extends Scene {
 
 	private final PositionF center = new PositionF((float) pixelWidth / 2F - 4.5F, (float) pixelHeight / 2F - 4.5F);
 	private PositionF vanPosition = PositionF.ZERO;
+	private CookEntity cook; // To change with vanEntity
 
 	public CityScene(int pixelWidth, int pixelHeight) {
 		super(pixelWidth, pixelHeight);
+		try {
+			cook = new CookEntity(this, vanPosition);
+		} catch (IOException e) {
+			e.printStackTrace();
+		} // To change with vanEntity
 	}
 
 	@Override
@@ -36,6 +46,16 @@ public class CityScene extends Scene {
 	@Override
 	protected int getBackgroundColor() {
 		return 0xeb6c82;
+	}
+
+	public CookEntity getCook() {
+		return cook;
+	}
+
+	@Override
+	public void render(Graphics g) {
+		super.render(g);
+		this.cook.render(g);
 	}
 
 }

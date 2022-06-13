@@ -1,94 +1,91 @@
-Feu_cuisson(wait){
-    *(wait)
-    |Cell(H,P) ? Pop:(cook)            //Si un objet pickable est sur la même case, un Pop va afficher un sprite en mode "feu allumé"
-    |Cell(H,V) ?    :(wait)            //Si il n'y a aucune objet sur la même case, on attends
+Feu_cuisson(Attendre){
+    *(Attendre)
+    |Cell(H,P) ? Pop:(Cook)            
+    |Cell(H,V) ?    :(Attendre)           
     
-    *(cook)
-    |True ?     wait:(cuit)            //On effectue un wait, ce qui correspond au temps de cuisson
-
-    *(cuit)
-    |Cell(H,P) ?    :(cuit)            //Tant que l'élément pickable est encore présent, on boucle sur cet état
-    |Cell(H,V) ?    Wizz:(wait)        //Si l'élément n'est plus présent, le Wizz va afficher un sprite en mode "feu éteint"
+    *(Cook)
+    |True ?     Wait:(Cuit)      
+          
+    *(Cuit)
+    |Cell(H,P) ?    :(Cuit)            
+    |Cell(H,V) ?    Wizz:(Attendre)   
 }
 
-Friteuse(wait){
-    *(wait)
-    |Cell(H,P) ? Pop:(cook)            //Si un objet pickable est sur la même case, un Pop va afficher un sprite en mode "huile chaude"
-    |Cell(H,V) ?    :(wait)            //Si il n'y a aucune objet sur la même case, on attends
+Friteuse(Attendre){
+    *(Attendre)
+    |Cell(H,P) ? Pop:(Cook)          
+    |Cell(H,V) ?    :(Attendre)           
     
-    *(cook)
-    |True ?     wait:(cuit)            //On effectue un wait, ce qui correspond au temps de cuisson
-
-    *(cuit)
-    |Cell(H,P) ?    :(cuit)            //Tant que l'élément pickable est encore présent, on boucle sur cet état
-    |Cell(H,V) ?    Wizz:(wait)        //Si l'élément n'est plus présent, le Wizz va afficher un sprite en mode "huile froide"
+    *(Cook)
+    |True ?     Wait:(Cuit)       
+    *(Cuit)
+    |Cell(H,P) ?    :(Cuit)         
+    |Cell(H,V) ?    Wizz:(Attendre)      
 }
 
-Garde_manger(wait){
-    *(wait)
-    |Cell(H,V) & GotStuff ?    Wizz:(waitRestock)    //Si la cellule est vide et qu'il reste du stuff on passe dans l'état restock qui va remettre un item sur le présentoire du garde manger
-    |True ?    :(wait)                               //rien dans l'inventaire du G_m
+Garde_manger(Attendre){
+    *(Attendre)
+    |Cell(H,V) & GotStuff ?    Wizz:(AttendreRestock)    
+    |True ?    :(Attendre)                
     
-    *(waitRestock)                        
-    |True ? wait:(restock)                           //tps d'attente avant de pouvoir repick un item
+    *(AttendreRestock)                        
+    |True ? Wait:(Restock)                      
     
-    *(restock)                     
-    |True ? Pop:(wait)                               //On repasse dans l'état wait avec un Pop qui affiche un item sur le présentoire
+    *(Restock)                     
+    |True ? Pop:(Attendre)                          
 }
 
-Table(vide){
-    *(vide)
-    |Cell(H,P) ? Pop:(pleine)        //Si pickable here => état pleine, Pop changement de sprite mode "table pleine"
-    |Cell(H,V) ?    :(vide)         //Si void here => état vide
+Table(Vide){
+    *(Vide)
+    |Cell(H,P) ? Pop:(Pleine)       
+    |Cell(H,V) ?    :(Vide)         
     
-    *(pleine)
-    |Cell(H,P) ?    :(pleine)        //Si pickable here => état pleine
-    |Cell(H,V) ? Wizz:(vide)        //Si void here => état vide, Wizz changement de sprite mode "table vide"
+    *(Pleine)
+    |Cell(H,P) ?    :(Pleine)        
+    |Cell(H,V) ? Wizz:(Vide)        
 }
 
-Table_a_sauce(ready){
-    *(ready)
-    |GotPower ? Wizz:(waitRestock)    //S'il y a une interaction, Wizz changement de sprite mode "reload"
-    |True ?   :(ready)               //Sinon on reste dans l'état ready
+Table_a_sauce(Ready){
+    *(Ready)
+    |GotPower ? Wizz:(AttendreRestock)    
+    |True ?   :(Ready)              
         
-    *(waitRestock)                        
-    |True ? wait:(restock)          //tps d'attente avant le reload
+    *(AttendreRestock)                        
+    |True ? Wait:(Restock)          
     
-    *(restock)                     
-    |True ? Pop:(ready)             //On repasse dans l'état ready avec un Pop changement de sprite mode "table ready"
-}
-GotPower sera implémenté comme ceci
-True=>interaction
-False=>!interaction
+    *(Restock)                     
+    |True ? Pop:(Ready)          
 
-Planche(vide){
-    *(vide)
-    |Cell(H,P) ? Pop:(startCoupe)                             //S'il y a un élément pickable on passe dans l'état startCoupe
-    |Cell(H,V) ?    :(vide)                                   //S'il n'y a pas d'item on boucle dans l'état vide
-    
-    *(startCoupe)
-    |Cell(H,P) & Key(SPACE) & Cell(F,@) ? Hit: (couper1)       //Si l'élément pickable est toujours présent, que le joueur est en face de la planche et qu'il appuye sur la touche ESPACE, on compte une découpe
-    |True ?    :(startCoupe)                                   //Boucle sur l'état actuel si le joueur ne découpe pas
-    
-    *(couper1)
-    |Cell(H,P) & Key(SPACE) & Cell(F,@) ? Hit: (couper2)       //Si l'élément pickable est toujours présent, que le joueur est en face de la planche et qu'il appuye sur la touche ESPACE, on compte une découpe supplémentaire
-    |True ?    :(couper1)                                      //Boucle sur l'état actuel si le joueur ne découpe pas
-    
-    *(couper2)
-    |Cell(H,P) & Key(SPACE) & Cell(F,@) ? Hit: (couper)        //Si l'élément pickable est toujours présent, que le joueur est en face de la planche et qu'il appuye sur la touche ESPACE, on compte une découpe supplémentaire
-    |True ?    :(couper2)                                      //Boucle sur l'état actuel si le joueur ne découpe pas
-    
-    *(couper)
-    |Cell(H,V) ? Wizz:(vide)                                   //L'élement à fini d'être découpé, on repasse dans l'état vide
-    |True ?    :(couper)                                      //Tant que le joueur ne récupère pas l'élément, on boucle dans cet état
 }
 
-Livraison(vide){
-    *(vide)
-    |Cell(H,P) ? Pop:(pret) // si on detecte un pickable dessus, on passe en plein
-    |Cell(H,V) ?    :(vide) // sinon on attends
+Planche(Vide){
+    *(Vide)
+    |Cell(H,P) ? Pop:(StartCoupe)                           
+    |Cell(H,V) ?    :(Vide)                                   
     
-    *(pret)
-    |Cell(H,P) ? Wizz:(vide) // c'est bon on supprime l'élément
-    |True ?          :(vide)
+    *(StartCoupe)
+    |Cell(H,P) & Key(SPACE) & Cell(F,@) ? Hit: (Couper1)       
+    |True ?    :(StartCoupe)                                   
+    
+    *(Couper1)
+    |Cell(H,P) & Key(SPACE) & Cell(F,@) ? Hit: (Couper2)       
+    |True ?    :(Couper1)                                      
+    
+    *(Couper2)
+    |Cell(H,P) & Key(SPACE) & Cell(F,@) ? Hit: (Couper)        
+    |True ?    :(Couper2)                                     
+    
+    *(Couper)
+    |Cell(H,V) ? Wizz:(Vide)                                   
+    |True ?    :(Couper)                                    
+}
+
+Livraison(Vide){
+    *(Vide)
+    |Cell(H,P) ? Pop:(Plein) 
+    |Cell(H,V) ?    :(Vide) 
+    
+    *(Plein)
+    |Cell(H,P) ? Wizz:(Vide)
+    |True ?          :(Plein)
 }

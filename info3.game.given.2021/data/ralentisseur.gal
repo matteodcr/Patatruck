@@ -1,5 +1,5 @@
 SpeedBump(Still) {
     * (Still):
-    | Cell(H,@) ? Pop :(Still) //verif si joueur passé trop vite
-    | True ? Wizz :(Still) //nothing
+    | Cell(H,@) ? Pop :(Still) 
+    | True ? Wizz :(Still) 
 }

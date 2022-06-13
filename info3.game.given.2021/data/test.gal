@@ -1,0 +1,4 @@
+PopOrWizz2(State1){
+  * (State1): True ? Pop  :(_)
+  * (State2): True ? Wizz :(_)
+}

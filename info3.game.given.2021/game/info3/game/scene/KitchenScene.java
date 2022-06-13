@@ -2,6 +2,7 @@ package info3.game.scene;
 
 import java.io.IOException;
 
+import info3.game.Game;
 import info3.game.entity.CookEntity;
 import info3.game.entity.StockTable;
 import info3.game.entity.Tile;
@@ -29,8 +30,8 @@ public class KitchenScene extends Scene {
 					new StockTable(this, 5, 3, Direction.NORD), new StockTable(this, 6, 3, Direction.NORD),
 					new StockTable(this, 7, 3, Direction.NORD), new StockTable(this, 8, 3, Direction.NORD), null } };
 
-	public KitchenScene(int pixelWidth, int pixelHeight) {
-		super(pixelWidth, pixelHeight);
+	public KitchenScene(int pixelWidth, int pixelHeight, Game g) {
+		super(pixelWidth, pixelHeight, g);
 		try {
 			cook = new CookEntity(this, KITCHEN_ORIGIN);
 		} catch (IOException e) {

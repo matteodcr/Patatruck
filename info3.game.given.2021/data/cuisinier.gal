@@ -2,7 +2,7 @@ Cook(Init){
   * (Init):
   | Key(z) ? Wizz(N):(Init)
   | Key(q) ? Wizz(E):(Init)
-  | Key(s) ? Wizz(O):(Init)
+  | Key(s) ? Wizz(W):(Init)
   | Key(d) ? Wizz(S):(Init)
   | Key(SPACE) ? Pop(F):(Init)  
 }

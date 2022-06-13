@@ -2,6 +2,7 @@ package info3.game.scene;
 
 import java.util.ArrayList;
 
+import info3.game.Game;
 import info3.game.entity.Entity;
 import info3.game.entity.Tile;
 import info3.game.graphics.Graphics;
@@ -10,12 +11,15 @@ import info3.game.position.PositionI;
 
 public abstract class Scene {
 
+	public Game m_game;
+
 	protected final int pixelWidth, pixelHeight;
 	ArrayList<Entity> entity_list = new ArrayList<>();
 
-	public Scene(int pixelWidth, int pixelHeight) {
+	public Scene(int pixelWidth, int pixelHeight, Game g) {
 		this.pixelWidth = pixelWidth;
 		this.pixelHeight = pixelHeight;
+		m_game = g;
 	}
 
 	public boolean addEntity(Entity entity) {
@@ -26,7 +30,10 @@ public abstract class Scene {
 		return entity_list.remove(entity);
 	}
 
-	public void tick() {
+	public void tick(long elapsed) {
+		for (Entity entity : entity_list) {
+			entity.tick(elapsed);
+		}
 	}
 
 	/**

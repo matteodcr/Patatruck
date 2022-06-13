@@ -16,4 +16,8 @@ public class GAutomaton {
 	public void addState(GState gState) {
 		this.states.add(gState);
 	}
+
+	public GState run(AutomatonListener aut, GState current_state) {
+		return current_state.checkTransitions(aut);
+	}
 }

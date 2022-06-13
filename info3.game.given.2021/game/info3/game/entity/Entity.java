@@ -4,17 +4,24 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-import info3.game.graphics.Graphics;
-import info3.game.position.PositionF;
-import info3.game.scene.Scene;
 import javax.imageio.ImageIO;
 
-public abstract class Entity {
+import info3.game.automata.AutomatonListener;
+import info3.game.automata.GAutomaton;
+import info3.game.automata.GState;
+import info3.game.graphics.Graphics;
+import info3.game.position.AutCategory;
+import info3.game.position.AutDirection;
+import info3.game.position.PositionF;
+import info3.game.scene.Scene;
+
+public abstract class Entity implements AutomatonListener {
 	Scene parentScene = null;
 	PositionF position;
-	// FIXME Automaton automate;
+	GAutomaton automaton;
 	int deathTime = 0;
 	int move_timer = 0, move_timer_max = 0; // allows to move only when move_timer==0
+	GState current_state;
 
 	Entity(Scene parent, PositionF pos) {
 		parentScene = parent;
@@ -29,8 +36,12 @@ public abstract class Entity {
 		return position;
 	}
 
-	void tick(long elapsed) {
-		// TODO
+	public void tick(long elapsed) {
+		System.out.printf("test\n");
+		GState state = automaton.run(this, current_state);
+		if (state != null) {
+			current_state = state;
+		}
 	}
 
 	void destroySpin() {
@@ -71,5 +82,22 @@ public abstract class Entity {
 
 	public void hasMoved() {
 		this.move_timer = move_timer_max;
+	}
+
+	@Override
+	public boolean move(AutDirection direction) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean cell(AutDirection direction, AutCategory category) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean key(AutDirection direction) {
+		return parentScene.m_game.m_listener.isUp(direction.toString());
 	}
 }

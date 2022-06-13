@@ -2,6 +2,7 @@ package info3.game.scene;
 
 import java.io.IOException;
 
+import info3.game.Game;
 import info3.game.entity.CityTile;
 import info3.game.entity.CookEntity;
 import info3.game.entity.Tile;
@@ -14,8 +15,8 @@ public class CityScene extends Scene {
 	private PositionF vanPosition = PositionF.ZERO;
 	private CookEntity cook; // To change with vanEntity
 
-	public CityScene(int pixelWidth, int pixelHeight) {
-		super(pixelWidth, pixelHeight);
+	public CityScene(int pixelWidth, int pixelHeight, Game g) {
+		super(pixelWidth, pixelHeight, g);
 		try {
 			cook = new CookEntity(this, vanPosition);
 		} catch (IOException e) {
@@ -24,7 +25,7 @@ public class CityScene extends Scene {
 	}
 
 	@Override
-	public void tick() {
+	public void tick(long elapsed) {
 		vanPosition = vanPosition.add(new PositionF(0.2F, 0.1F));
 	}
 

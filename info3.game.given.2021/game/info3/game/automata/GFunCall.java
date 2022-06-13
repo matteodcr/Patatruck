@@ -49,17 +49,17 @@ public class GFunCall implements IFunction {
 			if (params.size() == 0)
 				return aut.pop(AutDirection.F);
 			else
-				return aut.pop(AutDirection.valueOf(params.get(0)));
+				return aut.pop(AutDirection.valueOf(params.get(0).toUpperCase()));
 		case WIZZ:
 			if (params.size() == 0)
 				return aut.wizz(AutDirection.F);
 			else
-				return aut.wizz(AutDirection.valueOf(params.get(0)));
+				return aut.wizz(AutDirection.valueOf(params.get(0).toUpperCase()));
 		case MOVE:
 			if (params.size() == 0)
 				return aut.move(AutDirection.F);
 			else
-				return aut.move(AutDirection.valueOf(params.get(0)));
+				return aut.move(AutDirection.valueOf(params.get(0).toUpperCase()));
 		case TRUE:
 			return true;
 		case CELL:
@@ -74,13 +74,13 @@ public class GFunCall implements IFunction {
 					cat = AutCategory.WILDCARD;
 				else
 					cat = AutCategory.valueOf(cat_tmp);
-				return aut.cell(AutDirection.valueOf(params.get(0)), cat);
+				return aut.cell(AutDirection.valueOf(params.get(0).toUpperCase()), cat);
 			}
 		case KEY:
 			if (params.size() == 0)
 				return aut.key(AutDirection.F);
 			else
-				return aut.key(AutDirection.valueOf(params.get(0)));
+				return aut.key(AutDirection.valueOf(params.get(0).toUpperCase()));
 		default:
 			throw new IllegalStateException("panic");
 		}

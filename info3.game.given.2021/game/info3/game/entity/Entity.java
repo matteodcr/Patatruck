@@ -19,6 +19,7 @@ import info3.game.scene.Scene;
 public abstract class Entity implements AutomatonListener {
 	Scene parentScene = null;
 	PositionF position;
+	int gridX, gridY;
 	GAutomaton automaton;
 	int deathTime = 0;
 	int move_timer = 0, move_timer_max = 0; // allows to move only when move_timer==0

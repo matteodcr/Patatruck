@@ -24,7 +24,7 @@ public class KitchenScene extends Scene {
 
 	private CookEntity cook;
 
-	Tile[][] KitchenGrid = new Tile[][] {
+	public Tile[][] KitchenGrid = new Tile[][] {
 			new Tile[] { new BasicTableTile(this, 0, 0, Direction.SUD), new BasicTableTile(this, 1, 0, Direction.SUD),
 					new BasicTableTile(this, 2, 0, Direction.SUD), new FrieTile(this, 3, 0, Direction.SUD),
 					new FrieTile(this, 4, 0, Direction.SUD), new CutTile(this, 5, 0, Direction.SUD),
@@ -43,7 +43,8 @@ public class KitchenScene extends Scene {
 	public KitchenScene(int pixelWidth, int pixelHeight, Game g) {
 		super(pixelWidth, pixelHeight, g);
 		try {
-			cook = new CookEntity(this, KITCHEN_ORIGIN);
+			PositionF startOffset = new PositionF(getTileWidth(), getTileWidth());
+			cook = new CookEntity(this, KITCHEN_ORIGIN.add(startOffset));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

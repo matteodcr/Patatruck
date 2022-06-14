@@ -9,6 +9,7 @@ import info3.game.graphics.Sprite;
 import info3.game.position.AutCategory;
 import info3.game.position.AutDirection;
 import info3.game.position.PositionF;
+import info3.game.scene.KitchenScene;
 import info3.game.scene.Scene;
 
 public class CookEntity extends Entity {
@@ -18,6 +19,7 @@ public class CookEntity extends Entity {
 	long m_imageElapsed;
 	long m_moveElapsed;
 	int m_imageIndex;
+	AutDirection m_direction;
 
 	public CookEntity(Scene parent, PositionF position) throws IOException {
 		super(parent, position);
@@ -33,6 +35,8 @@ public class CookEntity extends Entity {
 		current_state = automaton.initial;
 		parentScene.addEntity(this);
 		category = AutCategory.J;
+		gridX = 1;
+		gridY = 1;
 	}
 
 	@Override
@@ -52,33 +56,68 @@ public class CookEntity extends Entity {
 		// TODO : Les colisions
 		switch (direction) {
 		case N: {
-			float x = position.getX();
-			float y = position.getY();
-			PositionF newPos = new PositionF(0, -parentScene.getTileWidth());
-
-			this.position = position.add(newPos);
-			return true;
+			if (gridY >= 1) {
+				if (((KitchenScene) parentScene).KitchenGrid[gridY - 1][gridX] == null) {
+					PositionF newPos = new PositionF(0, -parentScene.getTileWidth());
+					m_direction = direction;
+					gridY--;
+					// TODO : Tourner Sprite
+					this.position = position.add(newPos);
+					return true;
+				} else {
+					return false;
+				}
+			} else {
+				return false;
+			}
 		}
 		case W: {
-			float x = position.getX();
-			float y = position.getY();
-			PositionF newPos = new PositionF(-parentScene.getTileWidth(), 0);
-			this.position = position.add(newPos);
-			return true;
+			if (gridX >= 1) {
+				if (((KitchenScene) parentScene).KitchenGrid[gridY][gridX - 1] == null) {
+					PositionF newPos = new PositionF(-parentScene.getTileWidth(), 0);
+					m_direction = direction;
+					gridX--;
+					// TODO : Tourner Sprite
+					this.position = position.add(newPos);
+					return true;
+				} else {
+					return false;
+				}
+			} else {
+				return false;
+			}
 		}
 		case E: {
-			float x = position.getX();
-			float y = position.getY();
-			PositionF newPos = new PositionF(parentScene.getTileWidth(), 0);
-			this.position = position.add(newPos);
-			return true;
+			if (gridX <= 8) {
+				if (((KitchenScene) parentScene).KitchenGrid[gridY][gridX + 1] == null) {
+					PositionF newPos = new PositionF(parentScene.getTileWidth(), 0);
+					m_direction = direction;
+					gridX++;
+					// TODO : Tourner Sprite
+					this.position = position.add(newPos);
+					return true;
+				} else {
+					return false;
+				}
+			} else {
+				return false;
+			}
 		}
 		case S: {
-			float x = position.getX();
-			float y = position.getY();
-			PositionF newPos = new PositionF(0, parentScene.getTileWidth());
-			this.position = position.add(newPos);
-			return true;
+			if (gridY <= 1) {
+				if (((KitchenScene) parentScene).KitchenGrid[gridY + 1][gridX] == null) {
+					PositionF newPos = new PositionF(0, parentScene.getTileWidth());
+					m_direction = direction;
+					gridY++;
+					// TODO : Tourner Sprite
+					this.position = position.add(newPos);
+					return true;
+				} else {
+					return false;
+				}
+			} else {
+				return false;
+			}
 		}
 		default:
 			return false;

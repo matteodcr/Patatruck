@@ -2,6 +2,7 @@ package info3.game.automata;
 
 import info3.game.position.AutCategory;
 import info3.game.position.AutDirection;
+import info3.game.position.AutKey;
 
 public interface AutomatonListener {
 
@@ -17,5 +18,5 @@ public interface AutomatonListener {
 
 	boolean cell(AutDirection direction, AutCategory category);
 
-	boolean key(AutDirection direction);
+	boolean key(AutKey key);
 }

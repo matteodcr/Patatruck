@@ -4,6 +4,7 @@ import java.util.List;
 
 import info3.game.position.AutCategory;
 import info3.game.position.AutDirection;
+import info3.game.position.AutKey;
 
 public class GFunCall implements IFunction {
 	private enum FunName {
@@ -78,9 +79,9 @@ public class GFunCall implements IFunction {
 			}
 		case KEY:
 			if (params.size() == 0)
-				return aut.key(AutDirection.F);
+				return aut.key(AutKey.ENTER); // pas censé arrivé
 			else
-				return aut.key(AutDirection.valueOf(params.get(0).toUpperCase()));
+				return aut.key(AutKey.valueOf(params.get(0).toUpperCase()));
 		default:
 			throw new IllegalStateException("panic");
 		}

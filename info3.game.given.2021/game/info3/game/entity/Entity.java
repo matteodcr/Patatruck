@@ -12,6 +12,7 @@ import info3.game.automata.GState;
 import info3.game.graphics.Graphics;
 import info3.game.position.AutCategory;
 import info3.game.position.AutDirection;
+import info3.game.position.AutKey;
 import info3.game.position.PositionF;
 import info3.game.scene.Scene;
 
@@ -97,7 +98,7 @@ public abstract class Entity implements AutomatonListener {
 	}
 
 	@Override
-	public boolean key(AutDirection direction) {
+	public boolean key(AutKey direction) {
 		return parentScene.m_game.m_listener.isUp(direction.toString());
 	}
 }

@@ -27,7 +27,7 @@ public class BasicTableTile extends KitchenTile {
 	@Override
 	public void render(Graphics g) {
 		// BufferedImage img = m_images[m_imageIndex];
-		g.drawSprite(Sprite.KITCHEN_TILE1, 0, 0);
+		g.drawSprite(Sprite.BASICTABLE, 0, 0);
 	}
 
 }

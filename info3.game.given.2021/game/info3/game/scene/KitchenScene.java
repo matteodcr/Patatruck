@@ -5,6 +5,8 @@ import java.io.IOException;
 import info3.game.Game;
 import info3.game.entity.BasicTableTile;
 import info3.game.entity.CookEntity;
+import info3.game.entity.CutTile;
+import info3.game.entity.FrieTile;
 import info3.game.entity.StockTable;
 import info3.game.entity.Tile;
 import info3.game.graphics.Graphics;
@@ -19,8 +21,8 @@ public class KitchenScene extends Scene {
 
 	Tile[][] KitchenGrid = new Tile[][] {
 			new Tile[] { null, new StockTable(this, 1, 0, Direction.SUD), new BasicTableTile(this, 2, 0, Direction.SUD),
-					new StockTable(this, 3, 0, Direction.SUD), new StockTable(this, 4, 0, Direction.SUD),
-					new StockTable(this, 5, 0, Direction.SUD), new StockTable(this, 6, 0, Direction.SUD),
+					new BasicTableTile(this, 3, 0, Direction.SUD), new FrieTile(this, 4, 0, Direction.SUD),
+					new FrieTile(this, 5, 0, Direction.SUD), new CutTile(this, 6, 0, Direction.SUD),
 					new StockTable(this, 7, 0, Direction.SUD), new StockTable(this, 8, 0, Direction.SUD), null },
 			new Tile[] { new StockTable(this, 0, 1, Direction.EST), new StockTable(this, 1, 1, Direction.SUD), null,
 					null, null, null, null, null, null, new StockTable(this, 9, 1, Direction.OUEST) },

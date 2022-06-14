@@ -6,11 +6,12 @@ import info3.game.position.AutDirection;
 import info3.game.position.Direction;
 import info3.game.scene.Scene;
 
-public class FrieTile extends KitchenTile {
+public class CutTile extends KitchenTile {
 
-	public FrieTile(Scene parent, int gridX, int gridY, Direction d) {
+	public CutTile(Scene parent, int gridX, int gridY, Direction d) {
 		super(parent, gridX, gridY, null, d);
-	}// TODO sprite à ajouter
+		// TODO Auto-generated constructor stub
+	}
 
 	@Override
 	public boolean pop(AutDirection direction) {
@@ -27,7 +28,7 @@ public class FrieTile extends KitchenTile {
 	@Override
 	public void render(Graphics g) {
 		// BufferedImage img = m_images[m_imageIndex];
-		g.drawSprite(Sprite.FRITEUSE, 0, 0);
+		g.drawSprite(Sprite.PLANCHE, 0, 0);
 	}
 
 }

@@ -6,16 +6,21 @@ import info3.game.Game;
 import info3.game.entity.BasicTableTile;
 import info3.game.entity.CookEntity;
 import info3.game.entity.CutTile;
+import info3.game.entity.DeliveryTile;
 import info3.game.entity.FrieTile;
+import info3.game.entity.PanTile;
+import info3.game.entity.SauceTableTile;
 import info3.game.entity.StockTable;
 import info3.game.entity.Tile;
+import info3.game.entity.TrashTile;
 import info3.game.graphics.Graphics;
+import info3.game.graphics.Sprite;
 import info3.game.position.Direction;
 import info3.game.position.PositionF;
 
 public class KitchenScene extends Scene {
 
-	private static final PositionF KITCHEN_ORIGIN = new PositionF(46, 10);
+	private static final PositionF KITCHEN_ORIGIN = new PositionF(41, 10);
 
 	private CookEntity cook;
 
@@ -24,13 +29,13 @@ public class KitchenScene extends Scene {
 					new BasicTableTile(this, 3, 0, Direction.SUD), new FrieTile(this, 4, 0, Direction.SUD),
 					new FrieTile(this, 5, 0, Direction.SUD), new CutTile(this, 6, 0, Direction.SUD),
 					new StockTable(this, 7, 0, Direction.SUD), new StockTable(this, 8, 0, Direction.SUD), null },
-			new Tile[] { new StockTable(this, 0, 1, Direction.EST), new StockTable(this, 1, 1, Direction.SUD), null,
-					null, null, null, null, null, null, new StockTable(this, 9, 1, Direction.OUEST) },
-			new Tile[] { new StockTable(this, 0, 2, Direction.EST), new StockTable(this, 1, 2, Direction.SUD), null,
-					null, null, null, null, null, null, new StockTable(this, 9, 2, Direction.OUEST) },
-			new Tile[] { null, new StockTable(this, 1, 3, Direction.NORD), new StockTable(this, 2, 3, Direction.NORD),
-					new StockTable(this, 3, 3, Direction.NORD), new StockTable(this, 4, 3, Direction.NORD),
-					new StockTable(this, 5, 3, Direction.NORD), new StockTable(this, 6, 3, Direction.NORD),
+			new Tile[] { new DeliveryTile(this, 0, 1, Direction.EST), null, null, null, null, null, null, null, null,
+					new SauceTableTile(this, 9, 1, Direction.OUEST) },
+			new Tile[] { new DeliveryTile(this, 0, 2, Direction.EST), null, null, null, null, null, null, null, null,
+					new SauceTableTile(this, 9, 2, Direction.OUEST) },
+			new Tile[] { null, new TrashTile(this, 1, 3, Direction.NORD), new StockTable(this, 2, 3, Direction.NORD),
+					new PanTile(this, 3, 3, Direction.NORD), new PanTile(this, 4, 3, Direction.NORD),
+					new CutTile(this, 5, 3, Direction.NORD), new StockTable(this, 6, 3, Direction.NORD),
 					new StockTable(this, 7, 3, Direction.NORD), new StockTable(this, 8, 3, Direction.NORD), null } };
 
 	public KitchenScene(int pixelWidth, int pixelHeight, Game g) {
@@ -70,6 +75,8 @@ public class KitchenScene extends Scene {
 
 	@Override
 	public void render(Graphics g) {
+		super.render(g);
+		g.drawSprite(Sprite.KITCHENTRUCK, (g.getWidth() / 2) - 100, -2); // Valeur calculées
 		super.render(g);
 		this.cook.render(g);
 	}

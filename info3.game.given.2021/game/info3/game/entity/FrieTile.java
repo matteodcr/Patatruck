@@ -27,7 +27,7 @@ public class FrieTile extends KitchenTile {
 	@Override
 	public void render(Graphics g) {
 		// BufferedImage img = m_images[m_imageIndex];
-		g.drawSprite(Sprite.FRITEUSE, 0, 0);
+		g.drawSprite(Sprite.FRIE_TILE, 0, 0);
 	}
 
 }

@@ -1,18 +1,23 @@
 package info3.game.graphics;
 
+import static info3.game.graphics.Sprite.Spritesheet.BASICTABLE;
 import static info3.game.graphics.Sprite.Spritesheet.CITY;
-import static info3.game.graphics.Sprite.Spritesheet.COWBOY;
-import static info3.game.graphics.Sprite.Spritesheet.KITCHENCUT;
-import static info3.game.graphics.Sprite.Spritesheet.KITCHENFRIE;
-import static info3.game.graphics.Sprite.Spritesheet.KITCHENPAN;
-import static info3.game.graphics.Sprite.Spritesheet.KITCHENTILE;
+import static info3.game.graphics.Sprite.Spritesheet.COOK;
+import static info3.game.graphics.Sprite.Spritesheet.CUTTILE;
+import static info3.game.graphics.Sprite.Spritesheet.FRIETILE;
+import static info3.game.graphics.Sprite.Spritesheet.KITCHEN_TRUCK;
+import static info3.game.graphics.Sprite.Spritesheet.PANTILE;
+import static info3.game.graphics.Sprite.Spritesheet.SAUCETABLETILE;
+import static info3.game.graphics.Sprite.Spritesheet.STOCKTABLE;
+import static info3.game.graphics.Sprite.Spritesheet.TRASHTILE;
 
 public enum Sprite {
 
-	COWBOY0(COWBOY, 0, 0, 1, 1), COWBOY1(COWBOY, 0, 1, 1, 1), BUILDING_SQUARE_1_NORMAL(CITY, 0, 0, 1, 1),
+	PLAYER_KITCHEN(COOK, 0, 0, 1, 1), BUILDING_SQUARE_1_NORMAL(CITY, 0, 0, 1, 1),
 	BUILDING_SQUARE_1_ROUNDED(CITY, 0, 1, 1, 1), BUILDING_SQUARE_1_SQUIRCLE(CITY, 0, 2, 1, 1),
-	BASICTABLE(KITCHENTILE, 0, 0, 1, 1), KITCHEN_TILE3(KITCHENTILE, 0, 0, 1, 1), FRITEUSE(KITCHENFRIE, 0, 0, 1, 1),
-	PLANCHE(KITCHENCUT, 0, 0, 1, 1), KITCHEN_TILE44(KITCHENPAN, 0, 0, 1, 1),;
+	KITCHENTRUCK(KITCHEN_TRUCK, 0, 0, 1, 1), SAUCE_TABLE_TILE(SAUCETABLETILE, 0, 0, 1, 1),
+	FRIE_TILE(FRIETILE, 0, 0, 1, 1), CUT_TILE(CUTTILE, 0, 0, 1, 1), PAN_TILE(PANTILE, 0, 0, 1, 1),
+	TRASH_TILE(TRASHTILE, 0, 0, 1, 1), STOCK_TABLE(STOCKTABLE, 0, 0, 1, 1), BASIC_TABLE(BASICTABLE, 0, 0, 1, 1);
 
 	public final Spritesheet spritesheet;
 	public final int u, v, w, h;
@@ -28,8 +33,10 @@ public enum Sprite {
 	public enum Spritesheet {
 		// TODO
 
-		COWBOY("winchester-4x6.png", 48), CITY("city.png", 20), KITCHENTILE("kitchenTable.png", 13),
-		KITCHENPAN("PanTile.png", 13), KITCHENFRIE("FrieTile.png", 13), KITCHENCUT("CutTile.png", 13);
+		COOK("cook.png", 13), CITY("city.png", 20), SAUCETABLETILE("SauceTableTile.png", 13),
+		PANTILE("PanTile.png", 13), FRIETILE("FrieTile.png", 13), CUTTILE("CutTile.png", 13),
+		KITCHEN_TRUCK("kitchen.png", 256), TRASHTILE("TrashTile.png", 13), STOCKTABLE("StockTable.png", 13),
+		BASICTABLE("BasicTableTile.png", 13);
 
 		public final String filename;
 		public final int tileSize;

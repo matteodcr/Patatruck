@@ -9,7 +9,7 @@ public class DeliveryTile extends KitchenTile {
 	// IList<Item> assiette;
 	// Recipe recette;
 
-	protected DeliveryTile(Scene parent, int gridX, int gridY, Direction d) {
+	public DeliveryTile(Scene parent, int gridX, int gridY, Direction d) {
 		super(parent, gridX, gridY, null, d);
 		// TODO Auto-generated constructor stub
 	}

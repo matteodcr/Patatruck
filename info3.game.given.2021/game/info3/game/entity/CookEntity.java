@@ -38,7 +38,7 @@ public class CookEntity extends Entity {
 	@Override
 	public void render(Graphics g) {
 		// BufferedImage img = m_images[m_imageIndex]; Utile ?
-		g.drawSprite(Sprite.COWBOY1, this.position.getX(), this.position.getY());
+		g.drawSprite(Sprite.PLAYER_KITCHEN, this.position.getX(), this.position.getY());
 	}
 
 	@Override

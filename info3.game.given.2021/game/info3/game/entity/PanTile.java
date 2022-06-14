@@ -6,7 +6,7 @@ import info3.game.scene.Scene;
 
 public class PanTile extends KitchenTile {
 
-	protected PanTile(Scene parent, int gridX, int gridY, Direction d) {
+	public PanTile(Scene parent, int gridX, int gridY, Direction d) {
 		super(parent, gridX, gridY, null, d);
 		// TODO Sprite
 	}

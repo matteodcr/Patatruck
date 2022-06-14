@@ -1,23 +1,16 @@
 package info3.game.entity;
 
+import info3.game.position.AutDirection;
 import info3.game.position.Direction;
 import info3.game.position.PositionF;
 import info3.game.scene.Scene;
 
 public class CafardEntity extends Entity {
-//Wizz()=move()
+//wizz()=move()
 //pop()=egg()
 
 	CafardEntity(Scene parent, PositionF position) {
 		super(parent, position);
-	}
-
-	boolean wizz(Direction direction) {
-		return move(direction);
-	}
-
-	boolean pop(PositionF position) {
-		return egg(position);
 	}
 
 	boolean egg(PositionF position) {
@@ -71,5 +64,15 @@ public class CafardEntity extends Entity {
 			return false;
 		}
 
+	}
+
+	@Override
+	public boolean pop(AutDirection direction) {
+		return egg(position);
+	}
+
+	@Override
+	public boolean wizz(AutDirection direction) {
+		return move(direction);
 	}
 }

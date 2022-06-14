@@ -1,38 +1,29 @@
 Feu_cuisson(Attendre){
-    *(Attendre)
-    |Cell(H,P) ? Pop:(Cook)            
-    |Cell(H,V) ?    :(Attendre)           
+    *(Init)
+    |Key(Space) & Cell(F,@) ? Pop:(Cook)         
     
     *(Cook)
-    |True ?     Wait:(Cuit)      
-          
-    *(Cuit)
-    |Cell(H,P) ?    :(Cuit)            
-    |Cell(H,V) ?    Wizz:(Attendre)   
+    |True ?     Wait:(Cooked)  
+    		
+    *(Cooked)
+    |Key(Space) & Cell(F,@) ? Wizz:(Init)  
 }
 
-Friteuse(Attendre){
-    *(Attendre)
-    |Cell(H,P) ? Pop:(Cook)          
-    |Cell(H,V) ?    :(Attendre)           
+Friteuse(Init){
+    *(Init)
+    |Key(Space) & Cell(F,@) ? Pop:(Cook)         
     
     *(Cook)
-    |True ?     Wait:(Cuit)       
-    *(Cuit)
-    |Cell(H,P) ?    :(Cuit)         
-    |Cell(H,V) ?    Wizz:(Attendre)      
+    |True ?     Wait:(Cooked)  
+    		
+    *(Cooked)
+    |Key(Space) & Cell(F,@) ? Wizz:(Init)     
 }
 
 Garde_manger(Attendre){
-    *(Attendre)
-    |Cell(H,V) & GotStuff ?    Wizz:(AttendreRestock)    
-    |True ?    :(Attendre)                
-    
-    *(AttendreRestock)                        
-    |True ? Wait:(Restock)                      
-    
-    *(Restock)                     
-    |True ? Pop:(Attendre)                          
+	*(Init)
+	|Key(Space) & Cell(F,@) ? Pop:(Init)   
+	|True ? Wizz:(Init)                    
 }
 
 Table(Vide){
@@ -45,17 +36,10 @@ Table(Vide){
     |Cell(H,V) ? Wizz:(Vide)        
 }
 
-Table_a_sauce(Ready){
-    *(Ready)
-    |GotPower ? Wizz:(AttendreRestock)    
-    |True ?   :(Ready)              
-        
-    *(AttendreRestock)                        
-    |True ? Wait:(Restock)          
-    
-    *(Restock)                     
-    |True ? Pop:(Ready)          
-
+Table_a_sauce(Still){
+    *(Still) 
+    |Key(space) & Cell(F,@)? wizz():(Still)
+    |True ? pop() :(Still)
 }
 
 Planche(Vide){

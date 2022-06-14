@@ -5,18 +5,19 @@ import info3.game.graphics.Sprite;
 public enum ItemType {
 
 	// TODO Change Sprite of every Item
-	POTATO(Sprite.COWBOY0, "Potato", false), COOKED_POTATO(Sprite.COWBOY0, "Cooked_Potato", false),
-	MASHED_POTATO(Sprite.COWBOY0, "Mashed_Potato", false), FRIES(Sprite.COWBOY0, "Fries", false),
-	COOKED_FRIES(Sprite.COWBOY0, "Cooked_Fries", false), GALETTE(Sprite.COWBOY0, "Galette", false),
-	COOKED_GALETTE(Sprite.COWBOY0, "Cooked_Galette", false), SALAD(Sprite.COWBOY0, "Salad", false),
-	SALAD_LEAF(Sprite.COWBOY0, "Salad_Leaf", false), POTATO_SALAD(Sprite.COWBOY0, "Potato_Salad", true),
-	CHEESE(Sprite.COWBOY0, "Cheese", false), POUTINE(Sprite.COWBOY0, "Poutine", true),
-	TOMATO(Sprite.COWBOY0, "Tomato", false), TOMATO_SLICE(Sprite.COWBOY0, "Tomato_Slice", false),
-	MEAT(Sprite.COWBOY0, "Meat", false), COOKED_MEAT(Sprite.COWBOY0, "Cooked_Meat", false),
-	HASHED_MEAT(Sprite.COWBOY0, "Hashed_Meat", false), COOKED_HASHED_MEAT(Sprite.COWBOY0, "Cooked_Hashed_Meat", false),
-	CLASSIC_BURGER(Sprite.COWBOY0, "Classic_Burger", true), BREAD_SLICE(Sprite.COWBOY0, "Bread_Slice", false),
-	VEGI_BURGER(Sprite.COWBOY0, "Vegi_Burger", true), SHEPHERDS_PIE(Sprite.COWBOY0, "Shepherds_Pie", true),
-	BREAD(Sprite.COWBOY0, "Bread", false);
+	POTATO(Sprite.COWBOY0, "patate", false), COOKED_POTATO(Sprite.COWBOY0, "patate cuite", false),
+	MASHED_POTATO(Sprite.COWBOY0, "purée", false), FRIES(Sprite.COWBOY0, "frites", false),
+	COOKED_FRIES(Sprite.COWBOY0, "frites cuites", false), GALETTE(Sprite.COWBOY0, "galette", false),
+	COOKED_GALETTE(Sprite.COWBOY0, "galette cuite", false), SALAD(Sprite.COWBOY0, "salade", false),
+	SALAD_LEAF(Sprite.COWBOY0, "feuille de salade", false), POTATO_SALAD(Sprite.COWBOY0, "salade de patate", true),
+	CHEESE(Sprite.COWBOY0, "fromage", false), POUTINE(Sprite.COWBOY0, "poutine", true),
+	TOMATO(Sprite.COWBOY0, "tomate", false), TOMATO_SLICE(Sprite.COWBOY0, "rondelle de tomate", false),
+	MEAT(Sprite.COWBOY0, "viande", false), COOKED_MEAT(Sprite.COWBOY0, "viande cuite", false),
+	HASHED_MEAT(Sprite.COWBOY0, "viande hachée", false),
+	COOKED_HASHED_MEAT(Sprite.COWBOY0, "viande hachée cuite", false),
+	CLASSIC_BURGER(Sprite.COWBOY0, "burger classique", true), BREAD_SLICE(Sprite.COWBOY0, "tranche de pain", false),
+	VEGI_BURGER(Sprite.COWBOY0, "burger végétarien", true), SHEPHERDS_PIE(Sprite.COWBOY0, "hachis parmentier", true),
+	BREAD(Sprite.COWBOY0, "pain", false);
 
 	Sprite sprite;
 	String DisplayName;

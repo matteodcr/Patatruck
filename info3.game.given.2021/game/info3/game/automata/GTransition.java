@@ -29,10 +29,15 @@ public class GTransition {
 	private boolean chooseAction(AutomatonListener aut) {
 		Random rand = new Random();
 		IFunction f = sumMap(action, rand.nextInt(101));
-		return f.eval(aut);
+		if (f != null) {
+			return f.eval(aut);
+		} else {
+			return false;
+		}
 	}
 
-	// fct auxilliaire renvoie somme pourcentage deja present
+	// Fonction auxilliaire qui return l'action en fonction du % généré
+	// aléatoirement
 	private IFunction sumMap(Map<IFunction, Integer> map, int drawn_percent) {
 		List<IFunction> keys = new ArrayList<IFunction>(map.keySet());
 		int sum = 0;

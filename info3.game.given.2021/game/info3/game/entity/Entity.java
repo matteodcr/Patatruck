@@ -12,6 +12,7 @@ import info3.game.automata.GState;
 import info3.game.graphics.Graphics;
 import info3.game.position.AutCategory;
 import info3.game.position.AutDirection;
+import info3.game.position.AutKey;
 import info3.game.position.PositionF;
 import info3.game.scene.Scene;
 
@@ -22,6 +23,7 @@ public abstract class Entity implements AutomatonListener {
 	int deathTime = 0;
 	int move_timer = 0, move_timer_max = 0; // allows to move only when move_timer==0
 	GState current_state;
+	AutCategory category;
 
 	Entity(Scene parent, PositionF pos) {
 		parentScene = parent;
@@ -37,7 +39,6 @@ public abstract class Entity implements AutomatonListener {
 	}
 
 	public void tick(long elapsed) {
-		System.out.printf("test\n");
 		GState state = automaton.run(this, current_state);
 		if (state != null) {
 			current_state = state;
@@ -97,7 +98,7 @@ public abstract class Entity implements AutomatonListener {
 	}
 
 	@Override
-	public boolean key(AutDirection direction) {
+	public boolean key(AutKey direction) {
 		return parentScene.m_game.m_listener.isUp(direction.toString());
 	}
 }

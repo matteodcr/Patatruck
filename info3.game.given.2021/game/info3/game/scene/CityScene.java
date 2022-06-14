@@ -46,7 +46,7 @@ public class CityScene extends Scene {
 
 	@Override
 	protected int getBackgroundColor() {
-		return 0xeb6c82;
+		return 0xffeb6c82;
 	}
 
 	public CookEntity getCook() {

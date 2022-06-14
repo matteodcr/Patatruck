@@ -36,7 +36,7 @@ Pour cuire et découper le joueur devra effectuer des interactions clavier, qui 
 - rater la friture: impossibilité de freiner pendant un moment.
 
 Des évènements aléatoires pourront également avoir lieu :
-- apparition de cafard sur le sol de la cuisine. Il faut les écraser sinon ils se multiplient et ont une faible chance de voler de la nourriture quand ils sont proches d'un plat (pomme de terre, burger,...).
+- apparition de cafard sur le sol de la cuisine. Il faut les écraser sinon ils se multiplient (avec egg) et ont une faible chance de voler de la nourriture quand ils sont proches d'un plat (pomme de terre, burger,...).
 
 ### Ville
 
@@ -48,6 +48,10 @@ Dans la partie ville, le deuxième joueur conduit un camion pour se rendre au li
     - la direction du marché le plus proche et de la livraison sera affichée par une flèche en bordure d'écran (si pas présent dans le viewport)
 
 Le conducteur peut utiliser sa touche d'action pour échanger de véhicule avec un camion devant lui, afin de récupérer les ingrédients de ce dernier (et de démontrer la capacité d'échange d'automates).
+
+La ville est affichée dans un viewport, ainsi seul une partie de la ville est chargé à chaque instant pour alléger la charge sur le programme.
+
+Lorsque on roule sur une tuile verglas on change le stunt du camion pour une physique moins précise que d'habitude. On a donc 2 types de stunt : `verglas` et `classique`
 
 #### Génération procédurale
 
@@ -99,3 +103,9 @@ Les transitions sont exécutées dans l'ordre de déclaration jusqu'à ce qu'une
 Un automate est composé d'un nom et d'une liste d'états. Un état est représenté par un nom et une liste de transitions. Une transition est composée d'un état d'arrivée, d'une liste de tuple (action, pourcentage) (on en choisit une au hasard en suivant les probabilités) et d'une condition. Enfin, les actions de même nom peuvent avoir un effet unique pour chaque entité.
 
 Les actions et conditions suivent le modèle d'une interface commune appelée IFunction. En effet, ces fonctions sont semblables, car elles renvoient un booléen. Ainsi lors de l'exécution de ces dernières durant le fonctionnement de l'automate, elles font appel à un AutomatonListener (interface permettant de décrire un comportement propre de chaque fonction pour chaque entité) qui leur appartient et exécute l'action/la condition associée.
+
+## Attribution des automates
+
+Nous voudrions avoir, au démarrage de notre jeu, la possibilité d'associer des automates à chaque entité. Pour ce faire, nous associerons à chaque entité un nom ainsi qu'un automate par défaut. Au lancement du jeu, un écran similaire à l'illustration ci-dessous nous permettra d'expérimenter avec des substitutions. Le contrôle se fera avec <kbd>&uarr;</kbd>, <kbd>&rarr;</kbd>, <kbd>&darr;</kbd>, <kbd>&larr;</kbd>, <kbd>ENTRÉE</kbd> pour valider et une touche à définir pour réinitialiser, avec une ligne sélectionnée à chaque instant.
+
+![illustration](https://cdn.discordapp.com/attachments/980722135058243647/986288907429740584/automaton_selection.png)

@@ -1,6 +1,7 @@
 package info3.game.automata;
 
 import java.util.List;
+import java.util.Random;
 
 public class GAutomaton {
 	public GState initial;
@@ -18,6 +19,18 @@ public class GAutomaton {
 	}
 
 	public GState run(AutomatonListener aut, GState current_state) {
-		return current_state.checkTransitions(aut);
+		GState state = current_state.checkTransitions(aut);
+		if (state != null && state.name.equals("_"))
+			state = getRandomState();
+		return state;
+	}
+
+	private GState getRandomState() {
+		GState state;
+		do {
+			Random rand = new Random();
+			state = states.get(rand.nextInt(states.size() - 1));
+		} while (state.name.equals("_"));
+		return state;
 	}
 }

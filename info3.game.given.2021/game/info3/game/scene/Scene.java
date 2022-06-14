@@ -87,4 +87,8 @@ public abstract class Scene {
 	public int getPixelHeight() {
 		return pixelHeight;
 	}
+
+	public int getNbEntities() {
+		return entity_list.size();
+	}
 }

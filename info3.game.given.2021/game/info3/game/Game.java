@@ -110,7 +110,7 @@ public class Game {
 		m_frame.add(m_canvas, BorderLayout.CENTER);
 
 		m_text = new JLabel();
-		m_text.setText("Tick: 0ms FPS=0");
+		m_text.setText("Tick: 0ms FPS=0  Nb_entities_k = 0	Nb_entities_c = 0");
 		m_frame.add(m_text, BorderLayout.NORTH);
 
 		// center the window on the screen
@@ -163,11 +163,16 @@ public class Game {
 			m_textElapsed = 0;
 			float period = m_canvas.getTickPeriod();
 			int fps = m_canvas.getFPS();
-
+			int nb_entities_k = kitchenScene.getNbEntities();
+			int nb_entities_c = cityScene.getNbEntities();
 			String txt = "Tick=" + period + "ms";
 			while (txt.length() < 15)
 				txt += " ";
 			txt = txt + fps + " fps   ";
+			txt += "Nb_entities_k= " + nb_entities_k;
+			while (txt.length() < 45)
+				txt += " ";
+			txt += "Nb_entities_c= " + nb_entities_c;
 			m_text.setText(txt);
 
 			kitchenScene.tick(elapsed);

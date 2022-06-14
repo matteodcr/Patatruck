@@ -1,5 +1,6 @@
 package info3.game.entity;
 
+import info3.game.position.AutDirection;
 import info3.game.position.Direction;
 import info3.game.scene.Scene;
 
@@ -27,6 +28,18 @@ public class DeliveryTile extends KitchenTile {
 		// TODO Check si il y a les items nécessaires pour la recette
 		// Cette méthode sera appelée à chaque fois qu'un item est déposé
 		return true;
+	}
+
+	@Override
+	public boolean pop(AutDirection direction) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean wizz(AutDirection direction) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 	/*

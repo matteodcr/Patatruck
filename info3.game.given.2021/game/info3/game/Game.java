@@ -173,39 +173,7 @@ public class Game {
 			kitchenScene.tick(elapsed);
 			cityScene.tick(elapsed);
 		}
-		// kitchenScene.getCook().tick(elapsed);
-		// cityScene.getCook().tick(elapsed);
-		// moveCharacters();
 	}
-
-	/*
-	 * void moveCharacters() { if (m_listener.isUp("UP")) { if
-	 * (this.kitchenScene.getCook().canMove()) {
-	 * this.kitchenScene.getCook().wizz(Direction.NORD);
-	 * this.kitchenScene.getCook().hasMoved(); }
-	 * 
-	 * } if (m_listener.isUp("DOWN")) { if (this.kitchenScene.getCook().canMove()) {
-	 * this.kitchenScene.getCook().wizz(Direction.SUD);
-	 * this.kitchenScene.getCook().hasMoved(); } } if (m_listener.isUp("LEFT")) { if
-	 * (this.kitchenScene.getCook().canMove()) {
-	 * this.kitchenScene.getCook().wizz(Direction.OUEST);
-	 * this.kitchenScene.getCook().hasMoved(); } } if (m_listener.isUp("RIGHT")) {
-	 * if (this.kitchenScene.getCook().canMove()) {
-	 * this.kitchenScene.getCook().wizz(Direction.EST);
-	 * this.kitchenScene.getCook().hasMoved(); } } if (m_listener.isUp("Z")) { if
-	 * (this.cityScene.getCook().canMove()) {
-	 * this.cityScene.getCook().wizz(Direction.NORD);
-	 * this.cityScene.getCook().hasMoved(); } } if (m_listener.isUp("S")) { if
-	 * (this.cityScene.getCook().canMove()) {
-	 * this.cityScene.getCook().wizz(Direction.SUD);
-	 * this.cityScene.getCook().hasMoved(); } } if (m_listener.isUp("Q")) { if
-	 * (this.cityScene.getCook().canMove()) {
-	 * this.cityScene.getCook().wizz(Direction.OUEST);
-	 * this.cityScene.getCook().hasMoved(); } } if (m_listener.isUp("D")) { if
-	 * (this.cityScene.getCook().canMove()) {
-	 * this.cityScene.getCook().wizz(Direction.EST);
-	 * this.cityScene.getCook().hasMoved(); } } }
-	 */
 
 	/*
 	 * This request is to paint the Game Canvas, using the given graphics. This is

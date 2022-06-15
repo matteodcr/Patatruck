@@ -27,6 +27,9 @@ import java.io.RandomAccessFile;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+
 import info3.automata.ast.AST;
 import info3.automata.parser.AutomataParser;
 import info3.game.automata.AutomataGenerator;
@@ -34,12 +37,9 @@ import info3.game.automata.GAutomaton;
 import info3.game.graphics.AwtGraphics;
 import info3.game.graphics.GameCanvas;
 import info3.game.graphics.Graphics;
-import info3.game.position.Direction;
 import info3.game.scene.CityScene;
 import info3.game.scene.KitchenScene;
 import info3.game.sound.RandomFileInputStream;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
 
 public class Game {
 
@@ -68,10 +68,10 @@ public class Game {
 	JFrame m_frame;
 	JLabel m_text;
 	GameCanvas m_canvas;
-	CanvasListener m_listener;
+	public CanvasListener m_listener;
 	Sound m_music;
 
-	List<GAutomaton> automata_list; // can be moved
+	public List<GAutomaton> automata_list; // can be moved
 
 	private final KitchenScene kitchenScene;
 	private final CityScene cityScene;
@@ -91,8 +91,8 @@ public class Game {
 		m_frame = m_canvas.createFrame(d);
 		m_frame.setResizable(false);
 
-		kitchenScene = new KitchenScene(WIDTH, HEIGHT / 2);
-		cityScene = new CityScene(WIDTH, HEIGHT / 2);
+		kitchenScene = new KitchenScene(WIDTH, HEIGHT / 2, this);
+		cityScene = new CityScene(WIDTH, HEIGHT / 2, this);
 
 		System.out.println("  - setting up the frame...");
 		setupFrame();
@@ -156,7 +156,6 @@ public class Game {
 	 * that elapsed since the last time this method was invoked.
 	 */
 	void tick(long elapsed) {
-
 		// Update every second
 		// the text on top of the frame: tick and fps
 		m_textElapsed += elapsed;
@@ -171,63 +170,8 @@ public class Game {
 			txt = txt + fps + " fps   ";
 			m_text.setText(txt);
 
-			kitchenScene.tick();
-			cityScene.tick();
-		}
-		kitchenScene.getCook().tick(elapsed);
-		cityScene.getCook().tick(elapsed);
-		moveCharacters();
-	}
-
-	void moveCharacters() {
-		if (m_listener.isUp("UP")) {
-			if (this.kitchenScene.getCook().canMove()) {
-				this.kitchenScene.getCook().wizz(Direction.NORD);
-				this.kitchenScene.getCook().hasMoved();
-			}
-
-		}
-		if (m_listener.isUp("DOWN")) {
-			if (this.kitchenScene.getCook().canMove()) {
-				this.kitchenScene.getCook().wizz(Direction.SUD);
-				this.kitchenScene.getCook().hasMoved();
-			}
-		}
-		if (m_listener.isUp("LEFT")) {
-			if (this.kitchenScene.getCook().canMove()) {
-				this.kitchenScene.getCook().wizz(Direction.OUEST);
-				this.kitchenScene.getCook().hasMoved();
-			}
-		}
-		if (m_listener.isUp("RIGHT")) {
-			if (this.kitchenScene.getCook().canMove()) {
-				this.kitchenScene.getCook().wizz(Direction.EST);
-				this.kitchenScene.getCook().hasMoved();
-			}
-		}
-		if (m_listener.isUp("Z")) {
-			if (this.cityScene.getCook().canMove()) {
-				this.cityScene.getCook().wizz(Direction.NORD);
-				this.cityScene.getCook().hasMoved();
-			}
-		}
-		if (m_listener.isUp("S")) {
-			if (this.cityScene.getCook().canMove()) {
-				this.cityScene.getCook().wizz(Direction.SUD);
-				this.cityScene.getCook().hasMoved();
-			}
-		}
-		if (m_listener.isUp("Q")) {
-			if (this.cityScene.getCook().canMove()) {
-				this.cityScene.getCook().wizz(Direction.OUEST);
-				this.cityScene.getCook().hasMoved();
-			}
-		}
-		if (m_listener.isUp("D")) {
-			if (this.cityScene.getCook().canMove()) {
-				this.cityScene.getCook().wizz(Direction.EST);
-				this.cityScene.getCook().hasMoved();
-			}
+			kitchenScene.tick(elapsed);
+			cityScene.tick(elapsed);
 		}
 	}
 

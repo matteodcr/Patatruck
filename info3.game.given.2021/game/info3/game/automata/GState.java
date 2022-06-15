@@ -20,4 +20,15 @@ public class GState {
 	public void addTransition(GTransition transition) {
 		this.transitions.add(transition);
 	}
+
+	public GState checkTransitions(AutomatonListener aut) {
+		GState state = null;
+		for (GTransition transition : transitions) { // on parcourt transi jusqu'a trouver une qui
+			state = transition.doTransition(aut);
+			if (state != null)
+				break;
+		}
+		return state;
+
+	}
 }

@@ -1,28 +1,28 @@
-Feu_cuisson(Attendre){
+Feu_cuisson(Init){
     *(Init)
-    |Key(Space) & Cell(F,@) ? Pop:(Cook)         
+    |Key(SPACE) & Cell(F,@) ? Pop:(Cook)         
     
     *(Cook)
     |True ?     Wait:(Cooked)  
     		
     *(Cooked)
-    |Key(Space) & Cell(F,@) ? Wizz:(Init)  
+    |Key(SPACE) & Cell(F,@) ? Wizz:(Init)  
 }
 
 Friteuse(Init){
     *(Init)
-    |Key(Space) & Cell(F,@) ? Pop:(Cook)         
+    |Key(SPACE) & Cell(F,@) ? Pop:(Cook)         
     
     *(Cook)
     |True ?     Wait:(Cooked)  
     		
     *(Cooked)
-    |Key(Space) & Cell(F,@) ? Wizz:(Init)     
+    |Key(SPACE) & Cell(F,@) ? Wizz:(Init)     
 }
 
 Garde_manger(Attendre){
 	*(Init)
-	|Key(Space) & Cell(F,@) ? Pop:(Init)   
+	|Key(SPACE) & Cell(F,@) ? Pop:(Init)   
 	|True ? Wizz:(Init)                    
 }
 
@@ -38,8 +38,8 @@ Table(Vide){
 
 Table_a_sauce(Still){
     *(Still) 
-    |Key(space) & Cell(F,@)? wizz():(Still)
-    |True ? pop() :(Still)
+    |Key(SPACE) & Cell(F,@)? Wizz():(Still)
+    |True ? Pop() :(Still)
 }
 
 Planche(Vide){

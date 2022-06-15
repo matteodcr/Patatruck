@@ -5,30 +5,26 @@ import info3.game.graphics.Sprite;
 import info3.game.position.AutCategory;
 import info3.game.position.AutDirection;
 import info3.game.position.Direction;
-import info3.game.scene.KitchenScene;
 import info3.game.scene.Scene;
 
 public class StockTable extends KitchenTile {
-	Item item;
+	// Item item;
 	int stock;
 
-	public StockTable(Scene parent, int gridX, int gridY, Direction d,Item item) {
+	public StockTable(Scene parent, int gridX, int gridY, Direction d) {
 		super(parent, gridX, gridY, null, d);
 		automaton = parentScene.setupAutomaton("Garde_manger");
 		current_state = automaton.initial;
-		// TODO Remplacer null par le sprite de la StockTable
 	}
 
 	@Override
 	public boolean pop(AutDirection direction) { // prendre un aliment
-		Entity player = ((KitchenScene) this.parentScene).getCook();
-		if (stock == 0 || player.item != null) {
-			return false;
-		} else {
-			player.item = this.item;
-			stock--;
-			return true;
-		}
+		/*
+		 * Entity player = ((KitchenScene) this.parentScene).getCook(); if (stock == 0
+		 * || player.item != null) { return false; } else { player.item = this.item;
+		 * stock--; return true; }
+		 */
+		return false;
 	}
 
 	@Override

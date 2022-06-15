@@ -1,6 +1,6 @@
 Marche(Still){
   * (Still) 
-  | Cell(_,@) ? Pop  :()
-  | True ? Wizz :(Still)
+  | Cell(H,@) ? Pop(F)  :()
+  | True ? Wizz(F) :(Still)
   * ()
 }

@@ -1,12 +1,17 @@
 Voiture(Drive) {
     * (Drive) 
-    | Cell(_,@) ? Pop :(Stop) 
-    | Cell(F,O) & Cell(R,J) ? Wizz(R) :(Roule)                                          
-    | Cell(F,O) & Cell(L,J) ? Wizz(L) :(Roule)
-    | Cell(H,G) ? 10%Wizz(R) / 10%Wizz(L) / Wizz(F) :(Roule) 
-    | True ? Wizz(F) :(Roule) 
+    | Cell(H,@) ? Pop(F) :(Stop) 
+    | Cell(H,D) ? Wizz(F) :(Slow)
+    | Cell(F,O) & Cell(R,J) ? Move(R) :(Drive)                                          
+    | Cell(F,O) & Cell(L,J) ? Move(L) :(Drive)
+    | Cell(F,J) & Cell(L,J) ? 20%Move(L) / Move(F) :(Drive) 
+    | Cell(F,J) & Cell(R,J) ? 20%Move(R) / Move(F) :(Drive)
 
-    * (Stop) 
-    | Cell(_,@) ? :(Stop)  
-    | True ? Wizz :(Roule) 
+    * (Stop)
+    | Cell(H,@) ? Pop(F) :(Stop)  
+    | True ? :(Drive) 
+    
+    * (Slow)
+    | Cell(H,D) ? Wizz(F) :(Slow)  
+    | True ? :(Drive) 
 }

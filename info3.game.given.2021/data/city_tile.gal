@@ -1,0 +1,7 @@
+CityTile(Init) {
+	* (Init):
+	| True ? 10%Wizz(F) / Pop(F) :(Still)
+	
+    * (Still):
+    | True ? Pop(F): (Still)
+}

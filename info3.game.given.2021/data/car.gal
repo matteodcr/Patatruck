@@ -1,4 +1,4 @@
-Voiture(Drive) {
+Car(Drive) {
     * (Drive) 
     | Cell(H,@) ? Pop(F) :(Stop) 
     | Cell(H,D) ? Wizz(F) :(Slow)

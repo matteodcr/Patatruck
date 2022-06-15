@@ -1,221 +1,81 @@
 package info3.game.content;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 
-public class Recipe extends Item {
+public class Item {
+	final ItemType type;
+	final boolean hasOptionalSalad;
+	final boolean hasOptionalTomato;
+	final Sauce sauce;
 
-	ArrayList<Ingredients> ingredients = new ArrayList<>();
-	boolean hasOptionalSalad = false, hasOptionalTomato = false;
-	Ingredients sauce;
-
-	private HashMap<Ingredients, Ingredients> cookRecipe = new HashMap<>() {
+	private HashMap<ItemType, ItemType> cookItem = new HashMap<>() {
 		private static final long serialVersionUID = 1L;
 
 		{
-			put(Ingredients.POTATO, Ingredients.COOKED_POTATO);
-			put(Ingredients.HASHED_MEAT, Ingredients.COOKED_HASHED_MEAT);
-			put(Ingredients.MEAT, Ingredients.COOKED_MEAT);
+			put(ItemType.POTATO, ItemType.COOKED_POTATO);
+			put(ItemType.HASHED_MEAT, ItemType.COOKED_HASHED_MEAT);
+			put(ItemType.MEAT, ItemType.COOKED_MEAT);
 		}
 	};
 
-	private HashMap<Ingredients, Ingredients> cutRecipe = new HashMap<>() {
+	private HashMap<ItemType, ItemType> cutItem = new HashMap<>() {
 		private static final long serialVersionUID = 1L;
 
 		{
-			put(Ingredients.POTATO, Ingredients.FRIES);
-			put(Ingredients.FRIES, Ingredients.GALETTE);
-			put(Ingredients.COOKED_POTATO, Ingredients.MASHED_POTATO);
-			put(Ingredients.SALAD, Ingredients.SALAD_LEAF);
-			put(Ingredients.TOMATO, Ingredients.TOMATO_SLICE);
-			put(Ingredients.MEAT, Ingredients.HASHED_MEAT);
-			put(Ingredients.BREAD, Ingredients.BREAD_SLICE);
+			put(ItemType.POTATO, ItemType.FRIES);
+			put(ItemType.FRIES, ItemType.GALETTE);
+			put(ItemType.COOKED_POTATO, ItemType.MASHED_POTATO);
+			put(ItemType.SALAD, ItemType.SALAD_LEAF);
+			put(ItemType.TOMATO, ItemType.TOMATO_SLICE);
+			put(ItemType.MEAT, ItemType.HASHED_MEAT);
+			put(ItemType.BREAD, ItemType.BREAD_SLICE);
 		}
 	};
 
-	private HashMap<Ingredients, Ingredients> fryRecipe = new HashMap<>() {
+	private HashMap<ItemType, ItemType> fryItem = new HashMap<>() {
 		private static final long serialVersionUID = 1L;
 
 		{
-			put(Ingredients.FRIES, Ingredients.COOKED_FRIES);
-			put(Ingredients.GALETTE, Ingredients.COOKED_GALETTE);
+			put(ItemType.FRIES, ItemType.COOKED_FRIES);
+			put(ItemType.GALETTE, ItemType.COOKED_GALETTE);
 		}
 	};
 
-	private HashMap<List<Ingredients>, Ingredients> assembleRecipe = new HashMap<>() {
-		private static final long serialVersionUID = 1L;
-
-		{
-			put(List.of(Ingredients.SALAD_LEAF, Ingredients.COOKED_POTATO), Ingredients.POTATO_SALAD);
-			put(List.of(Ingredients.CHEESE, Ingredients.CHEESE, Ingredients.COOKED_FRIES), Ingredients.POUTINE);
-			put(List.of(Ingredients.MASHED_POTATO, Ingredients.COOKED_HASHED_MEAT), Ingredients.SHEPHERDS_PIE);
-			put(List.of(Ingredients.SALAD_LEAF, Ingredients.COOKED_GALETTE, Ingredients.TOMATO_SLICE,
-					Ingredients.CHEESE, Ingredients.BREAD_SLICE), Ingredients.POUTINE);
-			put(List.of(Ingredients.COOKED_MEAT, Ingredients.CHEESE, Ingredients.BREAD_SLICE),
-					Ingredients.CLASSIC_BURGER);
-			put(List.of(Ingredients.COOKED_GALETTE, Ingredients.CHEESE, Ingredients.BREAD_SLICE),
-					Ingredients.VEGI_BURGER);
-		}
-	};
-
-	// TODO A completer avec toutes les recettes intermediaires autorisees
-	private List<List<Ingredients>> allowedOngoingRecipes = List.of(
-			new ArrayList<Ingredients>(List.of(Ingredients.POTATO_SALAD)),
-			new ArrayList<Ingredients>(List.of(Ingredients.POUTINE)),
-			new ArrayList<Ingredients>(List.of(Ingredients.CLASSIC_BURGER)),
-			new ArrayList<Ingredients>(List.of(Ingredients.VEGI_BURGER)),
-			new ArrayList<Ingredients>(List.of(Ingredients.SHEPHERDS_PIE)),
-			new ArrayList<Ingredients>(List.of(Ingredients.BREAD)),
-			new ArrayList<Ingredients>(List.of(Ingredients.POTATO)),
-			new ArrayList<Ingredients>(List.of(Ingredients.MEAT)),
-			new ArrayList<Ingredients>(List.of(Ingredients.SALAD)),
-			new ArrayList<Ingredients>(List.of(Ingredients.CHEESE)),
-			new ArrayList<Ingredients>(List.of(Ingredients.TOMATO)),
-			new ArrayList<Ingredients>(List.of(Ingredients.COOKED_FRIES)),
-			new ArrayList<Ingredients>(List.of(Ingredients.TOMATO_SLICE)),
-			new ArrayList<Ingredients>(List.of(Ingredients.SALAD_LEAF)));
-
-	public Recipe(Ingredients ingredient) {
-		super(ingredient.sprite, ingredient.DisplayName);
-		ingredients.add(ingredient);
+	public Item(ItemType type, boolean hasOptionalSalad, boolean hasOptionalTomato, Sauce sauce) {
+		this.type = type;
+		this.hasOptionalSalad = hasOptionalSalad;
+		this.hasOptionalTomato = hasOptionalTomato;
+		this.sauce = sauce;
 	}
 
-	/**
-	 * Adds ingredients to the current one(s)
-	 * 
-	 * @param ingredient
-	 * @return failedRecipe if not possible, the recipe otherwise
-	 */
-	public Recipe addIngredient(Recipe ingredientList) {
-		Recipe result = null;
-		for (Ingredients ingredient : ingredientList.ingredients) {
-			this.ingredients.add(ingredient);
-			result = fuseRecipe();
-		}
-		return result;
+	public Item(ItemType type) {
+		this(type, false, false, null);
 	}
 
-	/**
-	 * Adds ingredient to the current one(s). Should only be used for clearer tests.
-	 * Usually use addIngredient(Recipe ingredientList).
-	 * 
-	 * @param ingredient
-	 * @return failedRecipe if not possible, the recipe otherwise
-	 */
-	public Recipe addIngredient(Ingredients ingredient) {
-		this.ingredients.add(ingredient);
-		return fuseRecipe();
+	public ItemType getType() {
+		return type;
 	}
 
-	/**
-	 * Returns the finished recipe if it has all ingredients, himself with optional
-	 * salad and/or tomato if possible, null otherwise
-	 * 
-	 * @return
-	 */
-	private Recipe fuseRecipe() {
-		// nothing to fuse
-		if (this.ingredients.size() <= 1)
-			return null;
-
-		// check no sauce if no need to sauce, same for salad and tomato
-		boolean acceptsSauce = false, acceptSalad = false, acceptTomato = false;
-		for (Ingredients ingredient : this.ingredients) {
-			if (ingredient.finalRecipe) {
-				acceptsSauce = true;
-				if (ingredient.acceptsOptionalSalad && !this.hasOptionalSalad)
-					acceptSalad = true;
-				if (ingredient.acceptsOptionalTomato && !this.hasOptionalTomato)
-					acceptTomato = true;
-			}
-		}
-		if (!acceptsSauce
-				&& (this.ingredients.contains(Ingredients.KETCHUP) || this.ingredients.contains(Ingredients.MAYO)))
-			return null;
-		if (!acceptSalad && this.ingredients.contains(Ingredients.SALAD_LEAF))
-			return allowedOngoing(new Recipe(Ingredients.FAILED_RECIPE));
-		if (!acceptTomato && this.ingredients.contains(Ingredients.TOMATO))
-			return allowedOngoing(new Recipe(Ingredients.FAILED_RECIPE));
-
-		// for adding optional salad, tomato or sauce
-		for (Ingredients ingredient : this.ingredients) {
-			if (ingredient.acceptsOptionalSalad && !this.hasOptionalSalad
-					&& this.ingredients.contains(Ingredients.SALAD_LEAF)) {
-				this.hasOptionalSalad = true;
-				this.ingredients.remove(Ingredients.SALAD_LEAF);
-				return allowedOngoing(this);
-			}
-
-			if (ingredient.acceptsOptionalTomato && !this.hasOptionalTomato
-					&& this.ingredients.contains(Ingredients.TOMATO_SLICE)) {
-				this.hasOptionalTomato = true;
-				this.ingredients.remove(Ingredients.TOMATO_SLICE);
-				return allowedOngoing(this);
-			}
-			if (ingredient.finalRecipe && this.ingredients.contains(Ingredients.KETCHUP)) {
-				if (this.sauce == Ingredients.MAYO) {
-					this.ingredients.remove(Ingredients.KETCHUP);
-					this.sauce = Ingredients.KETCHUP_MAYO;
-					return allowedOngoing(this);
-				} else if (this.sauce == null) {
-					this.ingredients.remove(Ingredients.KETCHUP);
-					this.sauce = Ingredients.KETCHUP;
-					return allowedOngoing(this);
-				} else {
-					return null;
-				}
-			}
-			if (ingredient.finalRecipe && this.ingredients.contains(Ingredients.MAYO)) {
-				if (this.sauce == Ingredients.KETCHUP) {
-					this.ingredients.remove(Ingredients.MAYO);
-					this.sauce = Ingredients.KETCHUP_MAYO;
-					return allowedOngoing(this);
-				} else if (this.sauce == null) {
-					this.ingredients.remove(Ingredients.MAYO);
-					this.sauce = Ingredients.MAYO;
-					return allowedOngoing(this);
-				} else {
-					return null;
-				}
-			}
-			// failed recipe
-			if (ingredient.finalRecipe && this.ingredients.size() > 1) {
-				return allowedOngoing(new Recipe(Ingredients.FAILED_RECIPE));
-			}
-		}
-		ArrayList<Ingredients> SortedRecipe;
-		Collections.sort(this.ingredients);
-		for (List<Ingredients> recipe : assembleRecipe.keySet()) {
-			if (recipe.size() == this.ingredients.size()) {
-				SortedRecipe = new ArrayList<>(recipe);
-				Collections.sort(SortedRecipe);
-				if (SortedRecipe.equals(this.ingredients)) {
-					return allowedOngoing(new Recipe(assembleRecipe.get(recipe)));
-				}
-			}
-		}
-		return allowedOngoing(this);
+	public boolean hasSalad() {
+		return hasOptionalSalad;
 	}
 
-	private Recipe allowedOngoing(Recipe recipe) {
-		if (recipe == null)
-			return null;
-		Collections.sort(recipe.ingredients);
-		boolean allowed = false;
-		ArrayList<Ingredients> sortedPossibility;
-		for (List<Ingredients> possibility : this.allowedOngoingRecipes) {
-			sortedPossibility = new ArrayList<>(possibility);
-			Collections.sort(sortedPossibility);
-			if (sortedPossibility.equals(recipe.ingredients))
-				allowed = true;
-		}
-		if (allowed) {
-			return recipe;
-		} else {
-			return new Recipe(Ingredients.FAILED_RECIPE);
-		}
+	public boolean hasTomato() {
+		return hasOptionalTomato;
+	}
+
+	public Sauce getSauce() {
+		return sauce;
+	}
+
+	public Item withSalad() {
+		assert type.acceptsOptionalSalad;
+		return new Item(type, true, hasOptionalTomato, sauce);
+	}
+
+	public Item withTomato() {
+		assert type.acceptsOptionalTomato;
+		return new Item(type, hasOptionalSalad, true, sauce);
 	}
 
 	/**
@@ -224,13 +84,11 @@ public class Recipe extends Item {
 	 * @param ingredient
 	 * @return
 	 */
-	public Recipe cook() {
-		if (this.ingredients.size() != 1)
-			return null;
-		Ingredients result = cookRecipe.get(this.ingredients.get(0));
+	public Item cook() {
+		ItemType result = cookItem.get(this.type);
 		if (result == null)
 			return null;
-		return new Recipe(result);
+		return new Item(result);
 	}
 
 	/**
@@ -239,13 +97,11 @@ public class Recipe extends Item {
 	 * @param ingredient
 	 * @return
 	 */
-	public Recipe cut() {
-		if (this.ingredients.size() != 1)
-			return null;
-		Ingredients result = cutRecipe.get(this.ingredients.get(0));
+	public Item cut() {
+		ItemType result = cutItem.get(this.type);
 		if (result == null)
 			return null;
-		return new Recipe(result);
+		return new Item(result);
 	}
 
 	/**
@@ -254,19 +110,17 @@ public class Recipe extends Item {
 	 * @param ingredient
 	 * @return
 	 */
-	public Recipe fry() {
-		if (this.ingredients.size() != 1)
-			return null;
-		Ingredients result = fryRecipe.get(this.ingredients.get(0));
+	public Item fry() {
+		ItemType result = fryItem.get(this.type);
 		if (result == null)
 			return null;
-		return new Recipe(result);
+		return new Item(result);
 	}
 
 	@Override
 	public String toString() {
 		String result = new String();
-		result = result + this.ingredients.toString();
+		result = result + this.type.toString();
 
 		if (hasOptionalSalad) {
 			result = result + "+ Optional Salad ";
@@ -280,4 +134,34 @@ public class Recipe extends Item {
 		return result;
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + (hasOptionalSalad ? 1231 : 1237);
+		result = prime * result + (hasOptionalTomato ? 1231 : 1237);
+		result = prime * result + ((sauce == null) ? 0 : sauce.hashCode());
+		result = prime * result + ((type == null) ? 0 : type.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Item other = (Item) obj;
+		if (hasOptionalSalad != other.hasOptionalSalad)
+			return false;
+		if (hasOptionalTomato != other.hasOptionalTomato)
+			return false;
+		if (sauce != other.sauce)
+			return false;
+		if (type != other.type)
+			return false;
+		return true;
+	}
 }

@@ -1,68 +1,63 @@
 package info3.game.tests;
 
-import info3.game.content.Ingredients;
-import info3.game.content.Recipe;
+import info3.game.content.Assembly;
+import info3.game.content.Item;
+import info3.game.content.ItemType;
 
 public class TestRecipes {
 	public static void main(String[] args) {
+		assert new Item(ItemType.FRIES).fry().getType() == ItemType.COOKED_FRIES;
+		assert new Item(ItemType.SALAD).fry() == null;
 
-		System.out.println("-----Test optional items-----" + '\n');
+		assert new Item(ItemType.MEAT).cook().getType() == ItemType.COOKED_MEAT;
+		assert new Item(ItemType.TOMATO_SLICE).cook() == null;
 
-		System.out.println("Potatoes can't have sauce so it has to return null when applying ketchup :");
-		Recipe testRecipe = new Recipe(Ingredients.POTATO);
-		System.out.println("" + testRecipe.addIngredient(Ingredients.KETCHUP) + '\n');
+		assert new Item(ItemType.BREAD).cut().getType() == ItemType.BREAD_SLICE;
+		assert new Item(ItemType.TOMATO_SLICE).cut() == null;
 
-		System.out.println("Poutine has to accepts sauce :");
-		testRecipe = new Recipe(Ingredients.POUTINE);
-		System.out.println("" + testRecipe.addIngredient(Ingredients.KETCHUP) + '\n');
+		Assembly burger = new Assembly();
+		burger.addItem(new Item(ItemType.BREAD_SLICE));
+		burger.addItem(new Item(ItemType.COOKED_GALETTE));
+		burger.addItem(new Item(ItemType.CHEESE));
+		assert burger.getItems().size() == 1;
+		assert burger.getItems().get(0).getType() == ItemType.VEGI_BURGER;
 
-		System.out.println("Poutine can't accepts optional salad so it has to return a failed recipe :");
-		System.out.println("" + testRecipe.addIngredient(Ingredients.SALAD_LEAF) + '\n');
+		burger = new Assembly();
+		burger.addItem(new Item(ItemType.BREAD_SLICE));
+		burger.addItem(new Item(ItemType.COOKED_GALETTE));
+		burger.addItem(new Item(ItemType.SHEPHERDS_PIE));
+		burger.addItem(new Item(ItemType.CHEESE));
+		assert burger.getItems().size() == 2;
+		assert burger.getItems().contains(new Item(ItemType.VEGI_BURGER));
+		assert burger.getItems().contains(new Item(ItemType.SHEPHERDS_PIE));
 
-		System.out.println("Classic burger accepts salad :");
-		testRecipe = new Recipe(Ingredients.CLASSIC_BURGER);
-		System.out.println("" + testRecipe.addIngredient(Ingredients.SALAD_LEAF) + '\n');
+		burger = new Assembly();
+		burger.addItem(new Item(ItemType.CHEESE));
+		burger.addItem(new Item(ItemType.BREAD_SLICE));
+		burger.addItem(new Item(ItemType.COOKED_GALETTE));
+		burger.addItem(new Item(ItemType.CHEESE));
+		assert burger.getItems().size() == 2;
+		assert burger.getItems().contains(new Item(ItemType.VEGI_BURGER));
+		assert burger.getItems().contains(new Item(ItemType.CHEESE));
 
-		testRecipe = testRecipe.addIngredient(Ingredients.SALAD_LEAF);
-		System.out.println("But it shouldn't accept 2 of them :");
-		System.out.println("" + testRecipe.addIngredient(Ingredients.SALAD_LEAF) + '\n');
+		Assembly poutine = new Assembly();
+		poutine.addItem(new Item(ItemType.COOKED_FRIES));
+		poutine.addItem(new Item(ItemType.CHEESE));
+		poutine.addItem(new Item(ItemType.CHEESE));
+		assert poutine.getItems().size() == 1;
+		assert poutine.getItems().contains(new Item(ItemType.POUTINE));
 
-		System.out.println("-----Test to cut/cook/fry ingredients-----" + '\n');
+		burger = new Assembly();
+		burger.addItem(new Item(ItemType.BREAD_SLICE));
+		burger.addItem(new Item(ItemType.SALAD_LEAF));
+		burger.addItem(new Item(ItemType.COOKED_MEAT));
+		burger.addItem(new Item(ItemType.CHEESE));
+		assert burger.getItems().size() == 1;
+		assert burger.getItems().get(0).getType() == ItemType.CLASSIC_BURGER;
+		assert burger.getItems().get(0).hasSalad();
+		assert !burger.getItems().get(0).hasTomato();
 
-		System.out.println("Try to cook a potato :");
-		testRecipe = new Recipe(Ingredients.POTATO);
-		System.out.println("" + testRecipe.cook() + '\n');
-
-		System.out.println("Try to cut a potato :");
-		System.out.println("" + testRecipe.cut() + '\n');
-
-		System.out.println("Try to fry a potato :");
-		System.out.println("" + testRecipe.fry() + '\n');
-
-		System.out.println("-----Test to recognise every assembly of receipt-----" + '\n');
-
-		System.out.println("Try to recognize a regular recipe in an order of items :");
-		testRecipe = new Recipe(Ingredients.COOKED_FRIES);
-		testRecipe = testRecipe.addIngredient(Ingredients.CHEESE);
-		System.out.println("" + testRecipe.addIngredient(Ingredients.CHEESE) + '\n');
-
-		System.out.println("Try to recognize a regular recipe in another order of items :");
-		testRecipe = new Recipe(Ingredients.CHEESE);
-		testRecipe = testRecipe.addIngredient(Ingredients.COOKED_FRIES);
-		System.out.println("" + testRecipe.addIngredient(Ingredients.CHEESE) + '\n');
-
-		System.out.println("Try to not recognize a recipe like poutine with 2 times the same item but with a error :");
-		testRecipe = new Recipe(Ingredients.COOKED_FRIES);
-		testRecipe = testRecipe.addIngredient(Ingredients.COOKED_FRIES);
-		System.out.println("" + testRecipe.addIngredient(Ingredients.CHEESE) + '\n');
-
-		System.out.println("Try to not recognize a false recipe :");
-		testRecipe = new Recipe(Ingredients.TOMATO_SLICE);
-		System.out.println("" + testRecipe.addIngredient(Ingredients.CHEESE) + '\n');
-
-		System.out.println("Try to combine 2 final recipes :");
-		testRecipe = new Recipe(Ingredients.CLASSIC_BURGER);
-		System.out.println("" + testRecipe.addIngredient(Ingredients.VEGI_BURGER) + '\n');
+		System.out.println("Everything works");
 	}
 
 }

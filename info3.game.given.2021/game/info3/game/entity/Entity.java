@@ -43,6 +43,8 @@ public abstract class Entity implements AutomatonListener {
 		if (state != null) {
 			current_state = state;
 		}
+		if (current_state.name.equals(""))
+			parentScene.removeEntity(this);
 	}
 
 	void destroySpin() {

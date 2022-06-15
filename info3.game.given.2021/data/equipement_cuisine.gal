@@ -89,3 +89,8 @@ Livraison(Vide){
     |Cell(H,P) ? Wizz:(Vide)
     |True ?          :(Plein)
 }
+
+Poubelle(Vide){
+	*(Vide)
+	|True ? :(Vide)
+}

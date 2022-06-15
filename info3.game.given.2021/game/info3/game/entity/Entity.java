@@ -14,11 +14,13 @@ import info3.game.position.AutCategory;
 import info3.game.position.AutDirection;
 import info3.game.position.AutKey;
 import info3.game.position.PositionF;
+import info3.game.scene.KitchenScene;
 import info3.game.scene.Scene;
 
 public abstract class Entity implements AutomatonListener {
 	Scene parentScene = null;
 	PositionF position;
+	AutDirection m_direction;
 	int gridX, gridY;
 	GAutomaton automaton;
 	int deathTime = 0;
@@ -29,6 +31,7 @@ public abstract class Entity implements AutomatonListener {
 	Entity(Scene parent, PositionF pos) {
 		parentScene = parent;
 		position = pos;
+		parentScene.addEntity(this);
 	}
 
 	void setPosition(PositionF pos) {
@@ -94,7 +97,42 @@ public abstract class Entity implements AutomatonListener {
 
 	@Override
 	public boolean cell(AutDirection direction, AutCategory category) {
-		// TODO Auto-generated method stub
+		switch (direction) {
+		case N: {
+			if ((gridY >= 1) && (((KitchenScene) parentScene).KitchenGrid[gridY - 1][gridX]) != null) {
+				if (((KitchenScene) parentScene).KitchenGrid[gridY - 1][gridX].category == category) {
+					return true;
+				}
+			}
+			break;
+		}
+		case W: {
+			if ((gridX >= 1) && (((KitchenScene) parentScene).KitchenGrid[gridY][gridX - 1]) != null) {
+				if (((KitchenScene) parentScene).KitchenGrid[gridY][gridX - 1].category == category) {
+					return true;
+				}
+			}
+			break;
+		}
+		case E: {
+			if ((gridX <= 8) && (((KitchenScene) parentScene).KitchenGrid[gridY][gridX + 1]) != null) {
+				if (((KitchenScene) parentScene).KitchenGrid[gridY][gridX + 1].category == category) {
+					return true;
+				}
+			}
+			break;
+		}
+		case S: {
+			if ((gridY <= 2) && (((KitchenScene) parentScene).KitchenGrid[gridY + 1][gridX]) != null) {
+				if (((KitchenScene) parentScene).KitchenGrid[gridY + 1][gridX].category == category) {
+					return true;
+				}
+			}
+			break;
+		}
+		default:
+			return false;
+		}
 		return false;
 	}
 

@@ -11,6 +11,8 @@ public class FrieTile extends KitchenTile {
 
 	public FrieTile(Scene parent, int gridX, int gridY, Direction d) {
 		super(parent, gridX, gridY, null, d);
+		automaton = parentScene.setupAutomaton("Friteuse");
+		current_state = automaton.initial;
 	}// TODO sprite à ajouter
 
 	@Override

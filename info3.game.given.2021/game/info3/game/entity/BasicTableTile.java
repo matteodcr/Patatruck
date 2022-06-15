@@ -11,7 +11,9 @@ public class BasicTableTile extends KitchenTile {
 
 	public BasicTableTile(Scene parent, int gridX, int gridY, Direction d) {
 		super(parent, gridX, gridY, null, d);
-	}// TODO sprite à ajouter
+		automaton = parentScene.setupAutomaton("Table");
+		current_state = automaton.initial;
+	}
 
 	@Override
 	public boolean pop(AutDirection direction) {
@@ -27,7 +29,6 @@ public class BasicTableTile extends KitchenTile {
 
 	@Override
 	public void render(Graphics g) {
-		// BufferedImage img = m_images[m_imageIndex];
 		g.drawSprite(Sprite.BASIC_TABLE, 0, 0);
 	}
 

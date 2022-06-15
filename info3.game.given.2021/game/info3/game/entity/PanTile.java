@@ -11,6 +11,8 @@ public class PanTile extends KitchenTile {
 
 	public PanTile(Scene parent, int gridX, int gridY, Direction d) {
 		super(parent, gridX, gridY, null, d);
+		automaton = parentScene.setupAutomaton("Feu_cuisson");
+		current_state = automaton.initial;
 		// TODO Sprite
 	}
 

@@ -14,6 +14,8 @@ public class DeliveryTile extends KitchenTile {
 
 	public DeliveryTile(Scene parent, int gridX, int gridY, Direction d) {
 		super(parent, gridX, gridY, null, d);
+		automaton = parentScene.setupAutomaton("Livraison");
+		current_state = automaton.initial;
 		// TODO Auto-generated constructor stub
 	}
 

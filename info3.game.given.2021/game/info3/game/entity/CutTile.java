@@ -11,6 +11,8 @@ public class CutTile extends KitchenTile {
 
 	public CutTile(Scene parent, int gridX, int gridY, Direction d) {
 		super(parent, gridX, gridY, null, d);
+		automaton = parentScene.setupAutomaton("Planche");
+		current_state = automaton.initial;
 		// TODO Auto-generated constructor stub
 	}
 

@@ -60,7 +60,7 @@ public class CockroachEntity extends Entity {
 	@Override
 	public boolean pop(AutDirection direction) { // explode
 		// TODO Auto-generated method stub
-		return false;
+		return true; // temporary to prevent cockroach from being stuck in dupli statedd
 	}
 
 	@Override

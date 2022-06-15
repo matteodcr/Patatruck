@@ -1,0 +1,9 @@
+Truck(Init){
+  * (Init):
+  | Key(FU) ? Move(N) :(Init)
+  | Key(FD) ? Move(S) :(Init)
+  | Key(FL) ? Move(O) :(Init)
+  | Key(FR) ? Move(E) :(Init)
+  | Key(ENTER) & Cell(H,A) ? Pop(F) :(Init)
+  | Key(ENTER) & Cell(H,G) ? Wizz(F) :(Init)
+}

@@ -42,7 +42,6 @@ public class StockTable extends KitchenTile {
 
 	@Override
 	public void render(Graphics g) {
-		// BufferedImage img = m_images[m_imageIndex];
 		g.drawSprite(Sprite.STOCK_TABLE, 0, 0);
 	}
 

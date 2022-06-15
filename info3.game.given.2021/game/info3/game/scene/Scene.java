@@ -95,7 +95,7 @@ public abstract class Scene {
 
 	public GAutomaton setupAutomaton(String name) {
 		for (GAutomaton current_automaton : m_game.automata_list) {
-			if (current_automaton.name.equals("Cook")) {
+			if (current_automaton.name.equals(name)) {
 				return current_automaton;
 			}
 		}

@@ -29,7 +29,7 @@ public class GAutomaton {
 		GState state;
 		do {
 			Random rand = new Random();
-			state = states.get(rand.nextInt(states.size() - 1));
+			state = states.get(rand.nextInt(states.size()));
 		} while (state.name.equals("_"));
 		return state;
 	}

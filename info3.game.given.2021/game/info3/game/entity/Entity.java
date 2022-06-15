@@ -26,12 +26,14 @@ public abstract class Entity implements AutomatonListener {
 	int deathTime = 0;
 	int move_timer = 0, move_timer_max = 0; // allows to move only when move_timer==0
 	GState current_state;
+
 	AutCategory category;
 
 	Entity(Scene parent, PositionF pos) {
 		parentScene = parent;
 		position = pos;
 		parentScene.addEntity(this);
+		m_direction = AutDirection.N;
 	}
 
 	void setPosition(PositionF pos) {
@@ -89,6 +91,66 @@ public abstract class Entity implements AutomatonListener {
 		this.move_timer = move_timer_max;
 	}
 
+	public AutDirection convertRelativToAbsolutedir(AutDirection direction) {
+		switch (direction) {
+		case F:
+			switch (m_direction) {
+			case N:
+				return AutDirection.N;
+			case W:
+				return AutDirection.W;
+			case E:
+				return AutDirection.E;
+			case S:
+				return AutDirection.S;
+			default:
+				break;
+			}
+		case B:
+			switch (m_direction) {
+			case N:
+				return AutDirection.S;
+			case W:
+				return AutDirection.E;
+			case E:
+				return AutDirection.W;
+			case S:
+				return AutDirection.N;
+			default:
+				break;
+			}
+		case L:
+			switch (m_direction) {
+			case N:
+				return AutDirection.W;
+			case W:
+				return AutDirection.S;
+			case E:
+				return AutDirection.N;
+			case S:
+				return AutDirection.E;
+			default:
+				break;
+			}
+		case R:
+			switch (m_direction) {
+			case N:
+				return AutDirection.E;
+			case W:
+				return AutDirection.N;
+			case E:
+				return AutDirection.S;
+			case S:
+				return AutDirection.W;
+			default:
+				break;
+			}
+		default:
+			break;
+		}
+		return direction;
+	}
+
 	@Override
 	public boolean move(AutDirection direction) {
 		// TODO Auto-generated method stub
@@ -97,7 +159,8 @@ public abstract class Entity implements AutomatonListener {
 
 	@Override
 	public boolean cell(AutDirection direction, AutCategory category) {
-		switch (direction) {
+		AutDirection newDirection = convertRelativToAbsolutedir(direction);
+		switch (newDirection) {
 		case N: {
 			if ((gridY >= 1) && (((KitchenScene) parentScene).KitchenGrid[gridY - 1][gridX]) != null) {
 				if (((KitchenScene) parentScene).KitchenGrid[gridY - 1][gridX].category == category) {
@@ -125,6 +188,15 @@ public abstract class Entity implements AutomatonListener {
 		case S: {
 			if ((gridY <= 2) && (((KitchenScene) parentScene).KitchenGrid[gridY + 1][gridX]) != null) {
 				if (((KitchenScene) parentScene).KitchenGrid[gridY + 1][gridX].category == category) {
+					return true;
+				}
+			}
+			break;
+		}
+		case H: {
+			if ((gridX >= 1) && (gridY >= 1) && (gridX <= 8) && (gridY <= 2)
+					&& (((KitchenScene) parentScene).KitchenGrid[gridY][gridX]) != null) {
+				if (((KitchenScene) parentScene).KitchenGrid[gridY][gridX].category == category) {
 					return true;
 				}
 			}

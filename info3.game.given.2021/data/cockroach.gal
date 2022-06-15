@@ -1,0 +1,12 @@
+Cockroach(Run){
+* (Run):
+| Cell(H,@)     ? Pop() :()                
+| (!Cell(F,@)) & (!Cell(L,@)) & (!Cell(F,O)) & (!Cell(L,O))    ? 70%Wizz(F) / 30%Wizz(L): (_)
+| (!Cell(F,@)) & (!Cell(R,@)) & (!Cell(F,O)) & (!Cell(R,O))    ? 70%Wizz(F) / 30%Wizz(R): (_)
+| ((Cell(F,@)) / (Cell(F,O))) & (!Cell(R,O))    ? Wizz(R): (_)
+| ((Cell(F,@)) / (Cell(F,O))) & (!Cell(L,O))    ? Wizz(L): (_)
+| ((Cell(F,@)) / (Cell(F,O))) & (!Cell(B,O))    ? Wizz(B): (_)
+ 
+* (Duplication):
+ | True ? 10%Egg(H) / 90%Wait :(Run)
+}

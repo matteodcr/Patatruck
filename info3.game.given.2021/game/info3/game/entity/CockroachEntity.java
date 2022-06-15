@@ -1,78 +1,71 @@
 package info3.game.entity;
 
+import java.io.IOException;
+
+import info3.game.graphics.Graphics;
+import info3.game.graphics.Sprite;
 import info3.game.position.AutCategory;
 import info3.game.position.AutDirection;
-import info3.game.position.Direction;
 import info3.game.position.PositionF;
 import info3.game.scene.Scene;
 
-public class CafardEntity extends Entity {
+public class CockroachEntity extends Entity {
 
-	CafardEntity(Scene parent, PositionF position) {
+	public CockroachEntity(Scene parent, PositionF position) throws IOException {
 		super(parent, position);
+		automaton = parentScene.setupAutomaton("Cockroach");
+		current_state = automaton.initial;
+		gridX = 2;
+		gridY = 2;
 	}
 
-	boolean egg(PositionF position) {
-		Entity nouveau_carfard = new CafardEntity(this.parentScene, position);
-		return this.parentScene.addEntity(nouveau_carfard);
-	}
-
-	boolean move(Direction direction) {
-		switch (direction) {
-		case NORD: {
-			float x = position.getX();
-			float y = position.getY();
+	@Override
+	public boolean wizz(AutDirection direction) {
+		AutDirection newDirection = convertRelativToAbsolutedir(direction);
+		m_direction = newDirection;
+		switch (newDirection) {
+		case N: {
 			PositionF newPos = new PositionF(0, -parentScene.getTileWidth());
-			// Tile nextTile = parent.getTile(x, y - parent.getTileWidth()); // On récupère
-			// la tile où le cuisinier veut se déplacer
-			// On gère plus tard les colisions, la vérification que la tile soit libre
-			position.add(newPos);
+			gridY--;
+			// TODO : Tourner Sprite
+			this.position = position.add(newPos);
 			return true;
 		}
-		case OUEST: {
-			float x = position.getX();
-			float y = position.getY();
+		case W: {
 			PositionF newPos = new PositionF(-parentScene.getTileWidth(), 0);
-			// Tile nextTile = parent.getTile(x - parent.getTileWidth(), y); // On récupère
-			// la tile où le cuisinier veut se déplacer
-			// On gère plus tard les colisions, la vérification que la tile soit libre
-			position.add(newPos);
+			gridX--;
+			// TODO : Tourner Sprite
+			this.position = position.add(newPos);
 			return true;
 		}
-		case EST: {
-			float x = position.getX();
-			float y = position.getY();
+		case E: {
 			PositionF newPos = new PositionF(parentScene.getTileWidth(), 0);
-			// Tile nextTile = parent.getTile(x + parent.getTileWidth(), y); // On récupère
-			// la tile où le cuisinier veut se déplacer
-			// On gère plus tard les colisions, la vérification que la tile soit libre
-			position.add(newPos);
+			gridX++;
+			// TODO : Tourner Sprite
+			this.position = position.add(newPos);
 			return true;
 		}
-		case SUD: {
-			float x = position.getX();
-			float y = position.getY();
+		case S: {
 			PositionF newPos = new PositionF(0, parentScene.getTileWidth());
-			// Tile nextTile = parent.getTile(x, y + parent.getTileWidth()); // On récupère
-			// la tile où le cuisinier veut se déplacer
-			// On gère plus tard les colisions, la vérification que la tile soit libre
-			position.add(newPos);
+			gridY++;
+			// TODO : Tourner Sprite
+			this.position = position.add(newPos);
 			return true;
 		}
 		default:
 			return false;
 		}
-
 	}
 
 	@Override
-	public boolean pop(AutDirection direction) {
-		return egg(position);
+	public boolean pop(AutDirection direction) { // explode
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 	@Override
-	public boolean wizz(AutDirection direction) {
-		return move(direction);
+	public void render(Graphics g) {
+		g.drawSprite(Sprite.COCKROACH_ENTITY, this.position.getX(), this.position.getY());
 	}
 
 	@Override
@@ -83,8 +76,14 @@ public class CafardEntity extends Entity {
 
 	@Override
 	public boolean egg(AutDirection direction) {
-		// TODO Auto-generated method stub
-		return false;
+		Entity nouveau_carfard = null;
+		try {
+			nouveau_carfard = new CockroachEntity(this.parentScene, position);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return this.parentScene.addEntity(nouveau_carfard);
 	}
 
 	@Override

@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import info3.game.Game;
 import info3.game.entity.BasicTableTile;
+import info3.game.entity.CockroachEntity;
 import info3.game.entity.CookEntity;
 import info3.game.entity.CutTile;
 import info3.game.entity.DeliveryTile;
@@ -23,6 +24,7 @@ public class KitchenScene extends Scene {
 	private static final PositionF KITCHEN_ORIGIN = new PositionF(41, 10);
 
 	private CookEntity cook;
+	private CockroachEntity cockroach;
 
 	public Tile[][] KitchenGrid = new Tile[][] {
 			new Tile[] { new BasicTableTile(this, 0, 0, Direction.SUD), new BasicTableTile(this, 1, 0, Direction.SUD),
@@ -43,8 +45,12 @@ public class KitchenScene extends Scene {
 	public KitchenScene(int pixelWidth, int pixelHeight, Game g) {
 		super(pixelWidth, pixelHeight, g);
 		try {
-			PositionF startOffset = new PositionF(getTileWidth(), getTileWidth());
-			cook = new CookEntity(this, KITCHEN_ORIGIN.add(startOffset));
+			cook = new CookEntity(this,
+					new PositionF(KITCHEN_ORIGIN.getX() + getTileWidth(), KITCHEN_ORIGIN.getY() + getTileWidth()));
+
+			cockroach = new CockroachEntity(this, new PositionF(KITCHEN_ORIGIN.getX() + getTileWidth() * 2,
+					KITCHEN_ORIGIN.getY() + getTileWidth() * 2));
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -82,6 +88,7 @@ public class KitchenScene extends Scene {
 		g.drawSprite(Sprite.KITCHENTRUCK, (g.getWidth() / 2) - 100, -3); // Valeur calculées
 		super.render(g); // Fond et case
 		this.cook.render(g);
+		this.cockroach.render(g);
 	}
 
 }

@@ -31,7 +31,8 @@ public abstract class Scene {
 	}
 
 	public void tick(long elapsed) {
-		for (Entity entity : entity_list) {
+		ArrayList<Entity> entityListBuffered = new ArrayList<Entity>(entity_list);
+		for (Entity entity : entityListBuffered) {
 			entity.tick(elapsed);
 		}
 	}

@@ -14,7 +14,6 @@ import info3.game.position.AutCategory;
 import info3.game.position.AutDirection;
 import info3.game.position.AutKey;
 import info3.game.position.PositionF;
-import info3.game.scene.KitchenScene;
 import info3.game.scene.Scene;
 
 public abstract class Entity implements AutomatonListener {
@@ -29,9 +28,11 @@ public abstract class Entity implements AutomatonListener {
 
 	AutCategory category;
 
-	Entity(Scene parent, PositionF pos) {
+	Entity(Scene parent, PositionF pos, int gX, int gY) {
 		parentScene = parent;
 		position = pos;
+		gridX = gX;
+		gridY = gY;
 		parentScene.addEntity(this);
 		m_direction = AutDirection.N;
 	}
@@ -162,52 +163,57 @@ public abstract class Entity implements AutomatonListener {
 	@Override
 	public boolean cell(AutDirection direction, AutCategory category) {
 		AutDirection newDirection = convertRelativToAbsolutedir(direction);
-		switch (newDirection) {
-		case N: {
-			if ((gridY >= 1) && (((KitchenScene) parentScene).KitchenGrid[gridY - 1][gridX]) != null) {
-				if (((KitchenScene) parentScene).KitchenGrid[gridY - 1][gridX].category == category) {
-					return true;
+		for (Entity entity : parentScene.entity_list) {
+			switch (newDirection) {
+			case N: {
+				if (gridY >= 1) {
+					if (entity.isItThatGrid(gridY - 1, gridX) && entity.category == category) {
+						return true;
+					}
 				}
+				break;
 			}
-			break;
-		}
-		case W: {
-			if ((gridX >= 1) && (((KitchenScene) parentScene).KitchenGrid[gridY][gridX - 1]) != null) {
-				if (((KitchenScene) parentScene).KitchenGrid[gridY][gridX - 1].category == category) {
-					return true;
+			case W: {
+				if (gridX >= 1) {
+					if (entity.isItThatGrid(gridY, gridX - 1) && entity.category == category) {
+						return true;
+					}
 				}
+				break;
 			}
-			break;
-		}
-		case E: {
-			if ((gridX <= 8) && (((KitchenScene) parentScene).KitchenGrid[gridY][gridX + 1]) != null) {
-				if (((KitchenScene) parentScene).KitchenGrid[gridY][gridX + 1].category == category) {
-					return true;
+			case E: {
+				if (gridX <= 8) {
+					if (entity.isItThatGrid(gridY, gridX + 1) && entity.category == category) {
+						return true;
+					}
 				}
+				break;
 			}
-			break;
-		}
-		case S: {
-			if ((gridY <= 2) && (((KitchenScene) parentScene).KitchenGrid[gridY + 1][gridX]) != null) {
-				if (((KitchenScene) parentScene).KitchenGrid[gridY + 1][gridX].category == category) {
-					return true;
+			case S: {
+				if (gridY <= 2) {
+					if (entity.isItThatGrid(gridY + 1, gridX) && entity.category == category) {
+						return true;
+					}
 				}
+				break;
 			}
-			break;
-		}
-		case H: {
-			if ((gridX >= 1) && (gridY >= 1) && (gridX <= 8) && (gridY <= 2)
-					&& (((KitchenScene) parentScene).KitchenGrid[gridY][gridX]) != null) {
-				if (((KitchenScene) parentScene).KitchenGrid[gridY][gridX].category == category) {
-					return true;
+			case H: {
+				if ((gridX >= 1) && (gridY >= 1) && (gridX <= 8) && (gridY <= 2)) {
+					if (entity.isItThatGrid(gridY, gridX) && entity.category == category) {
+						return true;
+					}
 				}
+				break;
 			}
-			break;
-		}
-		default:
-			return false;
+			default:
+				return false;
+			}
 		}
 		return false;
+	}
+
+	private boolean isItThatGrid(int gY, int gX) {
+		return gY == gridY && gX == gridX;
 	}
 
 	@Override

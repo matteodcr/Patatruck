@@ -17,14 +17,12 @@ public class CookEntity extends Entity {
 	int m_imageIndex;
 
 	public CookEntity(Scene parent, PositionF position) throws IOException {
-		super(parent, position);
+		super(parent, position, 1, 1);
 		move_timer_max = 100;
 		automaton = parentScene.setupAutomaton("Cook");
 		current_state = automaton.initial;
 		// parentScene.addEntity(this);
 		category = AutCategory.AROBASE;
-		gridX = 1;
-		gridY = 1;
 	}
 
 	@Override

@@ -15,7 +15,7 @@ public abstract class Scene {
 	public Game m_game;
 
 	protected final int pixelWidth, pixelHeight;
-	ArrayList<Entity> entity_list = new ArrayList<>();
+	public ArrayList<Entity> entity_list = new ArrayList<>();
 
 	public Scene(int pixelWidth, int pixelHeight, Game g) {
 		this.pixelWidth = pixelWidth;

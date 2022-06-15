@@ -12,11 +12,9 @@ import info3.game.scene.Scene;
 public class CockroachEntity extends Entity {
 
 	public CockroachEntity(Scene parent, PositionF position, int gX, int gY) throws IOException {
-		super(parent, position);
+		super(parent, position, gX, gY);
 		automaton = parentScene.setupAutomaton("Cockroach");
 		current_state = automaton.initial;
-		gridX = gX;
-		gridY = gY;
 	}
 
 	@Override

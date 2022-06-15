@@ -8,5 +8,5 @@ Cockroach(Run){
 | ((Cell(F,@)) / (Cell(F,O))) & (!Cell(B,O))    ? Wizz(B): (_)
  
 * (Duplication):
- | True ? 10%Egg(H) / 90%Wait :(Run)
+ | True ? 1%Egg(H) / 90%Wait :(Run)
 }

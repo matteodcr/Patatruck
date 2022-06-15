@@ -8,6 +8,7 @@ import info3.game.entity.CockroachEntity;
 import info3.game.entity.CookEntity;
 import info3.game.entity.CutTile;
 import info3.game.entity.DeliveryTile;
+import info3.game.entity.Entity;
 import info3.game.entity.FrieTile;
 import info3.game.entity.PanTile;
 import info3.game.entity.SauceTableTile;
@@ -49,7 +50,7 @@ public class KitchenScene extends Scene {
 					new PositionF(KITCHEN_ORIGIN.getX() + getTileWidth(), KITCHEN_ORIGIN.getY() + getTileWidth()));
 
 			cockroach = new CockroachEntity(this, new PositionF(KITCHEN_ORIGIN.getX() + getTileWidth() * 2,
-					KITCHEN_ORIGIN.getY() + getTileWidth() * 2));
+					KITCHEN_ORIGIN.getY() + getTileWidth() * 2), 2, 2);
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -87,8 +88,9 @@ public class KitchenScene extends Scene {
 		g.fill(0xff511e43);
 		g.drawSprite(Sprite.KITCHENTRUCK, (g.getWidth() / 2) - 100, -3); // Valeur calculées
 		super.render(g); // Fond et case
-		this.cook.render(g);
-		this.cockroach.render(g);
+		for (Entity entity : entity_list) {
+			entity.render(g);
+		}
 	}
 
 }

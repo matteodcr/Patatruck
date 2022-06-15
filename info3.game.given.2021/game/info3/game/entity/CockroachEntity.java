@@ -11,12 +11,12 @@ import info3.game.scene.Scene;
 
 public class CockroachEntity extends Entity {
 
-	public CockroachEntity(Scene parent, PositionF position) throws IOException {
+	public CockroachEntity(Scene parent, PositionF position, int gX, int gY) throws IOException {
 		super(parent, position);
 		automaton = parentScene.setupAutomaton("Cockroach");
 		current_state = automaton.initial;
-		gridX = 2;
-		gridY = 2;
+		gridX = gX;
+		gridY = gY;
 	}
 
 	@Override
@@ -78,7 +78,7 @@ public class CockroachEntity extends Entity {
 	public boolean egg(AutDirection direction) {
 		Entity nouveau_carfard = null;
 		try {
-			nouveau_carfard = new CockroachEntity(this.parentScene, position);
+			nouveau_carfard = new CockroachEntity(this.parentScene, position, gridX, gridY);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

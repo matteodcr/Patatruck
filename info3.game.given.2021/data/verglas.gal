@@ -1,5 +1,0 @@
-Iced_road(Still) {
-    * (Still):
-    | Cell(H,@) ? Pop :(Still) 
-    | True ? Wizz :(Still) 
-}

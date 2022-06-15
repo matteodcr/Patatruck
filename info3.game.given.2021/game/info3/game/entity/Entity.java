@@ -4,21 +4,34 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-import info3.game.graphics.Graphics;
-import info3.game.position.PositionF;
-import info3.game.scene.Scene;
 import javax.imageio.ImageIO;
 
-public abstract class Entity {
+import info3.game.automata.AutomatonListener;
+import info3.game.automata.GAutomaton;
+import info3.game.automata.GState;
+import info3.game.graphics.Graphics;
+import info3.game.position.AutCategory;
+import info3.game.position.AutDirection;
+import info3.game.position.AutKey;
+import info3.game.position.PositionF;
+import info3.game.scene.KitchenScene;
+import info3.game.scene.Scene;
+
+public abstract class Entity implements AutomatonListener {
 	Scene parentScene = null;
 	PositionF position;
-	// FIXME Automaton automate;
+	AutDirection m_direction;
+	int gridX, gridY;
+	GAutomaton automaton;
 	int deathTime = 0;
 	int move_timer = 0, move_timer_max = 0; // allows to move only when move_timer==0
+	GState current_state;
+	AutCategory category;
 
 	Entity(Scene parent, PositionF pos) {
 		parentScene = parent;
 		position = pos;
+		parentScene.addEntity(this);
 	}
 
 	void setPosition(PositionF pos) {
@@ -29,8 +42,11 @@ public abstract class Entity {
 		return position;
 	}
 
-	void tick(long elapsed) {
-		// TODO
+	public void tick(long elapsed) {
+		GState state = automaton.run(this, current_state);
+		if (state != null) {
+			current_state = state;
+		}
 	}
 
 	void destroySpin() {
@@ -71,5 +87,57 @@ public abstract class Entity {
 
 	public void hasMoved() {
 		this.move_timer = move_timer_max;
+	}
+
+	@Override
+	public boolean move(AutDirection direction) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean cell(AutDirection direction, AutCategory category) {
+		switch (direction) {
+		case N: {
+			if ((gridY >= 1) && (((KitchenScene) parentScene).KitchenGrid[gridY - 1][gridX]) != null) {
+				if (((KitchenScene) parentScene).KitchenGrid[gridY - 1][gridX].category == category) {
+					return true;
+				}
+			}
+			break;
+		}
+		case W: {
+			if ((gridX >= 1) && (((KitchenScene) parentScene).KitchenGrid[gridY][gridX - 1]) != null) {
+				if (((KitchenScene) parentScene).KitchenGrid[gridY][gridX - 1].category == category) {
+					return true;
+				}
+			}
+			break;
+		}
+		case E: {
+			if ((gridX <= 8) && (((KitchenScene) parentScene).KitchenGrid[gridY][gridX + 1]) != null) {
+				if (((KitchenScene) parentScene).KitchenGrid[gridY][gridX + 1].category == category) {
+					return true;
+				}
+			}
+			break;
+		}
+		case S: {
+			if ((gridY <= 2) && (((KitchenScene) parentScene).KitchenGrid[gridY + 1][gridX]) != null) {
+				if (((KitchenScene) parentScene).KitchenGrid[gridY + 1][gridX].category == category) {
+					return true;
+				}
+			}
+			break;
+		}
+		default:
+			return false;
+		}
+		return false;
+	}
+
+	@Override
+	public boolean key(AutKey direction) {
+		return parentScene.m_game.m_listener.isUp(direction.toString());
 	}
 }

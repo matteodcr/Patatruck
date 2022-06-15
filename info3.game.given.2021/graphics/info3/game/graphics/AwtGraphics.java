@@ -1,12 +1,13 @@
 package info3.game.graphics;
 
-import javax.imageio.ImageIO;
-import java.awt.*;
+import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+
+import javax.imageio.ImageIO;
 
 public class AwtGraphics implements Graphics {
 
@@ -41,27 +42,32 @@ public class AwtGraphics implements Graphics {
 		this.scaleFactor = scaleFactor;
 	}
 
-	@Override public Graphics window(int x, int y, int w, int h) {
+	@Override
+	public Graphics window(int x, int y, int w, int h) {
 		return new AwtGraphics(g.create(x * scaleFactor, y * scaleFactor, w * scaleFactor, h * scaleFactor), w, h,
 				scaleFactor);
 	}
 
-	@Override public Graphics window(float x, float y, int w, int h) {
+	@Override
+	public Graphics window(float x, float y, int w, int h) {
 		return new AwtGraphics(
 				g.create((int) (x * scaleFactor), (int) (y * scaleFactor), w * scaleFactor, h * scaleFactor), w, h,
 				scaleFactor);
 	}
 
-	@Override public int getWidth() {
+	@Override
+	public int getWidth() {
 		return width;
 	}
 
-	@Override public int getHeight() {
+	@Override
+	public int getHeight() {
 		return height;
 	}
 
-	@Override public void fill(int color, int x, int y, int width, int height) {
-		g.setColor(new Color(color));
+	@Override
+	public void fill(int color, int x, int y, int width, int height) {
+		g.setColor(new Color(color, true));
 		g.fillRect(x * scaleFactor, y * scaleFactor, width * scaleFactor, height * scaleFactor);
 	}
 
@@ -78,15 +84,18 @@ public class AwtGraphics implements Graphics {
 		g.drawImage(img, dx, dy, dx2, dy2, 0, 0, img.getWidth(), img.getHeight(), null);
 	}
 
-	@Override public void drawSprite(Sprite sprite, int x, int y) {
+	@Override
+	public void drawSprite(Sprite sprite, int x, int y) {
 		drawSpriteRealCoords(sprite, x * this.scaleFactor, y * this.scaleFactor);
 	}
 
-	@Override public void drawSprite(Sprite sprite, float x, float y) {
+	@Override
+	public void drawSprite(Sprite sprite, float x, float y) {
 		drawSpriteRealCoords(sprite, (int) (x * this.scaleFactor), (int) (y * this.scaleFactor));
 	}
 
-	@Override protected void finalize() {
+	@Override
+	protected void finalize() {
 		g.dispose();
 	}
 

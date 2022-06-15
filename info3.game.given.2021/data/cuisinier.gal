@@ -1,8 +1,8 @@
 Cook(Init){
   * (Init):
-  | Key(z) ? Wizz(N):(Init)
-  | Key(q) ? Wizz(E):(Init)
-  | Key(s) ? Wizz(O):(Init)
-  | Key(d) ? Wizz(S):(Init)
+  | Key(z) &! Cell(N, O) ? Wizz(N):(Init)
+  | Key(q) &! Cell(W, O) ? Wizz(W):(Init)
+  | Key(s) &! Cell(S, O) ? Wizz(S):(Init)
+  | Key(d) &! Cell(E, O) ? Wizz(E):(Init)
   | Key(SPACE) ? Pop(F):(Init)  
 }

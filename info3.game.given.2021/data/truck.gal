@@ -1,9 +1,8 @@
 Truck(Init){
   * (Init):
-  | Key(FU) ? Move(N) :(Init)
-  | Key(FD) ? Move(S) :(Init)
-  | Key(FL) ? Move(O) :(Init)
-  | Key(FR) ? Move(E) :(Init)
+  | Key(FU) ? Wizz(N) :(Init)
+  | Key(FD) ? Wizz(S) :(Init)
+  | Key(FL) ? Wizz(O) :(Init)
+  | Key(FR) ? Wizz(E) :(Init)
   | Key(ENTER) & Cell(H,A) ? Pop(F) :(Init)
-  | Key(ENTER) & Cell(H,G) ? Wizz(F) :(Init)
 }

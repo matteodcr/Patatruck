@@ -27,6 +27,9 @@ import java.io.RandomAccessFile;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+
 import info3.automata.ast.AST;
 import info3.automata.parser.AutomataParser;
 import info3.game.automata.AutomataGenerator;
@@ -36,8 +39,6 @@ import info3.game.graphics.GameCanvas;
 import info3.game.scene.CityScene;
 import info3.game.scene.KitchenScene;
 import info3.game.sound.RandomFileInputStream;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
 
 public class Game {
 
@@ -174,6 +175,9 @@ public class Game {
 
 			kitchenScene.tick(elapsed);
 			cityScene.tick(elapsed);
+		}
+		if (m_listener.isUp("SPACE")) {// used for testing shuffle
+			this.kitchenScene.shuffle();
 		}
 	}
 

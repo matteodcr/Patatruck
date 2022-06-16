@@ -1,6 +1,9 @@
 package info3.game.scene;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 import info3.game.Game;
 import info3.game.entity.BasicTableTile;
@@ -26,6 +29,12 @@ public class KitchenScene extends Scene {
 
 	private CookEntity cook;
 	private CockroachEntity cockroach;
+
+	private ArrayList<PositionF> indexEmplacements = new ArrayList<>(List.of(new PositionF(0, 1), new PositionF(0, 2),
+			new PositionF(0, 3), new PositionF(0, 4), new PositionF(0, 5), new PositionF(3, 1), new PositionF(3, 2),
+			new PositionF(3, 3), new PositionF(3, 4), new PositionF(3, 5)));
+	private ArrayList<PositionF> indexStockEmplacements = new ArrayList<>(List.of(new PositionF(0, 6),
+			new PositionF(0, 7), new PositionF(0, 8), new PositionF(3, 6), new PositionF(3, 7), new PositionF(3, 8)));
 
 	public Tile[][] KitchenGrid = new Tile[][] {
 			new Tile[] { new BasicTableTile(this, 0, 0, Direction.SUD), new BasicTableTile(this, 1, 0, Direction.SUD),
@@ -56,6 +65,59 @@ public class KitchenScene extends Scene {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public void shuffle() {
+		// generate future emplacements
+		Random rdm = new Random();
+		int[] movedTiles = new int[10], movedStockTables = new int[6];
+		for (int i = 0; i < movedTiles.length; i++) {
+			boolean acceptable;
+			do {
+				acceptable = true;
+				movedTiles[i] = rdm.nextInt(movedTiles.length);
+				for (int y = 0; y < i; y++) {
+					if (movedTiles[i] == movedTiles[y]) {
+						acceptable = false;
+					}
+				}
+			} while (!acceptable);
+		}
+		for (int i = 0; i < movedStockTables.length; i++) {
+			boolean acceptable;
+			do {
+				acceptable = true;
+				movedStockTables[i] = rdm.nextInt(movedStockTables.length);
+				for (int y = 0; y < i; y++) {
+					if (movedStockTables[i] == movedStockTables[y]) {
+						acceptable = false;
+					}
+				}
+			} while (!acceptable);
+		}
+		Tile[][] futureKitchenGrid = new Tile[][] {
+				new Tile[] { new BasicTableTile(this, 0, 0, Direction.SUD), null, null, null, null, null, null, null,
+						null, new BasicTableTile(this, 9, 0, Direction.SUD) },
+				new Tile[] { new DeliveryTile(this, 0, 1, Direction.EST), null, null, null, null, null, null, null,
+						null, new SauceTableTile(this, 9, 1, Direction.OUEST) },
+				new Tile[] { new DeliveryTile(this, 0, 2, Direction.EST), null, null, null, null, null, null, null,
+						null, new SauceTableTile(this, 9, 2, Direction.OUEST) },
+				new Tile[] { new BasicTableTile(this, 0, 0, Direction.SUD), null, null, null, null, null, null, null,
+						null, new BasicTableTile(this, 9, 0, Direction.SUD) } };
+		// replace everything
+		for (int i = 0; i < movedTiles.length; i++) {
+			PositionF pos = indexEmplacements.get(i), futurePos = indexEmplacements.get(movedTiles[i]);
+			Tile toMove = KitchenGrid[(int) pos.getX()][(int) pos.getY()];
+			toMove.setPosition(futurePos);
+			futureKitchenGrid[(int) futurePos.getX()][(int) futurePos.getY()] = toMove;
+		}
+		for (int i = 0; i < movedStockTables.length; i++) {
+			PositionF pos = indexStockEmplacements.get(i), futurePos = indexStockEmplacements.get(movedStockTables[i]);
+			Tile toMove = KitchenGrid[(int) pos.getX()][(int) pos.getY()];
+			toMove.setPosition(futurePos);
+			futureKitchenGrid[(int) futurePos.getX()][(int) futurePos.getY()] = toMove;
+		}
+		this.KitchenGrid = futureKitchenGrid;
 	}
 
 	@Override

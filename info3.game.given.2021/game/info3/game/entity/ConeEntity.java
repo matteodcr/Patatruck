@@ -13,7 +13,7 @@ public class ConeEntity extends Entity {
 
 	@Override
 	public boolean pop(AutDirection direction) {
-		return this.parentScene.removeEntity(this);
+		return true;
 	}
 
 	@Override

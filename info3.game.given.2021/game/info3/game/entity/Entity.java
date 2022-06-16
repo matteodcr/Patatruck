@@ -259,7 +259,6 @@ public abstract class Entity implements AutomatonListener {
 
 		}
 		return false;
-
 	}
 
 	private boolean isItThatGrid(int gY, int gX) {

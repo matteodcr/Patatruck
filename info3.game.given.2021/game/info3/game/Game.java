@@ -46,7 +46,7 @@ public class Game {
 	public static final int WIDTH = 256;
 	public static final int HEIGHT = 144;
 
-	public static final int SCALE_FACTOR = 6;
+	public static final int SCALE_FACTOR = 4;
 
 	/**
 	 * Ticks par seconde

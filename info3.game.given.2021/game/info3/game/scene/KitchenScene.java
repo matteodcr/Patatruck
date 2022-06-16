@@ -23,9 +23,11 @@ import info3.game.position.PositionF;
 public class KitchenScene extends Scene {
 
 	private static final PositionF KITCHEN_ORIGIN = new PositionF(41, 10);
+	public static final int MAXIMUM_COCKROACH_NUMBER = 20;
 
 	private CookEntity cook;
 	private CockroachEntity cockroach;
+	private int cockroach_counter = 1;
 
 	public Tile[][] KitchenGrid = new Tile[][] {
 			new Tile[] { new BasicTableTile(this, 0, 0, Direction.SUD), new BasicTableTile(this, 1, 0, Direction.SUD),
@@ -92,6 +94,14 @@ public class KitchenScene extends Scene {
 		for (Entity entity : entity_list) {
 			entity.render(g);
 		}
+	}
+
+	public int getCockroach_counter() {
+		return cockroach_counter;
+	}
+
+	public void setCockroach_counter(int cockroack_counter) {
+		this.cockroach_counter = cockroack_counter;
 	}
 
 }

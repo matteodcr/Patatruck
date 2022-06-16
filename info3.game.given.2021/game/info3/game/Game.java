@@ -27,17 +27,18 @@ import java.io.RandomAccessFile;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+
 import info3.automata.ast.AST;
 import info3.automata.parser.AutomataParser;
 import info3.game.automata.AutomataGenerator;
 import info3.game.automata.GAutomaton;
 import info3.game.graphics.AwtGraphics;
 import info3.game.graphics.GameCanvas;
-import info3.game.screen.GameScreen;
+import info3.game.screen.AutomatonSelectionScreen;
 import info3.game.screen.Screen;
 import info3.game.sound.RandomFileInputStream;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
 
 public class Game {
 
@@ -84,7 +85,7 @@ public class Game {
 
 		System.out.println("  - setting up the frame...");
 		setupFrame();
-		screen = new GameScreen(this);
+		screen = new AutomatonSelectionScreen(this);
 	}
 
 	public void changeScreen(Screen newScreen) {
@@ -148,6 +149,9 @@ public class Game {
 	 * that elapsed since the last time this method was invoked.
 	 */
 	void tick(long elapsed) {
+		if (screen == null)
+			return;
+
 		// Update every second
 		// the text on top of the frame: tick and fps
 		m_textElapsed += elapsed;

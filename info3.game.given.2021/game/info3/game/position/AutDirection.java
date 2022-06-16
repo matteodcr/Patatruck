@@ -11,6 +11,10 @@ public enum AutDirection {
 			return null;
 		};
 
+		public AutDirection twoapart() {
+			return null;
+		};
+
 	};
 
 	public AutDirection next() {
@@ -21,4 +25,7 @@ public enum AutDirection {
 		return values()[Math.floorMod((ordinal() - 1), 4)];
 	}
 
+	public AutDirection twoapart() {
+		return values()[Math.floorMod((ordinal() + 2), 4)];
+	}
 }

@@ -96,57 +96,13 @@ public abstract class Entity implements AutomatonListener {
 	public AutDirection convertRelativToAbsolutedir(AutDirection direction) {
 		switch (direction) {
 		case F:
-			switch (m_direction) {
-			case N:
-				return AutDirection.N;
-			case W:
-				return AutDirection.W;
-			case E:
-				return AutDirection.E;
-			case S:
-				return AutDirection.S;
-			default:
-				break;
-			}
+			return m_direction;
 		case B:
-			switch (m_direction) {
-			case N:
-				return AutDirection.S;
-			case W:
-				return AutDirection.E;
-			case E:
-				return AutDirection.W;
-			case S:
-				return AutDirection.N;
-			default:
-				break;
-			}
+			return m_direction.twoapart();
 		case L:
-			switch (m_direction) {
-			case N:
-				return AutDirection.W;
-			case W:
-				return AutDirection.S;
-			case E:
-				return AutDirection.N;
-			case S:
-				return AutDirection.E;
-			default:
-				break;
-			}
+			return m_direction.previous();
 		case R:
-			switch (m_direction) {
-			case N:
-				return AutDirection.E;
-			case W:
-				return AutDirection.N;
-			case E:
-				return AutDirection.S;
-			case S:
-				return AutDirection.W;
-			default:
-				break;
-			}
+			return m_direction.next();
 		default:
 			break;
 		}

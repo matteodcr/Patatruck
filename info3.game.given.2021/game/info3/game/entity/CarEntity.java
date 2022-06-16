@@ -8,12 +8,10 @@ import info3.game.scene.Scene;
 
 public class CarEntity extends Entity {
 	boolean isTruck;
-	Direction dir;
 
 	CarEntity(Scene parent, PositionF position, boolean isTruck, Direction direction) {
 		super(parent, position);
 		this.isTruck = isTruck;
-		this.dir = direction;
 	}
 
 	@Override
@@ -29,21 +27,28 @@ public class CarEntity extends Entity {
 
 	@Override
 	public boolean wizz(AutDirection direction) {
-		return changePos(this.dir);
-	}
-
-	public boolean move(AutDirection direction) {
-		switch (direction) {
-		case L: {
-			this.changeDir(direction);
-			return changePos(this.dir);
+		AutDirection newDirection = convertRelativToAbsolutedir(direction);
+		m_direction = newDirection;
+		switch (newDirection) {
+		case N: {
+			PositionF newPos = new PositionF(0, -parentScene.getTileWidth());
+			this.position = position.add(newPos);
+			return true;
 		}
-		case F: {
-			return changePos(this.dir);
+		case W: {
+			PositionF newPos = new PositionF(-parentScene.getTileWidth(), 0);
+			this.position = position.add(newPos);
+			return true;
 		}
-		case R: {
-			this.changeDir(direction);
-			return changePos(this.dir);
+		case E: {
+			PositionF newPos = new PositionF(parentScene.getTileWidth(), 0);
+			this.position = position.add(newPos);
+			return true;
+		}
+		case S: {
+			PositionF newPos = new PositionF(0, parentScene.getTileWidth());
+			this.position = position.add(newPos);
+			return true;
 		}
 		default:
 			return false;
@@ -51,40 +56,28 @@ public class CarEntity extends Entity {
 
 	}
 
-	void changeDir(AutDirection direction) {
-		switch (direction) {
-		case L:
-			this.dir = this.dir.previous();
-
-		case R:
-			this.dir = this.dir.next();
-
-		default:
-			break;
-		}
-
-	}
-
-	boolean changePos(Direction direction) {
-		switch (direction) {
-		case NORD: {
+	public boolean move(AutDirection direction) {
+		AutDirection newDirection = convertRelativToAbsolutedir(direction);
+		m_direction = newDirection;
+		switch (newDirection) {
+		case N: {
 			PositionF newPos = new PositionF(0, -parentScene.getTileWidth());
-			position.add(newPos);
+			this.position = position.add(newPos);
 			return true;
 		}
-		case SUD: {
+		case W: {
 			PositionF newPos = new PositionF(-parentScene.getTileWidth(), 0);
-			position.add(newPos);
+			this.position = position.add(newPos);
 			return true;
 		}
-		case OUEST: {
+		case E: {
 			PositionF newPos = new PositionF(parentScene.getTileWidth(), 0);
-			position.add(newPos);
+			this.position = position.add(newPos);
 			return true;
 		}
-		case EST: {
+		case S: {
 			PositionF newPos = new PositionF(0, parentScene.getTileWidth());
-			position.add(newPos);
+			this.position = position.add(newPos);
 			return true;
 		}
 		default:

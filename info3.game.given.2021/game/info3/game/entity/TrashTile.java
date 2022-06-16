@@ -7,48 +7,37 @@ import info3.game.position.AutDirection;
 import info3.game.position.Direction;
 import info3.game.scene.Scene;
 
-public class PanTile extends KitchenTile {
-	// Item item;
-	int compteur;
+public class TrashTile extends KitchenTile {
 
-	public PanTile(Scene parent, int gridX, int gridY, Direction d) {
+	public TrashTile(Scene parent, int gridX, int gridY, Direction d) {
 		super(parent, gridX, gridY, null, d);
-		automaton = parentScene.setupAutomaton("Feu_cuisson");
+		automaton = parentScene.setupAutomaton("Poubelle");
 		current_state = automaton.initial;
+		// TODO Auto-generated constructor stub
 	}
 
 	@Override
-	public boolean pop(AutDirection direction) {// prend un ingrédient à frire
-		/*
-		 * if (this.item != null) { return false; } else { Entity player =
-		 * ((KitchenScene) this.parentScene).getCook(); this.item = player.item;
-		 * player.item = null; this.compteur = 10; return true; }
-		 */
+	public boolean pop(AutDirection direction) {
+		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public boolean wizz(AutDirection direction) {// rend l'ingrédient au joueur
-		/*
-		 * Entity player = ((KitchenScene) this.parentScene).getCook(); player.item =
-		 * this.item; this.item = null; return true;
-		 */
+	public boolean wizz(AutDirection direction) {
+		// TODO Auto-generated method stub
 		return false;
-	}
-
-	public boolean gwait() {
-		if (this.compteur > 0) {
-			this.compteur++;
-			return false;
-		} else {
-			return true;
-		}
 	}
 
 	@Override
 	public void render(Graphics g) {
 		// BufferedImage img = m_images[m_imageIndex];
-		g.drawSprite(Sprite.PAN_TILE, 0, 0);
+		g.drawSprite(Sprite.TRASH_TILE, 0, 0);
+	}
+
+	@Override
+	public boolean gwait() {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 	@Override

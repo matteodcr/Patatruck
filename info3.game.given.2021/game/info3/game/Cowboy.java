@@ -24,9 +24,10 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
+import javax.imageio.ImageIO;
+
 import info3.game.graphics.Graphics;
 import info3.game.graphics.Sprite;
-import javax.imageio.ImageIO;
 
 /**
  * A simple class that holds the images of a sprite for an animated cowbow.
@@ -75,7 +76,7 @@ public class Cowboy {
 		m_width = width;
 		m_height = height;
 		// BufferedImage img = m_images[m_imageIndex];
-		g.drawSprite(Sprite.COWBOY1, m_x, m_y);
+		g.drawSprite(Sprite.PLAYER_KITCHEN, m_x, m_y);
 	}
 
 	public static BufferedImage[] loadSprite(String filename, int nrows, int ncols) throws IOException {

@@ -1,46 +1,70 @@
 package info3.game.entity;
 
+import java.io.IOException;
+
 import info3.game.graphics.Graphics;
 import info3.game.graphics.Sprite;
 import info3.game.position.AutCategory;
 import info3.game.position.AutDirection;
-import info3.game.position.Direction;
+import info3.game.position.PositionF;
 import info3.game.scene.Scene;
 
-public class BasicTableTile extends KitchenTile {
-	// Item item;
+public class CockroachEntity extends Entity {
 
-	public BasicTableTile(Scene parent, int gridX, int gridY, Direction d) {
-		super(parent, gridX, gridY, null, d);
-		automaton = parentScene.setupAutomaton("Table");
+	public CockroachEntity(Scene parent, PositionF position, int gX, int gY) throws IOException {
+		super(parent, position, gX, gY);
+		automaton = parentScene.setupAutomaton("Cockroach");
 		current_state = automaton.initial;
+		category = AutCategory.A;
 	}
 
 	@Override
-	public boolean pop(AutDirection direction) {
-		// poser
-		/*
-		 * Entity player = ((KitchenScene) this.parentScene).getCook(); if (player.item
-		 * != null) { if (this.item != null) { if (true assemblage possible ) { //
-		 * assembler } else { // plat raté } } else { this.item = player.item;
-		 * player.item = null; } return true; } else { return false;
-		 */return false;
-
+	public boolean wizz(AutDirection direction) {
+		AutDirection newDirection = convertRelativToAbsolutedir(direction);
+		m_direction = newDirection;
+		switch (newDirection) {
+		case N: {
+			PositionF newPos = new PositionF(0, -parentScene.getTileWidth());
+			gridY--;
+			// TODO : Tourner Sprite
+			this.position = position.add(newPos);
+			return true;
+		}
+		case W: {
+			PositionF newPos = new PositionF(-parentScene.getTileWidth(), 0);
+			gridX--;
+			// TODO : Tourner Sprite
+			this.position = position.add(newPos);
+			return true;
+		}
+		case E: {
+			PositionF newPos = new PositionF(parentScene.getTileWidth(), 0);
+			gridX++;
+			// TODO : Tourner Sprite
+			this.position = position.add(newPos);
+			return true;
+		}
+		case S: {
+			PositionF newPos = new PositionF(0, parentScene.getTileWidth());
+			gridY++;
+			// TODO : Tourner Sprite
+			this.position = position.add(newPos);
+			return true;
+		}
+		default:
+			return false;
+		}
 	}
 
 	@Override
-	public boolean wizz(AutDirection direction) {// vider
-		/*
-		 * if (this.item == null) { return false; } else { Entity player =
-		 * ((KitchenScene) this.parentScene).getCook(); player.item = this.item;
-		 * this.item = null; return true; }
-		 */
-		return false;
+	public boolean pop(AutDirection direction) { // explode
+		// TODO Auto-generated method stub
+		return true; // temporary to prevent cockroach from being stuck in dupli statedd
 	}
 
 	@Override
 	public void render(Graphics g) {
-		g.drawSprite(Sprite.BASIC_TABLE, 0, 0);
+		g.drawSprite(Sprite.COCKROACH_ENTITY, this.position.getX(), this.position.getY());
 	}
 
 	@Override
@@ -51,8 +75,14 @@ public class BasicTableTile extends KitchenTile {
 
 	@Override
 	public boolean egg(AutDirection direction) {
-		// TODO Auto-generated method stub
-		return false;
+		Entity nouveau_carfard = null;
+		try {
+			nouveau_carfard = new CockroachEntity(this.parentScene, position, gridX, gridY);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return this.parentScene.addEntity(nouveau_carfard);
 	}
 
 	@Override
@@ -132,5 +162,4 @@ public class BasicTableTile extends KitchenTile {
 		// TODO Auto-generated method stub
 		return false;
 	}
-
 }

@@ -157,7 +157,7 @@ public class AutomataGenerator implements IVisitor {
 	}
 
 	// fct auxilliaire renvoie somme pourcentage deja present
-	private int sum_map(Map<IFunction, Integer> map) {
+	private int sumMap(Map<IFunction, Integer> map) {
 		int sum = 0;
 		Collection<Integer> percent_list = map.values();
 		for (int percent : percent_list)
@@ -176,7 +176,7 @@ public class AutomataGenerator implements IVisitor {
 		for (Object funcall_tmp : funcalls) {
 			GFunCall funcall = (GFunCall) funcall_tmp;
 			if (funcall.percent == -1) { // si le pourcentage n'est pas donne, on le calcule
-				int sum_in_array = sum_map(action_list);
+				int sum_in_array = sumMap(action_list);
 				funcall.percent = (100 - sum_in_array) / (funcalls.size() - action_list.size());
 			}
 			action_list.put((IFunction) funcall, funcall.percent);

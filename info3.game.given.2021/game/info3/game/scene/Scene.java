@@ -15,7 +15,7 @@ public abstract class Scene {
 	public Game m_game;
 
 	protected final int pixelWidth, pixelHeight;
-	ArrayList<Entity> entity_list = new ArrayList<>();
+	public ArrayList<Entity> entity_list = new ArrayList<>();
 
 	public Scene(int pixelWidth, int pixelHeight, Game g) {
 		this.pixelWidth = pixelWidth;
@@ -32,7 +32,8 @@ public abstract class Scene {
 	}
 
 	public void tick(long elapsed) {
-		for (Entity entity : entity_list) {
+		ArrayList<Entity> entityListBuffered = new ArrayList<Entity>(entity_list);
+		for (Entity entity : entityListBuffered) {
 			entity.tick(elapsed);
 		}
 	}
@@ -95,7 +96,7 @@ public abstract class Scene {
 
 	public GAutomaton setupAutomaton(String name) {
 		for (GAutomaton current_automaton : m_game.automata_list) {
-			if (current_automaton.name.equals("Cook")) {
+			if (current_automaton.name.equals(name)) {
 				return current_automaton;
 			}
 		}

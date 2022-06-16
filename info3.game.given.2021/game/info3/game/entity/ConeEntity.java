@@ -14,14 +14,13 @@ public class ConeEntity extends Entity {
 
 	@Override
 	public boolean pop(AutDirection direction) {
-		// TODO Auto-generated method stub
-		return false;
+		return this.parentScene.removeEntity(this);
 	}
 
 	@Override
 	public boolean wizz(AutDirection direction) {
 		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	@Override

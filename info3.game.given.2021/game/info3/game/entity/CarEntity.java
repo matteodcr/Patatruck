@@ -1,17 +1,26 @@
 package info3.game.entity;
 
+import info3.game.graphics.Graphics;
+import info3.game.graphics.Sprite;
 import info3.game.position.AutCategory;
 import info3.game.position.AutDirection;
-import info3.game.position.Direction;
 import info3.game.position.PositionF;
 import info3.game.scene.Scene;
 
 public class CarEntity extends Entity {
 	boolean isTruck;
 
-	CarEntity(Scene parent, PositionF position, boolean isTruck, Direction direction) {
+	public CarEntity(Scene parent, PositionF position, boolean isTruck) {
 		super(parent, position);
 		this.isTruck = isTruck;
+		automaton = parentScene.setupAutomaton("Car");
+		current_state = automaton.initial;
+		category = AutCategory.A;
+	}
+
+	@Override
+	public void render(Graphics g) {
+		g.drawSprite(Sprite.CAR_ENTITY, this.position.getX(), this.position.getY());
 	}
 
 	@Override
@@ -31,22 +40,22 @@ public class CarEntity extends Entity {
 		m_direction = newDirection;
 		switch (newDirection) {
 		case N: {
-			PositionF newPos = new PositionF(0, -parentScene.getTileWidth());
+			PositionF newPos = new PositionF(0, -1);
 			this.position = position.add(newPos);
 			return true;
 		}
 		case W: {
-			PositionF newPos = new PositionF(-parentScene.getTileWidth(), 0);
+			PositionF newPos = new PositionF(-1, 0);
 			this.position = position.add(newPos);
 			return true;
 		}
 		case E: {
-			PositionF newPos = new PositionF(parentScene.getTileWidth(), 0);
+			PositionF newPos = new PositionF(1, 0);
 			this.position = position.add(newPos);
 			return true;
 		}
 		case S: {
-			PositionF newPos = new PositionF(0, parentScene.getTileWidth());
+			PositionF newPos = new PositionF(0, 1);
 			this.position = position.add(newPos);
 			return true;
 		}

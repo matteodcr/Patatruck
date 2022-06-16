@@ -1,6 +1,7 @@
 package info3.game.scene;
 
 import java.io.IOException;
+import java.util.Random;
 
 import info3.game.Game;
 import info3.game.entity.BasicTableTile;
@@ -102,6 +103,21 @@ public class KitchenScene extends Scene {
 
 	public void setCockroach_counter(int cockroack_counter) {
 		this.cockroach_counter = cockroack_counter;
+	}
+
+	@Override
+	public void tick(long elapsed) {
+		super.tick(elapsed);
+		Random rand = new Random();
+		if (rand.nextInt(500) < 2) {
+			try {
+				this.addEntity(new CockroachEntity(this, new PositionF(132, 36), 7, 2));
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
 	}
 
 }

@@ -17,7 +17,6 @@ public class CockroachEntity extends Entity {
 		automaton = parentScene.setupAutomaton("Cockroach");
 		current_state = automaton.initial;
 		category = AutCategory.A;
-		System.out.println(((KitchenScene) parentScene).getCockroach_counter());
 		Cockroach_counterAdd(1);
 	}
 
@@ -111,7 +110,6 @@ public class CockroachEntity extends Entity {
 	@Override
 	public boolean explode() {
 		Cockroach_counterAdd(-1);
-		System.out.println(((KitchenScene) parentScene).getCockroach_counter());
 		return true;
 	}
 

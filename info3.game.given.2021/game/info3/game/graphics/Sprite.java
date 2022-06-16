@@ -36,10 +36,10 @@ public enum Sprite {
 	public enum Spritesheet {
 		// TODO
 
-		COOK("cook.png", 13), CITY("city.png", 20), SAUCETABLETILE("SauceTableTile.png", 13),
-		PANTILE("PanTile.png", 13), FRIETILE("FrieTile.png", 13), CUTTILE("CutTile.png", 13),
-		KITCHEN_TRUCK("kitchen.png", 256), TRASHTILE("TrashTile.png", 13), STOCKTABLE("StockTable.png", 13),
-		BASICTABLE("BasicTableTile.png", 13), DELIVERYTILE("DeliveryTile.png", 13), COCKROACH("cockroach.png", 13),;
+		BASICTABLE("BasicTableTile.png", 13), COOK("cook.png", 13), CITY("city.png", 20),
+		SAUCETABLETILE("SauceTableTile.png", 13), PANTILE("PanTile.png", 13), FRIETILE("FrieTile.png", 13),
+		CUTTILE("CutTile.png", 13), KITCHEN_TRUCK("kitchen.png", 256), TRASHTILE("TrashTile.png", 13),
+		STOCKTABLE("StockTable.png", 13), DELIVERYTILE("DeliveryTile.png", 13), COCKROACH("cockroach.png", 13),;
 
 		public final String filename;
 		public final int tileSize;

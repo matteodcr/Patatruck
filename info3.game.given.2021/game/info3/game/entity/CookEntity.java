@@ -21,7 +21,6 @@ public class CookEntity extends Entity {
 		move_timer_max = 100;
 		automaton = parentScene.setupAutomaton("Cook");
 		current_state = automaton.initial;
-		// parentScene.addEntity(this);
 		category = AutCategory.AROBASE;
 	}
 

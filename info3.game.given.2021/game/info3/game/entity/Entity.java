@@ -33,7 +33,6 @@ public abstract class Entity implements AutomatonListener {
 		position = pos;
 		gridX = gX;
 		gridY = gY;
-		parentScene.addEntity(this);
 		m_direction = AutDirection.N;
 	}
 
@@ -209,7 +208,58 @@ public abstract class Entity implements AutomatonListener {
 				return false;
 			}
 		}
+		switch (newDirection) {
+		case N: {
+			if (gridY >= 1) {
+				if (parentScene.getTileAt(gridX, gridY - 1) != null
+						&& parentScene.getTileAt(gridX, gridY - 1).category == category) {
+					return true;
+				}
+			}
+			break;
+		}
+		case W: {
+			if (gridX >= 1) {
+				if (parentScene.getTileAt(gridX - 1, gridY) != null
+						&& parentScene.getTileAt(gridX - 1, gridY).category == category) {
+					return true;
+				}
+			}
+			break;
+		}
+		case E: {
+			if (gridX <= 8) {
+				if (parentScene.getTileAt(gridX + 1, gridY) != null
+						&& parentScene.getTileAt(gridX + 1, gridY).category == category) {
+					return true;
+				}
+			}
+			break;
+		}
+		case S: {
+			if (gridY <= 2) {
+				if (parentScene.getTileAt(gridX, gridY + 1) != null
+						&& parentScene.getTileAt(gridX, gridY + 1).category == category) {
+					return true;
+				}
+			}
+			break;
+		}
+		case H: {
+			if ((gridX >= 1) && (gridY >= 1) && (gridX <= 8) && (gridY <= 2)) {
+				if (parentScene.getTileAt(gridX, gridY) != null
+						&& parentScene.getTileAt(gridX, gridY).category == category) {
+					return true;
+				}
+			}
+			break;
+		}
+		default:
+			return false;
+
+		}
 		return false;
+
 	}
 
 	private boolean isItThatGrid(int gY, int gX) {

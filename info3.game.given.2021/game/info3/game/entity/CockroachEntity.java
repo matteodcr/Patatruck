@@ -15,6 +15,7 @@ public class CockroachEntity extends Entity {
 		super(parent, position, gX, gY);
 		automaton = parentScene.setupAutomaton("Cockroach");
 		current_state = automaton.initial;
+		category = AutCategory.A;
 	}
 
 	@Override

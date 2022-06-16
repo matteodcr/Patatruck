@@ -3,10 +3,12 @@ package info3.game.entity;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Map;
 
 import info3.game.position.AutCategory;
 import info3.game.position.AutDirection;
 import info3.game.position.PositionF;
+import info3.game.scene.ItemType;
 import info3.game.scene.Scene;
 
 public class MarketEntity extends Entity {
@@ -25,8 +27,8 @@ public class MarketEntity extends Entity {
 	
 	HashMap<ItemType, Integer> loot;
 	
-	MarketEntity(Scene parent, PositionF pos) {
-		super(parent, pos);
+	MarketEntity(Scene parent, PositionF pos, int gX, int gY) {
+		super(parent, pos, gX, gY); //FIXME define gridX and gridY
 		automaton = parentScene.setupAutomaton("Market");
 		current_state = automaton.initial;
 		category = AutCategory.P;
@@ -42,10 +44,15 @@ public class MarketEntity extends Entity {
 
 	@Override
 	public boolean pop(AutDirection direction) {
-		// TODO
-		// COMMENT MARCHENT LES STOCKAGES DANS LA CUISINE ??
-		// TODO
-		return false;
+		HashMap<ItemType, StockTable> stocktables = this.parentScene.m_game.getKitchenScene().getStocktables();
+		for (Map.Entry<ItemType, StockTable> stocktable : stocktables.entrySet()) {
+			for (Map.Entry<ItemType, Integer> itemset : loot.entrySet()) {
+				if (stocktable.getKey().equals(itemset.getKey()) {
+					stocktable.getValue().addStock((int)itemset.getValue())
+				}
+			}
+		}
+		return true;
 	}
 
 	@Override

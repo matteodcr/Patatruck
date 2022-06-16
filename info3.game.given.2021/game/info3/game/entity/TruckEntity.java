@@ -6,10 +6,15 @@ import info3.game.position.PositionF;
 import info3.game.scene.Scene;
 
 public class TruckEntity extends Entity {
+	int speed;
+	
+	TruckEntity(Scene parent, PositionF pos, int gX, int gY) {
+		super(parent, pos, gX, gY);
 
-	TruckEntity(Scene parent, PositionF pos) {
-		super(parent, pos);
-		// TODO Auto-generated constructor stub
+		automaton = parentScene.setupAutomaton("Truck");
+		current_state = automaton.initial;
+		category = AutCategory.AROBASE;
+		speed = 0;
 	}
 
 	@Override

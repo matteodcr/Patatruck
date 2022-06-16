@@ -161,6 +161,7 @@ public abstract class Entity implements AutomatonListener {
 			}
 			default:
 				return false;
+
 			}
 		}
 		switch (newDirection) {
@@ -201,7 +202,6 @@ public abstract class Entity implements AutomatonListener {
 		}
 		default:
 			return false;
-
 		}
 		return false;
 	}

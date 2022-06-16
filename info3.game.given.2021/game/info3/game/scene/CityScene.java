@@ -22,12 +22,12 @@ public class CityScene extends Scene {
 	public CityScene(int pixelWidth, int pixelHeight, Game g) {
 		super(pixelWidth, pixelHeight, g);
 		try {
-			cook = new CookEntity(this, vanPosition);
+			cook = new CookEntity(this, vanPosition); // To change with vanEntity
 			car = new CarEntity(this, center, false);
 			addEntity(car);
 		} catch (IOException e) {
 			e.printStackTrace();
-		} // To change with vanEntity
+		}
 	}
 
 	// @Override

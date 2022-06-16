@@ -70,22 +70,22 @@ public class CarEntity extends Entity {
 		m_direction = newDirection;
 		switch (newDirection) {
 		case N: {
-			PositionF newPos = new PositionF(0, -parentScene.getTileWidth());
+			PositionF newPos = new PositionF(0, -1);
 			this.position = position.add(newPos);
 			return true;
 		}
 		case W: {
-			PositionF newPos = new PositionF(-parentScene.getTileWidth(), 0);
+			PositionF newPos = new PositionF(-1, 0);
 			this.position = position.add(newPos);
 			return true;
 		}
 		case E: {
-			PositionF newPos = new PositionF(parentScene.getTileWidth(), 0);
+			PositionF newPos = new PositionF(1, 0);
 			this.position = position.add(newPos);
 			return true;
 		}
 		case S: {
-			PositionF newPos = new PositionF(0, parentScene.getTileWidth());
+			PositionF newPos = new PositionF(0, 1);
 			this.position = position.add(newPos);
 			return true;
 		}

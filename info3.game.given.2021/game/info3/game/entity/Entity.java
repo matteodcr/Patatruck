@@ -14,13 +14,13 @@ import info3.game.position.AutCategory;
 import info3.game.position.AutDirection;
 import info3.game.position.AutKey;
 import info3.game.position.PositionF;
+import info3.game.position.PositionI;
 import info3.game.scene.Scene;
 
 public abstract class Entity implements AutomatonListener {
 	Scene parentScene = null;
 	PositionF position;
 	AutDirection m_direction;
-	int gridX, gridY;
 	GAutomaton automaton;
 	int deathTime = 0;
 	int move_timer = 0, move_timer_max = 0; // allows to move only when move_timer==0
@@ -28,11 +28,9 @@ public abstract class Entity implements AutomatonListener {
 
 	AutCategory category;
 
-	Entity(Scene parent, PositionF pos, int gX, int gY) {
+	Entity(Scene parent, PositionF pos) {
 		parentScene = parent;
 		position = pos;
-		gridX = gX;
-		gridY = gY;
 		m_direction = AutDirection.N;
 	}
 
@@ -161,6 +159,8 @@ public abstract class Entity implements AutomatonListener {
 
 	@Override
 	public boolean cell(AutDirection direction, AutCategory category) {
+		int gridX = getGridFromPos(position).getX();
+		int gridY = getGridFromPos(position).getY();
 		AutDirection newDirection = convertRelativToAbsolutedir(direction);
 		for (Entity entity : parentScene.entity_list) {
 			switch (newDirection) {
@@ -263,11 +263,18 @@ public abstract class Entity implements AutomatonListener {
 	}
 
 	private boolean isItThatGrid(int gY, int gX) {
-		return gY == gridY && gX == gridX;
+		return gY == getGridFromPos(position).getY() && gX == getGridFromPos(position).getX();
 	}
 
 	@Override
 	public boolean key(AutKey direction) {
 		return parentScene.m_game.m_listener.isUp(direction.toString());
 	}
+
+	private PositionI getGridFromPos(PositionF pos) {
+		PositionF pos_tmp = pos.add(parentScene.getOriginOffset());
+		return pos_tmp.divFloor(parentScene.getTileWidth());
+
+	}
+
 }

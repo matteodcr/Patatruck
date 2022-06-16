@@ -51,7 +51,7 @@ public class KitchenScene extends Scene {
 			addEntity(cook);
 
 			cockroach = new CockroachEntity(this, new PositionF(KITCHEN_ORIGIN.getX() + getTileWidth() * 2,
-					KITCHEN_ORIGIN.getY() + getTileWidth() * 2), 2, 2);
+					KITCHEN_ORIGIN.getY() + getTileWidth() * 2));
 			addEntity(cockroach);
 		} catch (IOException e) {
 			e.printStackTrace();

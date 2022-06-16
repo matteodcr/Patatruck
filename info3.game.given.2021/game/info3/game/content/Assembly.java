@@ -7,6 +7,8 @@ import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
 public class Assembly {
+	private List<Item> items = new ArrayList<>();
+
 	private HashMap<List<ItemType>, ItemType> ASSEMBLE_RECIPES = new HashMap<>() {
 		private static final long serialVersionUID = 1L;
 
@@ -18,18 +20,6 @@ public class Assembly {
 			put(List.of(ItemType.COOKED_GALETTE, ItemType.CHEESE, ItemType.BREAD_SLICE), ItemType.VEGI_BURGER);
 		}
 	};
-
-	// TODO test
-	private static boolean includes(List<ItemType> a, List<ItemType> b) {
-		b = new ArrayList<>(b);
-		for (ItemType i : a) {
-			if (!b.remove(i))
-				return false;
-		}
-		return true;
-	}
-
-	private List<Item> items = new ArrayList<>();
 
 	private List<ItemType> getItemTypes() {
 		return items.stream().map(item -> item.type).collect(Collectors.toList());
@@ -44,9 +34,20 @@ public class Assembly {
 		}
 	}
 
-	public void addItem(Item addition) {
-		items.add(addition);
+	public Assembly() {
+	}
 
+	private static boolean includes(List<ItemType> a, List<ItemType> b) {
+		b = new ArrayList<>(b);
+		for (ItemType i : a) {
+			if (!b.remove(i))
+				return false;
+		}
+		return true;
+	}
+
+	private void addItemBase(Item addition) {
+		items.add(addition);
 		// Assemblage
 
 		List<ItemType> currentItems = getItemTypes();
@@ -81,5 +82,36 @@ public class Assembly {
 
 	public List<Item> getItems() {
 		return items;
+	}
+
+	public void removeItem(Item item) {
+		this.getItems().remove(item);
+	}
+
+	public void emptyAssembly() {
+		while (this.getItems().size() > 0) {
+			this.getItems().remove(0);
+		}
+	}
+
+	public boolean addItem(Item item) {
+		this.addItemBase(item);
+		if (this.getItems().size() == 1) { // un item ou une recette assemblee
+			return true;
+		} else {
+			boolean flag = false;
+			for (List<ItemType> tmp : ASSEMBLE_RECIPES.keySet()) {
+				if (includes(this.getItemTypes(), tmp)) {
+					flag = true;
+				}
+			}
+			if (flag) { // un assemblage incomplet
+				return true;
+			} else { // mauvais assemblage
+				this.emptyAssembly();
+				this.addItem(new Item(ItemType.FAILED_Item));
+				return false;
+			}
+		}
 	}
 }

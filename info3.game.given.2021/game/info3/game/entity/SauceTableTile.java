@@ -1,5 +1,7 @@
 package info3.game.entity;
 
+import info3.game.content.Item;
+import info3.game.content.Sauce;
 import info3.game.graphics.Graphics;
 import info3.game.graphics.Sprite;
 import info3.game.position.AutCategory;
@@ -9,7 +11,7 @@ import info3.game.scene.KitchenScene;
 import info3.game.scene.Scene;
 
 public class SauceTableTile extends KitchenTile {
-	Sauce sauce = null; // ketchup ou mayo
+	Sauce sauce;
 
 	public SauceTableTile(Scene parent, int gridX, int gridY, Direction d, Sauce sauce) {
 		super(parent, gridX, gridY, null, d);
@@ -18,17 +20,16 @@ public class SauceTableTile extends KitchenTile {
 
 	@Override
 	public boolean pop(AutDirection direction) {
-
 		return true;
 	}
 
 	@Override
 	public boolean wizz(AutDirection direction) {// mettre la sauce
-		Item item = ((KitchenScene) this.parentScene).getCook().item;
-		if (item == null || !(item.allowSauce(this.sauce))) {
+		Item item_player = ((KitchenScene) this.parentScene).getCook().item;
+		if (item_player == null) {
 			return false;
 		} else {
-			// ajouter la sauce sur item
+			item_player.setSauce(sauce);
 			return true;
 		}
 	}
@@ -127,7 +128,6 @@ public class SauceTableTile extends KitchenTile {
 	public boolean gotStuff() {
 		// TODO Auto-generated method stub
 		return false;
->>>>>>> ad002e0cc06c85d8446e5a213bc2618bdd1824ed
 	}
 
 }

@@ -1,5 +1,7 @@
 package info3.game.entity;
 
+import info3.game.content.Assembly;
+import info3.game.content.Item;
 import info3.game.graphics.Graphics;
 import info3.game.graphics.Sprite;
 import info3.game.position.AutCategory;
@@ -9,42 +11,39 @@ import info3.game.scene.KitchenScene;
 import info3.game.scene.Scene;
 
 public class BasicTableTile extends KitchenTile {
-	Item item;
+	Assembly assembly;
 
 	public BasicTableTile(Scene parent, int gridX, int gridY, Direction d) {
 		super(parent, gridX, gridY, null, d);
-		this.item = null;
+		this.assembly = new Assembly();
 	}// TODO sprite à ajouter
 
 	@Override
 	public boolean pop(AutDirection direction) {// poser
-		Entity player = ((KitchenScene) this.parentScene).getCook();
-		if (player.item != null) {
-			if (this.item != null) {
-				if (true/* assemblage possible */) {
-					// assembler
-				} else {
-					// plat raté
-				}
-			} else {
-				this.item = player.item;
-				player.item = null;
-			}
-			return true;
-		} else {
+		Item item_player = ((KitchenScene) this.parentScene).getCook().item;
+		if (item_player == null) {
 			return false;
+		} else {
+			this.assembly.addItem(item_player);
+			item_player = null;
+			return true;
 		}
+
 	}
 
 	@Override
-	public boolean wizz(AutDirection direction) {// vider
-		if (this.item == null) {
+	public boolean wizz(AutDirection direction) {// rendre au player
+		Item item_player = ((KitchenScene) this.parentScene).getCook().item;
+		if (item_player != null) {
 			return false;
 		} else {
-			Entity player = ((KitchenScene) this.parentScene).getCook();
-			player.item = this.item;
-			this.item = null;
-			return true;
+			if (this.assembly.getItems().size() == 1) {
+				item_player = this.assembly.getItems().get(0);
+				this.assembly.emptyAssembly();
+				return true;
+			} else {
+				return false;
+			}
 		}
 	}
 

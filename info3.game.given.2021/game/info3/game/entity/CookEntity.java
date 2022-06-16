@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 
 import info3.game.automata.GAutomaton;
+import info3.game.content.Item;
 import info3.game.graphics.Graphics;
 import info3.game.graphics.Sprite;
 import info3.game.position.AutCategory;
@@ -18,11 +19,13 @@ public class CookEntity extends Entity {
 	long m_imageElapsed;
 	long m_moveElapsed;
 	int m_imageIndex;
+	Item item;
 
 	public CookEntity(Scene parent, PositionF position) throws IOException {
 		super(parent, position);
 		// m_images = loadSprite("resources/winchester-4x6.png", 4, 6); Utile ?
 		move_timer_max = 100;
+		this.item = null;
 		List<GAutomaton> automata_list = parent.m_game.automata_list;
 		for (GAutomaton current_automaton : automata_list) {
 			if (current_automaton.name.equals("Cook")) {

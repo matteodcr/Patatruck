@@ -25,20 +25,17 @@ public class TestRecipes {
 		burger = new Assembly();
 		burger.addItem(new Item(ItemType.BREAD_SLICE));
 		burger.addItem(new Item(ItemType.COOKED_GALETTE));
-		burger.addItem(new Item(ItemType.SHEPHERDS_PIE));
 		burger.addItem(new Item(ItemType.CHEESE));
-		assert burger.getItems().size() == 2;
+		assert burger.getItems().size() == 1;
 		assert burger.getItems().contains(new Item(ItemType.VEGI_BURGER));
-		assert burger.getItems().contains(new Item(ItemType.SHEPHERDS_PIE));
 
 		burger = new Assembly();
 		burger.addItem(new Item(ItemType.CHEESE));
 		burger.addItem(new Item(ItemType.BREAD_SLICE));
 		burger.addItem(new Item(ItemType.COOKED_GALETTE));
 		burger.addItem(new Item(ItemType.CHEESE));
-		assert burger.getItems().size() == 2;
-		assert burger.getItems().contains(new Item(ItemType.VEGI_BURGER));
-		assert burger.getItems().contains(new Item(ItemType.CHEESE));
+		assert burger.getItems().size() == 1;
+		assert burger.getItems().contains(new Item(ItemType.FAILED_Item));
 
 		Assembly poutine = new Assembly();
 		poutine.addItem(new Item(ItemType.COOKED_FRIES));

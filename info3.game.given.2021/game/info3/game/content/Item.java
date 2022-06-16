@@ -78,6 +78,14 @@ public class Item {
 		return new Item(type, hasOptionalSalad, true, sauce);
 	}
 
+	public Item setSauce(Sauce sauce) {
+		if (this.sauce == Sauce.KETCHUP && sauce == Sauce.MAYO || this.sauce == Sauce.MAYO && sauce == Sauce.KETCHUP) {
+			return new Item(type, true, hasOptionalTomato, Sauce.KETCHUP_MAYO);
+		} else {
+			return new Item(type, true, hasOptionalTomato, sauce);
+		}
+	}
+
 	/**
 	 * Returns the cooked element if possible, null otherwise
 	 * 

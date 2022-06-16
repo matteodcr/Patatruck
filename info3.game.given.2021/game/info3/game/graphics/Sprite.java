@@ -1,6 +1,8 @@
 package info3.game.graphics;
 
 import static info3.game.graphics.Sprite.Spritesheet.BASICTABLE;
+import static info3.game.graphics.Sprite.Spritesheet.BREAD_;
+import static info3.game.graphics.Sprite.Spritesheet.CHEESE_;
 import static info3.game.graphics.Sprite.Spritesheet.CITY;
 import static info3.game.graphics.Sprite.Spritesheet.COCKROACH;
 import static info3.game.graphics.Sprite.Spritesheet.COOK;
@@ -8,9 +10,13 @@ import static info3.game.graphics.Sprite.Spritesheet.CUTTILE;
 import static info3.game.graphics.Sprite.Spritesheet.DELIVERYTILE;
 import static info3.game.graphics.Sprite.Spritesheet.FRIETILE;
 import static info3.game.graphics.Sprite.Spritesheet.KITCHEN_TRUCK;
+import static info3.game.graphics.Sprite.Spritesheet.MEAT_;
 import static info3.game.graphics.Sprite.Spritesheet.PANTILE;
+import static info3.game.graphics.Sprite.Spritesheet.POTATO_;
+import static info3.game.graphics.Sprite.Spritesheet.SALADE_;
 import static info3.game.graphics.Sprite.Spritesheet.SAUCETABLETILE;
 import static info3.game.graphics.Sprite.Spritesheet.STOCKTABLE;
+import static info3.game.graphics.Sprite.Spritesheet.TOMATO_;
 import static info3.game.graphics.Sprite.Spritesheet.TRASHTILE;
 
 public enum Sprite {
@@ -20,7 +26,9 @@ public enum Sprite {
 	KITCHENTRUCK(KITCHEN_TRUCK, 0, 0, 1, 1), SAUCE_TABLE_TILE(SAUCETABLETILE, 0, 0, 1, 1),
 	FRIE_TILE(FRIETILE, 0, 0, 1, 1), CUT_TILE(CUTTILE, 0, 0, 1, 1), PAN_TILE(PANTILE, 0, 0, 1, 1),
 	TRASH_TILE(TRASHTILE, 0, 0, 1, 1), STOCK_TABLE(STOCKTABLE, 0, 0, 1, 1), BASIC_TABLE(BASICTABLE, 0, 0, 1, 1),
-	DELIVERY_TILE(DELIVERYTILE, 0, 0, 1, 1), COCKROACH_ENTITY(COCKROACH, 0, 0, 1, 1);
+	DELIVERY_TILE(DELIVERYTILE, 0, 0, 1, 1), COCKROACH_ENTITY(COCKROACH, 0, 0, 1, 1), TOMATO(TOMATO_, 0, 0, 1, 1),
+	POTATO(POTATO_, 0, 0, 1, 1), SALADE(SALADE_, 0, 0, 1, 1), BREAD(BREAD_, 0, 0, 1, 1), CHEESE(CHEESE_, 0, 0, 1, 1),
+	MEAT(MEAT_, 0, 0, 1, 1);
 
 	public final Spritesheet spritesheet;
 	public final int u, v, w, h;
@@ -39,7 +47,10 @@ public enum Sprite {
 		BASICTABLE("BasicTableTile.png", 13), COOK("cook.png", 13), CITY("city.png", 20),
 		SAUCETABLETILE("SauceTableTile.png", 13), PANTILE("PanTile.png", 13), FRIETILE("FrieTile.png", 13),
 		CUTTILE("CutTile.png", 13), KITCHEN_TRUCK("kitchen.png", 256), TRASHTILE("TrashTile.png", 13),
-		STOCKTABLE("StockTable.png", 13), DELIVERYTILE("DeliveryTile.png", 13), COCKROACH("cockroach.png", 13),;
+		STOCKTABLE("StockTable.png", 13), DELIVERYTILE("DeliveryTile.png", 13), COCKROACH("cockroach.png", 13),
+		TOMATO_("Sprite_cuisine_ingredient/tomato.png", 13), POTATO_("Sprite_cuisine_ingredient/Potato.png", 13),
+		SALADE_("Sprite_cuisine_ingredient/salade.png", 13), BREAD_("Sprite_cuisine_ingredient/bread.png", 13),
+		CHEESE_("Sprite_cuisine_ingredient/cheese.png", 13), MEAT_("Sprite_cuisine_ingredient/meat.png", 13);
 
 		public final String filename;
 		public final int tileSize;

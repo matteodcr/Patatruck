@@ -36,12 +36,12 @@ public class KitchenScene extends Scene {
 	private ArrayList<PositionF> indexStockEmplacements = new ArrayList<>(List.of(new PositionF(0, 6),
 			new PositionF(0, 7), new PositionF(0, 8), new PositionF(3, 6), new PositionF(3, 7), new PositionF(3, 8)));
 
-	public Tile[][] KitchenGrid = new Tile[][] {
-			new Tile[] { new BasicTableTile(this, 0, 0, Direction.SUD), new BasicTableTile(this, 1, 0, Direction.SUD),
-					new BasicTableTile(this, 2, 0, Direction.SUD), new FrieTile(this, 3, 0, Direction.SUD),
-					new FrieTile(this, 4, 0, Direction.SUD), new CutTile(this, 5, 0, Direction.SUD),
-					new StockTable(this, 6, 0, Direction.SUD), new StockTable(this, 7, 0, Direction.SUD),
-					new StockTable(this, 8, 0, Direction.SUD), new BasicTableTile(this, 9, 0, Direction.SUD) },
+	public Tile[][] KitchenGrid = new Tile[][] { new Tile[] { new BasicTableTile(this, 0, 0, Direction.SUD),
+			new BasicTableTile(this, 1, 0, Direction.SUD), new BasicTableTile(this, 2, 0, Direction.SUD),
+			new FrieTile(this, 3, 0, Direction.SUD), new FrieTile(this, 4, 0, Direction.SUD),
+			new CutTile(this, 5, 0, Direction.SUD), new StockTable(this, 6, 0, Direction.SUD, Sprite.TOMATO),
+			new StockTable(this, 7, 0, Direction.SUD, Sprite.POTATO),
+			new StockTable(this, 8, 0, Direction.SUD, Sprite.CHEESE), new BasicTableTile(this, 9, 0, Direction.SUD) },
 			new Tile[] { new DeliveryTile(this, 0, 1, Direction.EST), null, null, null, null, null, null, null, null,
 					new SauceTableTile(this, 9, 1, Direction.OUEST) },
 			new Tile[] { new DeliveryTile(this, 0, 2, Direction.EST), null, null, null, null, null, null, null, null,
@@ -49,8 +49,10 @@ public class KitchenScene extends Scene {
 			new Tile[] { new BasicTableTile(this, 0, 3, Direction.NORD), new TrashTile(this, 1, 3, Direction.NORD),
 					new BasicTableTile(this, 2, 3, Direction.NORD), new PanTile(this, 3, 3, Direction.NORD),
 					new PanTile(this, 4, 3, Direction.NORD), new CutTile(this, 5, 3, Direction.NORD),
-					new StockTable(this, 6, 3, Direction.NORD), new StockTable(this, 7, 3, Direction.NORD),
-					new StockTable(this, 8, 3, Direction.NORD), new BasicTableTile(this, 9, 3, Direction.NORD) } };
+					new StockTable(this, 6, 3, Direction.NORD, Sprite.SALADE),
+					new StockTable(this, 7, 3, Direction.NORD, Sprite.BREAD),
+					new StockTable(this, 8, 3, Direction.NORD, Sprite.MEAT),
+					new BasicTableTile(this, 9, 3, Direction.NORD) } };
 
 	public KitchenScene(int pixelWidth, int pixelHeight, Game g) {
 		super(pixelWidth, pixelHeight, g);

@@ -1,6 +1,7 @@
 package info3.game.scene;
 
 import java.io.IOException;
+import java.util.HashMap;
 
 import info3.game.Game;
 import info3.game.entity.BasicTableTile;
@@ -26,6 +27,7 @@ public class KitchenScene extends Scene {
 
 	private CookEntity cook;
 	private CockroachEntity cockroach;
+	private HashMap<ItemType, StockTable> stocktables;
 
 	public Tile[][] KitchenGrid = new Tile[][] {
 			new Tile[] { new BasicTableTile(this, 0, 0, Direction.SUD), new BasicTableTile(this, 1, 0, Direction.SUD),
@@ -82,6 +84,10 @@ public class KitchenScene extends Scene {
 
 	public CookEntity getCook() {
 		return cook;
+	}
+	
+	public HashMap<ItemType, StockTable> getStocktables() {
+		return stocktables;
 	}
 
 	@Override

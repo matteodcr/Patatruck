@@ -28,11 +28,9 @@ public abstract class Entity implements AutomatonListener {
 
 	AutCategory category;
 
-	Entity(Scene parent, PositionF pos, int gX, int gY) {
+	Entity(Scene parent, PositionF pos) {
 		parentScene = parent;
 		position = pos;
-		gridX = gX;
-		gridY = gY;
 		m_direction = AutDirection.N;
 	}
 

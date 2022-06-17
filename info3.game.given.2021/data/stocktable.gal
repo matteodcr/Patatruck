@@ -1,9 +1,9 @@
 StockTable(Full){
-* (Full):
-| !GotStuff() ? Pop(F) :(Empty)
-| True() ? Wizz(F) :(Full)
+* (Still):
+| Cell(F,@) & Key(SPACE) ? Pop(F) :(Still)
+| !GotStuff() ? Wizz(F) :(Empty)
 
 * (Empty):
-| GotStuff() ? Wizz(F) :(Full)
-| True() ? Pop(F) :(Empty)
+| GotStuff() ? :(Full)
+| True() ? :(Empty)
 }

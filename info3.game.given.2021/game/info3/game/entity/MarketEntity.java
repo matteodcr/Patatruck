@@ -1,6 +1,7 @@
 package info3.game.entity;
 
 import java.util.ArrayList;
+
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -8,7 +9,7 @@ import java.util.Map;
 import info3.game.position.AutCategory;
 import info3.game.position.AutDirection;
 import info3.game.position.PositionF;
-import info3.game.scene.ItemType;
+import info3.game.content.ItemType;
 import info3.game.scene.Scene;
 
 public class MarketEntity extends Entity {
@@ -47,8 +48,8 @@ public class MarketEntity extends Entity {
 		HashMap<ItemType, StockTable> stocktables = this.parentScene.m_game.getKitchenScene().getStocktables();
 		for (Map.Entry<ItemType, StockTable> stocktable : stocktables.entrySet()) {
 			for (Map.Entry<ItemType, Integer> itemset : loot.entrySet()) {
-				if (stocktable.getKey().equals(itemset.getKey()) {
-					stocktable.getValue().addStock((int)itemset.getValue())
+				if (stocktable.getKey().equals(itemset.getKey())) {
+					stocktable.getValue().addStock((int)itemset.getValue());
 				}
 			}
 		}

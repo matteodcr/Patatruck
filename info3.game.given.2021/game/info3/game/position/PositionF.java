@@ -40,4 +40,9 @@ public class PositionF {
 		return new PositionF(this.x * tileWidth, this.y * tileWidth);
 	}
 
+	@Override
+	public String toString() {
+		return new String("(" + this.x + "," + this.y + ")");
+	}
+
 }

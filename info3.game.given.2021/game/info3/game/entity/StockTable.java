@@ -11,14 +11,14 @@ import info3.game.scene.Scene;
 public class StockTable extends KitchenTile {
 	Item item;
 	int stock;
-	Sprite stockItem;
+	Sprite stockItem, empty = Sprite.STOCK_TABLE, full = Sprite.STOCK_TABLE;
 
 	public StockTable(Scene parent, int gridX, int gridY, AutDirection d, Item item, Sprite stockItem) {
 		super(parent, gridX, gridY, null, d);
 		automaton = parentScene.setupAutomaton("Garde_manger");
 		current_state = automaton.initial;
 		this.stockItem = stockItem;
-		this.stock = 0;
+		this.stock = 5;
 		this.item = item;
 		this.stockItem = stockItem;
 	}
@@ -35,6 +35,11 @@ public class StockTable extends KitchenTile {
 			} else {
 				item_player = this.item;
 				stock--;
+				if (gotStuff()) {
+					this.defaultSprite = full;
+				} else {
+					this.defaultSprite = empty;
+				}
 				return true;
 			}
 		}
@@ -42,8 +47,6 @@ public class StockTable extends KitchenTile {
 
 	@Override
 	public boolean wizz(AutDirection direction) {
-		System.out.println("WIZZ");
-
 		return true;
 	}
 
@@ -147,8 +150,7 @@ public class StockTable extends KitchenTile {
 
 	@Override
 	public boolean gotStuff() {
-		// TODO Auto-generated method stub
-		return false;
+		return stock > 0;
 	}
 
 }

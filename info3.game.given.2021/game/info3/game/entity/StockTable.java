@@ -1,5 +1,6 @@
 package info3.game.entity;
 
+import info3.game.content.Item;
 import info3.game.graphics.Graphics;
 import info3.game.graphics.Sprite;
 import info3.game.position.AutCategory;
@@ -11,21 +12,29 @@ public class StockTable extends KitchenTile {
 	int stock;
 	Sprite stockItem;
 
-	public StockTable(Scene parent, int gridX, int gridY, AutDirection d, Sprite stockItem) {
+	public StockTable(Scene parent, int gridX, int gridY, Direction d, Item item) {
 		super(parent, gridX, gridY, null, d);
 		automaton = parentScene.setupAutomaton("Garde_manger");
 		current_state = automaton.initial;
 		this.stockItem = stockItem;
+		this.stock = 0;
+		this.item = item;
 	}
 
 	@Override
 	public boolean pop(AutDirection direction) { // prendre un aliment
-		/*
-		 * Entity player = ((KitchenScene) this.parentScene).getCook(); if (stock == 0
-		 * || player.item != null) { return false; } else { player.item = this.item;
-		 * stock--; return true; }
-		 */
-		return false;
+		Item item_player = ((KitchenScene) this.parentScene).getCook().item;
+		if (item_player != null) {
+			return false;
+		} else {
+			if (stock == 0) {
+				return false;
+			} else {
+				item_player = this.item;
+				stock--;
+				return true;
+			}
+		}
 	}
 
 	@Override
@@ -37,8 +46,8 @@ public class StockTable extends KitchenTile {
 		return this.stock;
 	}
 
-	public int addStock() {
-		return ++this.stock;
+	public void addStock(int x) {
+		this.stock += x;
 	}
 
 	@Override

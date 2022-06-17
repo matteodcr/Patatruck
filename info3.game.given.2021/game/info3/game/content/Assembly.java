@@ -65,7 +65,7 @@ public class Assembly {
 	 * ItemType> entry : ASSEMBLE_RECIPES.entrySet()) { if (includes(entry.getKey(),
 	 * currentItems)) { List<ItemType> recipe = new ArrayList<>(entry.getKey());
 	 * items.removeIf(i -> recipe.remove(i.type)); items.add(new
-	 * Item(entry.getValue())); } } }
+	 * Item(entry.g//etValue())); } } }
 	 */
 
 	public List<Item> getItems() {

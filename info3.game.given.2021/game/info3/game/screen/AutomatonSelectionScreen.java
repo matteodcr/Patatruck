@@ -1,18 +1,34 @@
 package info3.game.screen;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.TreeMap;
 
 import info3.game.Game;
 import info3.game.automata.GAutomaton;
+import info3.game.entity.EntityType;
 import info3.game.graphics.Graphics;
 import info3.game.graphics.Sprite;
 
 public class AutomatonSelectionScreen extends Screen {
+	final List<GAutomaton> allAutomata;
+	final Map<EntityType, Integer> selection = new TreeMap<>();
+	final Map<EntityType, Integer> defaultSelection;
+
 	public AutomatonSelectionScreen(Game game) {
 		super(game);
+
+		allAutomata = new ArrayList<>(game.getAllAutomata());
+
+		for (EntityType type : EntityType.values()) {
+			GAutomaton aut = game.getAutomaton(type.defaultAutomaton);
+			selection.put(type, allAutomata.indexOf(aut));
+		}
+
+		defaultSelection = new HashMap<>(selection);
 	}
 
 	int scrollTop = 0;
@@ -20,9 +36,16 @@ public class AutomatonSelectionScreen extends Screen {
 	boolean keyPressed = false;
 
 	private void cycleSelection(int delta) {
-		Map.Entry<String, Integer> e = new ArrayList<>(entityMappings.entrySet()).get(scrollTop);
-		int newVal = Math.floorMod(e.getValue() + delta, game.automata_list.size());
-		entityMappings.put(e.getKey(), newVal);
+		Map.Entry<EntityType, Integer> e = new ArrayList<>(selection.entrySet()).get(scrollTop);
+
+		int newVal;
+		if (delta != 0) {
+			newVal = Math.floorMod(e.getValue() + delta, allAutomata.size());
+		} else {
+			newVal = defaultSelection.get(e.getKey());
+		}
+
+		selection.put(e.getKey(), newVal);
 	}
 
 	@Override
@@ -30,13 +53,14 @@ public class AutomatonSelectionScreen extends Screen {
 		if (game.m_listener.isUp("ENTER")) {
 			enterLastPressed = true;
 		} else if (enterLastPressed) {
-			changeScreen(new GameScreen(game));
+			saveAndClose();
 		}
 
 		boolean upPressed = game.m_listener.isUp("UP");
 		boolean downPressed = game.m_listener.isUp("DOWN");
 		boolean leftPressed = game.m_listener.isUp("LEFT");
 		boolean rightPressed = game.m_listener.isUp("RIGHT");
+		boolean spacePressed = game.m_listener.isUp("SPACE");
 
 		if (upPressed && !keyPressed) {
 			if (scrollTop != 0)
@@ -44,7 +68,7 @@ public class AutomatonSelectionScreen extends Screen {
 		}
 
 		if (downPressed && !keyPressed) {
-			if (scrollTop < entityMappings.size() - 1)
+			if (scrollTop < selection.size() - 1)
 				scrollTop++;
 		}
 
@@ -56,17 +80,21 @@ public class AutomatonSelectionScreen extends Screen {
 			cycleSelection(1);
 		}
 
-		keyPressed = upPressed || downPressed || leftPressed || rightPressed;
+		if (spacePressed) {
+			cycleSelection(0);
+		}
+
+		keyPressed = upPressed || downPressed || leftPressed || rightPressed || spacePressed;
 	}
 
-	static Map<String, Integer> entityMappings;
-	static Map<String, Integer> defaultEntityMappings = new TreeMap<>();
+	private void saveAndClose() {
+		game.boundAutomata = new HashMap<>();
 
-	static {
-		defaultEntityMappings.put("cuisinier", 1);
-		defaultEntityMappings.put("étal de marché", 14);
-		defaultEntityMappings.put("cafard", 15);
-		entityMappings = new TreeMap<>(defaultEntityMappings);
+		for (Map.Entry<EntityType, Integer> entry : selection.entrySet()) {
+			game.boundAutomata.put(entry.getKey(), allAutomata.get(entry.getValue()));
+		}
+
+		changeScreen(new GameScreen(game));
 	}
 
 	@Override
@@ -76,14 +104,14 @@ public class AutomatonSelectionScreen extends Screen {
 
 		int i = 0;
 		int si = 3 - scrollTop;
-		for (Map.Entry<String, Integer> entry : entityMappings.entrySet()) {
-			GAutomaton currentAut = game.automata_list.get(entry.getValue());
-			boolean isDefault = Objects.equals(defaultEntityMappings.get(entry.getKey()), entry.getValue());
+		for (Map.Entry<EntityType, Integer> entry : selection.entrySet()) {
+			GAutomaton currentAut = allAutomata.get(entry.getValue());
+			boolean isDefault = Objects.equals(defaultSelection.get(entry.getKey()), entry.getValue());
 
 			int y = si++ * 16;
 			int textY = y + 4;
 
-			g.drawText(entry.getKey(), Graphics.Align.RIGHT, 16 * 5, textY);
+			g.drawText(entry.getKey().displayName, Graphics.Align.RIGHT, 16 * 5, textY);
 
 			if (i == scrollTop) {
 				g.drawSprite(Sprite.AS_LEFT_BOX, 6 * 16, y);

@@ -24,8 +24,12 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.io.File;
 import java.io.RandomAccessFile;
-import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -34,6 +38,7 @@ import info3.automata.ast.AST;
 import info3.automata.parser.AutomataParser;
 import info3.game.automata.AutomataGenerator;
 import info3.game.automata.GAutomaton;
+import info3.game.entity.EntityType;
 import info3.game.graphics.AwtGraphics;
 import info3.game.graphics.GameCanvas;
 import info3.game.screen.AutomatonSelectionScreen;
@@ -70,12 +75,20 @@ public class Game {
 	public final CanvasListener m_listener = new CanvasListener(this);
 	Sound m_music;
 
-	public List<GAutomaton> automata_list; // can be moved
+	private final Map<String, GAutomaton> automataList; // can be moved
+	public Map<EntityType, GAutomaton> boundAutomata = null;
+
+	public GAutomaton getBoundAutomaton(EntityType type) {
+		if (boundAutomata == null)
+			throw new RuntimeException("AutomatonSelectionScreen wasn't shown");
+
+		return boundAutomata.get(type);
+	}
 
 	Screen screen;
 
 	Game() {
-		automata_list = loadAutomata("data");
+		automataList = loadAutomata("data");
 		m_canvas = new GameCanvas(m_listener);
 
 		System.out.println("  - creating frame...");
@@ -90,6 +103,19 @@ public class Game {
 
 	public void changeScreen(Screen newScreen) {
 		screen = newScreen;
+	}
+
+	public GAutomaton getAutomaton(String name) {
+		GAutomaton a = automataList.get(name);
+
+		if (a != null)
+			return a;
+		else
+			throw new RuntimeException("automaton " + name + " not found");
+	}
+
+	public Collection<GAutomaton> getAllAutomata() {
+		return automataList.values();
 	}
 
 	/*
@@ -185,9 +211,9 @@ public class Game {
 	}
 
 	/* Generates automata list from .gal file */
-	List<GAutomaton> loadAutomata(String filename) {
+	Map<String, GAutomaton> loadAutomata(String filename) {
 		try {
-			List<GAutomaton> automata = new ArrayList<>();
+			Map<String, GAutomaton> automata = new TreeMap<>();
 			List<GAutomaton> automata_tmp;
 			File folder = new File(filename);
 			for (File file : folder.listFiles()) {
@@ -196,7 +222,10 @@ public class Game {
 						AST ast = AutomataParser.from_file(file.getAbsolutePath());
 						AutomataGenerator ast_visitor = new AutomataGenerator();
 						automata_tmp = (List<GAutomaton>) ast.accept(ast_visitor);
-						automata.addAll(automata_tmp);
+
+						automata.putAll(
+								automata_tmp.stream().collect(Collectors.toMap(a -> a.name, Function.identity())));
+
 						System.out.printf("successfully loaded automata from %s \n", file.getName());
 					} catch (Exception e) {
 						System.err.printf("error while loading file \"%s\"%n", file.getCanonicalFile());

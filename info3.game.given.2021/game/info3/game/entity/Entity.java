@@ -34,6 +34,9 @@ public abstract class Entity implements AutomatonListener {
 		gridX = gX;
 		gridY = gY;
 		m_direction = AutDirection.N;
+
+		automaton = parentScene.m_game.getBoundAutomaton(getType());
+		current_state = automaton.initial;
 	}
 
 	public abstract EntityType getType();

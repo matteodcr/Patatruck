@@ -23,7 +23,6 @@ import info3.game.entity.TrashTile;
 import info3.game.graphics.Graphics;
 import info3.game.graphics.Sprite;
 import info3.game.position.AutDirection;
-import info3.game.position.Direction;
 import info3.game.position.PositionF;
 
 public class KitchenScene extends Scene {
@@ -68,9 +67,10 @@ public class KitchenScene extends Scene {
 					new PositionF(KITCHEN_ORIGIN.getX() + getTileWidth(), KITCHEN_ORIGIN.getY() + getTileWidth()));
 			addEntity(cook);
 
-			cockroach = new CockroachEntity(this, new PositionF(KITCHEN_ORIGIN.getX() + getTileWidth() * 2,
-					KITCHEN_ORIGIN.getY() + getTileWidth() * 2), 2, 2);
-			addEntity(cockroach);
+			// cockroach = new CockroachEntity(this, new PositionF(KITCHEN_ORIGIN.getX() +
+			// getTileWidth() * 2,
+			// KITCHEN_ORIGIN.getY() + getTileWidth() * 2), 2, 2);
+			// addEntity(cockroach);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

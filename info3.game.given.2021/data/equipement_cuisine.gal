@@ -20,7 +20,7 @@ Friteuse(Init){
     |Key(SPACE) & Cell(F,@) ? Wizz:(Init)     
 }
 
-Garde_manger(Attendre){
+Garde_manger(Init){
 	*(Init)
 	|Key(SPACE) & Cell(F,@) ? Pop:(Init)   
 	|True ? Wizz:(Init)                    

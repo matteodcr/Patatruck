@@ -12,13 +12,14 @@ import info3.game.scene.Scene;
 
 public class CockroachEntity extends Entity {
 
-	
-
 	public CockroachEntity(Scene parent, PositionF position, int gX, int gY) throws IOException {
-		super(parent, position, gX, gY);
+		super(parent, position);
 		automaton = parentScene.setupAutomaton("Cockroach");
 		current_state = automaton.initial;
 		category = AutCategory.A;
+		gridX = gX;
+		gridY = gY;
+		System.out.println(((KitchenScene) parentScene).getCockroach_counter());
 		Cockroach_counterAdd(1);
 	}
 

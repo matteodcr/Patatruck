@@ -86,7 +86,7 @@ public enum Sprite {
 	public enum Spritesheet {
 		// TODO
 
-		COOKN("cookN.png", 13), CITY("city.png", 20), SAUCETABLETILE("SauceTableTile.png", 13),
+		COOKN("cookN.png", 13), CITY("city.png", 20), SAUCETABLETILE("BasicTableTile.png", 13),
 		OFFPANTILE("OffPanTable.png", 13), ONPANTILE("OnPanTable.png", 13), OFFFRIETILE("OffFrieTile.png", 13),
 		ONFRIETILE("OnFrieTile.png", 13), CUTTILE("CutTile.png", 13), KITCHEN_TRUCK("kitchen.png", 256),
 		TRASHTILE("TrashTile.png", 13), STOCKTABLE("StockTable.png", 13), BASICTABLEN("BasicTableTileN.png", 13),

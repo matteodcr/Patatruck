@@ -15,7 +15,7 @@ public class StockTable extends KitchenTile {
 
 	public StockTable(Scene parent, int gridX, int gridY, AutDirection d, Item item, Sprite stockItem) {
 		super(parent, gridX, gridY, null, d);
-		automaton = parentScene.setupAutomaton("Garde_manger");
+		automaton = parentScene.setupAutomaton("StockTable");
 		current_state = automaton.initial;
 		this.stockItem = stockItem;
 		this.stock = 5;
@@ -34,7 +34,7 @@ public class StockTable extends KitchenTile {
 			if (stock == 0) {
 				return false;
 			} else {
-				item_player = this.item;
+				((KitchenScene) this.parentScene).getCook().item = this.item;
 				stock--;
 				if (gotStuff()) {
 					this.defaultSprite = full;

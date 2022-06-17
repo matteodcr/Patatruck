@@ -4,7 +4,6 @@ import info3.game.graphics.Graphics;
 import info3.game.graphics.Sprite;
 import info3.game.position.AutCategory;
 import info3.game.position.AutDirection;
-import info3.game.position.Direction;
 import info3.game.scene.Scene;
 
 public class StockTable extends KitchenTile {
@@ -12,7 +11,7 @@ public class StockTable extends KitchenTile {
 	int stock;
 	Sprite stockItem;
 
-	public StockTable(Scene parent, int gridX, int gridY, Direction d, Sprite stockItem) {
+	public StockTable(Scene parent, int gridX, int gridY, AutDirection d, Sprite stockItem) {
 		super(parent, gridX, gridY, null, d);
 		automaton = parentScene.setupAutomaton("Garde_manger");
 		current_state = automaton.initial;

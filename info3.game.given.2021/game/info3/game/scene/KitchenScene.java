@@ -20,7 +20,7 @@ import info3.game.entity.Tile;
 import info3.game.entity.TrashTile;
 import info3.game.graphics.Graphics;
 import info3.game.graphics.Sprite;
-import info3.game.position.Direction;
+import info3.game.position.AutDirection;
 import info3.game.position.PositionF;
 
 public class KitchenScene extends Scene {
@@ -38,23 +38,23 @@ public class KitchenScene extends Scene {
 	private ArrayList<PositionF> indexStockEmplacements = new ArrayList<>(List.of(new PositionF(0, 6),
 			new PositionF(0, 7), new PositionF(0, 8), new PositionF(3, 6), new PositionF(3, 7), new PositionF(3, 8)));
 
-	public Tile[][] KitchenGrid = new Tile[][] { new Tile[] { new BasicTableTile(this, 0, 0, Direction.SUD),
-			new BasicTableTile(this, 1, 0, Direction.SUD), new BasicTableTile(this, 2, 0, Direction.SUD),
-			new FrieTile(this, 3, 0, Direction.SUD), new FrieTile(this, 4, 0, Direction.SUD),
-			new CutTile(this, 5, 0, Direction.SUD), new StockTable(this, 6, 0, Direction.SUD, Sprite.TOMATO),
-			new StockTable(this, 7, 0, Direction.SUD, Sprite.POTATO),
-			new StockTable(this, 8, 0, Direction.SUD, Sprite.CHEESE), new BasicTableTile(this, 9, 0, Direction.SUD) },
-			new Tile[] { new DeliveryTile(this, 0, 1, Direction.EST), null, null, null, null, null, null, null, null,
-					new SauceTableTile(this, 9, 1, Direction.OUEST) },
-			new Tile[] { new DeliveryTile(this, 0, 2, Direction.EST), null, null, null, null, null, null, null, null,
-					new SauceTableTile(this, 9, 2, Direction.OUEST) },
-			new Tile[] { new BasicTableTile(this, 0, 3, Direction.NORD), new TrashTile(this, 1, 3, Direction.NORD),
-					new BasicTableTile(this, 2, 3, Direction.NORD), new PanTile(this, 3, 3, Direction.NORD),
-					new PanTile(this, 4, 3, Direction.NORD), new CutTile(this, 5, 3, Direction.NORD),
-					new StockTable(this, 6, 3, Direction.NORD, Sprite.SALADE),
-					new StockTable(this, 7, 3, Direction.NORD, Sprite.BREAD),
-					new StockTable(this, 8, 3, Direction.NORD, Sprite.MEAT),
-					new BasicTableTile(this, 9, 3, Direction.NORD) } };
+	public Tile[][] KitchenGrid = new Tile[][] { new Tile[] { new BasicTableTile(this, 0, 0, AutDirection.S),
+			new BasicTableTile(this, 1, 0, AutDirection.S), new BasicTableTile(this, 2, 0, AutDirection.S),
+			new FrieTile(this, 3, 0, AutDirection.S), new FrieTile(this, 4, 0, AutDirection.S),
+			new CutTile(this, 5, 0, AutDirection.S), new StockTable(this, 6, 0, AutDirection.S, Sprite.TOMATO),
+			new StockTable(this, 7, 0, AutDirection.S, Sprite.POTATO),
+			new StockTable(this, 8, 0, AutDirection.S, Sprite.CHEESE), new BasicTableTile(this, 9, 0, AutDirection.S) },
+			new Tile[] { new DeliveryTile(this, 0, 1, AutDirection.E), null, null, null, null, null, null, null, null,
+					new SauceTableTile(this, 9, 1, AutDirection.W) },
+			new Tile[] { new DeliveryTile(this, 0, 2, AutDirection.E), null, null, null, null, null, null, null, null,
+					new SauceTableTile(this, 9, 2, AutDirection.W) },
+			new Tile[] { new BasicTableTile(this, 0, 3, AutDirection.N), new TrashTile(this, 1, 3, AutDirection.N),
+					new BasicTableTile(this, 2, 3, AutDirection.N), new PanTile(this, 3, 3, AutDirection.N),
+					new PanTile(this, 4, 3, AutDirection.N), new CutTile(this, 5, 3, AutDirection.N),
+					new StockTable(this, 6, 3, AutDirection.N, Sprite.SALADE),
+					new StockTable(this, 7, 3, AutDirection.N, Sprite.BREAD),
+					new StockTable(this, 8, 3, AutDirection.N, Sprite.MEAT),
+					new BasicTableTile(this, 9, 3, AutDirection.N) } };
 
 	public KitchenScene(int pixelWidth, int pixelHeight, Game g) {
 		super(pixelWidth, pixelHeight, g);
@@ -100,14 +100,14 @@ public class KitchenScene extends Scene {
 			} while (!acceptable);
 		}
 		Tile[][] futureKitchenGrid = new Tile[][] {
-				new Tile[] { new BasicTableTile(this, 0, 0, Direction.SUD), null, null, null, null, null, null, null,
-						null, new BasicTableTile(this, 9, 0, Direction.SUD) },
-				new Tile[] { new DeliveryTile(this, 0, 1, Direction.EST), null, null, null, null, null, null, null,
-						null, new SauceTableTile(this, 9, 1, Direction.OUEST) },
-				new Tile[] { new DeliveryTile(this, 0, 2, Direction.EST), null, null, null, null, null, null, null,
-						null, new SauceTableTile(this, 9, 2, Direction.OUEST) },
-				new Tile[] { new BasicTableTile(this, 0, 0, Direction.SUD), null, null, null, null, null, null, null,
-						null, new BasicTableTile(this, 9, 0, Direction.SUD) } };
+				new Tile[] { new BasicTableTile(this, 0, 0, AutDirection.S), null, null, null, null, null, null, null,
+						null, new BasicTableTile(this, 9, 0, AutDirection.S) },
+				new Tile[] { new DeliveryTile(this, 0, 1, AutDirection.E), null, null, null, null, null, null, null,
+						null, new SauceTableTile(this, 9, 1, AutDirection.W) },
+				new Tile[] { new DeliveryTile(this, 0, 2, AutDirection.E), null, null, null, null, null, null, null,
+						null, new SauceTableTile(this, 9, 2, AutDirection.W) },
+				new Tile[] { new BasicTableTile(this, 0, 0, AutDirection.S), null, null, null, null, null, null, null,
+						null, new BasicTableTile(this, 9, 0, AutDirection.S) } };
 		// replace everything
 		for (int i = 0; i < movedTiles.length; i++) {
 			PositionF pos = indexEmplacements.get(i), futurePos = indexEmplacements.get(movedTiles[i]);

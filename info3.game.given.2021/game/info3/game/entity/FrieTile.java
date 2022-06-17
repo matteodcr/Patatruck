@@ -4,14 +4,13 @@ import info3.game.graphics.Graphics;
 import info3.game.graphics.Sprite;
 import info3.game.position.AutCategory;
 import info3.game.position.AutDirection;
-import info3.game.position.Direction;
 import info3.game.scene.Scene;
 
 public class FrieTile extends KitchenTile {
 	// Item item;
 	int compteur;
 
-	public FrieTile(Scene parent, int gridX, int gridY, Direction d) {
+	public FrieTile(Scene parent, int gridX, int gridY, AutDirection d) {
 		super(parent, gridX, gridY, null, d);
 		automaton = parentScene.setupAutomaton("Friteuse");
 		current_state = automaton.initial;
@@ -47,7 +46,7 @@ public class FrieTile extends KitchenTile {
 
 	@Override
 	public void render(Graphics g) {
-		g.drawSprite(Sprite.FRIE_TILE, 0, 0);
+		g.drawSprite(Sprite.OFF_FRIE_TILE, 0, 0);
 	}
 
 	@Override

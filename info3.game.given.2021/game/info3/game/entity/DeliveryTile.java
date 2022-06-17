@@ -12,7 +12,7 @@ public class DeliveryTile extends KitchenTile {
 	// IList<Item> assiette;
 	// Recipe recette;
 
-	public DeliveryTile(Scene parent, int gridX, int gridY, Direction d) {
+	public DeliveryTile(Scene parent, int gridX, int gridY, AutDirection d) {
 		super(parent, gridX, gridY, null, d);
 		automaton = parentScene.setupAutomaton("Livraison");
 		current_state = automaton.initial;
@@ -32,7 +32,7 @@ public class DeliveryTile extends KitchenTile {
 	@Override
 	public void render(Graphics g) {
 		// BufferedImage img = m_images[m_imageIndex];
-		g.drawSprite(Sprite.DELIVERY_TILE, 0, 0);
+		g.drawSprite(Sprite.DELIVERYTILE, 0, 0);
 	}
 
 	boolean recetteReady() {

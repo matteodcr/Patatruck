@@ -4,13 +4,12 @@ import info3.game.graphics.Graphics;
 import info3.game.graphics.Sprite;
 import info3.game.position.AutCategory;
 import info3.game.position.AutDirection;
-import info3.game.position.Direction;
 import info3.game.scene.Scene;
 
 public class BasicTableTile extends KitchenTile {
 	// Item item;
 
-	public BasicTableTile(Scene parent, int gridX, int gridY, Direction d) {
+	public BasicTableTile(Scene parent, int gridX, int gridY, AutDirection d) {
 		super(parent, gridX, gridY, null, d);
 		automaton = parentScene.setupAutomaton("Table");
 		current_state = automaton.initial;
@@ -40,7 +39,22 @@ public class BasicTableTile extends KitchenTile {
 
 	@Override
 	public void render(Graphics g) {
-		g.drawSprite(Sprite.BASIC_TABLE, 0, 0);
+		switch (m_direction) {
+		case E:
+			g.drawSprite(Sprite.BASICTABLE_E, 0, 0);
+			break;
+		case N:
+			g.drawSprite(Sprite.BASICTABLE_N, 0, 0);
+			break;
+		case S:
+			g.drawSprite(Sprite.BASICTABLE_S, 0, 0);
+			break;
+		case W:
+			g.drawSprite(Sprite.BASICTABLE_W, 0, 0);
+			break;
+		default:
+			break;
+		}
 	}
 
 	@Override

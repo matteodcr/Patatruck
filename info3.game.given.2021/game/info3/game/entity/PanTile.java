@@ -4,14 +4,13 @@ import info3.game.graphics.Graphics;
 import info3.game.graphics.Sprite;
 import info3.game.position.AutCategory;
 import info3.game.position.AutDirection;
-import info3.game.position.Direction;
 import info3.game.scene.Scene;
 
 public class PanTile extends KitchenTile {
 	// Item item;
 	int compteur;
 
-	public PanTile(Scene parent, int gridX, int gridY, Direction d) {
+	public PanTile(Scene parent, int gridX, int gridY, AutDirection d) {
 		super(parent, gridX, gridY, null, d);
 		automaton = parentScene.setupAutomaton("Feu_cuisson");
 		current_state = automaton.initial;
@@ -48,7 +47,7 @@ public class PanTile extends KitchenTile {
 	@Override
 	public void render(Graphics g) {
 		// BufferedImage img = m_images[m_imageIndex];
-		g.drawSprite(Sprite.PAN_TILE, 0, 0);
+		g.drawSprite(Sprite.OFF_PAN_TILE, 0, 0);
 	}
 
 	@Override

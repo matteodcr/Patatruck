@@ -25,36 +25,52 @@ public class CockroachEntity extends Entity {
 
 	@Override
 	public boolean wizz(AutDirection direction) {
-		AutDirection newDirection = convertRelativToAbsolutedir(direction);
-		m_direction = newDirection;
-		switch (newDirection) {
-		case N: {
-			PositionF newPos = new PositionF(0, -parentScene.getTileWidth());
-			gridY--;
-			this.position = position.add(newPos);
-			return true;
+
+		finish = System.currentTimeMillis();
+		timeElapsed = finish - start;
+
+		if (timeElapsed >= 500) {
+			AutDirection newDirection = convertRelativToAbsolutedir(direction);
+			m_direction = newDirection;
+			switch (newDirection) {
+			case N: {
+				PositionF newPos = new PositionF(0, -parentScene.getTileWidth());
+				gridY--;
+				this.position = position.add(newPos);
+				start = System.currentTimeMillis();
+
+				return true;
+			}
+			case W: {
+				PositionF newPos = new PositionF(-parentScene.getTileWidth(), 0);
+				gridX--;
+				this.position = position.add(newPos);
+				start = System.currentTimeMillis();
+
+				return true;
+			}
+			case E: {
+				PositionF newPos = new PositionF(parentScene.getTileWidth(), 0);
+				gridX++;
+				this.position = position.add(newPos);
+				start = System.currentTimeMillis();
+
+				return true;
+			}
+			case S: {
+				PositionF newPos = new PositionF(0, parentScene.getTileWidth());
+				gridY++;
+				this.position = position.add(newPos);
+				start = System.currentTimeMillis();
+
+				return true;
+			}
+			default:
+				start = System.currentTimeMillis();
+				return false;
+			}
 		}
-		case W: {
-			PositionF newPos = new PositionF(-parentScene.getTileWidth(), 0);
-			gridX--;
-			this.position = position.add(newPos);
-			return true;
-		}
-		case E: {
-			PositionF newPos = new PositionF(parentScene.getTileWidth(), 0);
-			gridX++;
-			this.position = position.add(newPos);
-			return true;
-		}
-		case S: {
-			PositionF newPos = new PositionF(0, parentScene.getTileWidth());
-			gridY++;
-			this.position = position.add(newPos);
-			return true;
-		}
-		default:
-			return false;
-		}
+		return false;
 
 	}
 
@@ -113,7 +129,6 @@ public class CockroachEntity extends Entity {
 	@Override
 	public boolean explode() {
 		Cockroach_counterAdd(-1);
-		System.out.println(((KitchenScene) parentScene).getCockroach_counter());
 		return true;
 	}
 

@@ -10,11 +10,13 @@ import info3.game.scene.Scene;
 public class StockTable extends KitchenTile {
 	// Item item;
 	int stock;
+	Sprite stockItem;
 
-	public StockTable(Scene parent, int gridX, int gridY, Direction d) {
+	public StockTable(Scene parent, int gridX, int gridY, Direction d, Sprite stockItem) {
 		super(parent, gridX, gridY, null, d);
 		automaton = parentScene.setupAutomaton("Garde_manger");
 		current_state = automaton.initial;
+		this.stockItem = stockItem;
 	}
 
 	@Override
@@ -43,6 +45,7 @@ public class StockTable extends KitchenTile {
 	@Override
 	public void render(Graphics g) {
 		g.drawSprite(Sprite.STOCK_TABLE, 0, 0);
+		g.drawSprite(this.stockItem, 0, 0);
 	}
 
 	@Override

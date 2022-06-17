@@ -1,56 +1,36 @@
 package info3.game.graphics;
 
 import java.awt.Color;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.imageio.ImageIO;
+import java.awt.Image;
 
 public class AwtGraphics implements Graphics {
+
+	public static final String RESOURCES_DIRECTORY = "resources";
 
 	private final java.awt.Graphics g;
 	private final int width;
 	private final int height;
 	private final int scaleFactor;
 
-	private final static Map<Sprite, BufferedImage> SPRITES = new HashMap<>();
+	private final TextureCache textures;
 
-	static {
-		// Chargement des textures
-		for (Sprite.Spritesheet spritesheet : Sprite.Spritesheet.values()) {
-			try {
-				BufferedImage img = ImageIO.read(new File("resources", spritesheet.filename));
-				for (Sprite s : Sprite.values()) {
-					if (s.spritesheet == spritesheet) {
-						int size = spritesheet.tileSize;
-						SPRITES.put(s, img.getSubimage(s.u * size, s.v * size, s.w * size, s.h * size));
-					}
-				}
-			} catch (IOException e) {
-				throw new RuntimeException(e);
-			}
-		}
-	}
-
-	public AwtGraphics(java.awt.Graphics g, int width, int height, int scaleFactor) {
+	public AwtGraphics(AwtGraphics old, java.awt.Graphics g, int width, int height, int scaleFactor) {
 		this.g = g;
 		this.width = width;
 		this.height = height;
 		this.scaleFactor = scaleFactor;
+		this.textures = old != null ? old.textures : new TextureCache(RESOURCES_DIRECTORY, scaleFactor);
 	}
 
 	@Override
 	public Graphics window(int x, int y, int w, int h) {
-		return new AwtGraphics(g.create(x * scaleFactor, y * scaleFactor, w * scaleFactor, h * scaleFactor), w, h,
+		return new AwtGraphics(this, g.create(x * scaleFactor, y * scaleFactor, w * scaleFactor, h * scaleFactor), w, h,
 				scaleFactor);
 	}
 
 	@Override
 	public Graphics window(float x, float y, int w, int h) {
-		return new AwtGraphics(
+		return new AwtGraphics(this,
 				g.create((int) (x * scaleFactor), (int) (y * scaleFactor), w * scaleFactor, h * scaleFactor), w, h,
 				scaleFactor);
 	}
@@ -71,17 +51,17 @@ public class AwtGraphics implements Graphics {
 		g.fillRect(x * scaleFactor, y * scaleFactor, width * scaleFactor, height * scaleFactor);
 	}
 
-	private void drawSpriteRealCoords(Sprite sprite, int dx, int dy) {
-		BufferedImage img = SPRITES.get(sprite);
+	void drawSpriteRealCoords(Sprite sprite, int dx, int dy) {
+		Image img = textures.getScaledSprites().get(sprite);
 		if (img == null)
 			throw new IllegalStateException("Texture non trouvée");
 
-		int tileSize = sprite.spritesheet.tileSize;
+		drawSpriteRealCoords(img, dx, dy);
+	}
 
-		int dx2 = dx + sprite.w * tileSize * this.scaleFactor;
-		int dy2 = dy + sprite.h * tileSize * this.scaleFactor;
-
-		g.drawImage(img, dx, dy, dx2, dy2, 0, 0, img.getWidth(), img.getHeight(), null);
+	void drawSpriteRealCoords(Image img, int dx, int dy) {
+		// int iw = img.getWidth(null), ih = img.getHeight(null);
+		g.drawImage(img, dx, dy, null);
 	}
 
 	@Override
@@ -92,6 +72,25 @@ public class AwtGraphics implements Graphics {
 	@Override
 	public void drawSprite(Sprite sprite, float x, float y) {
 		drawSpriteRealCoords(sprite, (int) (x * this.scaleFactor), (int) (y * this.scaleFactor));
+	}
+
+	@Override
+	public int measureText(String text) {
+		return textures.getFont7beige().measureText(text);
+	}
+
+	@Override
+	public void drawText(String text, Align align, int x, int y) {
+		AwtFont f = textures.getFont7beige();
+		switch (align) {
+		case LEFT:
+			f.drawText(this, text, x, y);
+			break;
+		case RIGHT:
+			int width = f.measureText(text);
+			f.drawText(this, text, getWidth() + x - width, y);
+			break;
+		}
 	}
 
 	@Override

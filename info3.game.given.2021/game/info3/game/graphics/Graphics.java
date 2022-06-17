@@ -2,6 +2,10 @@ package info3.game.graphics;
 
 public interface Graphics {
 
+	enum Align {
+		LEFT, RIGHT,
+	}
+
 	int getWidth();
 
 	int getHeight();
@@ -29,5 +33,9 @@ public interface Graphics {
 	default void drawSprite(Sprite sprite, float x, float y) {
 		drawSprite(sprite, (int) x, (int) y);
 	}
+
+	int measureText(String text);
+
+	void drawText(String text, Align align, int x, int y);
 
 }

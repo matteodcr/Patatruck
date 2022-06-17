@@ -5,20 +5,22 @@ import info3.game.graphics.Graphics;
 import info3.game.graphics.Sprite;
 import info3.game.position.AutCategory;
 import info3.game.position.AutDirection;
+import info3.game.scene.KitchenScene;
 import info3.game.scene.Scene;
 
 public class StockTable extends KitchenTile {
-	// Item item;
+	Item item;
 	int stock;
 	Sprite stockItem;
 
-	public StockTable(Scene parent, int gridX, int gridY, Direction d, Item item) {
+	public StockTable(Scene parent, int gridX, int gridY, AutDirection d, Item item, Sprite stockItem) {
 		super(parent, gridX, gridY, null, d);
 		automaton = parentScene.setupAutomaton("Garde_manger");
 		current_state = automaton.initial;
 		this.stockItem = stockItem;
 		this.stock = 0;
 		this.item = item;
+		this.stockItem = stockItem;
 	}
 
 	@Override

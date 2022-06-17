@@ -5,10 +5,11 @@ import info3.game.graphics.Graphics;
 import info3.game.graphics.Sprite;
 import info3.game.position.AutCategory;
 import info3.game.position.AutDirection;
+import info3.game.scene.KitchenScene;
 import info3.game.scene.Scene;
 
 public class FrieTile extends KitchenTile {
-	// Item item;
+	Item item;
 	int compteur;
 
 	public FrieTile(Scene parent, int gridX, int gridY, AutDirection d) {

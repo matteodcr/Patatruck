@@ -22,6 +22,7 @@ import static info3.game.graphics.Sprite.Spritesheet.COOKS;
 import static info3.game.graphics.Sprite.Spritesheet.COOKW;
 import static info3.game.graphics.Sprite.Spritesheet.CUTTILE;
 import static info3.game.graphics.Sprite.Spritesheet.DELIVERY;
+import static info3.game.graphics.Sprite.Spritesheet.FAILEDITEM_;
 import static info3.game.graphics.Sprite.Spritesheet.FRIES_;
 import static info3.game.graphics.Sprite.Spritesheet.GALETTECOOKED_;
 import static info3.game.graphics.Sprite.Spritesheet.GALETTE_;
@@ -69,7 +70,7 @@ public enum Sprite {
 	MASHEDPOTATO(MASHEDPOTATO_, 0, 0, 1, 1), CLASSICBURGER(CLASSICBURGER_, 0, 0, 1, 1),
 	POTATOCOOKED(POTATOCOOKED_, 0, 0, 1, 1), POTATOSALAD(POTATOSALAD_, 0, 0, 1, 1), POUTINE(POUTINE_, 0, 0, 1, 1),
 	SALADELEAF(SALADELEAF_, 0, 0, 1, 1), TOMATOSLICE(TOMATOSLICE_, 0, 0, 1, 1), VEGIBURGER(VEGIBURGER_, 0, 0, 1, 1),
-	KETCHUP(KETCHUPTABLE, 0, 0, 1, 1), MAYONNAISE(MAYOTABLE, 0, 0, 1, 1);
+	KETCHUP(KETCHUPTABLE, 0, 0, 1, 1), MAYONNAISE(MAYOTABLE, 0, 0, 1, 1), FAILEDITEM(FAILEDITEM_, 0, 0, 1, 1);
 
 	public final Spritesheet spritesheet;
 	public final int u, v, w, h;
@@ -91,26 +92,28 @@ public enum Sprite {
 		TRASHTILE("TrashTile.png", 13), STOCKTABLE("StockTable.png", 13), BASICTABLEN("BasicTableTileN.png", 13),
 		BASICTABLEE("BasicTableTileE.png", 13), BASICTABLEW("BasicTableTileW.png", 13),
 		BASICTABLES("BasicTableTileS.png", 13), DELIVERY("DeliveryTile.png", 13),
-		TOMATO_("Sprite_cuisine_ingredient/tomato.png", 13), POTATO_("Sprite_cuisine_ingredient/Potato.png", 13),
-		SALADE_("Sprite_cuisine_ingredient/salade.png", 13), BREAD_("Sprite_cuisine_ingredient/bread.png", 13),
-		CHEESE_("Sprite_cuisine_ingredient/cheese.png", 13), MEAT_("Sprite_cuisine_ingredient/meat.png", 13),
+		TOMATO_("Sprite_cuisine_ingredient/tomate.png", 13), POTATO_("Sprite_cuisine_ingredient/patate.png", 13),
+		SALADE_("Sprite_cuisine_ingredient/salade.png", 13), BREAD_("Sprite_cuisine_ingredient/pain.png", 13),
+		CHEESE_("Sprite_cuisine_ingredient/fromage.png", 13), MEAT_("Sprite_cuisine_ingredient/viande.png", 13),
 		COCKROACHN("cockroachN.png", 13), COCKROACHE("cockroachE.png", 13), COCKROACHW("cockroachW.png", 13),
 		COCKROACHS("cockroachS.png", 13), COOKE("cookE.png", 13), COOKW("cookW.png", 13), COOKS("cookS.png", 13),
-		BREADSLICE_("Sprite_cuisine_ingredient/breadslice.png", 13),
-		COOKEDFRIES_("Sprite_cuisine_ingredient/coockedfries.png", 13),
-		COOKEDHASHMEAT_("Sprite_cuisine_ingredient/cookedhashsedmeat.png", 13),
-		COOKEDMEAT_("Sprite_cuisine_ingredient/cookedmeat.png", 13), FRIES_("Sprite_cuisine_ingredient/fries.png", 13),
-		GALETTE_("Sprite_cuisine_ingredient/galette.png", 13),
-		GALETTECOOKED_("Sprite_cuisine_ingredient/galettecoocked.png", 13),
-		HACHI_("Sprite_cuisine_ingredient/hachi.png", 13), HASHEDMEAT_("Sprite_cuisine_ingredient/hashedmeat.png", 13),
-		MASHEDPOTATO_("Sprite_cuisine_ingredient/mashed_potato.png", 13),
-		CLASSICBURGER_("Sprite_cuisine_ingredient/meatburger.png", 13),
-		POTATOCOOKED_("Sprite_cuisine_ingredient/potatocoocked.png", 13),
-		POTATOSALAD_("Sprite_cuisine_ingredient/potatosalade.png", 13),
+		BREADSLICE_("Sprite_cuisine_ingredient/tranche de pain.png", 13),
+		COOKEDFRIES_("Sprite_cuisine_ingredient/frites cuite.png", 13),
+		COOKEDHASHMEAT_("Sprite_cuisine_ingredient/viande hachee cuite.png", 13),
+		COOKEDMEAT_("Sprite_cuisine_ingredient/viande cuite.png", 13),
+		FRIES_("Sprite_cuisine_ingredient/frites.png", 13), GALETTE_("Sprite_cuisine_ingredient/galette.png", 13),
+		GALETTECOOKED_("Sprite_cuisine_ingredient/galette cuite.png", 13),
+		HACHI_("Sprite_cuisine_ingredient/hachis parmentier.png", 13),
+		HASHEDMEAT_("Sprite_cuisine_ingredient/viande hachee.png", 13),
+		MASHEDPOTATO_("Sprite_cuisine_ingredient/puree.png", 13),
+		CLASSICBURGER_("Sprite_cuisine_ingredient/burger classique.png", 13),
+		POTATOCOOKED_("Sprite_cuisine_ingredient/patate cuite.png", 13),
+		POTATOSALAD_("Sprite_cuisine_ingredient/salade de patate.png", 13),
 		POUTINE_("Sprite_cuisine_ingredient/poutine.png", 13),
-		SALADELEAF_("Sprite_cuisine_ingredient/saladeleaf.png", 13),
-		TOMATOSLICE_("Sprite_cuisine_ingredient/tomatoslice.png", 13), KETCHUPTABLE("ketchup.png", 13),
-		MAYOTABLE("mayonnaise.png", 13), VEGIBURGER_("Sprite_cuisine_ingredient/vegiburger.png", 13);
+		SALADELEAF_("Sprite_cuisine_ingredient/feuille de salade.png", 13),
+		TOMATOSLICE_("Sprite_cuisine_ingredient/rondelle de tomate.png", 13), KETCHUPTABLE("ketchup.png", 13),
+		MAYOTABLE("mayonnaise.png", 13), VEGIBURGER_("Sprite_cuisine_ingredient/burger vegetarien.png", 13),
+		FAILEDITEM_("Sprite_cuisine_ingredient/garbageplate.png", 13);
 
 		public final String filename;
 		public final int tileSize;

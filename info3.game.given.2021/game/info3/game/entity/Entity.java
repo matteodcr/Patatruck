@@ -32,7 +32,12 @@ public abstract class Entity implements AutomatonListener {
 		parentScene = parent;
 		position = pos;
 		m_direction = AutDirection.N;
+
+		automaton = parentScene.m_game.getBoundAutomaton(getType());
+		current_state = automaton.initial;
 	}
+
+	public abstract EntityType getType();
 
 	void setPosition(PositionF pos) {
 		position = pos;

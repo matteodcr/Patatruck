@@ -13,9 +13,12 @@ public class CockroachEntity extends Entity {
 
 	public CockroachEntity(Scene parent, PositionF position) throws IOException {
 		super(parent, position);
-		automaton = parentScene.setupAutomaton("Cockroach");
-		current_state = automaton.initial;
 		category = AutCategory.A;
+	}
+
+	@Override
+	public EntityType getType() {
+		return EntityType.COCKROACH;
 	}
 
 	@Override

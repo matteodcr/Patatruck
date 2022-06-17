@@ -3,7 +3,6 @@ package info3.game.scene;
 import java.util.ArrayList;
 
 import info3.game.Game;
-import info3.game.automata.GAutomaton;
 import info3.game.entity.Entity;
 import info3.game.entity.Tile;
 import info3.game.graphics.Graphics;
@@ -92,14 +91,5 @@ public abstract class Scene {
 
 	public int getNbEntities() {
 		return entity_list.size();
-	}
-
-	public GAutomaton setupAutomaton(String name) {
-		for (GAutomaton current_automaton : m_game.automata_list) {
-			if (current_automaton.name.equals(name)) {
-				return current_automaton;
-			}
-		}
-		return null;
 	}
 }

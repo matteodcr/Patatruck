@@ -120,6 +120,8 @@ public abstract class Entity implements AutomatonListener {
 		for (Entity entity : parentScene.entity_list) {
 			switch (newDirection) {
 			case N: {
+				System.out.println("N");
+
 				if (gridY >= 1) {
 					if (entity.isItThatGrid(gridY - 1, gridX) && entity.category == category) {
 						return true;
@@ -128,6 +130,8 @@ public abstract class Entity implements AutomatonListener {
 				break;
 			}
 			case W: {
+				System.out.println("W");
+
 				if (gridX >= 1) {
 					if (entity.isItThatGrid(gridY, gridX - 1) && entity.category == category) {
 						return true;
@@ -136,6 +140,8 @@ public abstract class Entity implements AutomatonListener {
 				break;
 			}
 			case E: {
+				System.out.println("E");
+
 				if (gridX <= 8) {
 					if (entity.isItThatGrid(gridY, gridX + 1) && entity.category == category) {
 						return true;
@@ -144,6 +150,8 @@ public abstract class Entity implements AutomatonListener {
 				break;
 			}
 			case S: {
+				System.out.println("S");
+
 				if (gridY <= 2) {
 					if (entity.isItThatGrid(gridY + 1, gridX) && entity.category == category) {
 						return true;
@@ -152,6 +160,8 @@ public abstract class Entity implements AutomatonListener {
 				break;
 			}
 			case H: {
+				System.out.println("H");
+
 				if ((gridX >= 1) && (gridY >= 1) && (gridX <= 8) && (gridY <= 2)) {
 					if (entity.isItThatGrid(gridY, gridX) && entity.category == category) {
 						return true;

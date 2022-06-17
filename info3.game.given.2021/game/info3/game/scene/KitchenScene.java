@@ -187,6 +187,14 @@ public class KitchenScene extends Scene {
 	@Override
 	public void tick(long elapsed) {
 		super.tick(elapsed);
+		for (int i = 0; i < KitchenGrid.length; i++) {
+			for (int j = 0; j < KitchenGrid[i].length; j++) {
+				if (KitchenGrid[i][j] != null) {
+					KitchenGrid[i][j].tick(elapsed);
+				}
+			}
+		}
+
 		Random rand = new Random();
 		if (rand.nextInt(500) < 2) {
 			try {

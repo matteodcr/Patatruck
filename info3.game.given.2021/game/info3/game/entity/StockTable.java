@@ -25,6 +25,7 @@ public class StockTable extends KitchenTile {
 
 	@Override
 	public boolean pop(AutDirection direction) { // prendre un aliment
+		System.out.println("POP");
 		Item item_player = ((KitchenScene) this.parentScene).getCook().item;
 		if (item_player != null) {
 			return false;
@@ -41,6 +42,8 @@ public class StockTable extends KitchenTile {
 
 	@Override
 	public boolean wizz(AutDirection direction) {
+		System.out.println("WIZZ");
+
 		return true;
 	}
 

@@ -176,7 +176,7 @@ public class Game {
 			kitchenScene.tick(elapsed);
 			cityScene.tick(elapsed);
 		}
-		if (m_listener.isUp("SPACE")) {// used for testing shuffle
+		if (m_listener.isUp("ESCAPE")) {// used for testing shuffle
 			this.kitchenScene.shuffle();
 		}
 	}

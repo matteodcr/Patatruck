@@ -1,4 +1,4 @@
-StockTable(Full){
+StockTable(Still){
 * (Still):
 | Cell(F,@) & Key(SPACE) ? Pop(F) :(Still)
 | !GotStuff() ? Wizz(F) :(Empty)

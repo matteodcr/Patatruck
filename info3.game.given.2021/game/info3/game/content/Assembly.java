@@ -43,12 +43,6 @@ public class Assembly {
 		return items.stream().map(item -> item.type).collect(Collectors.toList());
 	}
 
-	/*
-	 * private static void removeOfType(List<Item> items, ItemType type) { for (int
-	 * i = 0; i < items.size(); i++) { if (items.get(i).type == type) {
-	 * items.remove(i); return; } } }
-	 */
-
 	private static boolean includes(List<ItemType> a, List<ItemType> b) {
 		b = new ArrayList<>(b);
 		for (ItemType i : a) {
@@ -57,16 +51,6 @@ public class Assembly {
 		}
 		return true;
 	}
-
-	/*
-	 * private void addItemBase(Item addition) { items.add(addition); // Assemblage
-	 * 
-	 * List<ItemType> currentItems = getItemTypes(); for (Entry<List<ItemType>,
-	 * ItemType> entry : ASSEMBLE_RECIPES.entrySet()) { if (includes(entry.getKey(),
-	 * currentItems)) { List<ItemType> recipe = new ArrayList<>(entry.getKey());
-	 * items.removeIf(i -> recipe.remove(i.type)); items.add(new
-	 * Item(entry.g//etValue())); } } }
-	 */
 
 	public List<Item> getItems() {
 		return items;

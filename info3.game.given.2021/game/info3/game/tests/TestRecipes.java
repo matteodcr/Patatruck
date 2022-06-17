@@ -3,6 +3,7 @@ package info3.game.tests;
 import info3.game.content.Assembly;
 import info3.game.content.Item;
 import info3.game.content.ItemType;
+import info3.game.content.Sauce;
 
 public class TestRecipes {
 	public static void main(String[] args) {
@@ -51,6 +52,12 @@ public class TestRecipes {
 		burger.addItem(new Item(ItemType.CHEESE));
 		assert burger.getItems().size() == 1;
 		assert burger.getItems().get(0).getType() == ItemType.CLASSIC_BURGER_SALAD;
+
+		// test sauce
+		burger.getItems().get(0).setSauce(Sauce.KETCHUP);
+		assert burger.getItems().get(0).getSauce() == Sauce.KETCHUP;
+		burger.getItems().get(0).setSauce(Sauce.MAYO);
+		assert burger.getItems().get(0).getSauce() == Sauce.KETCHUP_MAYO;
 		System.out.println("Everything works");
 	}
 

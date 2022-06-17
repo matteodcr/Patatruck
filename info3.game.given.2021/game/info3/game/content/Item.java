@@ -4,9 +4,7 @@ import java.util.HashMap;
 
 public class Item {
 	final ItemType type;
-	final boolean hasOptionalSalad;
-	final boolean hasOptionalTomato;
-	final Sauce sauce;
+	Sauce sauce;
 
 	private HashMap<ItemType, ItemType> cookItem = new HashMap<>() {
 		private static final long serialVersionUID = 1L;
@@ -41,48 +39,28 @@ public class Item {
 		}
 	};
 
-	public Item(ItemType type, boolean hasOptionalSalad, boolean hasOptionalTomato, Sauce sauce) {
+	public Item(ItemType type, Sauce sauce) {
 		this.type = type;
-		this.hasOptionalSalad = hasOptionalSalad;
-		this.hasOptionalTomato = hasOptionalTomato;
 		this.sauce = sauce;
 	}
 
 	public Item(ItemType type) {
-		this(type, false, false, null);
+		this(type, null);
 	}
 
 	public ItemType getType() {
 		return type;
 	}
 
-	public boolean hasSalad() {
-		return hasOptionalSalad;
-	}
-
-	public boolean hasTomato() {
-		return hasOptionalTomato;
-	}
-
 	public Sauce getSauce() {
 		return sauce;
 	}
 
-	public Item withSalad() {
-		assert type.acceptsOptionalSalad;
-		return new Item(type, true, hasOptionalTomato, sauce);
-	}
-
-	public Item withTomato() {
-		assert type.acceptsOptionalTomato;
-		return new Item(type, hasOptionalSalad, true, sauce);
-	}
-
-	public Item setSauce(Sauce sauce) {
+	public void setSauce(Sauce sauce) {
 		if (this.sauce == Sauce.KETCHUP && sauce == Sauce.MAYO || this.sauce == Sauce.MAYO && sauce == Sauce.KETCHUP) {
-			return new Item(type, true, hasOptionalTomato, Sauce.KETCHUP_MAYO);
+			this.sauce = Sauce.KETCHUP_MAYO;
 		} else {
-			return new Item(type, true, hasOptionalTomato, sauce);
+			this.sauce = sauce;
 		}
 	}
 
@@ -129,13 +107,6 @@ public class Item {
 	public String toString() {
 		String result = new String();
 		result = result + this.type.toString();
-
-		if (hasOptionalSalad) {
-			result = result + "+ Optional Salad ";
-		}
-		if (hasOptionalTomato) {
-			result = result + "+ Optional Tomato ";
-		}
 		if (sauce != null) {
 			result = result + "+ " + this.sauce;
 		}
@@ -146,8 +117,6 @@ public class Item {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + (hasOptionalSalad ? 1231 : 1237);
-		result = prime * result + (hasOptionalTomato ? 1231 : 1237);
 		result = prime * result + ((sauce == null) ? 0 : sauce.hashCode());
 		result = prime * result + ((type == null) ? 0 : type.hashCode());
 		return result;
@@ -162,10 +131,6 @@ public class Item {
 		if (getClass() != obj.getClass())
 			return false;
 		Item other = (Item) obj;
-		if (hasOptionalSalad != other.hasOptionalSalad)
-			return false;
-		if (hasOptionalTomato != other.hasOptionalTomato)
-			return false;
 		if (sauce != other.sauce)
 			return false;
 		if (type != other.type)

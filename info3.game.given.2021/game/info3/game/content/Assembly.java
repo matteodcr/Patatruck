@@ -87,7 +87,7 @@ public class Assembly {
 				tmp = this.getRecipe(iter);
 				currentItems.remove(iter);
 				for (ItemType iter2 : tmp) {
-					this.getItems().add(new Item(iter2, false, false, null)); // on utilise pas addItem
+					this.getItems().add(new Item(iter2, null)); // on utilise pas addItem
 				}
 			}
 		}
@@ -122,7 +122,7 @@ public class Assembly {
 		for (Entry<List<ItemType>, ItemType> entry : ASSEMBLE_RECIPES.entrySet()) {
 			if (this.equal(entry.getKey())) { // on va former une recette
 				this.emptyAssembly();
-				this.getItems().add(new Item(entry.getValue(), false, false, null));
+				this.getItems().add(new Item(entry.getValue(), null));
 				return;
 			} else if (includes(currentItems, entry.getKey())) {// on est en bonne voie
 				return;

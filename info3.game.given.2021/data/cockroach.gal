@@ -1,6 +1,6 @@
 Cockroach(Run){
 * (Run):
-| Cell(H,@)     ? Pop() :()                
+| Cell(H,@)     ? Explode() :()                
 | (!Cell(F,@)) & (!Cell(L,@)) & (!Cell(F,O)) & (!Cell(L,O))    ? 70%Wizz(F) / 30%Wizz(L): (_)
 | (!Cell(F,@)) & (!Cell(R,@)) & (!Cell(F,O)) & (!Cell(R,O))    ? 70%Wizz(F) / 30%Wizz(R): (_)
 | ((Cell(F,@)) / (Cell(F,O))) & ((!Cell(R,O)) & (!Cell(R,@)))    ? Wizz(R): (_)

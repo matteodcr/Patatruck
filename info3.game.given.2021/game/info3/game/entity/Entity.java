@@ -25,6 +25,7 @@ public abstract class Entity implements AutomatonListener {
 	int deathTime = 0;
 	int move_timer = 0, move_timer_max = 0; // allows to move only when move_timer==0
 	GState current_state;
+	long start, finish, timeElapsed;
 
 	AutCategory category;
 
@@ -259,7 +260,6 @@ public abstract class Entity implements AutomatonListener {
 
 		}
 		return false;
-
 	}
 
 	private boolean isItThatGrid(int gY, int gX) {

@@ -26,9 +26,11 @@ import info3.game.position.PositionF;
 public class KitchenScene extends Scene {
 
 	private static final PositionF KITCHEN_ORIGIN = new PositionF(41, 10);
+	public static final int MAXIMUM_COCKROACH_NUMBER = 20;
 
 	private CookEntity cook;
 	private CockroachEntity cockroach;
+	private int cockroach_counter = 1;
 
 	private ArrayList<PositionF> indexEmplacements = new ArrayList<>(List.of(new PositionF(0, 1), new PositionF(0, 2),
 			new PositionF(0, 3), new PositionF(0, 4), new PositionF(0, 5), new PositionF(3, 1), new PositionF(3, 2),
@@ -156,6 +158,29 @@ public class KitchenScene extends Scene {
 		for (Entity entity : entity_list) {
 			entity.render(g);
 		}
+	}
+
+	public int getCockroach_counter() {
+		return cockroach_counter;
+	}
+
+	public void setCockroach_counter(int cockroack_counter) {
+		this.cockroach_counter = cockroack_counter;
+	}
+
+	@Override
+	public void tick(long elapsed) {
+		super.tick(elapsed);
+		Random rand = new Random();
+		if (rand.nextInt(500) < 2) {
+			try {
+				this.addEntity(new CockroachEntity(this, new PositionF(132, 36), 7, 2));
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
 	}
 
 }

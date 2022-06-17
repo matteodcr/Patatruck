@@ -23,6 +23,7 @@ import info3.game.entity.TrashTile;
 import info3.game.graphics.Graphics;
 import info3.game.graphics.Sprite;
 import info3.game.position.AutDirection;
+import info3.game.position.Direction;
 import info3.game.position.PositionF;
 
 public class KitchenScene extends Scene {
@@ -117,12 +118,23 @@ public class KitchenScene extends Scene {
 			PositionF pos = indexEmplacements.get(i), futurePos = indexEmplacements.get(movedTiles[i]);
 			Tile toMove = KitchenGrid[(int) pos.getX()][(int) pos.getY()];
 			toMove.setPosition(futurePos);
+			if (movedTiles[i] < movedTiles.length) {
+				toMove.myDir(AutDirection.N);
+			} else {
+				toMove.myDir(AutDirection.S);
+			}
+
 			futureKitchenGrid[(int) futurePos.getX()][(int) futurePos.getY()] = toMove;
 		}
 		for (int i = 0; i < movedStockTables.length; i++) {
 			PositionF pos = indexStockEmplacements.get(i), futurePos = indexStockEmplacements.get(movedStockTables[i]);
 			Tile toMove = KitchenGrid[(int) pos.getX()][(int) pos.getY()];
 			toMove.setPosition(futurePos);
+			if (movedStockTables[i] < movedStockTables.length) {
+				toMove.myDir(AutDirection.N);
+			} else {
+				toMove.myDir(AutDirection.S);
+			}
 			futureKitchenGrid[(int) futurePos.getX()][(int) futurePos.getY()] = toMove;
 		}
 		this.KitchenGrid = futureKitchenGrid;

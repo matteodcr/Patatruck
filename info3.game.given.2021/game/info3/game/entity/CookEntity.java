@@ -20,11 +20,13 @@ public class CookEntity extends Entity {
 	Item item;
 
 	public CookEntity(Scene parent, PositionF position) throws IOException {
-		super(parent, position, 1, 1);
+		super(parent, position);
 		move_timer_max = 100;
 		automaton = parentScene.setupAutomaton("Cook");
 		current_state = automaton.initial;
 		category = AutCategory.AROBASE;
+		gridX = 1;
+		gridY = 1;
 	}
 
 	@Override

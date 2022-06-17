@@ -19,10 +19,11 @@ import info3.game.graphics.Graphics;
 import info3.game.graphics.Sprite;
 import info3.game.position.Direction;
 import info3.game.position.PositionF;
+import info3.game.position.PositionI;
 
 public class KitchenScene extends Scene {
 
-	private static final PositionF KITCHEN_ORIGIN = new PositionF(41, 10);
+	private static final PositionI KITCHEN_ORIGIN = new PositionI(46, 10);
 
 	private CookEntity cook;
 	private CockroachEntity cockroach;
@@ -51,7 +52,7 @@ public class KitchenScene extends Scene {
 			addEntity(cook);
 
 			cockroach = new CockroachEntity(this, new PositionF(KITCHEN_ORIGIN.getX() + getTileWidth() * 2,
-					KITCHEN_ORIGIN.getY() + getTileWidth() * 2), 2, 2);
+					KITCHEN_ORIGIN.getY() + getTileWidth() * 2));
 			addEntity(cockroach);
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -65,7 +66,7 @@ public class KitchenScene extends Scene {
 
 	@Override
 	public PositionF getOriginOffset() {
-		return KITCHEN_ORIGIN.neg();
+		return KITCHEN_ORIGIN.neg().toFloat();
 	}
 
 	@Override
@@ -87,11 +88,12 @@ public class KitchenScene extends Scene {
 	@Override
 	public void render(Graphics g) {
 		g.fill(0xff511e43);
-		g.drawSprite(Sprite.KITCHENTRUCK, (g.getWidth() / 2) - 100, -3); // Valeur calculées
+		g.drawSprite(Sprite.KITCHEN_TRUCK_FLOOR, KITCHEN_ORIGIN.getX(), KITCHEN_ORIGIN.getY());
 		super.render(g); // Fond et case
 		for (Entity entity : entity_list) {
 			entity.render(g);
 		}
+		g.drawSprite(Sprite.KITCHEN_TRUCK, KITCHEN_ORIGIN.getX() - 13, KITCHEN_ORIGIN.getY() - 13);
 	}
 
 }

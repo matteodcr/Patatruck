@@ -17,7 +17,7 @@ public class CookEntity extends Entity {
 	int m_imageIndex;
 
 	public CookEntity(Scene parent, PositionF position) throws IOException {
-		super(parent, position, 1, 1);
+		super(parent, position);
 		move_timer_max = 100;
 		category = AutCategory.AROBASE;
 	}
@@ -44,7 +44,6 @@ public class CookEntity extends Entity {
 		case N: {
 			PositionF newPos = new PositionF(0, -parentScene.getTileWidth());
 			m_direction = direction;
-			gridY--;
 			// TODO : Tourner Sprite
 			this.position = position.add(newPos);
 			return true;
@@ -52,7 +51,6 @@ public class CookEntity extends Entity {
 		case W: {
 			PositionF newPos = new PositionF(-parentScene.getTileWidth(), 0);
 			m_direction = direction;
-			gridX--;
 			// TODO : Tourner Sprite
 			this.position = position.add(newPos);
 			return true;
@@ -60,7 +58,6 @@ public class CookEntity extends Entity {
 		case E: {
 			PositionF newPos = new PositionF(parentScene.getTileWidth(), 0);
 			m_direction = direction;
-			gridX++;
 			// TODO : Tourner Sprite
 			this.position = position.add(newPos);
 			return true;
@@ -68,7 +65,6 @@ public class CookEntity extends Entity {
 		case S: {
 			PositionF newPos = new PositionF(0, parentScene.getTileWidth());
 			m_direction = direction;
-			gridY++;
 			// TODO : Tourner Sprite
 			this.position = position.add(newPos);
 			return true;

@@ -19,13 +19,13 @@ public class TruckEntity extends Entity {
 
 	@Override
 	public boolean pop(AutDirection direction) {
-		// TODO Auto-generated method stub
+		// TODO CETTE FONCTION RÉALISE LE TRANSFERT D'AUTOMATE ENTRE LE JOUEUR CAMION ET UN CAMION ADVERSAIRE
 		return false;
 	}
 
 	@Override
 	public boolean wizz(AutDirection direction) {
-		// TODO Auto-generated method stub
+		// TODO MOVE DU JOUEUR CAMION, VOLÉ DEPUIS LE CODE DE LORIC ET VINCENT
 		return false;
 	}
 

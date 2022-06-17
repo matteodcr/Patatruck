@@ -36,6 +36,8 @@ public abstract class Entity implements AutomatonListener {
 		m_direction = AutDirection.N;
 	}
 
+	public abstract EntityType getType();
+
 	void setPosition(PositionF pos) {
 		position = pos;
 	}

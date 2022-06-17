@@ -13,8 +13,11 @@ public class StockTable extends KitchenTile {
 
 	public StockTable(Scene parent, int gridX, int gridY, Direction d) {
 		super(parent, gridX, gridY, null, d);
-		automaton = parentScene.setupAutomaton("Garde_manger");
-		current_state = automaton.initial;
+	}
+
+	@Override
+	public EntityType getType() {
+		return EntityType.TILE_STOCK;
 	}
 
 	@Override

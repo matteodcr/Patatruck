@@ -18,6 +18,11 @@ public class CityTile extends Tile {
 	}
 
 	@Override
+	public EntityType getType() {
+		return EntityType.TILE_CITY;
+	}
+
+	@Override
 	public boolean pop(AutDirection direction) {
 		// TODO Auto-generated method stub
 		return false;

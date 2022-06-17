@@ -12,9 +12,12 @@ public class SauceTableTile extends KitchenTile {
 
 	public SauceTableTile(Scene parent, int gridX, int gridY, Direction d) {
 		super(parent, gridX, gridY, null, d);
-		automaton = parentScene.setupAutomaton("Table_a_sauce");
-		current_state = automaton.initial;
 		// this.sauce = sauce;
+	}
+
+	@Override
+	public EntityType getType() {
+		return EntityType.TILE_SAUCE;
 	}
 
 	@Override

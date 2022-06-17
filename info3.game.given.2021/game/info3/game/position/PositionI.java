@@ -28,6 +28,10 @@ public final class PositionI {
 		return new PositionI(-x, -y);
 	}
 
+	public PositionF toFloat() {
+		return new PositionF(x, y);
+	}
+
 	@Override
 	public String toString() {
 		return "PositionI{" + "x=" + x + ", y=" + y + '}';

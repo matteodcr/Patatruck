@@ -96,6 +96,14 @@ public class Game {
 		System.out.println("  - setting up the frame...");
 		setupFrame();
 	}
+	
+	public KitchenScene getKitchenScene() {
+		return kitchenScene;
+	}
+	
+	public CityScene getCityScene() {
+		return cityScene;
+	}
 
 	/*
 	 * Then it lays out the frame, with a border layout, adding a label to the north

@@ -36,7 +36,6 @@ import info3.game.automata.AutomataGenerator;
 import info3.game.automata.GAutomaton;
 import info3.game.graphics.AwtGraphics;
 import info3.game.graphics.GameCanvas;
-import info3.game.graphics.Graphics;
 import info3.game.scene.CityScene;
 import info3.game.scene.KitchenScene;
 import info3.game.sound.RandomFileInputStream;
@@ -137,8 +136,7 @@ public class Game {
 
 	/*
 	 * Called from the GameCanvas listener when the frame
-	 */
-	String m_musicName;
+	 */ String m_musicName;
 
 	void loadMusic() {
 		m_musicName = m_musicNames[m_musicIndex];
@@ -186,14 +184,19 @@ public class Game {
 			kitchenScene.tick(elapsed);
 			cityScene.tick(elapsed);
 		}
+		if (m_listener.isUp("SPACE")) {// used for testing shuffle
+			this.kitchenScene.shuffle();
+		}
 	}
+
+	AwtGraphics g = null;
 
 	/*
 	 * This request is to paint the Game Canvas, using the given graphics. This is
 	 * called from the GameCanvasListener, called from the GameCanvas.
 	 */
 	void paint(java.awt.Graphics ag) {
-		Graphics g = new AwtGraphics(ag, WIDTH, HEIGHT, SCALE_FACTOR);
+		g = new AwtGraphics(g, ag, WIDTH, HEIGHT, SCALE_FACTOR);
 
 		// paint
 		int half = g.getHeight() / 2;

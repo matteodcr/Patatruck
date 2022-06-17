@@ -1,30 +1,42 @@
 package info3.game.entity;
 
+import info3.game.content.Item;
 import info3.game.graphics.Graphics;
 import info3.game.graphics.Sprite;
 import info3.game.position.AutCategory;
 import info3.game.position.AutDirection;
-import info3.game.position.Direction;
+import info3.game.scene.KitchenScene;
 import info3.game.scene.Scene;
 
 public class StockTable extends KitchenTile {
-	// Item item;
+	Item item;
 	int stock;
+	Sprite stockItem;
 
-	public StockTable(Scene parent, int gridX, int gridY, Direction d) {
+	public StockTable(Scene parent, int gridX, int gridY, AutDirection d, Item item, Sprite stockItem) {
 		super(parent, gridX, gridY, null, d);
 		automaton = parentScene.setupAutomaton("Garde_manger");
 		current_state = automaton.initial;
+		this.stockItem = stockItem;
+		this.stock = 0;
+		this.item = item;
+		this.stockItem = stockItem;
 	}
 
 	@Override
 	public boolean pop(AutDirection direction) { // prendre un aliment
-		/*
-		 * Entity player = ((KitchenScene) this.parentScene).getCook(); if (stock == 0
-		 * || player.item != null) { return false; } else { player.item = this.item;
-		 * stock--; return true; }
-		 */
-		return false;
+		Item item_player = ((KitchenScene) this.parentScene).getCook().item;
+		if (item_player != null) {
+			return false;
+		} else {
+			if (stock == 0) {
+				return false;
+			} else {
+				item_player = this.item;
+				stock--;
+				return true;
+			}
+		}
 	}
 
 	@Override
@@ -36,13 +48,14 @@ public class StockTable extends KitchenTile {
 		return this.stock;
 	}
 
-	public int addStock() {
-		return ++this.stock;
+	public void addStock(int x) {
+		this.stock += x;
 	}
 
 	@Override
 	public void render(Graphics g) {
 		g.drawSprite(Sprite.STOCK_TABLE, 0, 0);
+		g.drawSprite(this.stockItem, 0, 0);
 	}
 
 	@Override

@@ -19,7 +19,6 @@ public class TestRecipes {
 		burger.addItem(new Item(ItemType.BREAD_SLICE));
 		burger.addItem(new Item(ItemType.COOKED_GALETTE));
 		burger.addItem(new Item(ItemType.CHEESE));
-		// burger.addItem(new Item(ItemType.SALAD_LEAF));
 		assert burger.getItems().size() == 1;
 		assert burger.getItems().get(0).getType() == ItemType.VEGI_BURGER;
 
@@ -51,10 +50,7 @@ public class TestRecipes {
 		burger.addItem(new Item(ItemType.COOKED_MEAT));
 		burger.addItem(new Item(ItemType.CHEESE));
 		assert burger.getItems().size() == 1;
-		assert burger.getItems().get(0).getType() == ItemType.CLASSIC_BURGER;
-		assert burger.getItems().get(0).hasSalad();
-		assert !burger.getItems().get(0).hasTomato();
-
+		assert burger.getItems().get(0).getType() == ItemType.CLASSIC_BURGER_SALAD;
 		System.out.println("Everything works");
 	}
 

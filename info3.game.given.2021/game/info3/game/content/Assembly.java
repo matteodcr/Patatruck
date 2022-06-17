@@ -1,15 +1,16 @@
 package info3.game.content;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
 public class Assembly {
 	private List<Item> items = new ArrayList<>();
 
-	private HashMap<List<ItemType>, ItemType> ASSEMBLE_RECIPES = new HashMap<>() {
+	private Map<List<ItemType>, ItemType> ASSEMBLE_RECIPES = new LinkedHashMap<>() {
 		private static final long serialVersionUID = 1L;
 
 		{
@@ -121,8 +122,7 @@ public class Assembly {
 		for (Entry<List<ItemType>, ItemType> entry : ASSEMBLE_RECIPES.entrySet()) {
 			if (this.equal(entry.getKey())) { // on va former une recette
 				this.emptyAssembly();
-				this.getItems().add(new Item(entry.getValue(), entry.getValue().acceptsOptionalSalad,
-						entry.getValue().acceptsOptionalTomato, null));
+				this.getItems().add(new Item(entry.getValue(), false, false, null));
 				return;
 			} else if (includes(currentItems, entry.getKey())) {// on est en bonne voie
 				return;

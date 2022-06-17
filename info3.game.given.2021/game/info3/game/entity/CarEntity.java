@@ -1,4 +1,4 @@
-package info3.game.entity;
+fpackage info3.game.entity;
 
 import info3.game.graphics.Graphics;
 import info3.game.graphics.Sprite;
@@ -183,5 +183,61 @@ public class CarEntity extends Entity {
 		// TODO Auto-generated method stub
 		return false;
 	}
+	
+	@Override
+	public boolean cell(AutDirection direction, AutCategory category) {
+		AutDirection newDirection = convertRelativToAbsolutedir(direction);
+		switch (newDirection) {
+		case N: {
+			if (gridY >= 1) {
+				if (parentScene.getTileAt(gridX, gridY - 1) != null
+						&& parentScene.getTileAt(gridX, gridY - 1).category == category) {
+					return true;
+				}
+			}
+			break;
+		}
+		case W: {
+			if (gridX >= 1) {
+				if (parentScene.getTileAt(gridX - 1, gridY) != null
+						&& parentScene.getTileAt(gridX - 1, gridY).category == category) {
+					return true;
+				}
+			}
+			break;
+		}
+		case E: {
+			if (gridX <= 8) {
+				if (parentScene.getTileAt(gridX + 1, gridY) != null
+						&& parentScene.getTileAt(gridX + 1, gridY).category == category) {
+					return true;
+				}
+			}
+			break;
+		}
+		case S: {
+			if (gridY <= 2) {
+				if (parentScene.getTileAt(gridX, gridY + 1) != null
+						&& parentScene.getTileAt(gridX, gridY + 1).category == category) {
+					return true;
+				}
+			}
+			break;
+		}
+		case H: {
+			if ((gridX >= 1) && (gridY >= 1) && (gridX <= 8) && (gridY <= 2)) {
+				if (parentScene.getTileAt(gridX, gridY) != null
+						&& parentScene.getTileAt(gridX, gridY).category == category) {
+					return true;
+				}
+			}
+			break;
+		}
+		default:
+			return false;
 
+		}
+		return false;
+
+	}
 }

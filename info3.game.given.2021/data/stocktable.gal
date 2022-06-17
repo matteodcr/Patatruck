@@ -1,4 +1,4 @@
-StockTable(Full):
+StockTable(Full){
 * (Full):
 | !GotStuff() ? Pop(F) :(Empty)
 | True() ? Wizz(F) :(Full)
@@ -6,3 +6,4 @@ StockTable(Full):
 * (Empty):
 | GotStuff() ? Wizz(F) :(Full)
 | True() ? Pop(F) :(Empty)
+}

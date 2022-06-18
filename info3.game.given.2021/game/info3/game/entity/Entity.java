@@ -15,7 +15,6 @@ import info3.game.position.AutCategory;
 import info3.game.position.AutDirection;
 import info3.game.position.AutKey;
 import info3.game.position.PositionF;
-import info3.game.position.PositionI;
 import info3.game.scene.Scene;
 
 public abstract class Entity implements AutomatonListener {

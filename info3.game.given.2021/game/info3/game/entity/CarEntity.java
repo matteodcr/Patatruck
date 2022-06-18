@@ -1,14 +1,20 @@
-fpackage info3.game.entity;
+package info3.game.entity;
 
 import info3.game.graphics.Graphics;
 import info3.game.graphics.Sprite;
 import info3.game.position.AutCategory;
 import info3.game.position.AutDirection;
 import info3.game.position.PositionF;
+import info3.game.scene.CityScene;
 import info3.game.scene.Scene;
 
 public class CarEntity extends Entity {
 	boolean isTruck;
+	// TODO Deplacer hitbox hardocdé et methode de collision
+	// PositionF coordinatesTopLeft; position
+	PositionF coordinatesBottomRight;
+
+	public static final int COLLISION_RADIUS = 256;
 
 	public CarEntity(Scene parent, PositionF position, boolean isTruck) {
 		super(parent, position);
@@ -16,6 +22,7 @@ public class CarEntity extends Entity {
 		automaton = parentScene.setupAutomaton("Car");
 		current_state = automaton.initial;
 		category = AutCategory.A;
+		// setBottomRightCoordinates();
 	}
 
 	@Override
@@ -42,21 +49,25 @@ public class CarEntity extends Entity {
 		case N: {
 			PositionF newPos = new PositionF(0, -1);
 			this.position = position.add(newPos);
+			// setBottomRightCoordinates();
 			return true;
 		}
 		case W: {
 			PositionF newPos = new PositionF(-1, 0);
 			this.position = position.add(newPos);
+			// setBottomRightCoordinates();
 			return true;
 		}
 		case E: {
 			PositionF newPos = new PositionF(1, 0);
 			this.position = position.add(newPos);
+			// setBottomRightCoordinates();
 			return true;
 		}
 		case S: {
 			PositionF newPos = new PositionF(0, 1);
 			this.position = position.add(newPos);
+			// setBottomRightCoordinates();
 			return true;
 		}
 		default:
@@ -183,53 +194,52 @@ public class CarEntity extends Entity {
 		// TODO Auto-generated method stub
 		return false;
 	}
-	
+
+	// TODO Point de collision pr l'instant HARDCODE a l'entite CarEntity
 	@Override
 	public boolean cell(AutDirection direction, AutCategory category) {
 		AutDirection newDirection = convertRelativToAbsolutedir(direction);
 		switch (newDirection) {
 		case N: {
-			if (gridY >= 1) {
-				if (parentScene.getTileAt(gridX, gridY - 1) != null
-						&& parentScene.getTileAt(gridX, gridY - 1).category == category) {
-					return true;
-				}
+			if (((CityScene) parentScene).whatsTheCategoryOfTile(position.add(new PositionF(0, -1))) == category
+					|| ((CityScene) parentScene)
+							.whatsTheCategoryOfTile(position.add(new PositionF(3, -1))) == category) {
+				return true;
 			}
 			break;
 		}
 		case W: {
-			if (gridX >= 1) {
-				if (parentScene.getTileAt(gridX - 1, gridY) != null
-						&& parentScene.getTileAt(gridX - 1, gridY).category == category) {
-					return true;
-				}
+			if (((CityScene) parentScene).whatsTheCategoryOfTile(position.add(new PositionF(-1, 0))) == category
+					|| ((CityScene) parentScene)
+							.whatsTheCategoryOfTile(position.add(new PositionF(-1, 3))) == category) {
+				return true;
 			}
 			break;
 		}
 		case E: {
-			if (gridX <= 8) {
-				if (parentScene.getTileAt(gridX + 1, gridY) != null
-						&& parentScene.getTileAt(gridX + 1, gridY).category == category) {
-					return true;
-				}
+			if (((CityScene) parentScene).whatsTheCategoryOfTile(position.add(new PositionF(4, 0))) == category
+					|| ((CityScene) parentScene)
+							.whatsTheCategoryOfTile(position.add(new PositionF(4, 3))) == category) {
+				return true;
 			}
 			break;
 		}
 		case S: {
-			if (gridY <= 2) {
-				if (parentScene.getTileAt(gridX, gridY + 1) != null
-						&& parentScene.getTileAt(gridX, gridY + 1).category == category) {
-					return true;
-				}
+			if (((CityScene) parentScene).whatsTheCategoryOfTile(position.add(new PositionF(0, 4))) == category
+					|| ((CityScene) parentScene)
+							.whatsTheCategoryOfTile(position.add(new PositionF(3, 4))) == category) {
+				return true;
 			}
 			break;
 		}
 		case H: {
-			if ((gridX >= 1) && (gridY >= 1) && (gridX <= 8) && (gridY <= 2)) {
-				if (parentScene.getTileAt(gridX, gridY) != null
-						&& parentScene.getTileAt(gridX, gridY).category == category) {
-					return true;
-				}
+			if (((CityScene) parentScene).whatsTheCategoryOfTile(position.add(new PositionF(0, 0))) == category
+					|| ((CityScene) parentScene).whatsTheCategoryOfTile(position.add(new PositionF(3, 0))) == category
+					|| ((CityScene) parentScene).whatsTheCategoryOfTile(position.add(new PositionF(0, 3))) == category
+					|| ((CityScene) parentScene)
+							.whatsTheCategoryOfTile(position.add(new PositionF(3, 3))) == category) {
+				return true;
+
 			}
 			break;
 		}
@@ -240,4 +250,8 @@ public class CarEntity extends Entity {
 		return false;
 
 	}
+
+	// private void setBottomRightCoordinates() {
+	// coordinatesBottomRight = position.add(new PositionF(3, 3));
+	// }
 }

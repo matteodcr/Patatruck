@@ -1,6 +1,7 @@
 package info3.game.scene;
 
 import java.io.IOException;
+import java.util.HashMap;
 
 import info3.game.Game;
 import info3.game.entity.CarEntity;
@@ -8,8 +9,10 @@ import info3.game.entity.CityTile;
 import info3.game.entity.CookEntity;
 import info3.game.entity.Tile;
 import info3.game.graphics.Graphics;
+import info3.game.position.AutCategory;
 import info3.game.position.PositionF;
 import info3.game.worldgen.WorldGenerator;
+import info3.game.position.PositionI;
 
 public class CityScene extends Scene {
 
@@ -19,9 +22,13 @@ public class CityScene extends Scene {
 	public final WorldGenerator worldGenerator = new WorldGenerator(0);
 	private CarEntity car;
 
+	private HashMap<PositionI, CityTile> CachedCityTiles;
+
 	public CityScene(int pixelWidth, int pixelHeight, Game g) {
 		super(pixelWidth, pixelHeight, g);
+		CachedCityTiles = new HashMap<PositionI, CityTile>();
 		try {
+
 			cook = new CookEntity(this, vanPosition); // To change with vanEntity
 			car = new CarEntity(this, center, false);
 			addEntity(car);
@@ -30,6 +37,7 @@ public class CityScene extends Scene {
 		}
 	}
 
+	// Commenté pour tester avec une scène fixe
 	// @Override
 	// public void tick(long elapsed) {
 	// vanPosition = vanPosition.add(new PositionF(0.2F, 0.1F));
@@ -47,7 +55,43 @@ public class CityScene extends Scene {
 
 	@Override
 	public Tile getTileAt(int gridX, int gridY) {
-		return new CityTile(this, gridX, gridY);
+		Tile tile = new CityTile(this, gridX, gridY);
+		CachedCityTiles.put(new PositionI(gridX, gridY), (CityTile) tile);
+		return tile;
+	}
+
+	/* Renvoit la categorie du cadrant de la tuile a cette pos */
+	public AutCategory whatsTheCategoryOfTile(PositionF pos) {
+		int gX = getGridFromPos(pos).getX();
+		int gY = getGridFromPos(pos).getY();
+		CityTile tile = CachedCityTiles.get(new PositionI(gX, gY));
+		switch (whereInTile(pos)) {
+		case 0:
+			return tile.category_0;
+		case 1:
+			return tile.category_1;
+		case 2:
+			return tile.category_2;
+		case 3:
+			return tile.category_3;
+		default:
+			System.out.println("panic");
+		}
+		return null;
+	}
+
+	/* Fct qui renvoit le cadrant parmi les 4 d'une tuile de la ville */
+	public int whereInTile(PositionF pos) {
+		PositionF removedOriginOffset = pos.minus(center);
+		PositionF posModuloTileWidth = removedOriginOffset.divMod(getTileWidth());
+		if (posModuloTileWidth.getX() < 9 && posModuloTileWidth.getY() < 9)
+			return 0;
+		if (posModuloTileWidth.getX() >= 9 && posModuloTileWidth.getY() < 9)
+			return 1;
+		if (posModuloTileWidth.getX() < 9 && posModuloTileWidth.getY() >= 9)
+			return 2;
+		else
+			return 3;
 	}
 
 	@Override
@@ -64,6 +108,14 @@ public class CityScene extends Scene {
 		super.render(g);
 		this.cook.render(g);
 		this.car.render(g);
+		// debugCache();
 	}
 
+//	private void debugCache() {
+//		System.out.println("==========");
+//		CachedCityTiles.entrySet();
+//		for (Entry<PositionI, CityTile> entry : CachedCityTiles.entrySet()) {
+//			System.out.println(entry.getKey() + "/" + entry.getValue());
+//		}
+//	}
 }

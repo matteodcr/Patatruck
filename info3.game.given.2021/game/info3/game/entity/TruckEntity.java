@@ -1,70 +1,30 @@
 package info3.game.entity;
 
-import info3.game.content.Item;
-import info3.game.graphics.Graphics;
-import info3.game.graphics.Sprite;
 import info3.game.position.AutCategory;
 import info3.game.position.AutDirection;
-import info3.game.scene.KitchenScene;
+import info3.game.position.PositionF;
 import info3.game.scene.Scene;
 
-public class StockTable extends KitchenTile {
-	Item item;
-	int stock;
-	Sprite stockItem, empty = Sprite.STOCK_TABLE, full = Sprite.STOCK_TABLE;
+public class TruckEntity extends Entity {
+	int speed;
 
-	public StockTable(Scene parent, int gridX, int gridY, AutDirection d, Item item, Sprite stockItem) {
-		super(parent, gridX, gridY, null, d);
-		this.stockItem = stockItem;
-		this.stock = 5;
-		this.item = item;
-		this.stockItem = stockItem;
+	TruckEntity(Scene parent, PositionF pos) {
+		super(parent, pos);
+		category = AutCategory.AROBASE;
+		speed = 0;
 	}
 
 	@Override
-	public EntityType getType() {
-		return EntityType.TILE_STOCK;
-	}
-
-	@Override
-	public boolean pop(AutDirection direction) { // prendre un aliment
-		System.out.println("POP");
-		Item item_player = ((KitchenScene) this.parentScene).getCook().item;
-		if (item_player != null) {
-			return false;
-		} else {
-			if (stock == 0) {
-				return false;
-			} else {
-				((KitchenScene) this.parentScene).getCook().item = this.item;
-				stock--;
-				if (gotStuff()) {
-					this.defaultSprite = full;
-				} else {
-					this.defaultSprite = empty;
-				}
-				return true;
-			}
-		}
+	public boolean pop(AutDirection direction) {
+		// TODO CETTE FONCTION RÉALISE LE TRANSFERT D'AUTOMATE ENTRE LE JOUEUR CAMION ET
+		// UN CAMION ADVERSAIRE
+		return false;
 	}
 
 	@Override
 	public boolean wizz(AutDirection direction) {
-		return true;
-	}
-
-	public int getStock() {
-		return this.stock;
-	}
-
-	public void addStock(int x) {
-		this.stock += x;
-	}
-
-	@Override
-	public void render(Graphics g) {
-		g.drawSprite(Sprite.STOCK_TABLE, 0, 0);
-		g.drawSprite(this.stockItem, 0, 0);
+		// TODO MOVE DU JOUEUR CAMION, VOLÉ DEPUIS LE CODE DE LORIC ET VINCENT
+		return false;
 	}
 
 	@Override
@@ -153,7 +113,14 @@ public class StockTable extends KitchenTile {
 
 	@Override
 	public boolean gotStuff() {
-		return stock > 0;
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public EntityType getType() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

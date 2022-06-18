@@ -1,0 +1,9 @@
+StockTable(Still){
+* (Still):
+| Cell(F,@) & Key(SPACE) ? Pop(F) :(Still)
+| !GotStuff() ? Wizz(F) :(Empty)
+
+* (Empty):
+| GotStuff() ? :(Full)
+| True() ? :(Empty)
+}

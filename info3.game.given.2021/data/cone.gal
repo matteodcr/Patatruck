@@ -1,6 +1,6 @@
 TrafficCone(Still){
   * (Still):
-  | Cell(H,_) ? Pop :()
-  | True ? Wizz :(Still)
+  | Cell(H,_) ? Pop(F) :()
+  | True ? Wizz(F) :(Still)
   * ()
 }

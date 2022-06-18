@@ -1,6 +1,7 @@
 package info3.game.scene;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -27,6 +28,8 @@ import info3.game.position.PositionF;
 import info3.game.position.PositionI;
 
 public class KitchenScene extends Scene {
+	
+	private HashMap<ItemType, StockTable> stocktables;
 
 	private static final PositionI KITCHEN_ORIGIN = new PositionI(46, 10);
 	public static final int MAXIMUM_COCKROACH_NUMBER = 20;
@@ -164,6 +167,10 @@ public class KitchenScene extends Scene {
 
 	public CookEntity getCook() {
 		return cook;
+	}
+	
+	public HashMap<ItemType, StockTable> getStocktables() {
+		return stocktables;
 	}
 
 	@Override

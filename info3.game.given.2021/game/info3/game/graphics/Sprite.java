@@ -25,7 +25,6 @@ import static info3.game.graphics.Sprite.Spritesheet.CUTTILE;
 import static info3.game.graphics.Sprite.Spritesheet.DELIVERY;
 import static info3.game.graphics.Sprite.Spritesheet.FAILEDITEM_;
 import static info3.game.graphics.Sprite.Spritesheet.FRIES_;
-import static info3.game.graphics.Sprite.Spritesheet.FRIETILE;
 import static info3.game.graphics.Sprite.Spritesheet.GALETTECOOKED_;
 import static info3.game.graphics.Sprite.Spritesheet.GALETTE_;
 import static info3.game.graphics.Sprite.Spritesheet.HACHI_;
@@ -39,7 +38,6 @@ import static info3.game.graphics.Sprite.Spritesheet.OFFFRIETILE;
 import static info3.game.graphics.Sprite.Spritesheet.OFFPANTILE;
 import static info3.game.graphics.Sprite.Spritesheet.ONFRIETILE;
 import static info3.game.graphics.Sprite.Spritesheet.ONPANTILE;
-import static info3.game.graphics.Sprite.Spritesheet.PANTILE;
 import static info3.game.graphics.Sprite.Spritesheet.POTATOCOOKED_;
 import static info3.game.graphics.Sprite.Spritesheet.POTATOSALAD_;
 import static info3.game.graphics.Sprite.Spritesheet.POTATO_;
@@ -77,8 +75,7 @@ public enum Sprite {
 	POTATOCOOKED(POTATOCOOKED_, 0, 0, 1, 1), POTATOSALAD(POTATOSALAD_, 0, 0, 1, 1), POUTINE(POUTINE_, 0, 0, 1, 1),
 	SALADELEAF(SALADELEAF_, 0, 0, 1, 1), TOMATOSLICE(TOMATOSLICE_, 0, 0, 1, 1), VEGIBURGER(VEGIBURGER_, 0, 0, 1, 1),
 	KETCHUP(KETCHUPTABLE, 0, 0, 1, 1), MAYONNAISE(MAYOTABLE, 0, 0, 1, 1), FAILEDITEM(FAILEDITEM_, 0, 0, 1, 1),
-	KITCHEN_TRUCK(KITCHEN, 0, 0, 15, 6), KITCHEN_TRUCK_FLOOR(KITCHEN, 1, 6, 10, 4), FRIE_TILE(FRIETILE, 0, 0, 1, 1),
-	PAN_TILE(PANTILE, 0, 0, 1, 1);
+	KITCHEN_TRUCK(KITCHEN, 0, 0, 15, 6), KITCHEN_TRUCK_FLOOR(KITCHEN, 1, 6, 10, 4);
 
 	public final Spritesheet spritesheet;
 	public final int u, v, w, h;
@@ -94,7 +91,7 @@ public enum Sprite {
 	public enum Spritesheet {
 		// TODO
 
-		COOKN("cookN.png", 13), CITY("city.png", 20), SAUCETABLETILE("SauceTableTile.png", 13),
+		COOKN("cookN.png", 13), CITY("city.png", 20), SAUCETABLETILE("BasicTableTile.png", 13),
 		OFFPANTILE("OffPanTable.png", 13), ONPANTILE("OnPanTable.png", 13), OFFFRIETILE("OffFrieTile.png", 13),
 		ONFRIETILE("OnFrieTile.png", 13), CUTTILE("CutTile.png", 13), KITCHEN_TRUCK("kitchen.png", 256),
 		TRASHTILE("TrashTile.png", 13), STOCKTABLE("StockTable.png", 13), BASICTABLEN("BasicTableTileN.png", 13),
@@ -124,9 +121,8 @@ public enum Sprite {
 		FAILEDITEM_("Sprite_cuisine_ingredient/garbageplate.png", 13),
 		AUTOMATON_SELECTION("automaton_selection.png", 16),
 
-		BASICTABLE("BasicTableTile.png", 13), COOK("cook.png", 13), PANTILE("PanTile.png", 13),
-		FRIETILE("FrieTile.png", 13), KITCHEN("kitchen.png", 13), DELIVERYTILE("DeliveryTile.png", 13),
-		COCKROACH("cockroach.png", 13);
+		BASICTABLE("BasicTableTile.png", 13), COOK("cook.png", 13), KITCHEN("kitchen.png", 13),
+		DELIVERYTILE("DeliveryTile.png", 13), COCKROACH("cockroach.png", 13);
 
 		public final String filename;
 		public final int tileSize;

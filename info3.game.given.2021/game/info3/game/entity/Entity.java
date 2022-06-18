@@ -123,8 +123,6 @@ public abstract class Entity implements AutomatonListener {
 	public boolean cell(AutDirection direction, AutCategory category) {
 		int gridX = getGridFromPos(position).getX();
 		int gridY = getGridFromPos(position).getY();
-		if (this instanceof StockTable)
-			System.out.printf("cook= grid(%d %d) pos(%f %f)\n", gridX, gridY, position.getX(), position.getY());
 		AutDirection newDirection = convertRelativToAbsolutedir(direction);
 		for (Entity entity : parentScene.entity_list) {
 			switch (newDirection) {

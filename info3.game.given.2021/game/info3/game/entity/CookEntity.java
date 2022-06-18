@@ -22,11 +22,12 @@ public class CookEntity extends Entity {
 	public CookEntity(Scene parent, PositionF position) throws IOException {
 		super(parent, position);
 		move_timer_max = 100;
-		automaton = parentScene.setupAutomaton("Cook");
-		current_state = automaton.initial;
 		category = AutCategory.AROBASE;
-		gridX = 1;
-		gridY = 1;
+	}
+
+	@Override
+	public EntityType getType() {
+		return EntityType.COOK;
 	}
 
 	@Override
@@ -57,7 +58,6 @@ public class CookEntity extends Entity {
 			switch (direction) {
 			case N: {
 				PositionF newPos = new PositionF(0, -parentScene.getTileWidth());
-				gridY--;
 				this.position = position.add(newPos);
 				start = System.currentTimeMillis();
 
@@ -65,7 +65,6 @@ public class CookEntity extends Entity {
 			}
 			case W: {
 				PositionF newPos = new PositionF(-parentScene.getTileWidth(), 0);
-				gridX--;
 				this.position = position.add(newPos);
 				start = System.currentTimeMillis();
 
@@ -73,7 +72,6 @@ public class CookEntity extends Entity {
 			}
 			case E: {
 				PositionF newPos = new PositionF(parentScene.getTileWidth(), 0);
-				gridX++;
 				this.position = position.add(newPos);
 				start = System.currentTimeMillis();
 
@@ -81,7 +79,6 @@ public class CookEntity extends Entity {
 			}
 			case S: {
 				PositionF newPos = new PositionF(0, parentScene.getTileWidth());
-				gridY++;
 				this.position = position.add(newPos);
 				start = System.currentTimeMillis();
 

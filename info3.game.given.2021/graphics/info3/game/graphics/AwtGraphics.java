@@ -88,7 +88,7 @@ public class AwtGraphics implements Graphics {
 			break;
 		case RIGHT:
 			int width = f.measureText(text);
-			f.drawText(this, text, getWidth() + x - width, y);
+			f.drawText(this, text, x - width, y);
 			break;
 		}
 	}

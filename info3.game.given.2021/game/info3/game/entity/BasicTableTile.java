@@ -15,8 +15,11 @@ public class BasicTableTile extends KitchenTile {
 	public BasicTableTile(Scene parent, int gridX, int gridY, AutDirection d) {
 		super(parent, gridX, gridY, null, d);
 		this.assembly = new Assembly();
-		automaton = parentScene.setupAutomaton("Table");
-		current_state = automaton.initial;
+	}
+
+	@Override
+	public EntityType getType() {
+		return EntityType.TILE_TABLE;
 	}
 
 	@Override

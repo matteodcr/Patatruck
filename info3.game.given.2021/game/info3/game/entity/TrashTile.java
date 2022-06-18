@@ -10,9 +10,12 @@ public class TrashTile extends KitchenTile {
 
 	public TrashTile(Scene parent, int gridX, int gridY, AutDirection d) {
 		super(parent, gridX, gridY, null, d);
-		automaton = parentScene.setupAutomaton("Poubelle");
-		current_state = automaton.initial;
 		// TODO Auto-generated constructor stub
+	}
+
+	@Override
+	public EntityType getType() {
+		return EntityType.TILE_TRASH;
 	}
 
 	@Override

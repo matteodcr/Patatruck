@@ -1,5 +1,6 @@
 package info3.game.graphics;
 
+import static info3.game.graphics.Sprite.Spritesheet.AUTOMATON_SELECTION;
 import static info3.game.graphics.Sprite.Spritesheet.BASICTABLEE;
 import static info3.game.graphics.Sprite.Spritesheet.BASICTABLEN;
 import static info3.game.graphics.Sprite.Spritesheet.BASICTABLES;
@@ -24,12 +25,13 @@ import static info3.game.graphics.Sprite.Spritesheet.CUTTILE;
 import static info3.game.graphics.Sprite.Spritesheet.DELIVERY;
 import static info3.game.graphics.Sprite.Spritesheet.FAILEDITEM_;
 import static info3.game.graphics.Sprite.Spritesheet.FRIES_;
+import static info3.game.graphics.Sprite.Spritesheet.FRIETILE;
 import static info3.game.graphics.Sprite.Spritesheet.GALETTECOOKED_;
 import static info3.game.graphics.Sprite.Spritesheet.GALETTE_;
 import static info3.game.graphics.Sprite.Spritesheet.HACHI_;
 import static info3.game.graphics.Sprite.Spritesheet.HASHEDMEAT_;
 import static info3.game.graphics.Sprite.Spritesheet.KETCHUPTABLE;
-import static info3.game.graphics.Sprite.Spritesheet.KITCHEN_TRUCK;
+import static info3.game.graphics.Sprite.Spritesheet.KITCHEN;
 import static info3.game.graphics.Sprite.Spritesheet.MASHEDPOTATO_;
 import static info3.game.graphics.Sprite.Spritesheet.MAYOTABLE;
 import static info3.game.graphics.Sprite.Spritesheet.MEAT_;
@@ -37,6 +39,7 @@ import static info3.game.graphics.Sprite.Spritesheet.OFFFRIETILE;
 import static info3.game.graphics.Sprite.Spritesheet.OFFPANTILE;
 import static info3.game.graphics.Sprite.Spritesheet.ONFRIETILE;
 import static info3.game.graphics.Sprite.Spritesheet.ONPANTILE;
+import static info3.game.graphics.Sprite.Spritesheet.PANTILE;
 import static info3.game.graphics.Sprite.Spritesheet.POTATOCOOKED_;
 import static info3.game.graphics.Sprite.Spritesheet.POTATOSALAD_;
 import static info3.game.graphics.Sprite.Spritesheet.POTATO_;
@@ -51,11 +54,14 @@ import static info3.game.graphics.Sprite.Spritesheet.TRASHTILE;
 import static info3.game.graphics.Sprite.Spritesheet.VEGIBURGER_;
 
 public enum Sprite {
-
-	PLAYER_KITCHEN_N(COOKN, 0, 0, 1, 1), PLAYER_KITCHEN_E(COOKE, 0, 0, 1, 1), PLAYER_KITCHEN_W(COOKW, 0, 0, 1, 1),
-	PLAYER_KITCHEN_S(COOKS, 0, 0, 1, 1), BUILDING_SQUARE_1_NORMAL(CITY, 0, 0, 1, 1),
-	BUILDING_SQUARE_1_ROUNDED(CITY, 0, 1, 1, 1), BUILDING_SQUARE_1_SQUIRCLE(CITY, 0, 2, 1, 1),
-	KITCHENTRUCK(KITCHEN_TRUCK, 0, 0, 1, 1), SAUCE_TABLE_TILE(SAUCETABLETILE, 0, 0, 1, 1),
+	AS_LOGO(AUTOMATON_SELECTION, 11, 10, 5, 2), AS_BACKDROP(AUTOMATON_SELECTION, 0, 0, 16, 9),
+	AS_LEFT(AUTOMATON_SELECTION, 0, 10, 1, 1), AS_RIGHT(AUTOMATON_SELECTION, 1, 10, 1, 1),
+	AS_RESET(AUTOMATON_SELECTION, 8, 10, 1, 1), AS_LEFT_BOX(AUTOMATON_SELECTION, 0, 11, 1, 1),
+	AS_RIGHT_BOX(AUTOMATON_SELECTION, 1, 11, 1, 1), AS_BOX(AUTOMATON_SELECTION, 2, 11, 6, 1),
+	AS_RESET_BOX(AUTOMATON_SELECTION, 8, 11, 1, 1), PLAYER_KITCHEN_N(COOKN, 0, 0, 1, 1),
+	PLAYER_KITCHEN_E(COOKE, 0, 0, 1, 1), PLAYER_KITCHEN_W(COOKW, 0, 0, 1, 1), PLAYER_KITCHEN_S(COOKS, 0, 0, 1, 1),
+	BUILDING_SQUARE_1_NORMAL(CITY, 0, 0, 1, 1), BUILDING_SQUARE_1_ROUNDED(CITY, 0, 1, 1, 1),
+	BUILDING_SQUARE_1_SQUIRCLE(CITY, 0, 2, 1, 1), SAUCE_TABLE_TILE(SAUCETABLETILE, 0, 0, 1, 1),
 	OFF_FRIE_TILE(OFFFRIETILE, 0, 0, 1, 1), ON_FRIE_TILE(ONFRIETILE, 0, 0, 1, 1), CUT_TILE(CUTTILE, 0, 0, 1, 1),
 	OFF_PAN_TILE(OFFPANTILE, 0, 0, 1, 1), ON_PAN_TILE(ONPANTILE, 0, 0, 1, 1), TRASH_TILE(TRASHTILE, 0, 0, 1, 1),
 	STOCK_TABLE(STOCKTABLE, 0, 0, 1, 1), BASICTABLE_N(BASICTABLEN, 0, 0, 1, 1), BASICTABLE_E(BASICTABLEE, 0, 0, 1, 1),
@@ -70,7 +76,9 @@ public enum Sprite {
 	MASHEDPOTATO(MASHEDPOTATO_, 0, 0, 1, 1), CLASSICBURGER(CLASSICBURGER_, 0, 0, 1, 1),
 	POTATOCOOKED(POTATOCOOKED_, 0, 0, 1, 1), POTATOSALAD(POTATOSALAD_, 0, 0, 1, 1), POUTINE(POUTINE_, 0, 0, 1, 1),
 	SALADELEAF(SALADELEAF_, 0, 0, 1, 1), TOMATOSLICE(TOMATOSLICE_, 0, 0, 1, 1), VEGIBURGER(VEGIBURGER_, 0, 0, 1, 1),
-	KETCHUP(KETCHUPTABLE, 0, 0, 1, 1), MAYONNAISE(MAYOTABLE, 0, 0, 1, 1), FAILEDITEM(FAILEDITEM_, 0, 0, 1, 1);
+	KETCHUP(KETCHUPTABLE, 0, 0, 1, 1), MAYONNAISE(MAYOTABLE, 0, 0, 1, 1), FAILEDITEM(FAILEDITEM_, 0, 0, 1, 1),
+	KITCHEN_TRUCK(KITCHEN, 0, 0, 15, 6), KITCHEN_TRUCK_FLOOR(KITCHEN, 1, 6, 10, 4), FRIE_TILE(FRIETILE, 0, 0, 1, 1),
+	PAN_TILE(PANTILE, 0, 0, 1, 1);
 
 	public final Spritesheet spritesheet;
 	public final int u, v, w, h;
@@ -113,7 +121,12 @@ public enum Sprite {
 		SALADELEAF_("Sprite_cuisine_ingredient/feuille de salade.png", 13),
 		TOMATOSLICE_("Sprite_cuisine_ingredient/rondelle de tomate.png", 13), KETCHUPTABLE("ketchup.png", 13),
 		MAYOTABLE("mayonnaise.png", 13), VEGIBURGER_("Sprite_cuisine_ingredient/burger vegetarien.png", 13),
-		FAILEDITEM_("Sprite_cuisine_ingredient/garbageplate.png", 13);
+		FAILEDITEM_("Sprite_cuisine_ingredient/garbageplate.png", 13),
+		AUTOMATON_SELECTION("automaton_selection.png", 16),
+
+		BASICTABLE("BasicTableTile.png", 13), COOK("cook.png", 13), PANTILE("PanTile.png", 13),
+		FRIETILE("FrieTile.png", 13), KITCHEN("kitchen.png", 13), DELIVERYTILE("DeliveryTile.png", 13),
+		COCKROACH("cockroach.png", 13);
 
 		public final String filename;
 		public final int tileSize;

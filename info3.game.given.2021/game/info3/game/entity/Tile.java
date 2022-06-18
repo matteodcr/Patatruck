@@ -9,13 +9,18 @@ import info3.game.scene.Scene;
 public abstract class Tile extends Entity {
 	protected Sprite defaultSprite;
 
-	protected Tile(Scene parent, int gridX, int gridY) {
-		this(parent, gridX, gridY, null);
+	int gridX;
+	int gridY;
+
+	protected Tile(Scene parent, int gX, int gY) {
+		this(parent, gX, gY, null);
 	}
 
-	protected Tile(Scene parent, int gridX, int gridY, Sprite defaultSprite) {
-		super(parent, new PositionF(gridX, gridY).mul(parent.getTileWidth()));
+	protected Tile(Scene parent, int gX, int gY, Sprite defaultSprite) {
+		super(parent, new PositionF(gX, gY).mul(parent.getTileWidth()).minus(parent.getOriginOffset()));
 		this.defaultSprite = defaultSprite;
+		gridX = gX;
+		gridY = gY;
 	}
 
 	public void render(Graphics g) {

@@ -15,12 +15,15 @@ public class StockTable extends KitchenTile {
 
 	public StockTable(Scene parent, int gridX, int gridY, AutDirection d, Item item, Sprite stockItem) {
 		super(parent, gridX, gridY, null, d);
-		automaton = parentScene.setupAutomaton("Garde_manger");
-		current_state = automaton.initial;
 		this.stockItem = stockItem;
 		this.stock = 5;
 		this.item = item;
 		this.stockItem = stockItem;
+	}
+
+	@Override
+	public EntityType getType() {
+		return EntityType.TILE_STOCK;
 	}
 
 	@Override

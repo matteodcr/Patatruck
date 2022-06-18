@@ -17,8 +17,6 @@ public class CutTile extends KitchenTile {
 		super(parent, gridX, gridY, null, d);
 		this.item = null;
 		this.compteur = 0;
-		automaton = parentScene.setupAutomaton("Planche");
-		current_state = automaton.initial;
 	}
 
 	@Override
@@ -35,6 +33,12 @@ public class CutTile extends KitchenTile {
 			this.compteur = 20000;
 			return true;
 		}
+		// TODO Auto-generated constructor stub
+	}
+
+	@Override
+	public EntityType getType() {
+		return EntityType.TILE_CUT;
 	}
 
 	@Override

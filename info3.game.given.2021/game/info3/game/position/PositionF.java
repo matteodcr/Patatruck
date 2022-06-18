@@ -28,6 +28,10 @@ public class PositionF {
 		return new PositionF(this.x + b.x, this.y + b.y);
 	}
 
+	public PositionF minus(PositionF b) {
+		return new PositionF(this.x - b.x, this.y - b.y);
+	}
+
 	public PositionF neg() {
 		return new PositionF(-this.x, -this.y);
 	}

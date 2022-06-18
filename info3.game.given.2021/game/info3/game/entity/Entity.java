@@ -14,13 +14,13 @@ import info3.game.position.AutCategory;
 import info3.game.position.AutDirection;
 import info3.game.position.AutKey;
 import info3.game.position.PositionF;
+import info3.game.position.PositionI;
 import info3.game.scene.Scene;
 
 public abstract class Entity implements AutomatonListener {
 	Scene parentScene = null;
 	PositionF position;
 	AutDirection m_direction;
-	int gridX, gridY;
 	GAutomaton automaton;
 	int deathTime = 0;
 	int move_timer = 0, move_timer_max = 0; // allows to move only when move_timer==0
@@ -33,7 +33,12 @@ public abstract class Entity implements AutomatonListener {
 		parentScene = parent;
 		position = pos;
 		m_direction = AutDirection.N;
+
+		automaton = parentScene.m_game.getBoundAutomaton(getType());
+		current_state = automaton.initial;
 	}
+
+	public abstract EntityType getType();
 
 	public void setPosition(PositionF pos) {
 		position = pos;
@@ -116,43 +121,35 @@ public abstract class Entity implements AutomatonListener {
 
 	@Override
 	public boolean cell(AutDirection direction, AutCategory category) {
+		int gridX = getGridFromPos(position).getX();
+		int gridY = getGridFromPos(position).getY();
+		if (this instanceof StockTable)
+			System.out.printf("cook= grid(%d %d) pos(%f %f)\n", gridX, gridY, position.getX(), position.getY());
 		AutDirection newDirection = convertRelativToAbsolutedir(direction);
 		for (Entity entity : parentScene.entity_list) {
 			switch (newDirection) {
 			case N: {
-				if (direction == AutDirection.F && category == AutCategory.AROBASE)
-					System.out.println("N ENTITY");
-				if (gridY >= 1) {
-					if (entity.isItThatGrid(gridY - 1, gridX) && entity.category == category) {
-						return true;
-					}
+				if (entity.isItThatGrid(gridY - 1, gridX) && entity.category == category) {
+					return true;
 				}
 				break;
 			}
 			case W: {
-
-				if (gridX >= 1) {
-					if (entity.isItThatGrid(gridY, gridX - 1) && entity.category == category) {
-						return true;
-					}
+				if (entity.isItThatGrid(gridY, gridX - 1) && entity.category == category) {
+					return true;
 				}
 				break;
 			}
 			case E: {
-
-				if (gridX <= 8) {
-					if (entity.isItThatGrid(gridY, gridX + 1) && entity.category == category) {
-						return true;
-					}
+				if (entity.isItThatGrid(gridY, gridX + 1) && entity.category == category) {
+					return true;
 				}
 				break;
 			}
 			case S: {
 
-				if (gridY <= 2) {
-					if (entity.isItThatGrid(gridY + 1, gridX) && entity.category == category) {
-						return true;
-					}
+				if (entity.isItThatGrid(gridY + 1, gridX) && entity.category == category) {
+					return true;
 				}
 				break;
 			}
@@ -171,47 +168,30 @@ public abstract class Entity implements AutomatonListener {
 		}
 		switch (newDirection) {
 		case N: {
-			if (gridY >= 1) {
-				if (direction == AutDirection.F && category == AutCategory.AROBASE)
-					System.out.println("N");
-				if (parentScene.getTileAt(gridX, gridY - 1) != null
-						&& parentScene.getTileAt(gridX, gridY - 1).category == category) {
-					return true;
-				}
+			if (parentScene.getTileAt(gridX, gridY - 1) != null
+					&& parentScene.getTileAt(gridX, gridY - 1).category == category) {
+				return true;
 			}
 			break;
 		}
 		case W: {
-			if (direction == AutDirection.F && category == AutCategory.AROBASE)
-				// System.out.println("W");
-				if (gridX >= 1) {
-					if (parentScene.getTileAt(gridX - 1, gridY) != null
-							&& parentScene.getTileAt(gridX - 1, gridY).category == category) {
-						return true;
-					}
-				}
+			if (parentScene.getTileAt(gridX - 1, gridY) != null
+					&& parentScene.getTileAt(gridX - 1, gridY).category == category) {
+				return true;
+			}
 			break;
 		}
 		case E: {
-			if (gridX <= 8) {
-				if (direction == AutDirection.F && category == AutCategory.AROBASE)
-					// System.out.println("E");
-					if (parentScene.getTileAt(gridX + 1, gridY) != null
-							&& parentScene.getTileAt(gridX + 1, gridY).category == category) {
-						return true;
-					}
+			if (parentScene.getTileAt(gridX + 1, gridY) != null
+					&& parentScene.getTileAt(gridX + 1, gridY).category == category) {
+				return true;
 			}
 			break;
 		}
 		case S: {
-			if (direction == AutDirection.F && category == AutCategory.AROBASE) {
-				// System.out.println("S");
-			}
-			if (gridY <= 2) {
-				if (parentScene.getTileAt(gridX, gridY + 1) != null
-						&& parentScene.getTileAt(gridX, gridY + 1).category == category) {
-					return true;
-				}
+			if (parentScene.getTileAt(gridX, gridY + 1) != null
+					&& parentScene.getTileAt(gridX, gridY + 1).category == category) {
+				return true;
 			}
 			break;
 		}
@@ -234,13 +214,18 @@ public abstract class Entity implements AutomatonListener {
 	}
 
 	private boolean isItThatGrid(int gY, int gX) {
-		return gY == gridY && gX == gridX;
+		return gY == getGridFromPos(position).getY() && gX == getGridFromPos(position).getX();
 	}
 
 	@Override
 	public boolean key(AutKey direction) {
-		if (direction == AutKey.SPACE && this instanceof StockTable)
-			System.out.printf("boolean key=%b \n", parentScene.m_game.m_listener.isUp(direction.toString()));
 		return parentScene.m_game.m_listener.isUp(direction.toString());
 	}
+
+	private PositionI getGridFromPos(PositionF pos) {
+		PositionF pos_tmp = pos.add(parentScene.getOriginOffset());
+		return pos_tmp.divFloor(parentScene.getTileWidth());
+
+	}
+
 }

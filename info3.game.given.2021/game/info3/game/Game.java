@@ -24,8 +24,12 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.io.File;
 import java.io.RandomAccessFile;
-import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -34,10 +38,11 @@ import info3.automata.ast.AST;
 import info3.automata.parser.AutomataParser;
 import info3.game.automata.AutomataGenerator;
 import info3.game.automata.GAutomaton;
+import info3.game.entity.EntityType;
 import info3.game.graphics.AwtGraphics;
 import info3.game.graphics.GameCanvas;
-import info3.game.scene.CityScene;
-import info3.game.scene.KitchenScene;
+import info3.game.screen.AutomatonSelectionScreen;
+import info3.game.screen.Screen;
 import info3.game.sound.RandomFileInputStream;
 
 public class Game {
@@ -67,22 +72,23 @@ public class Game {
 	JFrame m_frame;
 	JLabel m_text;
 	GameCanvas m_canvas;
-	public CanvasListener m_listener;
+	public final CanvasListener m_listener = new CanvasListener(this);
 	Sound m_music;
 
-	public List<GAutomaton> automata_list; // can be moved
+	private final Map<String, GAutomaton> automataList; // can be moved
+	public Map<EntityType, GAutomaton> boundAutomata = null;
 
-	private final KitchenScene kitchenScene;
-	private final CityScene cityScene;
+	public GAutomaton getBoundAutomaton(EntityType type) {
+		if (boundAutomata == null)
+			throw new RuntimeException("AutomatonSelectionScreen wasn't shown");
+
+		return boundAutomata.get(type);
+	}
+
+	Screen screen;
 
 	Game() {
-		// creating a listener for all the events
-		// from the game canvas, that would be
-		// the controller in the MVC pattern
-		m_listener = new CanvasListener(this);
-		automata_list = loadAutomata("data");
-		// creating the game canvas to render the game,
-		// that would be a part of the view in the MVC pattern
+		automataList = loadAutomata("data");
 		m_canvas = new GameCanvas(m_listener);
 
 		System.out.println("  - creating frame...");
@@ -90,11 +96,26 @@ public class Game {
 		m_frame = m_canvas.createFrame(d);
 		m_frame.setResizable(false);
 
-		kitchenScene = new KitchenScene(WIDTH, HEIGHT / 2, this);
-		cityScene = new CityScene(WIDTH, HEIGHT / 2, this);
-
 		System.out.println("  - setting up the frame...");
 		setupFrame();
+		screen = new AutomatonSelectionScreen(this);
+	}
+
+	public void changeScreen(Screen newScreen) {
+		screen = newScreen;
+	}
+
+	public GAutomaton getAutomaton(String name) {
+		GAutomaton a = automataList.get(name);
+
+		if (a != null)
+			return a;
+		else
+			throw new RuntimeException("automaton " + name + " not found");
+	}
+
+	public Collection<GAutomaton> getAllAutomata() {
+		return automataList.values();
 	}
 
 	/*
@@ -109,7 +130,7 @@ public class Game {
 		m_frame.add(m_canvas, BorderLayout.CENTER);
 
 		m_text = new JLabel();
-		m_text.setText("Tick: 0ms FPS=0  Nb_entities_k = 0	Nb_entities_c = 0");
+		m_text.setText("Tick: 0ms FPS=0  Nb_entities=0");
 		m_frame.add(m_text, BorderLayout.NORTH);
 
 		// center the window on the screen
@@ -154,6 +175,9 @@ public class Game {
 	 * that elapsed since the last time this method was invoked.
 	 */
 	void tick(long elapsed) {
+		if (screen == null)
+			return;
+
 		// Update every second
 		// the text on top of the frame: tick and fps
 		m_textElapsed += elapsed;
@@ -161,23 +185,15 @@ public class Game {
 			m_textElapsed = 0;
 			float period = m_canvas.getTickPeriod();
 			int fps = m_canvas.getFPS();
-			int nb_entities_k = kitchenScene.getNbEntities();
-			int nb_entities_c = cityScene.getNbEntities();
+			int nb_entities_k = screen.getEntityCount();
 			String txt = "Tick=" + period + "ms";
 			while (txt.length() < 15)
 				txt += " ";
 			txt = txt + fps + " fps   ";
-			txt += "Nb_entities_k= " + nb_entities_k;
-			while (txt.length() < 45)
-				txt += " ";
-			txt += "Nb_entities_c= " + nb_entities_c;
+			txt += "Nb_entities=" + nb_entities_k;
 			m_text.setText(txt);
 
-			kitchenScene.tick(elapsed);
-			cityScene.tick(elapsed);
-		}
-		if (m_listener.isUp("ESCAPE")) {// used for testing shuffle
-			this.kitchenScene.shuffle();
+			screen.tick(elapsed);
 		}
 	}
 
@@ -191,15 +207,13 @@ public class Game {
 		g = new AwtGraphics(g, ag, WIDTH, HEIGHT, SCALE_FACTOR);
 
 		// paint
-		int half = g.getHeight() / 2;
-		kitchenScene.render(g.window(0, 0, g.getWidth(), half));
-		cityScene.render(g.window(0, half, g.getWidth(), half));
+		screen.render(g);
 	}
 
 	/* Generates automata list from .gal file */
-	List<GAutomaton> loadAutomata(String filename) {
+	Map<String, GAutomaton> loadAutomata(String filename) {
 		try {
-			List<GAutomaton> automata = new ArrayList<>();
+			Map<String, GAutomaton> automata = new TreeMap<>();
 			List<GAutomaton> automata_tmp;
 			File folder = new File(filename);
 			for (File file : folder.listFiles()) {
@@ -208,7 +222,10 @@ public class Game {
 						AST ast = AutomataParser.from_file(file.getAbsolutePath());
 						AutomataGenerator ast_visitor = new AutomataGenerator();
 						automata_tmp = (List<GAutomaton>) ast.accept(ast_visitor);
-						automata.addAll(automata_tmp);
+
+						automata.putAll(
+								automata_tmp.stream().collect(Collectors.toMap(a -> a.name, Function.identity())));
+
 						System.out.printf("successfully loaded automata from %s \n", file.getName());
 					} catch (Exception e) {
 						System.err.printf("error while loading file \"%s\"%n", file.getCanonicalFile());

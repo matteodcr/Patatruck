@@ -1,8 +1,8 @@
 package info3.game.scene;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
@@ -28,10 +28,12 @@ import info3.game.position.PositionF;
 import info3.game.position.PositionI;
 
 public class KitchenScene extends Scene {
-	
+
+	private ItemType current_order_0;
+	private ItemType current_order_1;
 	private HashMap<ItemType, StockTable> stocktables;
 
-	private static final PositionI KITCHEN_ORIGIN = new PositionI(46, 10);
+	private static final PositionI KITCHEN_ORIGIN = new PositionI(44, 10);
 	public static final int MAXIMUM_COCKROACH_NUMBER = 20;
 
 	private CookEntity cook;
@@ -74,6 +76,8 @@ public class KitchenScene extends Scene {
 			cockroach = new CockroachEntity(this, new PositionF(KITCHEN_ORIGIN.getX() + getTileWidth() * 2,
 					KITCHEN_ORIGIN.getY() + getTileWidth() * 2));
 			addEntity(cockroach);
+			current_order_0 = ItemType.getRandomRecipe();
+			current_order_1 = ItemType.getRandomRecipe();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -168,7 +172,7 @@ public class KitchenScene extends Scene {
 	public CookEntity getCook() {
 		return cook;
 	}
-	
+
 	public HashMap<ItemType, StockTable> getStocktables() {
 		return stocktables;
 	}
@@ -182,6 +186,26 @@ public class KitchenScene extends Scene {
 			entity.render(g);
 		}
 		g.drawSprite(Sprite.KITCHEN_TRUCK, KITCHEN_ORIGIN.getX() - 13, KITCHEN_ORIGIN.getY() - 13);
+		g.drawSprite(Sprite.ORDER_CARD, 224, 1);
+		renderCurrentOrder(g);
+	}
+
+	public void renderCurrentOrder(Graphics g) {
+		// int x = 226;
+		// int y = 22;
+		// int i = 0;
+		g.drawSprite(current_order_0.getSprite(), 226, 7);
+		g.drawSprite(current_order_1.getSprite(), 240, 7);
+		// for (ItemType item : current_order.getKey()) {
+		// g.drawSprite(item.getSprite(), x, y);
+		// x += 14;
+		// i++;
+		// if (i == 2) {
+		// x = 226;
+		// y += 14;
+		// }
+
+		// }
 	}
 
 	public int getCockroach_counter() {
@@ -206,14 +230,15 @@ public class KitchenScene extends Scene {
 		Random rand = new Random();
 		if (rand.nextInt(500) < 2) {
 			try {
-				this.addEntity(new CockroachEntity(this, new PositionF(137, 36)));
+				this.addEntity(new CockroachEntity(this, new PositionF(135, 36)));
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
-		/* Je l'ai déplacé ici pr l'instant car plus d'acces a kitchenScene depuis
-		 * Game (Vincent
+		/*
+		 * Je l'ai déplacé ici pr l'instant car plus d'acces a kitchenScene depuis Game
+		 * (Vincent
 		 */
 		if (m_game.m_listener.isUp("ESCAPE")) {// used for testing shuffle
 			this.shuffle();

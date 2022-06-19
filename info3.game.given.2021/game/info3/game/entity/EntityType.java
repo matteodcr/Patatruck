@@ -20,7 +20,7 @@ public enum EntityType {
 
 	TILE_SAUCE("table à sauce", "Table_a_sauce"),
 
-	TILE_STOCK("garde-manger", "Garde_manger"),
+	TILE_STOCK("garde-manger", "StockTable"),
 
 	TILE_TRASH("poubelle", "Poubelle");
 

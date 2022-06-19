@@ -1,5 +1,7 @@
 package info3.game.content;
 
+import java.util.Random;
+
 import info3.game.graphics.Sprite;
 
 public enum ItemType {
@@ -46,5 +48,28 @@ public enum ItemType {
 		this.sprite = sprite;
 		this.displayName = displayName;
 		this.finalItem = finalItem;
+	}
+
+	public static ItemType getRandomRecipe() {
+		Random rand = new Random();
+		int i = rand.nextInt(getNbOfFinalItems());
+		int j = 0;
+		for (ItemType item : ItemType.values()) {
+			if (item.isFinalItem()) {
+				if (i == j)
+					return item;
+				j++;
+			}
+		}
+		throw new IllegalStateException("no recipe found");
+	}
+
+	private static int getNbOfFinalItems() {
+		int sum = 0;
+		for (ItemType item : ItemType.values()) {
+			if (item.isFinalItem())
+				sum++;
+		}
+		return sum;
 	}
 }

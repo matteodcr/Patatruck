@@ -20,10 +20,15 @@ Friteuse(Init){
     |Key(SPACE) & Cell(F,@) ? Wizz:(Init)     
 }
 
-Garde_manger(Init){
-	*(Init)
-	|Key(SPACE) & Cell(F,@) ? Pop:(Init)   
-	|True ? Wizz:(Init)                    
+StockTable(Still){
+* (Still):
+| Cell(F,@) & Key(SPACE) ? Pop(F) :(Still)
+| Cell(F,A) ? Pop(F) : (Still)
+| !GotStuff() ? Wizz(F) :(Empty)
+
+* (Empty):
+| GotStuff() ? :(Full)
+| True() ? :(Empty)
 }
 
 Table(Vide){

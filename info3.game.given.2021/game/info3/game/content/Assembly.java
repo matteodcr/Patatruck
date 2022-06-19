@@ -5,6 +5,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Random;
 import java.util.stream.Collectors;
 
 public class Assembly {
@@ -130,6 +131,18 @@ public class Assembly {
 		}
 		this.emptyAssembly();
 		this.getItems().add(new Item(ItemType.FAILED_Item));// on est en mauvaise voie
+	}
+
+	public Entry<List<ItemType>, ItemType> getRandomRecipe() {
+		Random rand = new Random();
+		int i = rand.nextInt(ASSEMBLE_RECIPES.size());
+		int j = 0;
+		for (Entry<List<ItemType>, ItemType> entry : ASSEMBLE_RECIPES.entrySet()) {
+			if (i == j)
+				return entry;
+			j++;
+		}
+		throw new IllegalStateException("no recipe found");
 	}
 
 	/*

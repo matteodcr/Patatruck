@@ -34,6 +34,7 @@ import static info3.game.graphics.Sprite.Spritesheet.KITCHEN;
 import static info3.game.graphics.Sprite.Spritesheet.MASHEDPOTATO_;
 import static info3.game.graphics.Sprite.Spritesheet.MAYOTABLE;
 import static info3.game.graphics.Sprite.Spritesheet.MEAT_;
+import static info3.game.graphics.Sprite.Spritesheet.MENU;
 import static info3.game.graphics.Sprite.Spritesheet.OFFFRIETILE;
 import static info3.game.graphics.Sprite.Spritesheet.OFFPANTILE;
 import static info3.game.graphics.Sprite.Spritesheet.ONFRIETILE;
@@ -75,7 +76,7 @@ public enum Sprite {
 	POTATOCOOKED(POTATOCOOKED_, 0, 0, 1, 1), POTATOSALAD(POTATOSALAD_, 0, 0, 1, 1), POUTINE(POUTINE_, 0, 0, 1, 1),
 	SALADELEAF(SALADELEAF_, 0, 0, 1, 1), TOMATOSLICE(TOMATOSLICE_, 0, 0, 1, 1), VEGIBURGER(VEGIBURGER_, 0, 0, 1, 1),
 	KETCHUP(KETCHUPTABLE, 0, 0, 1, 1), MAYONNAISE(MAYOTABLE, 0, 0, 1, 1), FAILEDITEM(FAILEDITEM_, 0, 0, 1, 1),
-	KITCHEN_TRUCK(KITCHEN, 0, 0, 15, 6), KITCHEN_TRUCK_FLOOR(KITCHEN, 1, 6, 10, 4);
+	KITCHEN_TRUCK(KITCHEN, 0, 0, 15, 6), KITCHEN_TRUCK_FLOOR(KITCHEN, 1, 6, 10, 4), ORDER_CARD(MENU, 0, 0, 1, 1);
 
 	public final Spritesheet spritesheet;
 	public final int u, v, w, h;
@@ -122,7 +123,7 @@ public enum Sprite {
 		AUTOMATON_SELECTION("automaton_selection.png", 16),
 
 		BASICTABLE("BasicTableTile.png", 13), COOK("cook.png", 13), KITCHEN("kitchen.png", 13),
-		DELIVERYTILE("DeliveryTile.png", 13), COCKROACH("cockroach.png", 13);
+		DELIVERYTILE("DeliveryTile.png", 13), COCKROACH("cockroach.png", 13), MENU("menu.png", 69);
 
 		public final String filename;
 		public final int tileSize;

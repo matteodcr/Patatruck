@@ -2,10 +2,10 @@ package info3.game.entity;
 
 import info3.game.content.Item;
 import info3.game.graphics.Graphics;
+import info3.game.graphics.Graphics.Align;
 import info3.game.graphics.Sprite;
 import info3.game.position.AutCategory;
 import info3.game.position.AutDirection;
-import info3.game.scene.KitchenScene;
 import info3.game.scene.Scene;
 
 public class StockTable extends KitchenTile {
@@ -28,24 +28,27 @@ public class StockTable extends KitchenTile {
 
 	@Override
 	public boolean pop(AutDirection direction) { // prendre un aliment
-		System.out.println("POP");
-		Item item_player = ((KitchenScene) this.parentScene).getCook().item;
-		if (item_player != null) {
-			return false;
-		} else {
-			if (stock == 0) {
+		Entity eInteracting = selectEntityToInteractWith();
+		if (eInteracting != null) {
+			Item item_entity = eInteracting.item;
+			if (item_entity != null) {
 				return false;
 			} else {
-				((KitchenScene) this.parentScene).getCook().item = this.item;
-				stock--;
-				if (gotStuff()) {
-					this.defaultSprite = full;
+				if (stock == 0) {
+					return false;
 				} else {
-					this.defaultSprite = empty;
+					eInteracting.item = this.item;
+					stock--;
+					if (gotStuff()) {
+						this.defaultSprite = full;
+					} else {
+						this.defaultSprite = empty;
+					}
+					return true;
 				}
-				return true;
 			}
 		}
+		return false;
 	}
 
 	@Override
@@ -65,6 +68,8 @@ public class StockTable extends KitchenTile {
 	public void render(Graphics g) {
 		g.drawSprite(Sprite.STOCK_TABLE, 0, 0);
 		g.drawSprite(this.stockItem, 0, 0);
+		String tmp = Integer.toString(stock);
+		g.drawText(tmp, Align.LEFT, 0, 0);
 	}
 
 	@Override

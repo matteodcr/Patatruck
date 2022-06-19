@@ -6,8 +6,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-import info3.game.entity.StockTable;
-
 public class GTransition {
 	public Map<IFunction, Integer> action; // Action et pourcentage
 	public IFunction condition;
@@ -21,10 +19,6 @@ public class GTransition {
 
 	public GState doTransition(AutomatonListener aut) {
 		if (condition.eval(aut)) {
-			if (aut instanceof StockTable) {
-				// System.out.println("GO");
-
-			}
 			// si pas d'action = on effectue la transi, sinon on choisit une action a exec
 			if (action.isEmpty() || chooseAction(aut)) {
 				return destination;

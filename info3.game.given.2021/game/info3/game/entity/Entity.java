@@ -9,6 +9,7 @@ import javax.imageio.ImageIO;
 import info3.game.automata.AutomatonListener;
 import info3.game.automata.GAutomaton;
 import info3.game.automata.GState;
+import info3.game.content.Item;
 import info3.game.graphics.Graphics;
 import info3.game.position.AutCategory;
 import info3.game.position.AutDirection;
@@ -28,6 +29,7 @@ public abstract class Entity implements AutomatonListener {
 	long start, finish, timeElapsed;
 
 	AutCategory category;
+	public Item item;
 
 	Entity(Scene parent, PositionF pos) {
 		parentScene = parent;
@@ -36,6 +38,7 @@ public abstract class Entity implements AutomatonListener {
 
 		automaton = parentScene.m_game.getBoundAutomaton(getType());
 		current_state = automaton.initial;
+		item = null;
 	}
 
 	public abstract EntityType getType();
@@ -145,18 +148,14 @@ public abstract class Entity implements AutomatonListener {
 				break;
 			}
 			case S: {
-
 				if (entity.isItThatGrid(gridY + 1, gridX) && entity.category == category) {
 					return true;
 				}
 				break;
 			}
 			case H: {
-
-				if ((gridX >= 1) && (gridY >= 1) && (gridX <= 8) && (gridY <= 2)) {
-					if (entity.isItThatGrid(gridY, gridX) && entity.category == category) {
-						return true;
-					}
+				if (entity.isItThatGrid(gridY, gridX) && entity.category == category) {
+					return true;
 				}
 				break;
 			}
@@ -194,14 +193,10 @@ public abstract class Entity implements AutomatonListener {
 			break;
 		}
 		case H: {
-			if (direction == AutDirection.F && category == AutCategory.AROBASE)
-				// System.out.println("H");
-				if ((gridX >= 1) && (gridY >= 1) && (gridX <= 8) && (gridY <= 2)) {
-					if (parentScene.getTileAt(gridX, gridY) != null
-							&& parentScene.getTileAt(gridX, gridY).category == category) {
-						return true;
-					}
-				}
+			if (parentScene.getTileAt(gridX, gridY) != null
+					&& parentScene.getTileAt(gridX, gridY).category == category) {
+				return true;
+			}
 			break;
 		}
 		default:
@@ -226,4 +221,32 @@ public abstract class Entity implements AutomatonListener {
 
 	}
 
+	// To handle corner equipments cases in the kitchen
+	public Entity selectEntityToInteractWith() {
+		int gridX = getGridFromPos(position).getX();
+		int gridY = getGridFromPos(position).getY();
+		for (Entity entity : parentScene.entity_list) {
+			switch (m_direction) {
+			case N:
+				if (entity.isItThatGrid(gridY - 1, gridX) && entity.m_direction == AutDirection.S)
+					return entity;
+				break;
+			case W:
+				if (entity.isItThatGrid(gridY, gridX - 1) && entity.m_direction == AutDirection.E)
+					return entity;
+				break;
+			case E:
+				if (entity.isItThatGrid(gridY, gridX + 1) && entity.m_direction == AutDirection.W)
+					return entity;
+				break;
+			case S:
+				if (entity.isItThatGrid(gridY + 1, gridX) && entity.m_direction == AutDirection.N)
+					return entity;
+				break;
+			default:
+				break;
+			}
+		}
+		return null; // no entity fills the criteria
+	}
 }

@@ -15,8 +15,7 @@ public class CockroachEntity extends Entity {
 	public CockroachEntity(Scene parent, PositionF position) throws IOException {
 		super(parent, position);
 		category = AutCategory.A;
-		System.out.println(((KitchenScene) parentScene).getCockroach_counter());
-		Cockroach_counterAdd(1);
+		cockroachCounterAdd(1);
 	}
 
 	@Override
@@ -98,7 +97,7 @@ public class CockroachEntity extends Entity {
 
 	@Override
 	public boolean egg(AutDirection direction) {
-		if (((KitchenScene) parentScene).getCockroach_counter() <= KitchenScene.MAXIMUM_COCKROACH_NUMBER) {
+		if (((KitchenScene) parentScene).getCockroachCounter() <= KitchenScene.MAXIMUM_COCKROACH_NUMBER) {
 			Entity nouveau_carfard = null;
 			try {
 				nouveau_carfard = new CockroachEntity(this.parentScene, position);
@@ -125,7 +124,7 @@ public class CockroachEntity extends Entity {
 
 	@Override
 	public boolean explode() {
-		Cockroach_counterAdd(-1);
+		cockroachCounterAdd(-1);
 		return true;
 	}
 
@@ -195,8 +194,8 @@ public class CockroachEntity extends Entity {
 		return c;
 	}
 
-	public void Cockroach_counterAdd(int value) {
-		((KitchenScene) parentScene).setCockroach_counter(((KitchenScene) parentScene).getCockroach_counter() + value);
+	public void cockroachCounterAdd(int value) {
+		((KitchenScene) parentScene).setCockroachCounter(((KitchenScene) parentScene).getCockroachCounter() + value);
 		;
 	}
 

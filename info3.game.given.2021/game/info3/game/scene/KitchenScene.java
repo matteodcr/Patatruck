@@ -39,7 +39,7 @@ public class KitchenScene extends Scene {
 
 	private CookEntity cook;
 	private CockroachEntity cockroach;
-	private int cockroach_counter = 1;
+	private int cockroachCounter = 1;
 
 	private ArrayList<PositionF> indexEmplacements = new ArrayList<>(List.of(new PositionF(0, 1), new PositionF(0, 2),
 			new PositionF(0, 3), new PositionF(0, 4), new PositionF(0, 5), new PositionF(3, 1), new PositionF(3, 2),
@@ -196,12 +196,12 @@ public class KitchenScene extends Scene {
 		g.drawSprite(currentOrder1.getSprite(), 240, 7);
 	}
 
-	public int getCockroach_counter() {
-		return cockroach_counter;
+	public int getCockroachCounter() {
+		return cockroachCounter;
 	}
 
-	public void setCockroach_counter(int cockroack_counter) {
-		this.cockroach_counter = cockroack_counter;
+	public void setCockroachCounter(int cockroack_counter) {
+		this.cockroachCounter = cockroack_counter;
 	}
 
 	@Override

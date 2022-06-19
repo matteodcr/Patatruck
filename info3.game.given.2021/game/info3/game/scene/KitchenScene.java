@@ -29,8 +29,8 @@ import info3.game.position.PositionI;
 
 public class KitchenScene extends Scene {
 
-	private ItemType current_order_0;
-	private ItemType current_order_1;
+	private ItemType currentOrder0;
+	private ItemType currentOrder1;
 	private HashMap<ItemType, StockTable> stocktables;
 
 	private static final PositionI KITCHEN_ORIGIN = new PositionI(44, 10);
@@ -76,8 +76,8 @@ public class KitchenScene extends Scene {
 			cockroach = new CockroachEntity(this, new PositionF(KITCHEN_ORIGIN.getX() + getTileWidth() * 2,
 					KITCHEN_ORIGIN.getY() + getTileWidth() * 2));
 			addEntity(cockroach);
-			current_order_0 = ItemType.getRandomRecipe();
-			current_order_1 = ItemType.getRandomRecipe();
+			currentOrder0 = ItemType.getRandomItem();
+			currentOrder1 = ItemType.getRandomItem();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -191,21 +191,8 @@ public class KitchenScene extends Scene {
 	}
 
 	public void renderCurrentOrder(Graphics g) {
-		// int x = 226;
-		// int y = 22;
-		// int i = 0;
-		g.drawSprite(current_order_0.getSprite(), 226, 7);
-		g.drawSprite(current_order_1.getSprite(), 240, 7);
-		// for (ItemType item : current_order.getKey()) {
-		// g.drawSprite(item.getSprite(), x, y);
-		// x += 14;
-		// i++;
-		// if (i == 2) {
-		// x = 226;
-		// y += 14;
-		// }
-
-		// }
+		g.drawSprite(currentOrder0.getSprite(), 226, 7);
+		g.drawSprite(currentOrder1.getSprite(), 240, 7);
 	}
 
 	public int getCockroach_counter() {

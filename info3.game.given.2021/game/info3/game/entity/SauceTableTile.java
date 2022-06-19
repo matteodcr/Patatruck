@@ -12,9 +12,9 @@ import info3.game.scene.Scene;
 public class SauceTableTile extends KitchenTile {
 	Sauce sauce;
 
-	public SauceTableTile(Scene parent, int gridX, int gridY, AutDirection d) {
+	public SauceTableTile(Scene parent, int gridX, int gridY, AutDirection d, Sauce sauce) {
 		super(parent, gridX, gridY, null, d);
-		// this.sauce = sauce;
+		this.sauce = sauce;
 	}
 
 	@Override

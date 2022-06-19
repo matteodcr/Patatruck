@@ -50,7 +50,7 @@ public enum ItemType {
 		this.finalItem = finalItem;
 	}
 
-	public static ItemType getRandomRecipe() {
+	public static ItemType getRandomItem() {
 		Random rand = new Random();
 		int i = rand.nextInt(getNbOfFinalItems());
 		int j = 0;

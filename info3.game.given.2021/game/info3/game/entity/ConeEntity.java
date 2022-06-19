@@ -13,7 +13,7 @@ public class ConeEntity extends Entity {
 
 	@Override
 	public EntityType getType() {
-		return null; // TODO
+		return EntityType.CONE;
 	}
 
 	@Override

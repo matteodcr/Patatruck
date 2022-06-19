@@ -17,7 +17,7 @@ public abstract class Tile extends Entity {
 	}
 
 	protected Tile(Scene parent, int gX, int gY, Sprite defaultSprite) {
-		super(parent, new PositionF(gX, gY).mul(parent.getTileWidth()).minus(parent.getOriginOffset()));
+		super(parent, new PositionF(gX, gY).mul(parent.getTileWidth()).sub(parent.getOriginOffset()));
 		this.defaultSprite = defaultSprite;
 		gridX = gX;
 		gridY = gY;

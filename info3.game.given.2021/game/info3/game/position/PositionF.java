@@ -28,7 +28,7 @@ public class PositionF {
 		return new PositionF(this.x + b.x, this.y + b.y);
 	}
 
-	public PositionF minus(PositionF b) {
+	public PositionF sub(PositionF b) {
 		return new PositionF(this.x - b.x, this.y - b.y);
 	}
 

@@ -35,8 +35,7 @@ public class MarketEntity extends Entity {
 
 	@Override
 	public EntityType getType() {
-		// TODO Auto-generated method stub
-		return null;
+		return EntityType.MARKET;
 	}
 
 	@Override

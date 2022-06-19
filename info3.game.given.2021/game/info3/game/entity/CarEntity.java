@@ -18,8 +18,7 @@ public class CarEntity extends Entity {
 
 	@Override
 	public EntityType getType() {
-		// TODO Auto-generated method stub
-		return null;
+		return EntityType.CAR;
 	}
 
 	@Override

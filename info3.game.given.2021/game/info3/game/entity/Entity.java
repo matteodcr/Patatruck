@@ -124,8 +124,8 @@ public abstract class Entity implements AutomatonListener {
 
 	@Override
 	public boolean cell(AutDirection direction, AutCategory category) {
-		int gridX = getGridFromPos(position).getX();
-		int gridY = getGridFromPos(position).getY();
+		int gridX = getGridPosFromPos().getX();
+		int gridY = getGridPosFromPos().getY();
 		AutDirection newDirection = convertRelativToAbsolutedir(direction);
 		for (Entity entity : parentScene.entity_list) {
 			switch (newDirection) {
@@ -207,7 +207,7 @@ public abstract class Entity implements AutomatonListener {
 	}
 
 	private boolean isItThatGrid(int gY, int gX) {
-		return gY == getGridFromPos(position).getY() && gX == getGridFromPos(position).getX();
+		return gY == getGridPosFromPos().getY() && gX == getGridPosFromPos().getX();
 	}
 
 	@Override
@@ -215,16 +215,16 @@ public abstract class Entity implements AutomatonListener {
 		return parentScene.m_game.m_listener.isUp(direction.toString());
 	}
 
-	private PositionI getGridFromPos(PositionF pos) {
-		PositionF pos_tmp = pos.add(parentScene.getOriginOffset());
+	private PositionI getGridPosFromPos() {
+		PositionF pos_tmp = position.add(parentScene.getOriginOffset());
 		return pos_tmp.divFloor(parentScene.getTileWidth());
 
 	}
 
 	// To handle corner equipments cases in the kitchen
 	public Entity selectEntityToInteractWith() {
-		int gridX = getGridFromPos(position).getX();
-		int gridY = getGridFromPos(position).getY();
+		int gridX = getGridPosFromPos().getX();
+		int gridY = getGridPosFromPos().getY();
 		for (Entity entity : parentScene.entity_list) {
 			switch (m_direction) {
 			case N:

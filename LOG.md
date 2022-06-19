@@ -1,5 +1,6 @@
 # PLA : Patatruck -- Journal de bord
 
+
 ## 4-7 juin
 
   * Travail sur le diagramme UML
@@ -269,7 +270,7 @@ Travail sur les entités associés aux automates de la ville.
 
 Travail sur l'affichage dans la ville d'une voiture et gestion de son IA (gérer collisions avec les batiments)
 
-+Vincent  : Réécrit les champs `gridX` et `gridY` dans `Tile` et les enlever de `Entity` et `CityTile`. Les entités n'auront accès qu'à la position en pixel mais pourront appeler des méthodes pour connaître leur grille.
++Vincent  : Réécrit les champs `gridX` et `gridY` dans `Tile` et les enlever de `Entity` et `CityTile`. Les entités n'auront accès qu'à la position en pixels mais pourront appeler des méthodes pour connaître leur grille.
 
 #### Edgar
 
@@ -278,7 +279,7 @@ Travail sur l'affichage dans la ville d'une voiture et gestion de son IA (gérer
   * Implémentation quasi-fonctionnelle d'un menu de selection d'automates
   * Petit fix d'un rendu pas très joli
 
-### Elise
+#### Elise
 
 Travail sur content, restucturation du code
 
@@ -294,9 +295,82 @@ Travail sur les recettes et ajout de la possibilité de shuffle les éléments d
 
 ## 17 juin
 
+Il nous manque toujours une classe fonctionnelle pour les items et les assemblages. On a réussi à implanter l'entité `Car` dans la ville ainsi que lier son automate, mais pour l'instant on a pas de collision dans cette scène (millimétrique et non plus par case). On a implanté une fonction pour shuffle les équipements de la cuisine.
+
 ### Réflexions en cours
+
+- Comment gérer les collisions dans la ville ? Réimplanter `Cell` et comparer la `PositionF`  de l'entité avec la catégorie de l'entité à la `PositionF` d'à côté (quelques pixels)  
 
 ### Plan de codage
 
+#### Loric & Vincent
+
+Ajout des collisions avec les bâtiments dans la ville.
+
+#### Paul
+
+Lors du shuffle, réorienter les tables dans le bon sens.
+
+#### Matthéo et Aurélien
+
+Nouveaux sprites et ajouts des sprites dans la scène + méthodes pour orienter facilement les sprites
+
+#### Paul, Aurélien & Mattéo
+
+Ajout de l'interaction entre la `StockTable` et le joueur (implémentation des méthodes de celle-ci).
+
+#### Elise
+
+Fin d'item et des assemblages.
+
+#### Mathis
+
+Attendre les items types
+
+#### Edgar
+
+Merge dans le master de l'écran de sélection d'automate.
+
 ### Tests à réaliser
 
+- Vérifier visuellement que les voitures ne rentre pas en collision avec les bâtiments `REPORRTED`
+- Assemblage des recettes (fichier test) `DONE`
+- Vérifiez l'interaction entre la `StockTable` et le `Cook`
+
+## 18 & 19 Juin
+
+Les branches git sont un peu désordonnés et tout le monde n'a pas la version la plus récente du master. Le but durant le week-end est de réussir à tout récupérer sur le master pour repartir sur de bonnes bases lundi. On a également pas pu finir l'implémentation des collisions dans la ville, donc on va essayer de terminer ça pendant le week-end. Voilà une liste de tout ce qu'il reste à faire pour avoir un jeu agréable :
+* Système de collision millimétrique
+* Physique de déplacement des véhicules dans la ville
+* Implémentation de la génération aléatoire (en cours)
+* Placer les ralentisseurs et les marchés dans la ville 
+* Gérer l'apparition et la disparition des véhicules 
+* Implémentation de la mécanique de transfert entre 2 camions
+* Implémentation de la mécanique de doublure avec les erreurs de cuisson
+* Gérer la mécanique de viewport
+* Implémentation des timers (un de décompte et un pour le score)
+* Implémentation du compteur de vitesse (lié à la physique)
+* Créer et afficher l'UI sur l'écran (vitesse, temps et recette en cours)
+* Gérer l'interaction entre les différents équipements de cuisine et le joueur
+* Ecran d'accueil (logo, best score, start, select automata, quit + credits dans un coin)
+* Ecran de fin (logo, score de la partie, best score, replay, quit)
+* Sauvegarde et relecture du/des meilleur(s) score(s)
+* (Ajout du verglas et des nids de poules)
+* (Système de sons/bruitages)
+* (Système d'animations)
+
+### Plan de codage
+
+#### Vincent
+
+Terminer le travail sur les collisions millimétrique de la voiture. Récupérer le travail de tout le monde et le fusionner sur une nouvelle branche. Laisser à tout le monde vérifier que ça comprend/ correspond à ce qu'ils ont codé. Une fois le consensus atteint, merge sur master après vérification par Edgar.
+
+Implémenter la base du système de commandes (recettes à réaliser)
+Implémenter l'action qui permet aux cafards de voler des ingrédients dans la `StockTable`. + Gérer les interactions dans les coins du camion en fonction de l'orientation de l'entité qui va interagir.
+
+
+### Tests à réaliser
+
+- Pour la voiture, vérifier que celle-ci ne rentre pas dans des batiments et qu'elle les détecte bien `DONE`
+- Pour le merge : refaire la plus part des tests précédents et vérifier que rien n'est cassé. `KINDA_DONE`
+- Vérifier que les cafards peuvent voler un ingrédient et que le joueur ne peut interagir que si il regarde l'équipement. `DONE`

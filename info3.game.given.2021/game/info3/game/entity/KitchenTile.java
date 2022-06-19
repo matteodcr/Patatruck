@@ -6,12 +6,11 @@ import info3.game.position.AutDirection;
 import info3.game.scene.Scene;
 
 public abstract class KitchenTile extends Tile {
-	private AutDirection direction;
 
 	protected KitchenTile(Scene parent, int gridX, int gridY, Sprite sprite, AutDirection d) {
 		super(parent, gridX, gridY, sprite);
 		category = AutCategory.O;
-		m_direction = d;
+		m_direction = d; // field inherited from Entity
 	}
 
 }

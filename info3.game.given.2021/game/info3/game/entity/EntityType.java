@@ -4,7 +4,13 @@ public enum EntityType {
 	TILE_TABLE("table", "Table"),
 
 	// TODO
-	TILE_CITY("ville", "TrafficCone"),
+	TILE_CITY("ville", "CityTile"),
+
+	CONE("cone", "TrafficCone"),
+
+	MARKET("marché", "Market"),
+
+	CAR("voiture", "Car"),
 
 	COCKROACH("cafard", "Cockroach"),
 

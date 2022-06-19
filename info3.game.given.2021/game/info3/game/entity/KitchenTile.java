@@ -6,7 +6,6 @@ import info3.game.position.AutDirection;
 import info3.game.scene.Scene;
 
 public abstract class KitchenTile extends Tile {
-	private AutDirection direction;
 
 	protected KitchenTile(Scene parent, int gridX, int gridY, Sprite sprite, AutDirection d) {
 		super(parent, gridX, gridY, sprite);

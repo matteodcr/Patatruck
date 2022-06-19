@@ -9,6 +9,7 @@ import java.util.Random;
 import info3.game.Game;
 import info3.game.content.Item;
 import info3.game.content.ItemType;
+import info3.game.content.Sauce;
 import info3.game.entity.BasicTableTile;
 import info3.game.entity.CockroachEntity;
 import info3.game.entity.CookEntity;
@@ -55,9 +56,9 @@ public class KitchenScene extends Scene {
 					new StockTable(this, 8, 0, AutDirection.S, new Item(ItemType.CHEESE), Sprite.CHEESE),
 					new BasicTableTile(this, 9, 0, AutDirection.S) },
 			new Tile[] { new DeliveryTile(this, 0, 1, AutDirection.E), null, null, null, null, null, null, null, null,
-					new SauceTableTile(this, 9, 1, AutDirection.W) },
+					new SauceTableTile(this, 9, 1, AutDirection.W, Sauce.KETCHUP) },
 			new Tile[] { new DeliveryTile(this, 0, 2, AutDirection.E), null, null, null, null, null, null, null, null,
-					new SauceTableTile(this, 9, 2, AutDirection.W) },
+					new SauceTableTile(this, 9, 2, AutDirection.W, Sauce.MAYO) },
 			new Tile[] { new BasicTableTile(this, 0, 3, AutDirection.N), new TrashTile(this, 1, 3, AutDirection.N),
 					new BasicTableTile(this, 2, 3, AutDirection.N), new PanTile(this, 3, 3, AutDirection.N),
 					new PanTile(this, 4, 3, AutDirection.N), new CutTile(this, 5, 3, AutDirection.N),
@@ -115,9 +116,9 @@ public class KitchenScene extends Scene {
 				new Tile[] { new BasicTableTile(this, 0, 0, AutDirection.S), null, null, null, null, null, null, null,
 						null, new BasicTableTile(this, 9, 0, AutDirection.S) },
 				new Tile[] { new DeliveryTile(this, 0, 1, AutDirection.E), null, null, null, null, null, null, null,
-						null, new SauceTableTile(this, 9, 1, AutDirection.W) },
+						null, new SauceTableTile(this, 9, 1, AutDirection.W, Sauce.KETCHUP) },
 				new Tile[] { new DeliveryTile(this, 0, 2, AutDirection.E), null, null, null, null, null, null, null,
-						null, new SauceTableTile(this, 9, 2, AutDirection.W) },
+						null, new SauceTableTile(this, 9, 2, AutDirection.W, Sauce.MAYO) },
 				new Tile[] { new BasicTableTile(this, 0, 0, AutDirection.S), null, null, null, null, null, null, null,
 						null, new BasicTableTile(this, 9, 0, AutDirection.S) } };
 		// replace everything

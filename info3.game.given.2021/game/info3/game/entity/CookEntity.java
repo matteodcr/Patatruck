@@ -29,7 +29,15 @@ public class CookEntity extends Entity {
 
 	@Override
 	public void render(Graphics g) {
-		g.drawSprite(Sprite.PLAYER_KITCHEN, this.position.getX(), this.position.getY());
+		if (m_direction == AutDirection.N) {
+			g.drawSprite(Sprite.PLAYER_KITCHEN_N, this.position.getX(), this.position.getY());
+		} else if (m_direction == AutDirection.E) {
+			g.drawSprite(Sprite.PLAYER_KITCHEN_E, this.position.getX(), this.position.getY());
+		} else if (m_direction == AutDirection.W) {
+			g.drawSprite(Sprite.PLAYER_KITCHEN_W, this.position.getX(), this.position.getY());
+		} else {
+			g.drawSprite(Sprite.PLAYER_KITCHEN_S, this.position.getX(), this.position.getY());
+		}
 	}
 
 	@Override
@@ -40,38 +48,46 @@ public class CookEntity extends Entity {
 
 	@Override
 	public boolean wizz(AutDirection direction) {
-		switch (direction) {
-		case N: {
-			PositionF newPos = new PositionF(0, -parentScene.getTileWidth());
-			m_direction = direction;
-			// TODO : Tourner Sprite
-			this.position = position.add(newPos);
-			return true;
+		finish = System.currentTimeMillis();
+		timeElapsed = finish - start;
+
+		if (timeElapsed >= 200) {
+			switch (direction) {
+			case N: {
+				PositionF newPos = new PositionF(0, -parentScene.getTileWidth());
+				this.position = position.add(newPos);
+				start = System.currentTimeMillis();
+
+				return true;
+			}
+			case W: {
+				PositionF newPos = new PositionF(-parentScene.getTileWidth(), 0);
+				this.position = position.add(newPos);
+				start = System.currentTimeMillis();
+
+				return true;
+			}
+			case E: {
+				PositionF newPos = new PositionF(parentScene.getTileWidth(), 0);
+				this.position = position.add(newPos);
+				start = System.currentTimeMillis();
+
+				return true;
+			}
+			case S: {
+				PositionF newPos = new PositionF(0, parentScene.getTileWidth());
+				this.position = position.add(newPos);
+				start = System.currentTimeMillis();
+
+				return true;
+			}
+			default:
+				start = System.currentTimeMillis();
+
+				return false;
+			}
 		}
-		case W: {
-			PositionF newPos = new PositionF(-parentScene.getTileWidth(), 0);
-			m_direction = direction;
-			// TODO : Tourner Sprite
-			this.position = position.add(newPos);
-			return true;
-		}
-		case E: {
-			PositionF newPos = new PositionF(parentScene.getTileWidth(), 0);
-			m_direction = direction;
-			// TODO : Tourner Sprite
-			this.position = position.add(newPos);
-			return true;
-		}
-		case S: {
-			PositionF newPos = new PositionF(0, parentScene.getTileWidth());
-			m_direction = direction;
-			// TODO : Tourner Sprite
-			this.position = position.add(newPos);
-			return true;
-		}
-		default:
-			return false;
-		}
+		return false;
 	}
 
 	@Override
@@ -164,4 +180,10 @@ public class CookEntity extends Entity {
 		return false;
 	}
 
+	@Override
+	public boolean cell(AutDirection direction, AutCategory category) {
+		boolean c = super.cell(direction, category);
+		m_direction = direction;
+		return c;
+	}
 }

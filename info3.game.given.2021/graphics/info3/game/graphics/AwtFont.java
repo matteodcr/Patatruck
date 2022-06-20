@@ -58,8 +58,8 @@ public class AwtFont {
 
 		int width = getWidth(sprite);
 		if (width != 0 && c != ' ') {
-			g = new Grapheme(sprite.getSubimage(0, 0, width, sprite.getHeight())
-					.getScaledInstance(width * scaleFactor, -1, Image.SCALE_REPLICATE), width);
+			g = new Grapheme(sprite.getSubimage(0, 0, width, sprite.getHeight()).getScaledInstance(width * scaleFactor,
+					-1, Image.SCALE_REPLICATE), width);
 		}
 
 		if (g != null)

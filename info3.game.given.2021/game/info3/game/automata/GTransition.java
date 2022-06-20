@@ -54,4 +54,5 @@ public class GTransition {
 		}
 		return null; // not meant to happen
 	}
+
 }

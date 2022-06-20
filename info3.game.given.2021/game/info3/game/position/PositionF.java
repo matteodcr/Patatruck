@@ -28,6 +28,10 @@ public class PositionF {
 		return new PositionF(this.x + b.x, this.y + b.y);
 	}
 
+	public PositionF sub(PositionF b) {
+		return new PositionF(this.x - b.x, this.y - b.y);
+	}
+
 	public PositionF neg() {
 		return new PositionF(-this.x, -this.y);
 	}
@@ -38,6 +42,11 @@ public class PositionF {
 
 	public PositionF mul(int tileWidth) {
 		return new PositionF(this.x * tileWidth, this.y * tileWidth);
+	}
+
+	@Override
+	public String toString() {
+		return new String("(" + this.x + "," + this.y + ")");
 	}
 
 }

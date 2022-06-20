@@ -51,4 +51,5 @@ public final class PositionI {
 	public int hashCode() {
 		return Objects.hash(x, y);
 	}
+
 }

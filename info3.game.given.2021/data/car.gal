@@ -1,0 +1,17 @@
+Car(Drive) {
+    * (Drive) 
+    | Cell(H,@) ? Pop(F) :(Stop) 
+    | Cell(H,D) ? Wizz(F) :(Slow)
+    | Cell(F,O) & !Cell(R,O) ? Move(R) :(Drive)                                          
+    | Cell(F,O) & !Cell(L,O) ? Move(L) :(Drive)
+    | !Cell(F,O) & !Cell(L,O) ? 20%Move(L) / Move(F) :(Drive) 
+    | !Cell(F,O) & !Cell(R,O) ? 20%Move(R) / Move(F) :(Drive)
+
+    * (Stop)
+    | Cell(H,@) ? Pop(F) :(Stop)  
+    | True ? :(Drive) 
+    
+    * (Slow)
+    | Cell(H,D) ? Wizz(F) :(Slow)  
+    | True ? :(Drive) 
+}

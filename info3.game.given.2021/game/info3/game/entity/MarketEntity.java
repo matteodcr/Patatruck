@@ -25,10 +25,10 @@ public class MarketEntity extends Entity {
 		category = AutCategory.P;
 
 		// Generating random loot
-		int random_quantity;
+		int randomQuantity;
 		for (ItemType item : items) {
-			random_quantity = (int) Math.random() * (MAX_QUANTITY - MIN_QUANTITY + 1) + MIN_QUANTITY;
-			loot.put(item, random_quantity);
+			randomQuantity = (int) Math.random() * (MAX_QUANTITY - MIN_QUANTITY + 1) + MIN_QUANTITY;
+			loot.put(item, randomQuantity);
 		}
 		parentScene.addEntity(this);
 	}
@@ -40,7 +40,7 @@ public class MarketEntity extends Entity {
 
 	@Override
 	public boolean pop(AutDirection direction) {
-		HashMap<ItemType, StockTable> stocktables = ((KitchenScene) this.parentScene).getStocktables();
+		HashMap<ItemType, StockTable> stocktables = ((KitchenScene) this.parentScene).getStockTables();
 		for (Map.Entry<ItemType, StockTable> stocktable : stocktables.entrySet()) {
 			for (Map.Entry<ItemType, Integer> itemset : loot.entrySet()) {
 				if (stocktable.getKey().equals(itemset.getKey())) {

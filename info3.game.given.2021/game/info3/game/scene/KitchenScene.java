@@ -175,7 +175,7 @@ public class KitchenScene extends Scene {
 	}
 
 	public HashMap<ItemType, StockTable> getStockTables() {
-		return stocktables;
+		return stockTables;
 	}
 
 	@Override

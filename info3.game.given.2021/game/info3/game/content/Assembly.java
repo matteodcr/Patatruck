@@ -38,9 +38,6 @@ public class Assembly {
 		}
 	};
 
-	public Assembly() {
-	}
-
 	private List<ItemType> getItemTypes() {
 		return items.stream().map(item -> item.type).collect(Collectors.toList());
 	}

@@ -60,9 +60,7 @@ public class Assembly {
 	}
 
 	public void emptyAssembly() {
-		while (this.getItems().size() > 0) {
-			this.getItems().remove(0);
-		}
+		this.getItems().clear();
 	}
 
 	private List<ItemType> getRecipe(ItemType item) {

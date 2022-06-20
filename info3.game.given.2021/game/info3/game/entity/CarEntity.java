@@ -10,9 +10,8 @@ import info3.game.scene.Scene;
 
 public class CarEntity extends Entity {
 	boolean isTruck;
-	// TODO Deplacer hitbox hardocdé et methode de collision
-	// PositionF coordinatesTopLeft; position
-	PositionF coordinatesBottomRight;
+	// TODO Deplacer hitbox hardocdé et methode de collision (champ ou classe pr pos
+	// bas a droite de l'entite
 
 	public static final int COLLISION_RADIUS = 256;
 
@@ -251,7 +250,4 @@ public class CarEntity extends Entity {
 
 	}
 
-	// private void setBottomRightCoordinates() {
-	// coordinatesBottomRight = position.add(new PositionF(3, 3));
-	// }
 }

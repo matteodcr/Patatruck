@@ -127,9 +127,9 @@ public class KitchenScene extends Scene {
 			Tile toMove = KitchenGrid[(int) pos.getX()][(int) pos.getY()];
 			toMove.setPosition(futurePos);
 			if (movedTiles[i] < movedTiles.length) {
-				toMove.myDir(AutDirection.N);
-			} else {
 				toMove.myDir(AutDirection.S);
+			} else {
+				toMove.myDir(AutDirection.N);
 			}
 
 			futureKitchenGrid[(int) futurePos.getX()][(int) futurePos.getY()] = toMove;
@@ -139,9 +139,9 @@ public class KitchenScene extends Scene {
 			Tile toMove = KitchenGrid[(int) pos.getX()][(int) pos.getY()];
 			toMove.setPosition(futurePos);
 			if (movedStockTables[i] < movedStockTables.length) {
-				toMove.myDir(AutDirection.N);
-			} else {
 				toMove.myDir(AutDirection.S);
+			} else {
+				toMove.myDir(AutDirection.N);
 			}
 			futureKitchenGrid[(int) futurePos.getX()][(int) futurePos.getY()] = toMove;
 		}

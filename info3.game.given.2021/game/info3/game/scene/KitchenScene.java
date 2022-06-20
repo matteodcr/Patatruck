@@ -174,7 +174,7 @@ public class KitchenScene extends Scene {
 		return cook;
 	}
 
-	public HashMap<ItemType, StockTable> getStocktables() {
+	public HashMap<ItemType, StockTable> getStockTables() {
 		return stocktables;
 	}
 

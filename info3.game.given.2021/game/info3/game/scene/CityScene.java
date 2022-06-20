@@ -26,12 +26,12 @@ public class CityScene extends Scene {
 	public final WorldGenerator worldGenerator = new WorldGenerator(0);
 	private CarEntity car;
 
-	private HashMap<PositionI, CityTile> CachedCityTiles;
+	private HashMap<PositionI, CityTile> cachedCityTiles;
 
 	public CityScene(int pixelWidth, int pixelHeight, Game g) {
 		super(pixelWidth, pixelHeight, g);
 		phyCook = new PhysicsEntity(4);
-		CachedCityTiles = new HashMap<PositionI, CityTile>();
+		cachedCityTiles = new HashMap<PositionI, CityTile>();
 		try {
 
 			cook = new CookEntity(this, vanPosition); // To change with vanEntity
@@ -79,24 +79,24 @@ public class CityScene extends Scene {
 	@Override
 	public Tile getTileAt(int gridX, int gridY) {
 		Tile tile = new CityTile(this, gridX, gridY);
-		CachedCityTiles.put(new PositionI(gridX, gridY), (CityTile) tile);
+		cachedCityTiles.put(new PositionI(gridX, gridY), (CityTile) tile);
 		return tile;
 	}
 
 	/* Renvoit la categorie du cadrant de la tuile a cette pos */
-	public AutCategory whatsTheCategoryOfTile(PositionF pos) {
-		int gX = getGridFromPos(pos).getX();
-		int gY = getGridFromPos(pos).getY();
-		CityTile tile = CachedCityTiles.get(new PositionI(gX, gY));
+	public AutCategory whatsTheCategoryOfTile(PositionF pos, Entity entity) {
+		int gX = entity.getGridPosFromPos().getX();
+		int gY = entity.getGridPosFromPos().getY();
+		CityTile tile = cachedCityTiles.get(new PositionI(gX, gY));
 		switch (whereInTile(pos)) {
 		case 0:
-			return tile.category_0;
+			return tile.category0;
 		case 1:
-			return tile.category_1;
+			return tile.category1;
 		case 2:
-			return tile.category_2;
+			return tile.category2;
 		case 3:
-			return tile.category_3;
+			return tile.category3;
 		default:
 			System.out.println("panic");
 		}

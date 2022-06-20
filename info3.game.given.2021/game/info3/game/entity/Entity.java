@@ -251,5 +251,29 @@ public abstract class Entity implements AutomatonListener {
 
 	public void setDirection(AutDirection absDirection) {
 		this.m_direction = absDirection;
+	/*
+	 * Fct qui renvoit la grille correspondante à une position en pixels(marche ds
+	 * les 2 scènes) Pour la cityScene 0,0 est le centre du viewport, il faut donc
+	 * faire qq calculs pour les grilles qui peuvent être négatives, si on a des
+	 * valeurs positives, on divise juste la position reçue en retirant l'offset.
+	 * 
+	 */
+	public PositionI getGridPosFromPos() {
+		PositionF pos_tmp = position.add(parentScene.getOriginOffset());
+		if (pos_tmp.getX() < 0 || pos_tmp.getY() < 0) {
+			pos_tmp = pos_tmp.divFloorF(parentScene.getTileWidth());
+			float pos_tmp_x = pos_tmp.getX();
+			float pos_tmp_y = pos_tmp.getY();
+			int pos_x = (int) pos_tmp_x;
+			int pos_y = (int) pos_tmp_y;
+			if (pos_tmp_x < 0)
+				pos_x = (int) Math.floor(pos_tmp_x);
+			if (pos_tmp_y < 0)
+				pos_y = (int) Math.floor(pos_tmp_y);
+			return new PositionI(pos_x, pos_y);
+		} else {
+			return pos_tmp.divFloor(parentScene.getTileWidth());
+		}
+
 	}
 }

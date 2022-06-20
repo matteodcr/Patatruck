@@ -13,15 +13,12 @@ public class CarEntity extends Entity {
 	// TODO Deplacer hitbox hardocdé et methode de collision (champ ou classe pr pos
 	// bas a droite de l'entite
 
-	public static final int COLLISION_RADIUS = 256;
-
 	public CarEntity(Scene parent, PositionF position, boolean isTruck) {
 		super(parent, position);
 		this.isTruck = isTruck;
 		automaton = parentScene.setupAutomaton("Car");
 		current_state = automaton.initial;
 		category = AutCategory.A;
-		// setBottomRightCoordinates();
 	}
 
 	@Override
@@ -48,25 +45,21 @@ public class CarEntity extends Entity {
 		case N: {
 			PositionF newPos = new PositionF(0, -1);
 			this.position = position.add(newPos);
-			// setBottomRightCoordinates();
 			return true;
 		}
 		case W: {
 			PositionF newPos = new PositionF(-1, 0);
 			this.position = position.add(newPos);
-			// setBottomRightCoordinates();
 			return true;
 		}
 		case E: {
 			PositionF newPos = new PositionF(1, 0);
 			this.position = position.add(newPos);
-			// setBottomRightCoordinates();
 			return true;
 		}
 		case S: {
 			PositionF newPos = new PositionF(0, 1);
 			this.position = position.add(newPos);
-			// setBottomRightCoordinates();
 			return true;
 		}
 		default:

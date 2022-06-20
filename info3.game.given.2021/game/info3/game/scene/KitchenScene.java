@@ -32,7 +32,7 @@ public class KitchenScene extends Scene {
 
 	private ItemType currentOrder0;
 	private ItemType currentOrder1;
-	private HashMap<ItemType, StockTable> stocktables;
+	private HashMap<ItemType, StockTable> stockTables;
 
 	private static final PositionI KITCHEN_ORIGIN = new PositionI(44, 10);
 	public static final int MAXIMUM_COCKROACH_NUMBER = 20;

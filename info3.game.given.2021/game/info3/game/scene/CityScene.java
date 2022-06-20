@@ -7,9 +7,12 @@ import info3.game.Game;
 import info3.game.entity.CarEntity;
 import info3.game.entity.CityTile;
 import info3.game.entity.CookEntity;
+import info3.game.entity.Entity;
+import info3.game.entity.PhysicsEntity;
 import info3.game.entity.Tile;
 import info3.game.graphics.Graphics;
 import info3.game.position.AutCategory;
+import info3.game.position.AutDirection;
 import info3.game.position.PositionF;
 import info3.game.worldgen.WorldGenerator;
 import info3.game.position.PositionI;
@@ -26,6 +29,7 @@ public class CityScene extends Scene {
 
 	public CityScene(int pixelWidth, int pixelHeight, Game g) {
 		super(pixelWidth, pixelHeight, g);
+		phyCook = new PhysicsEntity(4);
 		CachedCityTiles = new HashMap<PositionI, CityTile>();
 		try {
 
@@ -35,6 +39,24 @@ public class CityScene extends Scene {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	@Override
+	public void tick(long elapsed) {
+		super.tick(elapsed);
+		if (m_game.m_listener.isUp("UP")) {
+			phyCook.addAcceleration(AutDirection.N);
+		}
+		if (m_game.m_listener.isUp("DOWN")) {
+			phyCook.addAcceleration(AutDirection.S);
+		}
+		if (m_game.m_listener.isUp("LEFT")) {
+			phyCook.addAcceleration(AutDirection.W);
+		}
+		if (m_game.m_listener.isUp("RIGHT")) {
+			phyCook.addAcceleration(AutDirection.E);
+		}
+		cook.setPosition(phyCook.Shift(elapsed).add(cook.getPosition()));
 	}
 
 	// Commenté pour tester avec une scène fixe

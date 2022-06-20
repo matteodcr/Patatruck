@@ -5,10 +5,10 @@ import info3.game.position.PositionF;
 
 public class PhysicsEntity {
 
-	float maxAccelerationX = 2, maxAccelerationY = 2; // en pixels
+	float maxShiftX = 2, maxShiftY = 2; // en pixels
 	float accelerationX = 0, accelerationY = 0;
 	float velocityX = 0, velocityY = 0;
-	float power, airbreak = 10;
+	float power, airbreak = 2;
 
 	/**
 	 * 
@@ -24,8 +24,7 @@ public class PhysicsEntity {
 	 * @param elapsed     time in ms
 	 * @return the shifted position to add to the current position of the entity
 	 */
-	PositionF addAcceleration(AutDirection absoluteDir, long elapsed) {
-		PositionF shift = new PositionF(0, 0);
+	public void addAcceleration(AutDirection absoluteDir) {
 		switch (absoluteDir) {
 		case N:
 			accelerationY -= power;
@@ -40,9 +39,39 @@ public class PhysicsEntity {
 			accelerationX -= power;
 			break;
 		default:
-			return null;
+			break;
 		}
-		return shift;
+	}
+
+	public PositionF Shift(long elapsed) {
+		System.out.println(accelerationX + "\t" + velocityX);
+
+		accelerationX = (float) (accelerationX / Math.pow(airbreak, elapsed));
+		if (Math.abs(accelerationX) < 0.01)
+			accelerationX = 0;
+		accelerationY = (float) (accelerationY / Math.pow(airbreak, elapsed));
+		if (Math.abs(accelerationY) < 0.01)
+			accelerationY = 0;
+		velocityX += elapsed * accelerationX;
+		velocityX /= airbreak * elapsed;
+		if (Math.abs(velocityX) < 0.01)
+			velocityX = 0;
+		velocityY += elapsed * accelerationY;
+		velocityY /= airbreak * elapsed;
+		if (Math.abs(velocityY) < 0.01)
+			velocityY = 0;
+
+		float shiftX = velocityX * elapsed, shiftY = velocityY * elapsed;
+		if (shiftX > maxShiftX)
+			shiftX = maxShiftX;
+		else if (shiftX < -maxShiftX)
+			shiftX = -maxShiftX;
+		if (shiftY > maxShiftY)
+			shiftY = maxShiftY;
+		else if (shiftY < -maxShiftY)
+			shiftY = -maxShiftY;
+
+		return new PositionF(shiftX, shiftY);
 	}
 
 }

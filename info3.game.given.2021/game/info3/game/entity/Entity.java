@@ -46,7 +46,7 @@ public abstract class Entity implements AutomatonListener {
 		position = pos;
 	}
 
-	PositionF getPosition() {
+	public PositionF getPosition() {
 		return position;
 	}
 

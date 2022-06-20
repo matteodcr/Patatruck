@@ -142,15 +142,4 @@ public class Assembly {
 		throw new IllegalStateException("no recipe found");
 	}
 
-	/*
-	 * items.add(new Item(tmp1));
-	 * 
-	 * if (this.getItems().size() != 1) { return true; } else { boolean flag =
-	 * false; for (List<ItemType> tmp : ASSEMBLE_RECIPES.keySet()) { if
-	 * (includes(this.getItemTypes(), tmp)) { flag = true; } } if (flag) { // un
-	 * assemblage incomplet return true; } else { // mauvais assemblage
-	 * this.emptyAssembly(); this.addItem(new Item(ItemType.FAILED_Item)); return
-	 * false; } }
-	 */
-
 }

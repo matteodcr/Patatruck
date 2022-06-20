@@ -29,21 +29,21 @@ public class CarEntity extends Entity {
 
 	@Override
 	public boolean wizz(AutDirection direction) {
-		return moov_dir(this.dir);
+		return changePos(this.dir);
 	}
 
 	public boolean move(AutDirection direction) {
 		switch (direction) {
 		case L: {
-			this.change_dir(direction);
-			return moov_dir(this.dir);
+			this.changeDir(direction);
+			return changePos(this.dir);
 		}
 		case F: {
-			return moov_dir(this.dir);
+			return changePos(this.dir);
 		}
 		case R: {
-			this.change_dir(direction);
-			return moov_dir(this.dir);
+			this.changeDir(direction);
+			return changePos(this.dir);
 		}
 		default:
 			return false;
@@ -51,7 +51,7 @@ public class CarEntity extends Entity {
 
 	}
 
-	void change_dir(AutDirection direction) {
+	void changeDir(AutDirection direction) {
 		switch (direction) {
 		case L:
 			this.dir = this.dir.previous();
@@ -65,7 +65,7 @@ public class CarEntity extends Entity {
 
 	}
 
-	boolean moov_dir(Direction direction) {
+	boolean changePos(Direction direction) {
 		switch (direction) {
 		case NORD: {
 			PositionF newPos = new PositionF(0, -parentScene.getTileWidth());

@@ -74,6 +74,12 @@ public class Assembly {
 		return null;
 	}
 
+	/**
+	 * getRecipe
+	 * 
+	 * @implSpec : Decompose a recipe into simple ingredients, in order to compose
+	 *           more complex recipe
+	 */
 	private void explode() {
 		List<ItemType> currentItems = this.getItemTypes();
 		List<ItemType> tmp = new ArrayList<ItemType>();

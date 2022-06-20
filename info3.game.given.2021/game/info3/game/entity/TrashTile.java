@@ -10,7 +10,6 @@ public class TrashTile extends KitchenTile {
 
 	public TrashTile(Scene parent, int gridX, int gridY, AutDirection d) {
 		super(parent, gridX, gridY, null, d);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
@@ -20,13 +19,11 @@ public class TrashTile extends KitchenTile {
 
 	@Override
 	public boolean pop(AutDirection direction) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean wizz(AutDirection direction) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
@@ -38,91 +35,76 @@ public class TrashTile extends KitchenTile {
 
 	@Override
 	public boolean gwait() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean egg(AutDirection direction) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean hit(AutDirection direction) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean jump(AutDirection direction) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean explode() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean pick(AutDirection direction) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean power() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean protect(AutDirection direction) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean store() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean turn(AutDirection direction) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean gthrow(AutDirection direction) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean myDir(AutDirection direction) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean closest(AutCategory category, AutDirection direction) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean gotPower() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean gotStuff() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 

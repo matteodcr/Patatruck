@@ -7,6 +7,7 @@ import static info3.game.graphics.Sprite.Spritesheet.BASICTABLES;
 import static info3.game.graphics.Sprite.Spritesheet.BASICTABLEW;
 import static info3.game.graphics.Sprite.Spritesheet.BREADSLICE_;
 import static info3.game.graphics.Sprite.Spritesheet.BREAD_;
+import static info3.game.graphics.Sprite.Spritesheet.CAR;
 import static info3.game.graphics.Sprite.Spritesheet.CHEESE_;
 import static info3.game.graphics.Sprite.Spritesheet.CITY;
 import static info3.game.graphics.Sprite.Spritesheet.CLASSICBURGER_;
@@ -51,6 +52,9 @@ import static info3.game.graphics.Sprite.Spritesheet.POUTINE_;
 import static info3.game.graphics.Sprite.Spritesheet.SALADELEAF_;
 import static info3.game.graphics.Sprite.Spritesheet.SALADE_;
 import static info3.game.graphics.Sprite.Spritesheet.SAUCETABLETILE;
+import static info3.game.graphics.Sprite.Spritesheet.SPEEDOMETER_;
+import static info3.game.graphics.Sprite.Spritesheet.SPEEDOMETER_HIGH_;
+import static info3.game.graphics.Sprite.Spritesheet.SPEEDOMETER_LOW_;
 import static info3.game.graphics.Sprite.Spritesheet.STOCKTABLE;
 import static info3.game.graphics.Sprite.Spritesheet.TOMATOSLICE_;
 import static info3.game.graphics.Sprite.Spritesheet.TOMATO_;
@@ -97,7 +101,9 @@ public enum Sprite {
 	CITY_BAR_3_VERT_ROUNDED(CITY, 2, 3, 1, 3), CITY_BAR_3_HORIZ_NORMAL(CITY, 0, 6, 3, 1),
 	CITY_BAR_3_HORIZ_ROUNDED(CITY, 0, 7, 3, 1), CITY_SQUARE_2_SQUARE(CITY, 6, 0, 2, 2),
 	CITY_SQUARE_2_DENTED(CITY, 6, 2, 2, 2), CITY_SQUARE_2_BISCUIT(CITY, 6, 4, 2, 2), CITY_CORNER_BR(CITY, 12, 0, 2, 2),
-	CITY_CORNER_TL(CITY, 12, 4, 2, 2), CITY_CORNER_BL(CITY, 12, 2, 2, 2), CITY_CORNER_TR(CITY, 12, 6, 2, 2);
+	CITY_CORNER_TL(CITY, 12, 4, 2, 2), CITY_CORNER_BL(CITY, 12, 2, 2, 2), CITY_CORNER_TR(CITY, 12, 6, 2, 2),
+	SPEEDOMETER(SPEEDOMETER_, 0, 0, 1, 1), CAR_ENTITY(CAR, 0, 0, 1, 1), SPEEDOMETER_LOW(SPEEDOMETER_LOW_, 0, 0, 1, 1),
+	SPEEDOMETER_HIGH(SPEEDOMETER_HIGH_, 0, 0, 1, 1);
 
 	public static final Sprite[] CITY_SQUARES_1 = new Sprite[] { CITY_SQUARE_1_SQUARE, CITY_SQUARE_1_ROUND,
 			CITY_SQUARE_1_SQUIRCLE };
@@ -159,7 +165,8 @@ public enum Sprite {
 		DELIVERYTILE("DeliveryTile.png", 13), COCKROACH("cockroach.png", 13), MENU("menu.png", 69),
 
 		MAYO_INDIC("indic_mayo.png", 13), KETCHUP_INDIC("indic_ketchup.png", 13),
-		KETCHUP_MAYO_INDIC("indic_mayo_ketchup.png", 13);
+		KETCHUP_MAYO_INDIC("indic_mayo_ketchup.png", 13), CAR("car2.png", 4), SPEEDOMETER_("speedometer.png", 19),
+		SPEEDOMETER_LOW_("speedometerLow.png", 19), SPEEDOMETER_HIGH_("speedometerHigh.png", 19);
 
 		public final String filename;
 		public final int tileSize;

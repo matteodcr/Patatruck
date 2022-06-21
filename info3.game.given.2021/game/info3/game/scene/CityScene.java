@@ -12,6 +12,7 @@ import info3.game.entity.PhysicsEntity;
 import info3.game.entity.Tile;
 import info3.game.graphics.Graphics;
 import info3.game.graphics.Graphics.Align;
+import info3.game.graphics.Sprite;
 import info3.game.position.AutCategory;
 import info3.game.position.AutDirection;
 import info3.game.position.PositionF;
@@ -30,10 +31,9 @@ public class CityScene extends Scene {
 
 	public CityScene(int pixelWidth, int pixelHeight, Game g) {
 		super(pixelWidth, pixelHeight, g);
-		phyCook = new PhysicsEntity(4);
+		phyCook = new PhysicsEntity(4, 1);
 		cachedCityTiles = new HashMap<PositionI, CityTile>();
 		try {
-
 			cook = new CookEntity(this, vanPosition); // To change with vanEntity
 			car = new CarEntity(this, center, false);
 			addEntity(car);
@@ -131,7 +131,14 @@ public class CityScene extends Scene {
 		super.render(g);
 		this.cook.render(g);
 		this.car.render(g);
-		// debugCache();
+		Sprite speed = Sprite.SPEEDOMETER;
+		if (phyCook.getVelocity() < 20) {
+			speed = Sprite.SPEEDOMETER_LOW;
+		} else if (phyCook.getVelocity() >= 50) {
+			speed = Sprite.SPEEDOMETER_HIGH;
+		}
+		g.drawSprite(speed, 2, 0);
+		g.drawText(phyCook.getVelocity() + "", Align.LEFT, 10, 18);
 	}
 
 //	private void debugCache() {

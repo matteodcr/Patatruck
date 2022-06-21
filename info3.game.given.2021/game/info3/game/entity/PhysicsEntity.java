@@ -11,15 +11,25 @@ public class PhysicsEntity {
 	double power, airbreak = 2;
 	double maxVelocity = 1.5;// max velocity for turning otherwise do mess
 	double previousElapsed[] = { 0, 0 };
-	int velocityToPrint = 0, refreshTimerVelocity = 10, timerVelocity = 0;
+	int velocityToPrint = 0, refreshTimerVelocity = 5, timerVelocity = 0;
 
 	/**
 	 * Average power is 4
 	 * 
-	 * @param power will act on how fast it will go
+	 * @param power  will act on how fast it will go
+	 * @param effect -1=slower 0=normal 1=faster
 	 */
-	public PhysicsEntity(double power) {
-		this.power = power;
+	public PhysicsEntity(double power, int effect) {
+		switch (effect) {
+		case -1:
+			this.power = power / 2;
+			break;
+		case 1:
+			this.power = power * 2;
+			break;
+		default:
+			this.power = power;
+		}
 	}
 
 	/**
@@ -86,7 +96,7 @@ public class PhysicsEntity {
 
 		if (timerVelocity == 0) {
 			timerVelocity = refreshTimerVelocity;
-			velocityToPrint = (int) Math.abs(10 * (velocityX + velocityY));
+			velocityToPrint = (int) (25 * Math.sqrt(shiftX * shiftX + shiftY * shiftY));
 		} else {
 			timerVelocity--;
 		}

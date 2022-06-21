@@ -37,6 +37,12 @@ public interface Graphics {
 		drawSprite(sprite, (int) x, (int) y);
 	}
 
+	/**
+	 * Dessine un morceau d'une sprite, c'est-à-dire un carré de la taille d'une
+	 * tile de la spritesheet
+	 */
+	void drawSpritePart(Sprite sprite, int x, int y, int offsetU, int offsetV);
+
 	default void drawItem(Item i, float x, float y) {
 		drawSprite(i.getType().getSprite(), x, y);
 		if (i.getSauce() == Sauce.KETCHUP) {

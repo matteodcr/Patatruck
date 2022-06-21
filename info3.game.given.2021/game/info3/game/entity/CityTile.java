@@ -1,21 +1,28 @@
 package info3.game.entity;
 
-import info3.game.graphics.Sprite;
+import info3.game.graphics.Graphics;
 import info3.game.position.AutCategory;
 import info3.game.position.AutDirection;
+import info3.game.scene.CityScene;
 import info3.game.scene.Scene;
+import info3.game.worldgen.GenTile;
 
 public class CityTile extends Tile {
-	private static final Sprite[] BUILDINGS_1X1 = new Sprite[] { Sprite.BUILDING_SQUARE_1_NORMAL,
-			Sprite.BUILDING_SQUARE_1_ROUNDED, Sprite.BUILDING_SQUARE_1_SQUIRCLE, };
+	private final GenTile genTile;
 
 	public CityTile(Scene parent, int gridX, int gridY) {
-		super(parent, gridX, gridY, BUILDINGS_1X1[Math.floorMod(gridX + gridY, 3)]);
+		super(parent, gridX, gridY);
+		genTile = ((CityScene) parent).worldGenerator.generate(gridX, gridY);
 	}
 
 	@Override
 	public EntityType getType() {
 		return EntityType.TILE_CITY;
+	}
+
+	@Override
+	public void render(Graphics g) {
+		g.drawSpritePart(genTile.buildingSprite, 0, 0, genTile.buildingSpriteOffsetX, genTile.buildingSpriteOffsetY);
 	}
 
 	@Override

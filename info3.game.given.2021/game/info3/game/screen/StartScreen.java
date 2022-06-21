@@ -7,7 +7,6 @@ import info3.game.graphics.Sprite;
 
 public class StartScreen extends Screen {
 
-	long score;
 
 	public StartScreen(Game game) {
 		super(game);
@@ -38,10 +37,11 @@ public class StartScreen extends Screen {
 				changeScreen(new GameScreen(game));
 				break;
 			case 1:
+				
 				changeScreen(new AutomatonSelectionScreen(game));
 				break;
 			case 2:
-				System.out.println("credits");// TODO rajouter scene credits
+				changeScreen(new CreditScreen(game));
 				break;
 			default:
 				break;
@@ -55,16 +55,18 @@ public class StartScreen extends Screen {
 
 	@Override
 	public void render(Graphics g) {
+		
 		g.drawSprite(Sprite.AS_BACKDROP, 0, 0);
 		g.drawSprite(Sprite.AS_LOGO, 0, 0);
-		g.drawSprite(Sprite.AS_BOX, 97, 47);
-		g.drawSprite(Sprite.AS_BOX, 97, 62);
-		g.drawSprite(Sprite.AS_BOX, 97, 77);
+		g.drawSprite(Sprite.AS_BOX, 100, 47);
+		g.drawSprite(Sprite.AS_BOX, 100, 62);
+		g.drawSprite(Sprite.AS_BOX, 100, 77);
+		g.drawSprite(Sprite.AS_RIGHT, 86, 47 + scrollTop*15);
 
-		String tmp = "START ";
-		g.drawText(tmp, Align.LEFT, 100, 50);
+		String tmp = "JOUER";
+		g.drawText(tmp, Align.LEFT, 103, 50);
 		tmp = "CHOIX AUTOMATES";
-		g.drawText(tmp, Align.LEFT, 100, 65);
-		g.drawText("CREDIT", Align.LEFT, 100, 80);
+		g.drawText(tmp, Align.LEFT, 103, 65);
+		g.drawText("CRÉDITS", Align.LEFT, 103, 80);
 	}
 }

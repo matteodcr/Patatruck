@@ -42,6 +42,8 @@ public class CanvasListener implements GameCanvasListener {
 	private static final int VK_Q = 0x51;
 	private static final int VK_S = 0x53;
 	private static final int VK_D = 0x44;
+	
+	private boolean spaceUsed = false, escapeUsed = false, enterUsed = false;
 
 	public HashSet<Integer> keyboard = new HashSet<>();
 	private HashMap<Integer, String> dico = new HashMap<>(); // Only necessary for the debug in the console
@@ -64,11 +66,26 @@ public class CanvasListener implements GameCanvasListener {
 	public boolean isUp(String name) {
 		switch (name) {
 		case "ENTER":
-			return keyboard.contains(VK_ENTER);
+			if(keyboard.contains(VK_ENTER)&&!enterUsed) {
+				enterUsed = true;
+				return true;
+			}else {
+				return false;
+			}
 		case "ESCAPE":
-			return keyboard.contains(VK_ESCAPE);
+			if(keyboard.contains(VK_ESCAPE)&&!enterUsed) {
+				escapeUsed = true;
+				return true;
+			}else {
+				return false;
+			}
 		case "SPACE":
-			return keyboard.contains(VK_SPACE);
+			if(keyboard.contains(VK_SPACE)&&!enterUsed) {
+				spaceUsed = true;
+				return true;
+			}else {
+				return false;
+			}
 		case "UP":
 			return keyboard.contains(VK_UP);
 		case "RIGHT":
@@ -164,6 +181,15 @@ public class CanvasListener implements GameCanvasListener {
 		// System.out.println("Key pressed: " + e.getKeyChar() + " code=" +
 		// e.getKeyCode());
 		keyboard.add(e.getKeyCode());
+		if(e.getKeyCode()==VK_ENTER){
+			enterUsed = false;
+		}
+		if(e.getKeyCode()==VK_SPACE){
+			spaceUsed = false;
+		}
+		if(e.getKeyCode()==VK_ESCAPE){
+			escapeUsed = false;
+		}
 		// printKeyboard();
 	}
 
@@ -172,6 +198,15 @@ public class CanvasListener implements GameCanvasListener {
 		// System.out.println("Key released: " + e.getKeyChar() + " code=" +
 		// e.getKeyCode());
 		keyboard.remove(e.getKeyCode());
+		if(e.getKeyCode()==VK_ENTER){
+			enterUsed = false;
+		}
+		if(e.getKeyCode()==VK_SPACE){
+			spaceUsed = false;
+		}
+		if(e.getKeyCode()==VK_ESCAPE){
+			escapeUsed = false;
+		}
 		// printKeyboard();
 	}
 

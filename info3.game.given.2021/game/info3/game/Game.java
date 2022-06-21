@@ -46,9 +46,9 @@ import info3.game.automata.GAutomaton;
 import info3.game.entity.EntityType;
 import info3.game.graphics.AwtGraphics;
 import info3.game.graphics.GameCanvas;
-import info3.game.screen.AutomatonSelectionScreen;
 import info3.game.screen.EndScreen;
 import info3.game.screen.Screen;
+import info3.game.screen.StartScreen;
 import info3.game.sound.RandomFileInputStream;
 
 public class Game {
@@ -112,7 +112,7 @@ public class Game {
 
 		System.out.println("  - setting up the frame...");
 		setupFrame();
-		screen = new AutomatonSelectionScreen(this);
+		screen = new StartScreen(this);
 
 	}
 

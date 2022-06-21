@@ -11,6 +11,7 @@ import info3.game.entity.Entity;
 import info3.game.entity.PhysicsEntity;
 import info3.game.entity.Tile;
 import info3.game.graphics.Graphics;
+import info3.game.graphics.Graphics.Align;
 import info3.game.position.AutCategory;
 import info3.game.position.AutDirection;
 import info3.game.position.PositionF;

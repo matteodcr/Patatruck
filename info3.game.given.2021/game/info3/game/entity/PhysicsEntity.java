@@ -5,16 +5,20 @@ import info3.game.position.PositionF;
 
 public class PhysicsEntity {
 
-	float maxShiftX = 2, maxShiftY = 2; // en pixels
-	float accelerationX = 0, accelerationY = 0;
-	float velocityX = 0, velocityY = 0;
-	float power, airbreak = 2;
+	double maxShiftX = 2, maxShiftY = 2; // en pixels
+	double accelerationX = 0, accelerationY = 0;
+	double velocityX = 0, velocityY = 0;
+	double power, airbreak = 2;
+	double maxVelocity = 1.5;// max velocity for turning otherwise do mess
+	double previousElapsed[] = { 0, 0 };
+	int velocityToPrint = 0, refreshTimerVelocity = 10, timerVelocity = 0;
 
 	/**
+	 * Average power is 4
 	 * 
 	 * @param power will act on how fast it will go
 	 */
-	public PhysicsEntity(float power) {
+	public PhysicsEntity(double power) {
 		this.power = power;
 	}
 
@@ -22,9 +26,9 @@ public class PhysicsEntity {
 	 * 
 	 * @param absoluteDir
 	 * @param elapsed     time in ms
-	 * @return the shifted position to add to the current position of the entity
+	 * @return if the truck is going too fast to turn
 	 */
-	public void addAcceleration(AutDirection absoluteDir) {
+	public boolean addAcceleration(AutDirection absoluteDir) {
 		switch (absoluteDir) {
 		case N:
 			accelerationY -= power;
@@ -41,27 +45,36 @@ public class PhysicsEntity {
 		default:
 			break;
 		}
+		if (Math.abs(velocityX) >= maxVelocity && Math.abs(velocityY) >= maxVelocity) {
+			return true;
+		}
+		return false;
 	}
 
 	public PositionF Shift(long elapsed) {
-		System.out.println(accelerationX + "\t" + velocityX);
+		double minValue = 0.001;
+		double smoothElapsed = (elapsed + previousElapsed[0] + previousElapsed[1]) / 3;// used because of spikes due to
+																						// garbage collector
+		previousElapsed[0] = previousElapsed[1];
+		previousElapsed[1] = elapsed;
+		// System.out.println(accelerationX + "\t" + velocityX);
 
-		accelerationX = (float) (accelerationX / Math.pow(airbreak, elapsed));
-		if (Math.abs(accelerationX) < 0.01)
+		accelerationX = accelerationX / Math.pow(airbreak, smoothElapsed);
+		if (Math.abs(accelerationX) < minValue)
 			accelerationX = 0;
-		accelerationY = (float) (accelerationY / Math.pow(airbreak, elapsed));
-		if (Math.abs(accelerationY) < 0.01)
+		accelerationY = accelerationY / Math.pow(airbreak, smoothElapsed);
+		if (Math.abs(accelerationY) < minValue)
 			accelerationY = 0;
-		velocityX += elapsed * accelerationX;
-		velocityX /= airbreak * elapsed;
-		if (Math.abs(velocityX) < 0.01)
+		velocityX += smoothElapsed * accelerationX;
+		velocityX /= airbreak;
+		if (Math.abs(velocityX) < minValue)
 			velocityX = 0;
-		velocityY += elapsed * accelerationY;
-		velocityY /= airbreak * elapsed;
-		if (Math.abs(velocityY) < 0.01)
+		velocityY += smoothElapsed * accelerationY;
+		velocityY /= airbreak;
+		if (Math.abs(velocityY) < minValue)
 			velocityY = 0;
 
-		float shiftX = velocityX * elapsed, shiftY = velocityY * elapsed;
+		double shiftX = velocityX * smoothElapsed, shiftY = velocityY * smoothElapsed;
 		if (shiftX > maxShiftX)
 			shiftX = maxShiftX;
 		else if (shiftX < -maxShiftX)
@@ -71,7 +84,18 @@ public class PhysicsEntity {
 		else if (shiftY < -maxShiftY)
 			shiftY = -maxShiftY;
 
-		return new PositionF(shiftX, shiftY);
+		if (timerVelocity == 0) {
+			timerVelocity = refreshTimerVelocity;
+			velocityToPrint = (int) Math.abs(10 * (velocityX + velocityY));
+		} else {
+			timerVelocity--;
+		}
+
+		return new PositionF((float) shiftX, (float) shiftY);
+	}
+
+	public int getVelocity() {
+		return velocityToPrint;
 	}
 
 }

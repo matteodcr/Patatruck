@@ -3,7 +3,7 @@ package info3.game.graphics;
 public interface Graphics {
 
 	enum Align {
-		LEFT, RIGHT,
+		LEFT, RIGHT, CENTER,
 	}
 
 	int getWidth();

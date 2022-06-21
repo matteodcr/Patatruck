@@ -82,13 +82,16 @@ public class AwtGraphics implements Graphics {
 	@Override
 	public void drawText(String text, Align align, int x, int y) {
 		AwtFont f = textures.getFont7beige();
+		int width = f.measureText(text);
 		switch (align) {
 		case LEFT:
 			f.drawText(this, text, x, y);
 			break;
 		case RIGHT:
-			int width = f.measureText(text);
 			f.drawText(this, text, x - width, y);
+			break;
+		case CENTER:
+			f.drawText(this, text, x - width / 2, y);
 			break;
 		}
 	}

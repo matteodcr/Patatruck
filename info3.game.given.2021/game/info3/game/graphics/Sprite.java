@@ -10,6 +10,7 @@ import static info3.game.graphics.Sprite.Spritesheet.BREAD_;
 import static info3.game.graphics.Sprite.Spritesheet.CHEESE_;
 import static info3.game.graphics.Sprite.Spritesheet.CITY;
 import static info3.game.graphics.Sprite.Spritesheet.CLASSICBURGER_;
+import static info3.game.graphics.Sprite.Spritesheet.CLOCK_;
 import static info3.game.graphics.Sprite.Spritesheet.COCKROACHE;
 import static info3.game.graphics.Sprite.Spritesheet.COCKROACHN;
 import static info3.game.graphics.Sprite.Spritesheet.COCKROACHS;
@@ -76,7 +77,8 @@ public enum Sprite {
 	POTATOCOOKED(POTATOCOOKED_, 0, 0, 1, 1), POTATOSALAD(POTATOSALAD_, 0, 0, 1, 1), POUTINE(POUTINE_, 0, 0, 1, 1),
 	SALADELEAF(SALADELEAF_, 0, 0, 1, 1), TOMATOSLICE(TOMATOSLICE_, 0, 0, 1, 1), VEGIBURGER(VEGIBURGER_, 0, 0, 1, 1),
 	KETCHUP(KETCHUPTABLE, 0, 0, 1, 1), MAYONNAISE(MAYOTABLE, 0, 0, 1, 1), FAILEDITEM(FAILEDITEM_, 0, 0, 1, 1),
-	KITCHEN_TRUCK(KITCHEN, 0, 0, 15, 6), KITCHEN_TRUCK_FLOOR(KITCHEN, 1, 6, 10, 4), ORDER_CARD(MENU, 0, 0, 1, 1);
+	KITCHEN_TRUCK(KITCHEN, 0, 0, 15, 6), KITCHEN_TRUCK_FLOOR(KITCHEN, 1, 6, 10, 4), ORDER_CARD(MENU, 0, 0, 1, 1),
+	CLOCK(CLOCK_, 0, 0, 1, 1);
 
 	public final Spritesheet spritesheet;
 	public final int u, v, w, h;
@@ -120,7 +122,7 @@ public enum Sprite {
 		TOMATOSLICE_("Sprite_cuisine_ingredient/rondelle de tomate.png", 13), KETCHUPTABLE("ketchup.png", 13),
 		MAYOTABLE("mayonnaise.png", 13), VEGIBURGER_("Sprite_cuisine_ingredient/burger vegetarien.png", 13),
 		FAILEDITEM_("Sprite_cuisine_ingredient/garbageplate.png", 13),
-		AUTOMATON_SELECTION("automaton_selection.png", 16),
+		AUTOMATON_SELECTION("automaton_selection.png", 16), CLOCK_("clock.png", 19),
 
 		BASICTABLE("BasicTableTile.png", 13), COOK("cook.png", 13), KITCHEN("kitchen.png", 13),
 		DELIVERYTILE("DeliveryTile.png", 13), COCKROACH("cockroach.png", 13), MENU("menu.png", 69);

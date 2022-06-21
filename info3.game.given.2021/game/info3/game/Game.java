@@ -271,6 +271,13 @@ public class Game {
 		}
 	}
 
+	public void addTime(long time) {
+		if ((timeGame + time * 1000) <= 999999)
+			timeGame += time * 1000;
+		else
+			timeGame = 999999;
+	}
+
 	public void setTimer() {
 		startTimeGame = System.currentTimeMillis();
 		timerHasBeenSet = true;

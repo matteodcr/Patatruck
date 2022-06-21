@@ -23,6 +23,7 @@ import info3.game.entity.StockTable;
 import info3.game.entity.Tile;
 import info3.game.entity.TrashTile;
 import info3.game.graphics.Graphics;
+import info3.game.graphics.Graphics.Align;
 import info3.game.graphics.Sprite;
 import info3.game.position.AutDirection;
 import info3.game.position.PositionF;
@@ -79,6 +80,7 @@ public class KitchenScene extends Scene {
 			addEntity(cockroach);
 			currentOrder0 = ItemType.getRandomItem();
 			currentOrder1 = ItemType.getRandomItem();
+			m_game.setTimer();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -189,6 +191,10 @@ public class KitchenScene extends Scene {
 		g.drawSprite(Sprite.KITCHEN_TRUCK, KITCHEN_ORIGIN.getX() - 13, KITCHEN_ORIGIN.getY() - 13);
 		g.drawSprite(Sprite.ORDER_CARD, 224, 1);
 		renderCurrentOrder(g);
+
+		g.drawText(String.valueOf((int) m_game.timeGame / 1000), Align.CENTER, 17, 24);
+		g.drawSprite(Sprite.CLOCK, 8, 3);
+
 	}
 
 	public void renderCurrentOrder(Graphics g) {

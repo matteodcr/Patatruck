@@ -22,7 +22,12 @@ package info3.game;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.Collection;
 import java.util.List;
@@ -42,6 +47,7 @@ import info3.game.entity.EntityType;
 import info3.game.graphics.AwtGraphics;
 import info3.game.graphics.GameCanvas;
 import info3.game.screen.AutomatonSelectionScreen;
+import info3.game.screen.EndScreen;
 import info3.game.screen.Screen;
 import info3.game.sound.RandomFileInputStream;
 
@@ -51,6 +57,7 @@ public class Game {
 	public static final int HEIGHT = 144;
 
 	public static final int SCALE_FACTOR = 6;
+	public static final int START_TIME = 60000; // ms
 
 	/**
 	 * Ticks par seconde
@@ -86,8 +93,15 @@ public class Game {
 	}
 
 	Screen screen;
+	public long timeGame;
+	private boolean timerHasBeenSet;
+	private long startTimeGame;
+
+	public long highScore;
 
 	Game() {
+		timerHasBeenSet = false;
+		highScore = loadHighScore();
 		automataList = loadAutomata("data");
 		m_canvas = new GameCanvas(m_listener);
 
@@ -99,6 +113,7 @@ public class Game {
 		System.out.println("  - setting up the frame...");
 		setupFrame();
 		screen = new AutomatonSelectionScreen(this);
+
 	}
 
 	public void changeScreen(Screen newScreen) {
@@ -195,6 +210,7 @@ public class Game {
 
 			screen.tick(elapsed);
 		}
+		timer(elapsed);
 	}
 
 	AwtGraphics g = null;
@@ -240,4 +256,59 @@ public class Game {
 		}
 	}
 
+	void timer(long elapsed) {
+		if (timerHasBeenSet) {
+			timeGame -= elapsed;
+
+			if (timeGame <= 0) {
+				timerHasBeenSet = false;
+				long score = (long) Math
+						.ceil(((double) (System.currentTimeMillis()) - ((double) startTimeGame)) / 1000);
+				if (score > highScore)
+					storeHighScore(score);
+				changeScreen(new EndScreen(this, score));
+			}
+		}
+	}
+
+	public void setTimer() {
+		startTimeGame = System.currentTimeMillis();
+		timerHasBeenSet = true;
+		timeGame = START_TIME;
+	}
+
+	private long loadHighScore() {
+		long score = 0;
+		try {
+			File file = new File("resources/scores.txt");
+			BufferedReader br = new BufferedReader(new FileReader(file));
+			String line = br.readLine();
+			try {
+				score = Integer.parseInt(line.trim()); // parse each line as an int
+			} catch (NumberFormatException e) {
+				System.out.println("Score invalide ds resources/scores.txts");
+			}
+			br.close();
+			return score;
+
+		} catch (IOException ex) {
+			System.out.println("Couldn't find save file : resources/scores.txt");
+			return score;
+		}
+	}
+
+	private boolean storeHighScore(long s) {
+		try {
+			File file = new File("resources/scores.txt");
+			BufferedWriter br = new BufferedWriter(new FileWriter(file));
+			String line = String.valueOf(s);
+			br.write(line);
+			br.close();
+			highScore = s;
+			return true;
+		} catch (IOException ex) {
+			System.out.println("Couldn't find save file : resources/scores.txt");
+			return false;
+		}
+	}
 }

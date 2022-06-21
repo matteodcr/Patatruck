@@ -166,7 +166,8 @@ public enum Sprite {
 
 		MAYO_INDIC("indic_mayo.png", 13), KETCHUP_INDIC("indic_ketchup.png", 13),
 		KETCHUP_MAYO_INDIC("indic_mayo_ketchup.png", 13), CAR("car2.png", 4), SPEEDOMETER_("speedometer.png", 19),
-		SPEEDOMETER_LOW_("speedometerLow.png", 19), SPEEDOMETER_HIGH_("speedometerHigh.png", 19);
+		SPEEDOMETER_LOW_("speedometerLow.png", 19), SPEEDOMETER_HIGH_("speedometerHigh.png", 19),
+		CITYTRUCK("cityTruck.png", 13);
 
 		public final String filename;
 		public final int tileSize;

@@ -60,7 +60,6 @@ public class AwtGraphics implements Graphics {
 	}
 
 	void drawSpriteRealCoords(Image img, int dx, int dy) {
-		// int iw = img.getWidth(null), ih = img.getHeight(null);
 		g.drawImage(img, dx, dy, null);
 	}
 
@@ -72,6 +71,19 @@ public class AwtGraphics implements Graphics {
 	@Override
 	public void drawSprite(Sprite sprite, float x, float y) {
 		drawSpriteRealCoords(sprite, (int) (x * this.scaleFactor), (int) (y * this.scaleFactor));
+	}
+
+	@Override
+	public void drawSpritePart(Sprite sprite, int x, int y, int offsetU, int offsetV) {
+		Image img = textures.getScaledSprites().get(sprite);
+		if (img == null)
+			throw new IllegalStateException("Texture non trouvée");
+
+		int tileSize = sprite.spritesheet.tileSize;
+		int dx = x * this.scaleFactor, dy = y * this.scaleFactor;
+		int sx = offsetU * this.scaleFactor * tileSize, sy = offsetV * this.scaleFactor * tileSize;
+		int size = tileSize * this.scaleFactor;
+		g.drawImage(img, dx, dy, dx + size, dy + size, sx, sy, sx + size, sy + size, null);
 	}
 
 	@Override

@@ -8,7 +8,7 @@ public class AveragePhysics implements Physics {
 	double accX = 0, accY = 0;
 	double velX = 0, velY = 0;
 	double maxVel = 2.5;
-	double force = 0, friction = 2;
+	double force = 0, friction = 1;
 
 	double avgVelBuff = 0, avgVel = 0;
 	int timerVel = 0, timerMaxVel = 10;

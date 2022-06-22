@@ -10,7 +10,7 @@ import info3.game.scene.Scene;
 
 public class CarEntity extends Entity {
 	public Physics physics = new PhysicsClassic(3);
-	final boolean isTruck;
+	boolean isTruck;
 	// TODO Deplacer hitbox hardocdé et methode de collision (champ ou classe pr pos
 	// bas a droite de l'entite
 
@@ -256,6 +256,20 @@ public class CarEntity extends Entity {
 		this.physics = new PhysicsSmoke(3, this.physics.getAccX(), this.physics.getAccY(), this.physics.getVelX(),
 				this.physics.getVelY(), this.physics.getMaxVel(), this.physics.getAvgVelBuff(),
 				this.physics.getAvgVel(), this.physics.getTimerVel(), this.physics.getTimerMaxVel());
+	}
+
+	public void swap(CarEntity carentity) {
+		carentity.isTruck = !carentity.isTruck;
+		this.isTruck = !this.isTruck;
+		if (this.isTruck) {
+			((CityScene) this.parentScene).setCook(this);
+		} else {
+			((CityScene) this.parentScene).setCook(carentity);
+		}
+		Physics physics = this.physics;
+		this.physics = carentity.physics;
+		carentity.physics = physics;
+
 	}
 
 }

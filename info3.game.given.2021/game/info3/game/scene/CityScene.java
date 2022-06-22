@@ -121,6 +121,10 @@ public class CityScene extends Scene {
 		return cookCar;
 	}
 
+	public void setCook(CarEntity car) {
+		cookCar = car;
+	}
+
 	@Override
 	public void render(Graphics g) {
 		super.render(g);

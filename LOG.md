@@ -1,6 +1,5 @@
 # PLA : Patatruck -- Journal de bord
 
-
 ## 4-7 juin
 
   * Travail sur le diagramme UML
@@ -118,19 +117,19 @@ PopOrWizz2(State1){
 ### Elise
 
 modificaton de l'automate du cafard
-    
+
 ### Aurélien
-   
+
 Première implémentation de `DeliveryTile`
 
 ### Mattéo
-    
+
 Première implémentation de `PanTile`
-    
+
 ### Loric
-    
+
 Première implémentation de `FrieTile`, `SauceTable` et `BasicTable`
-    
+
 ### Vincent & Mathis
 
 Deuxième implémentation du générateur d'automates fonctionnelle réparant les problèmes cités dans la première implémentation (la lecture se fait pour un répertoire de fichiers GAL et on gère maintenant les opérateurs booléens sur les conditions).
@@ -140,9 +139,9 @@ Deuxième implémentation du générateur d'automates fonctionnelle réparant le
 Finission de l'implémentation de l'utilisation du clavier pour déplacer des personnages sur 2 scènes différentes avec le nouveau system graphique.
 Ajout du contenu `Content` faisant référence aux items et recettes.
 Ajout de tests sur les recettes.
-    
+
 ### Aurélien + Vincent + Mattéo
-    
+
 Travail en groupe pour associer l'automate du cuistot à `CookEntity` en implémentant les méthodes Wizz (déplacement du cuistot) et `Key` (condition)
 L'objectif est de bien comprendre la pile d'appel et le flot d'exécution en partant du tick sur l'entité jusqu'à ce dernier arrive dans un (nouvel) état après la transition de l'automate.
 
@@ -150,18 +149,18 @@ L'objectif est de bien comprendre la pile d'appel et le flot d'exécution en par
 
 Beaucoup de merges, aide à l'équipe et début du dessin d'une spritesheet contenant des lettres de l'alphabet en pixel art. Le but serait de créer le menu de seléction d'automates.
 
-## 14 Juin : le renouveau du journal 
+## 14 Juin : le renouveau du journal
 
-Fin de la phase de prototypage. On a implémenté le générateur d'automate, les automates des entités, on a le squelette du modèle. On a également géré les entrées claviers multiples pour gérer les 2 joueurs sur le même clavier. 
+Fin de la phase de prototypage. On a implémenté le générateur d'automate, les automates des entités, on a le squelette du modèle. On a également géré les entrées claviers multiples pour gérer les 2 joueurs sur le même clavier.
 
-### Réflexions en cours 
+### Réflexions en cours
 
 - Rendre le code de déplacement plus général pour pouvoir l'appliquer à d'autres automates (quelques éléments sont Hardcodés) (Mattéo)
 - Problèmes : géré le fait que le déplacement de l'entit cuisinier avec l'automate associe mal les directions (gauche = bas par exemple)
 
 ### Plan de codage
 
-#### Mattéo, Aurélien et Vincent 
+#### Mattéo, Aurélien et Vincent
 
 On va généraliser le code fait hier pour déplacer le cuisinier avec un automate. On va donc travailler sur `CookEntity` et sur le générateur d'automates pour impémenter d'autres actions et conditions. On va également essayer de gérer les collisions entre cette entité et un obstacle
 
@@ -169,7 +168,7 @@ On va généraliser le code fait hier pour déplacer le cuisinier avec un automa
 
 Implémenter quelques fonctionnalités manquantes sur le générateur d'automate notamment le second type d'aléatoire (voir journal 12 juin) et les transitions avec conditions mais sans action.
 
-#### Elise & Mathis 
+#### Elise & Mathis
 
 Implémenter les classes java pour chaque entité ainsi que leurs méthodes de bases.
 Amélioration de leurs automates.
@@ -191,7 +190,7 @@ Implémentation d'un système de rendu de police d'écriture personalisée en pi
 - Tester les classes des nouvelles entités avec leurs automates si possible (en fonction de l'avancement des autres). `NOT_DONE`
 - Tester le générateur d'automate pour des transitions sans actions `DONE` et les transitions vers un état aléatoire (avec `cafard.gal`) `NOT_DONE`
 
-## 15 juin 
+## 15 juin
 
 La scène de la cuisine avance, on arrive à afficher les entités des différents équipements de la cuisine, ainsi que le cuistot et on gère les collisions de ce dernier (de façon primitive). Edgar avance sur la fonctionnalité de sélection d'automates. Du côté des ingrédients et des recettes, on a prototypé les méthodes de découpe, de cuisson et de friture ainsi que l'assemblage des ingrédients.
 
@@ -237,11 +236,11 @@ Début du travail sur la scène de la ville. Vérification et correction des aut
 - Assemblage des recettes (voir jour précédent) `NOT_DONE`
 - Vérifier interaction 2 entités lors du même tick au niveau du modèle `DONE` (+graphisme) `DONE`
 - Vérifier les collisions niveau graphisme et modèle avec la nouvelle façon de faire. `DONE`
-- Vérifier la méthode Egg de l'entité cafard (pas de problème de création multiple d'entités / superposition) et la bonne destruction de cette entité par le joueur (suppression visuelle + dans la liste d'entités)`DONE` 
+- Vérifier la méthode Egg de l'entité cafard (pas de problème de création multiple d'entités / superposition) et la bonne destruction de cette entité par le joueur (suppression visuelle + dans la liste d'entités)`DONE`
 
 ## 16 Juin
 
-Automates de la ville finis. Apparition et destruction des cafards fonctionnels (reste à générer les cafards aléatoirement au fil de la partie et à implémenter la fonctionnalité qui permet aux cafards de voler des ingrédients). 
+Automates de la ville finis. Apparition et destruction des cafards fonctionnels (reste à générer les cafards aléatoirement au fil de la partie et à implémenter la fonctionnalité qui permet aux cafards de voler des ingrédients).
 
 ### Réflexions en cours
 
@@ -252,14 +251,14 @@ Automates de la ville finis. Apparition et destruction des cafards fonctionnels 
 
 #### Mattéo, Aurélien & Vincent
 
-Revoir les collisions (voir réflexions). Travail sur la récupération et l'affichage d'items. Dans l'attente du travail sur les items, réalisation d'implémentation "annexes" : 
+Revoir les collisions (voir réflexions). Travail sur la récupération et l'affichage d'items. Dans l'attente du travail sur les items, réalisation d'implémentation "annexes" :
 - Limitation du nombre de cafards
 - Affichage des sprites en fonction de la direction
 - Réduction de la "vitesse" du joueur et des cafards via l'ajout d'un `timeElapsed` qui n'est pas une boucle wait().
 
 #### Mathis
 
-Implémentation de l'entité marché et début de travail sur le joueur camion. On commence à soulever des questions importantes sur le fonctionnement de la  ville et on trouve des réponses. 
+Implémentation de l'entité marché et début de travail sur le joueur camion. On commence à soulever des questions importantes sur le fonctionnement de la  ville et on trouve des réponses.
 En attendant que les Item soient fonctionnels et que des tests puissent être lancés, je fais des sprites.
 
 #### Loric
@@ -274,10 +273,10 @@ Travail sur l'affichage dans la ville d'une voiture et gestion de son IA (gérer
 
 #### Edgar
 
-  * Aider le reste du groupe.
-  * Fin du système de rendu de police
-  * Implémentation quasi-fonctionnelle d'un menu de selection d'automates
-  * Petit fix d'un rendu pas très joli
+* Aider le reste du groupe.
+* Fin du système de rendu de police
+* Implémentation quasi-fonctionnelle d'un menu de selection d'automates
+* Petit fix d'un rendu pas très joli
 
 #### Elise
 
@@ -299,7 +298,7 @@ Il nous manque toujours une classe fonctionnelle pour les items et les assemblag
 
 ### Réflexions en cours
 
-- Comment gérer les collisions dans la ville ? Réimplanter `Cell` et comparer la `PositionF`  de l'entité avec la catégorie de l'entité à la `PositionF` d'à côté (quelques pixels)  
+- Comment gérer les collisions dans la ville ? Réimplanter `Cell` et comparer la `PositionF`  de l'entité avec la catégorie de l'entité à la `PositionF` d'à côté (quelques pixels)
 
 ### Plan de codage
 
@@ -339,12 +338,16 @@ Merge dans le master de l'écran de sélection d'automate.
 
 ## 18 & 19 Juin
 
-Les branches git sont un peu désordonnés et tout le monde n'a pas la version la plus récente du master. Le but durant le week-end est de réussir à tout récupérer sur le master pour repartir sur de bonnes bases lundi. On a également pas pu finir l'implémentation des collisions dans la ville, donc on va essayer de terminer ça pendant le week-end. Voilà une liste de tout ce qu'il reste à faire pour avoir un jeu agréable :
+Les branches git sont un peu désordonnés et tout le monde n'a pas la version la plus récente du master. Le but durant le week-end est de réussir à tout récupérer sur le master pour repartir sur de bonnes bases lundi. On a également pas pu finir l'implémentation des collisions dans la ville, donc on va essayer de terminer ça pendant le week-end.
+
+### Réflexions en cours
+
+Voilà une liste de tout ce qu'il reste à faire pour avoir un jeu agréable :
 * Système de collision millimétrique
 * Physique de déplacement des véhicules dans la ville
 * Implémentation de la génération aléatoire (en cours)
-* Placer les ralentisseurs et les marchés dans la ville 
-* Gérer l'apparition et la disparition des véhicules 
+* Placer les ralentisseurs et les marchés dans la ville
+* Gérer l'apparition et la disparition des véhicules
 * Implémentation de la mécanique de transfert entre 2 camions
 * Implémentation de la mécanique de doublure avec les erreurs de cuisson
 * Gérer la mécanique de viewport
@@ -352,10 +355,9 @@ Les branches git sont un peu désordonnés et tout le monde n'a pas la version l
 * Implémentation du compteur de vitesse (lié à la physique)
 * Créer et afficher l'UI sur l'écran (vitesse, temps et recette en cours)
 * Gérer l'interaction entre les différents équipements de cuisine et le joueur
-* Ecran d'accueil (logo, best score, start, select automata, quit + credits dans un coin)
+* Ecran d'accueil (logo, best score, start, select automata, quit + credits dans un coin en cours)
 * Ecran de fin (logo, score de la partie, best score, replay, quit)
 * Sauvegarde et relecture du/des meilleur(s) score(s)
-* (Ajout du verglas et des nids de poules)
 * (Système de sons/bruitages)
 * (Système d'animations)
 
@@ -372,5 +374,156 @@ Implémenter l'action qui permet aux cafards de voler des ingrédients dans la `
 ### Tests à réaliser
 
 - Pour la voiture, vérifier que celle-ci ne rentre pas dans des batiments et qu'elle les détecte bien `DONE`
-- Pour le merge : refaire la plus part des tests précédents et vérifier que rien n'est cassé. `KINDA_DONE`
+- Pour le merge : refaire la plupart des tests précédents et vérifier que rien n'est cassé. `KINDA_DONE` `DONE le 20 juin`
 - Vérifier que les cafards peuvent voler un ingrédient et que le joueur ne peut interagir que si il regarde l'équipement. `DONE`
+
+## 20 Juin
+
+On attend le merge sur master dans la matinée après avoir fait les dernières modifications pour se conformer aux conventions (Vincent, Mattéo, Mathis, Loric, Paul). Ensuite on va se répartir sur les différentes tâches dont on parle juste au-dessus.
+
+### Réflexions en cours
+
+- Comment organiser l'équipe divisée en 2 groupes (distanciel & présentiel) ? On passe par Discord pour communiquer entre tout le monde. Il faut éviter de se marcher dessus et de travailler sur les mêmes parties du code.
+
+### Plan de codage
+
+#### Paul
+
+Travailler sur la physique du système de déplacement des voitures dans la ville.
+
+#### Loric
+
+Création et affichage du timer de jeu.
+
+#### Mattéo
+
+Gestion de toutes les interactions dans la cuisine.
+Première version d'une cuisine permettant de réaliser toutes les recettes.
+- SauceTable
+- CutTile
+- PanTile
+- FryTile
+- BasicTableTile
+
+Réimplémentation de CookEntity avec un Assembly : modification des KitchenTile avec cette nouvelle implémentation
+
+#### Mathis
+
+Gérer l'apparition et la disparition des entités voitures et camions adversaires.
+
+#### Vincent
+
+Gérer la condition de fin de jeu, l'affichage de l'écran de fin , du score et de sa sauvegarde dans un fichier de meilleurs scores.
+
+#### Elise
+
+Aide sur la cuisine.
+Tentative de codage de l'écran d'acceuil.
+
+#### Edgar
+
+🤒 _Maladie, impossibilité de travailler_
+
+#### Aurélien
+
+Mon objectif est de faire la préparation du scénario de la démo. Malheureusement aujourd'hui la COVID aura eu raison de moi. Je prévois de le faire demain.
+
+### Tests à réaliser
+
+- Vérifier que les voitures accélèrent et ralentissent correctement
+- Vérifier que le timer s'affiche bien et qu'il est centré `DONE`
+- Vérifier que lorsque le timer arrive à 0 on bascule sur l'écran de fin, que le score affiché est bon et que si l'on rappuie sur espace on arrive à nouveau sur le jeu (bien réinitialisé) `DONE`
+
+## 21 Juin
+
+La cuisine est quasi fonctionnelle et le système de physique a bien avancée. La partie se lance avec un timer et s'arrête quand il arrive à 0 en nous affichant le score (temps écoulé depuis le début) et en nous proposant de rejouer depuis un écran de fin.
+
+### Réflexion en cours
+
+Nouvelles tâches :
+* Formattage du code (anglicisation)
+* Rassembler les sprites en spritesheets
+* Réorganiser les fichiers (à la toute fin)
+
+### Plan de codage
+
+#### Aurélien
+
+Préparation du scénario de la démo.
+Recherche et création des bruitages du jeu.
+
+#### Vincent
+
+Fin du travail pour sauvegarder le score. Implémentation des premiers bruitages dans le jeu avec un système qui empêche un deuxième son identique de se lancer si le premier n'est pas fini.
+
+#### Mathis
+
+Lister tous les sons à trouver/créer
+
+#### Loric, Élise et Mathis
+
+Implémentation de l'écran de début de jeu et des crédits. Ajout de la navigation entre les différents écrans.
+
+#### Paul
+
+Implémentation d'une nouvelle version de la physique pour l'utiliser avec les differents avatars, fix du bug du shuffle.
+
+#### Edgar
+
+Génération du monde aléatoire.
+
+#### Elise
+Debug de la cuisine
+
+#### Mattéo
+
+- DeliveryTile
+- Affichage Sauce
+- Debug Global
+- Pouvoir livrer une recette entierement
+
+### Tests à réaliser
+
+- Vérifier qu'on démarre bien sur l'écran d'accueil, qu'on peut naviguer dans tous les écrans et lancer une partie, qu'à la fin de la partie on arrive sur l'écran de fin et qu'on puisse relancer une partie. `DONE`
+- Vérifier qu'on peut réaliser une recette de A à Z et qu'on peut interagir avec les différents éléments de la cuisine. `DONE` (sauf la livraison)
+- Vérifier que chaque physique du camion l'impacte bien `DONE`
+
+## 22 Juin
+
+Cuisine et physique fonctionnelle, premiers sons dans le jeu. Transitions entre tous les écrans pour démarrer, finir et relancer une partie avec sauvegarde du meilleur score.
+
+### Réflexions en cours
+
+
+
+### Plan de codage
+
+#### Edgar
+
+Génération du monde aléatoire : disposition des bâtiments et calcul des boîtes de collision
+
+#### Vincent
+
+Travail sur les collisions dans la ville. Lorsque le joueur contrôle le camion, il faut le faire rebondir sur les murs car sinon il a des chances de les traverser avec l'inertie.
+J'ai également travaillé sur les collisions entre les différents véhicules dans la ville.
+
+#### Paul
+
+Mise à jour du system de physique pour répondre aux collisions et légers réglages dans les équations de mouvements. Ajout de fonctions à la physique pour pouvoir intervertir parmi les avatars plus facilement. Mise à jour de cityScene pour pouvoir utiliser un automate sur un carEntity pour déplacer le joueur dans la ville. Mise à jour du canvasListener pour pouvoir comprendre lorsqu'un automate veut détecter les flèches du clavier.
+
+### Elise
+
+Generation de recette et de sauce aléatoire.
+Debug de l'ajout de sauce à une recette.
+
+#### Loric
+
+Affichage des recettes à réaliser. Gestion de l'échange d'automate lorsque le joueur veut changer de camion.
+
+### Tests à réaliser
+
+- La ville se génère d'une façon cohérente `DONE`
+- Les collisions des bâtiments sont correctes `NOT_DONE` (c'est à l'équipe véhicule de faire ça)
+- Vérifier que on détecte bien les collisions entre 2 véhicules `DONE`
+- Le camion contrôlé par le joueur ne doit pas passer à travers les batiments `DONE`
+- Utilisation d'un automate pour déplacer le camion dans la ville et vérifier les collisions `DONE`

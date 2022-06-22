@@ -198,13 +198,13 @@ public class CanvasListener implements GameCanvasListener {
 		// System.out.println("Key released: " + e.getKeyChar() + " code=" +
 		// e.getKeyCode());
 		keyboard.remove(e.getKeyCode());
-		if(e.getKeyCode()==VK_ENTER){
+		if (e.getKeyCode() == VK_ENTER) {
 			enterUsed = false;
 		}
-		if(e.getKeyCode()==VK_SPACE){
+		if (e.getKeyCode() == VK_SPACE) {
 			spaceUsed = false;
 		}
-		if(e.getKeyCode()==VK_ESCAPE){
+		if (e.getKeyCode() == VK_ESCAPE) {
 			escapeUsed = false;
 		}
 		// printKeyboard();

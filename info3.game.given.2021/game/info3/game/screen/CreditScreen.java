@@ -17,9 +17,8 @@ public class CreditScreen extends Screen {
 
 		if (escapePressed) {
 			changeScreen(new StartScreen(game));
-			}
-
 		}
+	}
 
 
 	@Override

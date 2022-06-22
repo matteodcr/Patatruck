@@ -55,18 +55,15 @@ public class StartScreen extends Screen {
 
 	@Override
 	public void render(Graphics g) {
-		
 		g.drawSprite(Sprite.AS_BACKDROP, 0, 0);
 		g.drawSprite(Sprite.AS_LOGO, 0, 0);
 		g.drawSprite(Sprite.AS_BOX, 100, 47);
 		g.drawSprite(Sprite.AS_BOX, 100, 62);
 		g.drawSprite(Sprite.AS_BOX, 100, 77);
 		g.drawSprite(Sprite.AS_RIGHT, 86, 47 + scrollTop*15);
-
-		String tmp = "JOUER";
-		g.drawText(tmp, Align.LEFT, 103, 50);
-		tmp = "CHOIX AUTOMATES";
-		g.drawText(tmp, Align.LEFT, 103, 65);
+		
+		g.drawText("JOUER", Align.LEFT, 103, 50);
+		g.drawText("CHOIX AUTOMATES", Align.LEFT, 103, 65);
 		g.drawText("CRÉDITS", Align.LEFT, 103, 80);
 	}
 }

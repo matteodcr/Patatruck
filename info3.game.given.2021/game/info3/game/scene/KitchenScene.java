@@ -14,9 +14,9 @@ import info3.game.entity.BasicTableTile;
 import info3.game.entity.CockroachEntity;
 import info3.game.entity.CookEntity;
 import info3.game.entity.CutTile;
-import info3.game.entity.DeliveryTile;
 import info3.game.entity.Entity;
 import info3.game.entity.FrieTile;
+import info3.game.entity.KitchenDeliveryTile;
 import info3.game.entity.PanTile;
 import info3.game.entity.SauceTableTile;
 import info3.game.entity.StockTable;
@@ -31,8 +31,8 @@ import info3.game.position.PositionI;
 
 public class KitchenScene extends Scene {
 
-	private ItemType currentOrder0;
-	private ItemType currentOrder1;
+	public Item currentOrder0;
+	public Item currentOrder1;
 	private HashMap<ItemType, StockTable> stockTables;
 
 	private static final PositionI KITCHEN_ORIGIN = new PositionI(44, 10);
@@ -41,6 +41,8 @@ public class KitchenScene extends Scene {
 	private CookEntity cook;
 	private CockroachEntity cockroach;
 	private int cockroachCounter = 1;
+	public boolean smoke = false;
+	public int smokeCounter = 100;
 
 	private ArrayList<PositionF> indexEmplacements = new ArrayList<>(List.of(new PositionF(0, 1), new PositionF(0, 2),
 			new PositionF(0, 3), new PositionF(0, 4), new PositionF(0, 5), new PositionF(3, 1), new PositionF(3, 2),
@@ -48,25 +50,7 @@ public class KitchenScene extends Scene {
 	private ArrayList<PositionF> indexStockEmplacements = new ArrayList<>(List.of(new PositionF(0, 6),
 			new PositionF(0, 7), new PositionF(0, 8), new PositionF(3, 6), new PositionF(3, 7), new PositionF(3, 8)));
 
-	public Tile[][] KitchenGrid = new Tile[][] {
-			new Tile[] { new BasicTableTile(this, 0, 0, AutDirection.S), new BasicTableTile(this, 1, 0, AutDirection.S),
-					new BasicTableTile(this, 2, 0, AutDirection.S), new FrieTile(this, 3, 0, AutDirection.S),
-					new FrieTile(this, 4, 0, AutDirection.S), new CutTile(this, 5, 0, AutDirection.S),
-					new StockTable(this, 6, 0, AutDirection.S, new Item(ItemType.TOMATO), Sprite.TOMATO),
-					new StockTable(this, 7, 0, AutDirection.S, new Item(ItemType.POTATO), Sprite.POTATO),
-					new StockTable(this, 8, 0, AutDirection.S, new Item(ItemType.CHEESE), Sprite.CHEESE),
-					new BasicTableTile(this, 9, 0, AutDirection.S) },
-			new Tile[] { new DeliveryTile(this, 0, 1, AutDirection.E), null, null, null, null, null, null, null, null,
-					new SauceTableTile(this, 9, 1, AutDirection.W, Sauce.KETCHUP) },
-			new Tile[] { new DeliveryTile(this, 0, 2, AutDirection.E), null, null, null, null, null, null, null, null,
-					new SauceTableTile(this, 9, 2, AutDirection.W, Sauce.MAYO) },
-			new Tile[] { new BasicTableTile(this, 0, 3, AutDirection.N), new TrashTile(this, 1, 3, AutDirection.N),
-					new BasicTableTile(this, 2, 3, AutDirection.N), new PanTile(this, 3, 3, AutDirection.N),
-					new PanTile(this, 4, 3, AutDirection.N), new CutTile(this, 5, 3, AutDirection.N),
-					new StockTable(this, 6, 3, AutDirection.N, new Item(ItemType.SALAD), Sprite.SALADE),
-					new StockTable(this, 7, 3, AutDirection.N, new Item(ItemType.BREAD), Sprite.BREAD),
-					new StockTable(this, 8, 3, AutDirection.N, new Item(ItemType.MEAT), Sprite.MEAT),
-					new BasicTableTile(this, 9, 3, AutDirection.N) } };
+	public Tile[][] kitchenGrid;
 
 	public KitchenScene(int pixelWidth, int pixelHeight, Game g) {
 		super(pixelWidth, pixelHeight, g);
@@ -77,9 +61,35 @@ public class KitchenScene extends Scene {
 
 			cockroach = new CockroachEntity(this, new PositionF(KITCHEN_ORIGIN.getX() + getTileWidth() * 2,
 					KITCHEN_ORIGIN.getY() + getTileWidth() * 2));
+
 			addEntity(cockroach);
-			currentOrder0 = ItemType.getRandomItem();
-			currentOrder1 = ItemType.getRandomItem();
+			currentOrder0 = Item.getRandomItem();
+			currentOrder1 = Item.getRandomItem();
+			System.out.println(currentOrder0);
+			System.out.println(currentOrder1);
+			m_game.setTimer();
+
+			kitchenGrid = new Tile[][] {
+					new Tile[] { new BasicTableTile(this, 0, 0, AutDirection.S),
+							new BasicTableTile(this, 1, 0, AutDirection.S),
+							new BasicTableTile(this, 2, 0, AutDirection.S), new FrieTile(this, 3, 0, AutDirection.S),
+							new FrieTile(this, 4, 0, AutDirection.S), new CutTile(this, 5, 0, AutDirection.S),
+							new StockTable(this, 6, 0, AutDirection.S, new Item(ItemType.TOMATO), Sprite.TOMATO),
+							new StockTable(this, 7, 0, AutDirection.S, new Item(ItemType.POTATO), Sprite.POTATO),
+							new StockTable(this, 8, 0, AutDirection.S, new Item(ItemType.CHEESE), Sprite.CHEESE),
+							new BasicTableTile(this, 9, 0, AutDirection.S) },
+					new Tile[] { new KitchenDeliveryTile(this, 0, 1, AutDirection.E), null, null, null, null, null,
+							null, null, null, new SauceTableTile(this, 9, 1, AutDirection.W, Sauce.KETCHUP) },
+					new Tile[] { new KitchenDeliveryTile(this, 0, 2, AutDirection.E), null, null, null, null, null,
+							null, null, null, new SauceTableTile(this, 9, 2, AutDirection.W, Sauce.MAYO) },
+					new Tile[] { new BasicTableTile(this, 0, 3, AutDirection.N),
+							new TrashTile(this, 1, 3, AutDirection.N), new BasicTableTile(this, 2, 3, AutDirection.N),
+							new PanTile(this, 3, 3, AutDirection.N), new PanTile(this, 4, 3, AutDirection.N),
+							new CutTile(this, 5, 3, AutDirection.N),
+							new StockTable(this, 6, 3, AutDirection.N, new Item(ItemType.SALAD), Sprite.SALADE),
+							new StockTable(this, 7, 3, AutDirection.N, new Item(ItemType.BREAD), Sprite.BREAD),
+							new StockTable(this, 8, 3, AutDirection.N, new Item(ItemType.MEAT), Sprite.MEAT),
+							new BasicTableTile(this, 9, 3, AutDirection.N) } };
 			m_game.setTimer();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -115,39 +125,37 @@ public class KitchenScene extends Scene {
 			} while (!acceptable);
 		}
 		Tile[][] futureKitchenGrid = new Tile[][] {
-				new Tile[] { new BasicTableTile(this, 0, 0, AutDirection.S), null, null, null, null, null, null, null,
-						null, new BasicTableTile(this, 9, 0, AutDirection.S) },
-				new Tile[] { new DeliveryTile(this, 0, 1, AutDirection.E), null, null, null, null, null, null, null,
-						null, new SauceTableTile(this, 9, 1, AutDirection.W, Sauce.KETCHUP) },
-				new Tile[] { new DeliveryTile(this, 0, 2, AutDirection.E), null, null, null, null, null, null, null,
-						null, new SauceTableTile(this, 9, 2, AutDirection.W, Sauce.MAYO) },
-				new Tile[] { new BasicTableTile(this, 0, 0, AutDirection.S), null, null, null, null, null, null, null,
-						null, new BasicTableTile(this, 9, 0, AutDirection.S) } };
+				new Tile[] { kitchenGrid[0][0], null, null, null, null, null, null, null, null, kitchenGrid[0][9] },
+				new Tile[] { kitchenGrid[1][0], null, null, null, null, null, null, null, null, kitchenGrid[1][9] },
+				new Tile[] { kitchenGrid[2][0], null, null, null, null, null, null, null, null, kitchenGrid[2][9] },
+				new Tile[] { kitchenGrid[3][0], null, null, null, null, null, null, null, null, kitchenGrid[3][9] } };
 		// replace everything
 		for (int i = 0; i < movedTiles.length; i++) {
 			PositionF pos = indexEmplacements.get(i), futurePos = indexEmplacements.get(movedTiles[i]);
-			Tile toMove = KitchenGrid[(int) pos.getX()][(int) pos.getY()];
-			toMove.setPosition(futurePos);
-			if (movedTiles[i] < movedTiles.length) {
-				toMove.myDir(AutDirection.S);
+			Tile toMove = kitchenGrid[(int) pos.getX()][(int) pos.getY()];
+			toMove.setPosition(new PositionF(futurePos.getY(), futurePos.getX()).mul(this.getTileWidth())
+					.sub(this.getOriginOffset()));
+			if (futurePos.getX() == 0) {
+				toMove.setDirection(AutDirection.S);
 			} else {
-				toMove.myDir(AutDirection.N);
+				toMove.setDirection(AutDirection.N);
 			}
 
 			futureKitchenGrid[(int) futurePos.getX()][(int) futurePos.getY()] = toMove;
 		}
 		for (int i = 0; i < movedStockTables.length; i++) {
 			PositionF pos = indexStockEmplacements.get(i), futurePos = indexStockEmplacements.get(movedStockTables[i]);
-			Tile toMove = KitchenGrid[(int) pos.getX()][(int) pos.getY()];
-			toMove.setPosition(futurePos);
-			if (movedStockTables[i] < movedStockTables.length) {
-				toMove.myDir(AutDirection.S);
+			Tile toMove = kitchenGrid[(int) pos.getX()][(int) pos.getY()];
+			toMove.setPosition(new PositionF(futurePos.getY(), futurePos.getX()).mul(this.getTileWidth())
+					.sub(this.getOriginOffset()));
+			if (futurePos.getX() == 0) {
+				toMove.setDirection(AutDirection.S);
 			} else {
-				toMove.myDir(AutDirection.N);
+				toMove.setDirection(AutDirection.N);
 			}
 			futureKitchenGrid[(int) futurePos.getX()][(int) futurePos.getY()] = toMove;
 		}
-		this.KitchenGrid = futureKitchenGrid;
+		this.kitchenGrid = futureKitchenGrid;
 	}
 
 	@Override
@@ -164,7 +172,7 @@ public class KitchenScene extends Scene {
 	public Tile getTileAt(int gridX, int gridY) {
 		if (gridX < 0 || gridY < 0 || gridX >= 10 || gridY >= 4)
 			return null;
-		return KitchenGrid[gridY][gridX];
+		return kitchenGrid[gridY][gridX];
 	}
 
 	@Override
@@ -194,12 +202,34 @@ public class KitchenScene extends Scene {
 
 		g.drawText(String.valueOf((int) m_game.timeGame / 1000), Align.CENTER, 17, 24);
 		g.drawSprite(Sprite.CLOCK, 8, 3);
+		if (smoke) {
+			g.drawSprite(Sprite.KITCHEN_TRUCK_SMOKE, KITCHEN_ORIGIN.getX() - 13, KITCHEN_ORIGIN.getY() - 13);
+
+		}
 
 	}
 
 	public void renderCurrentOrder(Graphics g) {
-		g.drawSprite(currentOrder0.getSprite(), 226, 7);
-		g.drawSprite(currentOrder1.getSprite(), 240, 7);
+		g.drawSprite(currentOrder0.getType().getSprite(), 226, 7);
+		g.drawSprite(currentOrder1.getType().getSprite(), 240, 7);
+		if (currentOrder0.getSauce() != null) {
+			g.drawSprite(currentOrder0.getSauce().getSprite(), 226, 25);
+		}
+		if (currentOrder1.getSauce() != null) {
+			g.drawSprite(currentOrder1.getSauce().getSprite(), 240, 25);
+		}
+		if (currentOrder0.hasOptionalSalad()) {
+			g.drawSprite(Sprite.SALADE, 226, 40);
+		}
+		if (currentOrder1.hasOptionalSalad()) {
+			g.drawSprite(Sprite.SALADE, 240, 40);
+		}
+		if (currentOrder0.hasOptionalTomato()) {
+			g.drawSprite(Sprite.TOMATO, 226, 54);
+		}
+		if (currentOrder1.hasOptionalTomato()) {
+			g.drawSprite(Sprite.TOMATO, 240, 54);
+		}
 	}
 
 	public int getCockroachCounter() {
@@ -213,16 +243,23 @@ public class KitchenScene extends Scene {
 	@Override
 	public void tick(long elapsed) {
 		super.tick(elapsed);
-		for (int i = 0; i < KitchenGrid.length; i++) {
-			for (int j = 0; j < KitchenGrid[i].length; j++) {
-				if (KitchenGrid[i][j] != null) {
-					KitchenGrid[i][j].tick(elapsed);
+		if (smoke) {
+			smokeCounter--;
+		}
+		if (smokeCounter == 0) {
+			smoke = false;
+			smokeCounter = 100;
+		}
+		for (int i = 0; i < kitchenGrid.length; i++) {
+			for (int j = 0; j < kitchenGrid[i].length; j++) {
+				if (kitchenGrid[i][j] != null) {
+					kitchenGrid[i][j].tick(elapsed);
 				}
 			}
 		}
 
 		Random rand = new Random();
-		if (rand.nextInt(500) < 2) {
+		if (rand.nextInt(10000) < 2) {
 			try {
 				this.addEntity(new CockroachEntity(this, new PositionF(135, 36)));
 			} catch (IOException e) {

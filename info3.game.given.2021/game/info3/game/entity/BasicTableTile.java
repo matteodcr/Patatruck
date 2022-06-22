@@ -6,7 +6,6 @@ import info3.game.graphics.Graphics;
 import info3.game.graphics.Sprite;
 import info3.game.position.AutCategory;
 import info3.game.position.AutDirection;
-import info3.game.scene.KitchenScene;
 import info3.game.scene.Scene;
 
 public class BasicTableTile extends KitchenTile {
@@ -24,31 +23,42 @@ public class BasicTableTile extends KitchenTile {
 
 	@Override
 	public boolean pop(AutDirection direction) {// poser
-		Item item_player = ((KitchenScene) this.parentScene).getCook().item;
-		if (item_player == null) {
-			return false;
-		} else {
-			this.assembly.addItem(item_player);
-			item_player = null;
-			return true;
-		}
+		Entity eInteracting = selectEntityToInteractWith();
+		if (eInteracting instanceof CookEntity && ((CookEntity) eInteracting) != null) {
+			if (((CookEntity) eInteracting).m_assembly.getItems().size() == 0) {
+				return false;
+			} else {
+				assembly.addAssembly(player.m_assembly);
+				player.m_assembly.getItems().clear();
 
+				return true;
+
+			}
+		}
+		return false;
 	}
 
 	@Override
-	public boolean wizz(AutDirection direction) {// rendre au player
-		Item item_player = ((KitchenScene) this.parentScene).getCook().item;
-		if (item_player != null) {
-			return false;
-		} else {
-			if (this.assembly.getItems().size() == 1) {
-				item_player = this.assembly.getItems().get(0);
-				this.assembly.emptyAssembly();
-				return true;
-			} else {
-				return false;
+	public boolean wizz(AutDirection direction) {// rendre au player si fini / donner si pas fini
+		Entity eInteracting = selectEntityToInteractWith();
+		if (eInteracting instanceof CookEntity && ((CookEntity) eInteracting) != null) {
+
+			if (player.m_assembly.getItems().size() == 0 && assembly.getItems().size() != 0) {
+				if (assembly.getItems().get(0).getType().isFinalItem()) {
+					player.m_assembly.addAssembly(assembly);
+					assembly.getItems().clear();
+				} else {
+					player.m_assembly.addItem(assembly.getItems().remove(assembly.getItems().size() - 1));
+				}
+			} else if (player.m_assembly.getItems().size() == 1) {
+				assembly.addAssembly(player.m_assembly);
+				player.m_assembly.getItems().clear();
 			}
+
+			return true;
+
 		}
+		return false;
 	}
 
 	@Override
@@ -68,6 +78,12 @@ public class BasicTableTile extends KitchenTile {
 			break;
 		default:
 			break;
+		}
+		if (!assembly.getItems().isEmpty()) {
+			for (Item item : assembly.getItems()) {
+				g.drawSprite(item.getType().getSprite(), 0, 0);
+
+			}
 		}
 	}
 

@@ -1,38 +1,31 @@
 package info3.game.entity;
 
-import info3.game.content.Item;
 import info3.game.graphics.Graphics;
 import info3.game.graphics.Sprite;
 import info3.game.position.AutCategory;
 import info3.game.position.AutDirection;
-import info3.game.scene.KitchenScene;
 import info3.game.scene.Scene;
 
 public class CutTile extends KitchenTile {
-	Item item;
-	int compteur;
+	int compteur = 0;
 
 	public CutTile(Scene parent, int gridX, int gridY, AutDirection d) {
 		super(parent, gridX, gridY, null, d);
-		this.item = null;
-		this.compteur = 0;
 	}
 
 	@Override
-	public boolean pop(AutDirection direction) {// prend un ingrédiant à couper
-		Item item_player = ((KitchenScene) this.parentScene).getCook().item;
-		if (item_player == null || this.item != null) {
+	public boolean pop(AutDirection direction) {// prend un ingrédient à couper
+		if (player.m_assembly.getItems().size() != 1 || this.item != null) {
 			return false;
 		} else {
-			if (item_player.cut() == null) { // est-ce qu'on peut couper?
+			if (player.m_assembly.getItems().get(0).cut() == null) { // est-ce qu'on peut couper?
 				return false;
 			}
-			this.item = item_player.cut();
-			item_player = null;
-			this.compteur = 20000;
+			this.item = player.m_assembly.getItems().get(0);
+			player.m_assembly.getItems().clear();
+			this.compteur = 100;
 			return true;
 		}
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
@@ -42,7 +35,7 @@ public class CutTile extends KitchenTile {
 
 	@Override
 	public boolean wizz(AutDirection direction) {// rend l'ingrédient coupé au joueur
-		((KitchenScene) this.parentScene).getCook().item = this.item;
+		player.m_assembly.addItem(item);
 		this.item = null;
 		return true;
 
@@ -51,17 +44,20 @@ public class CutTile extends KitchenTile {
 	@Override
 	public boolean gwait() {
 		if (this.compteur > 0) {
-			this.compteur++;
+			this.compteur--;
 			return false;
 		} else {
+			this.item = item.cut();
 			return true;
 		}
 	}
 
 	@Override
 	public void render(Graphics g) {
-		// BufferedImage img = m_images[m_imageIndex];
 		g.drawSprite(Sprite.CUT_TILE, 0, 0);
+		if (item != null) {
+			g.drawSprite(item.getType().getSprite(), 0, 0);
+		}
 	}
 
 	@Override

@@ -2,6 +2,7 @@ package info3.game.entity;
 
 import java.io.IOException;
 
+import info3.game.content.Assembly;
 import info3.game.graphics.Graphics;
 import info3.game.graphics.Sprite;
 import info3.game.position.AutCategory;
@@ -10,16 +11,16 @@ import info3.game.position.PositionF;
 import info3.game.scene.Scene;
 
 public class CookEntity extends Entity {
-	// Item holding; Class Item TODO
-
 	long m_imageElapsed;
 	long m_moveElapsed;
 	int m_imageIndex;
+	Assembly m_assembly;
 
 	public CookEntity(Scene parent, PositionF position) throws IOException {
 		super(parent, position);
 		move_timer_max = 100;
 		category = AutCategory.AROBASE;
+		m_assembly = new Assembly();
 	}
 
 	@Override
@@ -29,6 +30,7 @@ public class CookEntity extends Entity {
 
 	@Override
 	public void render(Graphics g) {
+
 		if (m_direction == AutDirection.N) {
 			g.drawSprite(Sprite.PLAYER_KITCHEN_N, this.position.getX(), this.position.getY());
 		} else if (m_direction == AutDirection.E) {
@@ -38,11 +40,18 @@ public class CookEntity extends Entity {
 		} else {
 			g.drawSprite(Sprite.PLAYER_KITCHEN_S, this.position.getX(), this.position.getY());
 		}
+		if (m_assembly.getItems().size() >= 1) {
+			g.drawItem(m_assembly.getItems().get(0), this.position.getX(), this.position.getY());
+		}
 	}
 
 	@Override
 	public boolean pop(AutDirection direction) {
-		// TODO Auto-generated method stub
+		// System.out.println("");
+		// System.out.print(this.m_assembly.getItems().toString());
+		// if (!this.m_assembly.getItems().isEmpty())
+		// System.out.print(this.m_assembly.getItems().get(0).getSauce());
+
 		return false;
 	}
 

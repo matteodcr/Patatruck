@@ -1,6 +1,7 @@
 package info3.game.content;
 
 import java.util.HashMap;
+import java.util.Random;
 
 public class Item {
 	final ItemType type;
@@ -56,11 +57,33 @@ public class Item {
 		return sauce;
 	}
 
+	public boolean hasOptionalSalad() {
+		if (this.getType() == ItemType.CLASSIC_BURGER_SALAD || this.getType() == ItemType.CLASSIC_BURGER_SALAD_TOMATO
+				|| this.getType() == ItemType.VEGI_BURGER_SALAD
+				|| this.getType() == ItemType.VEGI_BURGER_SALAD_TOMATO) {
+			return true;
+		}
+		return false;
+	}
+
+	public boolean hasOptionalTomato() {
+		if (this.getType() == ItemType.CLASSIC_BURGER_TOMATO || this.getType() == ItemType.CLASSIC_BURGER_SALAD_TOMATO
+				|| this.getType() == ItemType.VEGI_BURGER_TOMATO
+				|| this.getType() == ItemType.VEGI_BURGER_SALAD_TOMATO) {
+			return true;
+		}
+		return false;
+
+	}
+
 	public void setSauce(Sauce sauce) {
-		if (this.sauce == Sauce.KETCHUP && sauce == Sauce.MAYO || this.sauce == Sauce.MAYO && sauce == Sauce.KETCHUP) {
-			this.sauce = Sauce.KETCHUP_MAYO;
-		} else {
-			this.sauce = sauce;
+		if (this.getType().finalItem) {
+			if (this.sauce == Sauce.KETCHUP && sauce == Sauce.MAYO || this.sauce == Sauce.MAYO && sauce == Sauce.KETCHUP
+					|| this.sauce == Sauce.KETCHUP_MAYO) {
+				this.sauce = Sauce.KETCHUP_MAYO;
+			} else {
+				this.sauce = sauce;
+			}
 		}
 	}
 
@@ -137,4 +160,45 @@ public class Item {
 			return false;
 		return true;
 	}
+
+	private void getRandomSauce() {
+		Random rand = new Random();
+		int i = rand.nextInt(4);
+		if (i == 0)
+			this.setSauce(Sauce.KETCHUP);
+		else if (i == 1)
+			this.setSauce(Sauce.KETCHUP_MAYO);
+		else if (i == 2)
+			this.setSauce(Sauce.MAYO);
+	}
+
+	private static int getNbOfFinalItems() {
+		int sum = 0;
+		for (ItemType item : ItemType.values()) {
+			if (item.isFinalItem())
+				sum++;
+		}
+		return sum;
+	}
+
+	private static ItemType getRandomItemType() {
+		Random rand = new Random();
+		int i = rand.nextInt(getNbOfFinalItems());
+		int j = 0;
+		for (ItemType item : ItemType.values()) {
+			if (item.isFinalItem()) {
+				if (i == j)
+					return item;
+				j++;
+			}
+		}
+		throw new IllegalStateException("no recipe found");
+	}
+
+	public static Item getRandomItem() {
+		Item res = new Item(getRandomItemType());
+		res.getRandomSauce();
+		return res;
+	}
+
 }

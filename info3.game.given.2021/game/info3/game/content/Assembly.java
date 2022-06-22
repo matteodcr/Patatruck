@@ -80,19 +80,25 @@ public class Assembly {
 	 * @implSpec : Decompose a recipe into simple ingredients, in order to compose
 	 *           more complex recipe
 	 */
-	private void explode() {
-		List<ItemType> currentItems = this.getItemTypes();
+	private Sauce explode() {
+		ArrayList<Item> currentItems = new ArrayList<Item>(this.getItems());
 		List<ItemType> tmp = new ArrayList<ItemType>();
+		Sauce sauce = null;
 
-		for (ItemType iter : currentItems) {
-			if (iter.isFinalItem()) {
-				tmp = this.getRecipe(iter);
-				currentItems.remove(iter);
+		for (Item iter : currentItems) {
+			if (iter.getType().isFinalItem()) {
+				sauce = iter.getSauce();
+			}
+			if (iter.getType().isFinalItem()) {
+				tmp = this.getRecipe(iter.getType());
+				this.removeItem(iter);
+				;
 				for (ItemType iter2 : tmp) {
 					this.getItems().add(new Item(iter2, null)); // on utilise pas addItem
 				}
 			}
 		}
+		return sauce;
 	}
 
 	private boolean equal(List<ItemType> l) {
@@ -115,8 +121,8 @@ public class Assembly {
 
 	public void addItem(Item item) {
 		items.add(item);
-		this.explode(); // on divise les potentielles recettes finales présentes dans le sac du
-						// cuisinier
+		Sauce sauce = this.explode(); // on divise les potentielles recettes finales présentes dans le sac du
+		// cuisinier
 		if (this.getItems().size() == 1) {
 			return;
 		}
@@ -124,7 +130,7 @@ public class Assembly {
 		for (Entry<List<ItemType>, ItemType> entry : ASSEMBLE_RECIPES.entrySet()) {
 			if (this.equal(entry.getKey())) { // on va former une recette
 				this.emptyAssembly();
-				this.getItems().add(new Item(entry.getValue(), null));
+				this.getItems().add(new Item(entry.getValue(), sauce));
 				return;
 			} else if (includes(currentItems, entry.getKey())) {// on est en bonne voie
 				return;
@@ -132,6 +138,14 @@ public class Assembly {
 		}
 		this.emptyAssembly();
 		this.getItems().add(new Item(ItemType.FAILED_Item));// on est en mauvaise voie
+	}
+
+	public void addAssembly(Assembly a) {
+		java.util.Iterator<Item> i = a.getItems().iterator();
+		while (i.hasNext()) {
+			this.addItem(i.next());
+		}
+
 	}
 
 	public Entry<List<ItemType>, ItemType> getRandomRecipe() {

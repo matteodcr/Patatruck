@@ -58,6 +58,10 @@ public class TestRecipes {
 		assert burger.getItems().get(0).getSauce() == Sauce.KETCHUP;
 		burger.getItems().get(0).setSauce(Sauce.MAYO);
 		assert burger.getItems().get(0).getSauce() == Sauce.KETCHUP_MAYO;
+
+		// random recette
+		Item.getRandomItem();
+
 		System.out.println("Everything works");
 	}
 

@@ -16,19 +16,19 @@ public enum EntityType {
 
 	COOK("cuisinier", "Cook"),
 
-	TILE_CUT("planche à découp.", "Planche"),
+	TILE_CUT("planche à découp.", "Cut"),
 
-	TILE_DELIVERY("table de livraison", "Livraison"),
+	TILE_DELIVERY("table de livraison", "Kitchen_Delivery"),
 
-	TILE_FRYER("friteuse", "Friteuse"),
+	TILE_FRYER("friteuse", "Fry"),
 
-	TILE_PAN("plaques de cuiss.", "Feu_cuisson"),
+	TILE_PAN("plaques de cuiss.", "Firecook"),
 
-	TILE_SAUCE("table à sauce", "Table_a_sauce"),
+	TILE_SAUCE("table à sauce", "SauceTable"),
 
 	TILE_STOCK("garde-manger", "StockTable"),
 
-	TILE_TRASH("poubelle", "Poubelle");
+	TILE_TRASH("poubelle", "Trash");
 
 	public final String displayName;
 	public final String defaultAutomaton;

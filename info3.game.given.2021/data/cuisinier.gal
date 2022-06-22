@@ -6,3 +6,13 @@ Cook(Init){
   | Key(d) &! Cell(E, O) ? Wizz(E):(Init)
   | Key(SPACE) ? Pop(F):(Init)  
 }
+
+Cook_Inverse(Init){
+  * (Init):
+  | Key(d) &! Cell(N, O) ? Wizz(N):(Init)
+  | Key(s) &! Cell(W, O) ? Wizz(W):(Init)
+  | Key(q) &! Cell(S, O) ? Wizz(S):(Init)
+  | Key(z) &! Cell(E, O) ? Wizz(E):(Init)
+  | Key(SPACE) ? Pop(F):(Init)  
+}
+

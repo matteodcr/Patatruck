@@ -7,9 +7,11 @@ import info3.game.position.AutDirection;
 import info3.game.scene.Scene;
 
 public class TrashTile extends KitchenTile {
+	Sprite empty = Sprite.TRASH_TILE_EMPTY, full = Sprite.TRASH_TILE_FULL;
 
 	public TrashTile(Scene parent, int gridX, int gridY, AutDirection d) {
 		super(parent, gridX, gridY, null, d);
+		defaultSprite = empty;
 	}
 
 	@Override
@@ -19,18 +21,37 @@ public class TrashTile extends KitchenTile {
 
 	@Override
 	public boolean pop(AutDirection direction) {
+		Entity eInteracting = selectEntityToInteractWith();
+		if (eInteracting instanceof CookEntity && ((CookEntity) eInteracting) != null) {
+
+			if (((CookEntity) eInteracting).m_assembly.getItems().size() != 0) {
+				((CookEntity) eInteracting).m_assembly.getItems().clear();
+				this.defaultSprite = full;
+				return true;
+			}
+		}
 		return false;
+
 	}
 
 	@Override
 	public boolean wizz(AutDirection direction) {
+
+		Entity eInteracting = selectEntityToInteractWith();
+		if (eInteracting instanceof CookEntity && ((CookEntity) eInteracting) != null) {
+
+			if (((CookEntity) eInteracting).m_assembly.getItems().size() != 0) {
+				((CookEntity) eInteracting).m_assembly.getItems().clear();
+				return true;
+			}
+		}
 		return false;
+
 	}
 
 	@Override
 	public void render(Graphics g) {
-		// BufferedImage img = m_images[m_imageIndex];
-		g.drawSprite(Sprite.TRASH_TILE, 0, 0);
+		g.drawSprite(defaultSprite, 0, 0);
 	}
 
 	@Override

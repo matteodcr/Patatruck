@@ -1,7 +1,5 @@
 package info3.game.content;
 
-import java.util.Random;
-
 import info3.game.graphics.Sprite;
 
 public enum ItemType {
@@ -25,7 +23,7 @@ public enum ItemType {
 	VEGI_BURGER_SALAD_TOMATO(Sprite.VEGIBURGER, "burger classique", true),
 	SHEPHERDS_PIE(Sprite.HACHI, "hachis parmentier", true), BREAD(Sprite.BREAD, "pain", false),
 	KETCHUP(Sprite.KETCHUP, "ketchup", false), MAYO(Sprite.MAYONNAISE, "ketchup", false),
-	KETCHUP_MAYO(Sprite.KETCHUP, "ketchup", false), FAILED_Item(Sprite.FAILEDITEM, "recette ratee", false);
+	KETCHUP_MAYO(Sprite.KETCHUP_MAYO, "ketchup", false), FAILED_Item(Sprite.FAILEDITEM, "recette ratee", false);
 
 	final boolean finalItem;
 
@@ -48,28 +46,5 @@ public enum ItemType {
 		this.sprite = sprite;
 		this.displayName = displayName;
 		this.finalItem = finalItem;
-	}
-
-	public static ItemType getRandomItem() {
-		Random rand = new Random();
-		int i = rand.nextInt(getNbOfFinalItems());
-		int j = 0;
-		for (ItemType item : ItemType.values()) {
-			if (item.isFinalItem()) {
-				if (i == j)
-					return item;
-				j++;
-			}
-		}
-		throw new IllegalStateException("no recipe found");
-	}
-
-	private static int getNbOfFinalItems() {
-		int sum = 0;
-		for (ItemType item : ItemType.values()) {
-			if (item.isFinalItem())
-				sum++;
-		}
-		return sum;
 	}
 }

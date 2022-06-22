@@ -1,20 +1,24 @@
 package info3.game.entity;
 
-import info3.game.content.Item;
 import info3.game.content.Sauce;
 import info3.game.graphics.Graphics;
 import info3.game.graphics.Sprite;
 import info3.game.position.AutCategory;
 import info3.game.position.AutDirection;
-import info3.game.scene.KitchenScene;
 import info3.game.scene.Scene;
 
 public class SauceTableTile extends KitchenTile {
 	Sauce sauce;
+	static final Sprite mayo = Sprite.MAYONNAISE, ketchup = Sprite.KETCHUP;
 
 	public SauceTableTile(Scene parent, int gridX, int gridY, AutDirection d, Sauce sauce) {
 		super(parent, gridX, gridY, null, d);
 		this.sauce = sauce;
+		if (sauce == Sauce.KETCHUP) {
+			defaultSprite = ketchup;
+		} else {
+			defaultSprite = mayo;
+		}
 	}
 
 	@Override
@@ -29,20 +33,23 @@ public class SauceTableTile extends KitchenTile {
 
 	@Override
 	public boolean wizz(AutDirection direction) {// mettre la sauce
-		Item item_player = ((KitchenScene) this.parentScene).getCook().item;
-		if (item_player == null) {
-			return false;
-		} else {
-			item_player.setSauce(sauce);
-			return true;
+		Entity eInteracting = selectEntityToInteractWith();
+
+		if (eInteracting != null) {
+			if (((CookEntity) eInteracting).m_assembly.getItems().size() == 0) {
+				return false;
+			} else {
+				((CookEntity) eInteracting).m_assembly.getItems().get(0).setSauce(sauce);
+				return true;
+			}
 		}
+		return false;
 	}
 
 	@Override
 	public void render(Graphics g) {
-		// BufferedImage img = m_images[m_imageIndex];
 		g.drawSprite(Sprite.SAUCE_TABLE_TILE, 0, 0);
-		g.drawSprite(Sprite.KETCHUP, 0, 0);
+		g.drawSprite(defaultSprite, 0, 0);
 	}
 
 	@Override

@@ -249,4 +249,8 @@ public abstract class Entity implements AutomatonListener {
 		}
 		return null; // no entity fills the criteria
 	}
+
+	public void setDirection(AutDirection absDirection) {
+		this.m_direction = absDirection;
+	}
 }

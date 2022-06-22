@@ -11,7 +11,8 @@ import info3.game.scene.Scene;
 public class StockTable extends KitchenTile {
 	Item item;
 	int stock;
-	Sprite stockItem, empty = Sprite.STOCK_TABLE, full = Sprite.STOCK_TABLE;
+	Sprite stockItem, background = Sprite.STOCK_TABLE;
+	boolean empty;
 
 	public StockTable(Scene parent, int gridX, int gridY, AutDirection d, Item item, Sprite stockItem) {
 		super(parent, gridX, gridY, null, d);
@@ -19,6 +20,8 @@ public class StockTable extends KitchenTile {
 		this.stock = 5;
 		this.item = item;
 		this.stockItem = stockItem;
+		this.defaultSprite = background;
+		this.empty = false;
 	}
 
 	@Override
@@ -29,20 +32,40 @@ public class StockTable extends KitchenTile {
 	@Override
 	public boolean pop(AutDirection direction) { // prendre un aliment
 		Entity eInteracting = selectEntityToInteractWith();
-		if (eInteracting != null) {
-			Item item_entity = eInteracting.item;
-			if (item_entity != null) {
+		if (eInteracting instanceof CookEntity && ((CookEntity) eInteracting) != null) {
+			if (((CookEntity) eInteracting).m_assembly.getItems().size() != 0) {
 				return false;
 			} else {
 				if (stock == 0) {
 					return false;
 				} else {
-					eInteracting.item = this.item;
+					((CookEntity) eInteracting).m_assembly.getItems().add(item);
 					stock--;
 					if (gotStuff()) {
-						this.defaultSprite = full;
+						empty = false;
+						;
 					} else {
-						this.defaultSprite = empty;
+						empty = true;
+					}
+					return true;
+				}
+			}
+
+		}
+		if (eInteracting instanceof CockroachEntity && ((CockroachEntity) eInteracting) != null) {
+			if (((CockroachEntity) eInteracting).item != null) {
+				return false;
+			} else {
+				if (stock == 0) {
+					return false;
+				} else {
+					((CockroachEntity) eInteracting).item = item;
+					stock--;
+					if (gotStuff()) {
+						empty = false;
+						;
+					} else {
+						empty = true;
 					}
 					return true;
 				}
@@ -66,8 +89,9 @@ public class StockTable extends KitchenTile {
 
 	@Override
 	public void render(Graphics g) {
-		g.drawSprite(Sprite.STOCK_TABLE, 0, 0);
-		g.drawSprite(this.stockItem, 0, 0);
+		g.drawSprite(defaultSprite, 0, 0);
+		if (!empty)
+			g.drawSprite(this.stockItem, 0, 0);
 		String tmp = Integer.toString(stock);
 		g.drawText(tmp, Align.LEFT, 0, 0);
 	}

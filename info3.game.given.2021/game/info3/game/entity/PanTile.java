@@ -11,9 +11,11 @@ import info3.game.scene.Scene;
 public class PanTile extends KitchenTile {
 	Item item;
 	int compteur;
+	static final Sprite empty = Sprite.OFF_PAN_TILE, full = Sprite.ON_PAN_TILE;
 
 	public PanTile(Scene parent, int gridX, int gridY, AutDirection d) {
 		super(parent, gridX, gridY, null, d);
+		defaultSprite = empty;
 	}
 
 	@Override
@@ -23,23 +25,23 @@ public class PanTile extends KitchenTile {
 
 	@Override
 	public boolean pop(AutDirection direction) {// prend un ingrédiant à cuire et le cuit
-		Item item_player = ((KitchenScene) this.parentScene).getCook().item;
-		if (item_player == null || this.item != null) {
+		if (player.m_assembly.getItems().size() != 1 || this.item != null) {
 			return false;
 		} else {
-			if (item_player.cook() == null) { // est-ce qu'on peut cuire ?
+			if (player.m_assembly.getItems().get(0).cook() == null) { // est-ce qu'on peut cuire ?
 				return false;
 			}
-			this.item = item_player.cook();
-			item_player = null;
-			this.compteur = 20000;
+			this.item = player.m_assembly.getItems().get(0);
+			player.m_assembly.getItems().clear();
+			this.compteur = 100;
+			defaultSprite = full;
 			return true;
 		}
 	}
 
 	@Override
 	public boolean wizz(AutDirection direction) {// rend l'ingrédient au joueur
-		((KitchenScene) this.parentScene).getCook().item = this.item;
+		player.m_assembly.addItem(item);
 		this.item = null;
 		return true;
 	}
@@ -47,17 +49,22 @@ public class PanTile extends KitchenTile {
 	@Override
 	public boolean gwait() {
 		if (this.compteur > 0) {
-			this.compteur++;
+			this.compteur--;
 			return false;
 		} else {
+			defaultSprite = empty;
+			this.item = item.cook();
+			this.compteur = 100;
 			return true;
 		}
 	}
 
 	@Override
 	public void render(Graphics g) {
-		// BufferedImage img = m_images[m_imageIndex];
-		g.drawSprite(Sprite.OFF_PAN_TILE, 0, 0);
+		g.drawSprite(defaultSprite, 0, 0);
+		if (item != null) {
+			g.drawSprite(item.getType().getSprite(), 0, 0);
+		}
 	}
 
 	@Override
@@ -80,8 +87,15 @@ public class PanTile extends KitchenTile {
 
 	@Override
 	public boolean explode() {
-		// TODO Auto-generated method stub
-		return false;
+		if (this.compteur > 0) {
+			this.compteur--;
+			return false;
+		} else {
+			((KitchenScene) parentScene).smoke = true;
+			item = null;
+			return true;
+
+		}
 	}
 
 	@Override

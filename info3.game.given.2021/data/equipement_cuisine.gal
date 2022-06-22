@@ -1,4 +1,4 @@
-Feu_cuisson(Init){
+Firecook(Init){
     *(Init)
     |Key(SPACE) & Cell(F,@) ? Pop:(Cook)         
     
@@ -6,18 +6,26 @@ Feu_cuisson(Init){
     |True ?     Wait:(Cooked)  
     		
     *(Cooked)
-    |Key(SPACE) & Cell(F,@) ? Wizz:(Init)  
+    |Key(SPACE) & Cell(F,@) ? Wizz:(Presswait)  
+    |True ? Explode:(Init)
+    
+    *(Presswait)
+    |(!Key(SPACE)) & Cell(F,@) ? :(Init)  
 }
 
-Friteuse(Init){
+Fry(Init){
     *(Init)
     |Key(SPACE) & Cell(F,@) ? Pop:(Cook)         
     
     *(Cook)
     |True ?     Wait:(Cooked)  
-    		
+    
     *(Cooked)
-    |Key(SPACE) & Cell(F,@) ? Wizz:(Init)     
+    |Key(SPACE) & Cell(F,@) ? Wizz:(Presswait)
+    |True ? Explode:(Init)
+    
+    *(Presswait)
+    |(!Key(SPACE)) & Cell(F,@) ? :(Init) 
 }
 
 StockTable(Still){
@@ -31,55 +39,65 @@ StockTable(Still){
 | True() ? :(Empty)
 }
 
-Table(Vide){
-    *(Vide)
-    |Cell(H,P) ? Pop:(Pleine)       
-    |Cell(H,V) ?    :(Vide)         
+Table(Init){
+    *(Init)
+    |Cell(F,@) & Key(SPACE) ? Pop:(Presswait1)       
+    |True ?    :(Init)   
     
-    *(Pleine)
-    |Cell(H,P) ?    :(Pleine)        
-    |Cell(H,V) ? Wizz:(Vide)        
+     *(Presswait1)
+    |!Key(SPACE) ? :(Pleine)       
+    |True ?    :(Presswait1)          
+    
+    *(Pleine)       
+    |Cell(F,@) & Key(SPACE)  ? Wizz:(Presswait2)   
+    |True ?    :(Pleine)      
+    
+    *(Presswait2)
+    |!Key(SPACE) ? :(Pleine)       
+    |True ?    :(Presswait2)  
 }
 
-Table_a_sauce(Still){
+SauceTable(Still){
     *(Still) 
     |Key(SPACE) & Cell(F,@)? Wizz():(Still)
     |True ? Pop() :(Still)
 }
 
-Planche(Vide){
-    *(Vide)
-    |Cell(H,P) ? Pop:(StartCoupe)                           
-    |Cell(H,V) ?    :(Vide)                                   
+Cut(Init){
+    *(Init)
+    |Key(SPACE) & Cell(F,@) ? Pop:(Cut)         
     
-    *(StartCoupe)
-    |Cell(H,P) & Key(SPACE) & Cell(F,@) ? Hit: (Couper1)       
-    |True ?    :(StartCoupe)                                   
+    *(Cut)
+    |True ?     Wait:(Cooked)  
+    		
+    *(Cooked)
+    |Key(SPACE) & Cell(F,@) ? Wizz:(Presswait)
     
-    *(Couper1)
-    |Cell(H,P) & Key(SPACE) & Cell(F,@) ? Hit: (Couper2)       
-    |True ?    :(Couper1)                                      
-    
-    *(Couper2)
-    |Cell(H,P) & Key(SPACE) & Cell(F,@) ? Hit: (Couper)        
-    |True ?    :(Couper2)                                     
-    
-    *(Couper)
-    |Cell(H,V) ? Wizz:(Vide)                                   
-    |True ?    :(Couper)                                    
+    *(Presswait)
+    |(!Key(SPACE)) & Cell(F,@) ? :(Init)                                   
 }
 
-Livraison(Vide){
-    *(Vide)
-    |Cell(H,P) ? Pop:(Plein) 
-    |Cell(H,V) ?    :(Vide) 
+Kitchen_Delivery(Init){
+     *(Init)
+    |Cell(F,@) & Key(SPACE) ? Pop:(Presswait1)       
+    |True ?    :(Init)   
     
-    *(Plein)
-    |Cell(H,P) ? Wizz:(Vide)
-    |True ?          :(Plein)
+     *(Presswait1)
+    |!Key(SPACE) ? :(Pleine)       
+    |True ?    :(Presswait1)          
+    
+    *(Pleine)       
+    |Cell(F,@) & Key(SPACE)  ? Wizz:(Presswait2)   
+    |True ?    :(Pleine)      
+    
+    *(Presswait2)
+    |!Key(SPACE) ? :(Pleine)       
+    |True ?    :(Presswait2)  
 }
 
-Poubelle(Vide){
+Trash(Vide){
 	*(Vide)
-	|True ? :(Vide)
+	|Cell(F,@) & Key(SPACE) ? Pop:(Plein)
+	*(Plein)
+	|Cell(F,@) & Key(SPACE) ? Wizz:(Plein)
 }

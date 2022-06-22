@@ -31,9 +31,13 @@ import static info3.game.graphics.Sprite.Spritesheet.GALETTE_;
 import static info3.game.graphics.Sprite.Spritesheet.HACHI_;
 import static info3.game.graphics.Sprite.Spritesheet.HASHEDMEAT_;
 import static info3.game.graphics.Sprite.Spritesheet.KETCHUPTABLE;
+import static info3.game.graphics.Sprite.Spritesheet.KETCHUP_INDIC;
+import static info3.game.graphics.Sprite.Spritesheet.KETCHUP_MAYO_;
+import static info3.game.graphics.Sprite.Spritesheet.KETCHUP_MAYO_INDIC;
 import static info3.game.graphics.Sprite.Spritesheet.KITCHEN;
 import static info3.game.graphics.Sprite.Spritesheet.MASHEDPOTATO_;
 import static info3.game.graphics.Sprite.Spritesheet.MAYOTABLE;
+import static info3.game.graphics.Sprite.Spritesheet.MAYO_INDIC;
 import static info3.game.graphics.Sprite.Spritesheet.MEAT_;
 import static info3.game.graphics.Sprite.Spritesheet.MENU;
 import static info3.game.graphics.Sprite.Spritesheet.OFFFRIETILE;
@@ -50,7 +54,8 @@ import static info3.game.graphics.Sprite.Spritesheet.SAUCETABLETILE;
 import static info3.game.graphics.Sprite.Spritesheet.STOCKTABLE;
 import static info3.game.graphics.Sprite.Spritesheet.TOMATOSLICE_;
 import static info3.game.graphics.Sprite.Spritesheet.TOMATO_;
-import static info3.game.graphics.Sprite.Spritesheet.TRASHTILE;
+import static info3.game.graphics.Sprite.Spritesheet.TRASHTILE_EMPTY;
+import static info3.game.graphics.Sprite.Spritesheet.TRASHTILE_FULL;
 import static info3.game.graphics.Sprite.Spritesheet.VEGIBURGER_;
 
 public enum Sprite {
@@ -63,7 +68,8 @@ public enum Sprite {
 	BUILDING_SQUARE_1_NORMAL(CITY, 0, 0, 1, 1), BUILDING_SQUARE_1_ROUNDED(CITY, 0, 1, 1, 1),
 	BUILDING_SQUARE_1_SQUIRCLE(CITY, 0, 2, 1, 1), SAUCE_TABLE_TILE(SAUCETABLETILE, 0, 0, 1, 1),
 	OFF_FRIE_TILE(OFFFRIETILE, 0, 0, 1, 1), ON_FRIE_TILE(ONFRIETILE, 0, 0, 1, 1), CUT_TILE(CUTTILE, 0, 0, 1, 1),
-	OFF_PAN_TILE(OFFPANTILE, 0, 0, 1, 1), ON_PAN_TILE(ONPANTILE, 0, 0, 1, 1), TRASH_TILE(TRASHTILE, 0, 0, 1, 1),
+	OFF_PAN_TILE(OFFPANTILE, 0, 0, 1, 1), ON_PAN_TILE(ONPANTILE, 0, 0, 1, 1),
+	TRASH_TILE_EMPTY(TRASHTILE_EMPTY, 0, 0, 1, 1), TRASH_TILE_FULL(TRASHTILE_FULL, 0, 0, 1, 1),
 	STOCK_TABLE(STOCKTABLE, 0, 0, 1, 1), BASICTABLE_N(BASICTABLEN, 0, 0, 1, 1), BASICTABLE_E(BASICTABLEE, 0, 0, 1, 1),
 	BASICTABLE_W(BASICTABLEW, 0, 0, 1, 1), BASICTABLE_S(BASICTABLES, 0, 0, 1, 1), DELIVERYTILE(DELIVERY, 0, 0, 1, 1),
 	TOMATO(TOMATO_, 0, 0, 1, 1), POTATO(POTATO_, 0, 0, 1, 1), SALADE(SALADE_, 0, 0, 1, 1), BREAD(BREAD_, 0, 0, 1, 1),
@@ -78,7 +84,10 @@ public enum Sprite {
 	SALADELEAF(SALADELEAF_, 0, 0, 1, 1), TOMATOSLICE(TOMATOSLICE_, 0, 0, 1, 1), VEGIBURGER(VEGIBURGER_, 0, 0, 1, 1),
 	KETCHUP(KETCHUPTABLE, 0, 0, 1, 1), MAYONNAISE(MAYOTABLE, 0, 0, 1, 1), FAILEDITEM(FAILEDITEM_, 0, 0, 1, 1),
 	KITCHEN_TRUCK(KITCHEN, 0, 0, 15, 6), KITCHEN_TRUCK_FLOOR(KITCHEN, 1, 6, 10, 4), ORDER_CARD(MENU, 0, 0, 1, 1),
-	CLOCK(CLOCK_, 0, 0, 1, 1);
+	CLOCK(CLOCK_, 0, 0, 1, 1), INDIC_MAYO_(MAYO_INDIC, 0, 0, 1, 1), INDIC_KETCHUP_(KETCHUP_INDIC, 0, 0, 1, 1),
+	KETCHUP_MAYO(KETCHUP_MAYO_, 0, 0, 1, 1),
+	KITCHEN_TRUCK_SMOKE(KITCHEN, 0, 11, 12, 6),
+	KETCHUP_MAYO_INDIC_(KETCHUP_MAYO_INDIC, 0, 0, 1, 1);
 
 	public final Spritesheet spritesheet;
 	public final int u, v, w, h;
@@ -97,14 +106,15 @@ public enum Sprite {
 		COOKN("cookN.png", 13), CITY("city.png", 20), SAUCETABLETILE("BasicTableTile.png", 13),
 		OFFPANTILE("OffPanTable.png", 13), ONPANTILE("OnPanTable.png", 13), OFFFRIETILE("OffFrieTile.png", 13),
 		ONFRIETILE("OnFrieTile.png", 13), CUTTILE("CutTile.png", 13), KITCHEN_TRUCK("kitchen.png", 256),
-		TRASHTILE("TrashTile.png", 13), STOCKTABLE("StockTable.png", 13), BASICTABLEN("BasicTableTileN.png", 13),
-		BASICTABLEE("BasicTableTileE.png", 13), BASICTABLEW("BasicTableTileW.png", 13),
-		BASICTABLES("BasicTableTileS.png", 13), DELIVERY("DeliveryTile.png", 13),
-		TOMATO_("Sprite_cuisine_ingredient/tomate.png", 13), POTATO_("Sprite_cuisine_ingredient/patate.png", 13),
-		SALADE_("Sprite_cuisine_ingredient/salade.png", 13), BREAD_("Sprite_cuisine_ingredient/pain.png", 13),
-		CHEESE_("Sprite_cuisine_ingredient/fromage.png", 13), MEAT_("Sprite_cuisine_ingredient/viande.png", 13),
-		COCKROACHN("cockroachN.png", 13), COCKROACHE("cockroachE.png", 13), COCKROACHW("cockroachW.png", 13),
-		COCKROACHS("cockroachS.png", 13), COOKE("cookE.png", 13), COOKW("cookW.png", 13), COOKS("cookS.png", 13),
+		TRASHTILE_EMPTY("EmptyTrash.png", 13), TRASHTILE_FULL("FullTrash.png", 13), STOCKTABLE("StockTable.png", 13),
+		BASICTABLEN("BasicTableTileN.png", 13), BASICTABLEE("BasicTableTileE.png", 13),
+		BASICTABLEW("BasicTableTileW.png", 13), BASICTABLES("BasicTableTileS.png", 13),
+		DELIVERY("DeliveryTile.png", 13), TOMATO_("Sprite_cuisine_ingredient/tomate.png", 13),
+		POTATO_("Sprite_cuisine_ingredient/patate.png", 13), SALADE_("Sprite_cuisine_ingredient/salade.png", 13),
+		BREAD_("Sprite_cuisine_ingredient/pain.png", 13), CHEESE_("Sprite_cuisine_ingredient/fromage.png", 13),
+		MEAT_("Sprite_cuisine_ingredient/viande.png", 13), COCKROACHN("cockroachN.png", 13),
+		COCKROACHE("cockroachE.png", 13), COCKROACHW("cockroachW.png", 13), COCKROACHS("cockroachS.png", 13),
+		COOKE("cookE.png", 13), COOKW("cookW.png", 13), COOKS("cookS.png", 13),
 		BREADSLICE_("Sprite_cuisine_ingredient/tranche de pain.png", 13),
 		COOKEDFRIES_("Sprite_cuisine_ingredient/frites cuite.png", 13),
 		COOKEDHASHMEAT_("Sprite_cuisine_ingredient/viande hachee cuite.png", 13),
@@ -123,9 +133,13 @@ public enum Sprite {
 		MAYOTABLE("mayonnaise.png", 13), VEGIBURGER_("Sprite_cuisine_ingredient/burger vegetarien.png", 13),
 		FAILEDITEM_("Sprite_cuisine_ingredient/garbageplate.png", 13),
 		AUTOMATON_SELECTION("automaton_selection.png", 16), CLOCK_("clock.png", 19),
+		KETCHUP_MAYO_("ketchup_mayo.png", 13),
 
 		BASICTABLE("BasicTableTile.png", 13), COOK("cook.png", 13), KITCHEN("kitchen.png", 13),
-		DELIVERYTILE("DeliveryTile.png", 13), COCKROACH("cockroach.png", 13), MENU("menu.png", 69);
+		DELIVERYTILE("DeliveryTile.png", 13), COCKROACH("cockroach.png", 13), MENU("menu.png", 69),
+
+		MAYO_INDIC("indic_mayo.png", 13), KETCHUP_INDIC("indic_ketchup.png", 13),
+		KETCHUP_MAYO_INDIC("indic_mayo_ketchup.png", 13);
 
 		public final String filename;
 		public final int tileSize;

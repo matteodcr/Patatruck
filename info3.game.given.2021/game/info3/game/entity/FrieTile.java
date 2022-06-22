@@ -11,9 +11,11 @@ import info3.game.scene.Scene;
 public class FrieTile extends KitchenTile {
 	Item item;
 	int compteur;
+	static final Sprite empty = Sprite.OFF_FRIE_TILE, full = Sprite.ON_FRIE_TILE;
 
 	public FrieTile(Scene parent, int gridX, int gridY, AutDirection d) {
 		super(parent, gridX, gridY, null, d);
+		defaultSprite = empty;
 	}
 
 	@Override
@@ -23,23 +25,25 @@ public class FrieTile extends KitchenTile {
 
 	@Override
 	public boolean pop(AutDirection direction) {// prend un ingrédiant à frire
-		Item item_player = ((KitchenScene) this.parentScene).getCook().item;
-		if (item_player == null || this.item != null) {
+		if (player.m_assembly.getItems().size() != 1 || this.item != null) {
 			return false;
 		} else {
-			if (item_player.fry() == null) { // est-ce qu'on peut frire ?
+			if (player.m_assembly.getItems().get(0).fry() == null) { // est-ce qu'on peut frire ?
 				return false;
 			}
-			this.item = item_player.fry();
-			item_player = null;
-			this.compteur = 20000;
+			this.item = player.m_assembly.getItems().get(0);
+			;
+			((KitchenScene) this.parentScene).getCook().item = null;
+			player.m_assembly.getItems().clear();
+			this.compteur = 100;
+			defaultSprite = full;
 			return true;
 		}
 	}
 
 	@Override
 	public boolean wizz(AutDirection direction) {// rend l'ingrédient cuit au joueur
-		((KitchenScene) this.parentScene).getCook().item = this.item;
+		player.m_assembly.addItem(item);
 		this.item = null;
 		return true;
 
@@ -48,16 +52,25 @@ public class FrieTile extends KitchenTile {
 	@Override
 	public boolean gwait() {
 		if (this.compteur > 0) {
-			this.compteur++;
+			this.compteur--;
 			return false;
 		} else {
+			this.item = item.fry();
+			defaultSprite = empty;
+			this.compteur = 100;
 			return true;
+
 		}
 	}
 
 	@Override
 	public void render(Graphics g) {
-		g.drawSprite(Sprite.OFF_FRIE_TILE, 0, 0);
+		g.drawSprite(defaultSprite, 0, 0);
+
+		if (defaultSprite == empty && item != null) {
+			g.drawSprite(item.getType().getSprite(), 0, 0);
+
+		}
 	}
 
 	@Override
@@ -80,8 +93,15 @@ public class FrieTile extends KitchenTile {
 
 	@Override
 	public boolean explode() {
-		// TODO Auto-generated method stub
-		return false;
+		if (this.compteur > 0) {
+			this.compteur--;
+			return false;
+		} else {
+			((KitchenScene) parentScene).smoke = true;
+			item = null;
+			return true;
+
+		}
 	}
 
 	@Override

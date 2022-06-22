@@ -1,20 +1,22 @@
 package info3.game.entity;
 
+import info3.game.content.Assembly;
+import info3.game.content.Item;
 import info3.game.graphics.Graphics;
 import info3.game.graphics.Sprite;
 import info3.game.position.AutCategory;
 import info3.game.position.AutDirection;
 import info3.game.position.Direction;
+import info3.game.scene.KitchenScene;
 import info3.game.scene.Scene;
 
-public class DeliveryTile extends KitchenTile {
+public class KitchenDeliveryTile extends KitchenTile {
 
-	// IList<Item> assiette;
-	// Recipe recette;
+	Assembly assembly;
 
-	public DeliveryTile(Scene parent, int gridX, int gridY, AutDirection d) {
+	public KitchenDeliveryTile(Scene parent, int gridX, int gridY, AutDirection d) {
 		super(parent, gridX, gridY, null, d);
-		// TODO Auto-generated constructor stub
+		assembly = new Assembly();
 	}
 
 	@Override
@@ -34,25 +36,73 @@ public class DeliveryTile extends KitchenTile {
 
 	@Override
 	public void render(Graphics g) {
-		// BufferedImage img = m_images[m_imageIndex];
 		g.drawSprite(Sprite.DELIVERYTILE, 0, 0);
+		if (!assembly.getItems().isEmpty()) {
+			for (Item item : assembly.getItems()) {
+				g.drawSprite(item.getType().getSprite(), 0, 0);
+
+			}
+		}
 	}
 
-	boolean recetteReady() {
-		// TODO Check si il y a les items nécessaires pour la recette
-		// Cette méthode sera appelée à chaque fois qu'un item est déposé
-		return true;
+	boolean recetteReady(Item currentOrder1) {
+		return (!assembly.getItems().isEmpty() && currentOrder1 == assembly.getItems().get(0));
 	}
 
 	@Override
 	public boolean pop(AutDirection direction) {
-		// TODO Auto-generated method stub
+		Entity eInteracting = selectEntityToInteractWith();
+		if (eInteracting instanceof CookEntity && ((CookEntity) eInteracting) != null) {
+			if (((CookEntity) eInteracting).m_assembly.getItems().size() == 0) {
+				return false;
+			} else {
+				assembly.addAssembly(player.m_assembly);
+				player.m_assembly.getItems().clear();
+				System.out.println(assembly.getItems());
+				System.out.println(assembly.getItems().get(0).getSauce());
+
+				return true;
+
+			}
+		}
 		return false;
 	}
 
 	@Override
 	public boolean wizz(AutDirection direction) {
-		// TODO Auto-generated method stub
+		System.out.println("Wizz" + "");
+
+		Entity eInteracting = selectEntityToInteractWith();
+		if (eInteracting instanceof CookEntity && ((CookEntity) eInteracting) != null) {
+
+			if (recetteReady(((KitchenScene) parentScene).currentOrder0)) {
+				((KitchenScene) parentScene).currentOrder0 = Item.getRandomItem();
+				assembly.getItems().clear();
+				return true;
+			}
+
+			if (recetteReady(((KitchenScene) parentScene).currentOrder1)) {
+				((KitchenScene) parentScene).currentOrder1 = Item.getRandomItem();
+				assembly.getItems().clear();
+				return true;
+			}
+
+			if (player.m_assembly.getItems().size() == 0 && assembly.getItems().size() != 0) {
+				if (assembly.getItems().get(0).getType().isFinalItem()) {
+					player.m_assembly.addAssembly(assembly);
+					assembly.getItems().clear();
+				} else {
+					player.m_assembly.addItem(assembly.getItems().remove(assembly.getItems().size() - 1));
+				}
+			} else if (player.m_assembly.getItems().size() == 1) {
+				assembly.addAssembly(player.m_assembly);
+				player.m_assembly.getItems().clear();
+			}
+
+			System.out.println(assembly.getItems());
+			return true;
+
+		}
 		return false;
 	}
 

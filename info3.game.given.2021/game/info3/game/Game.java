@@ -29,7 +29,9 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.RandomAccessFile;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -46,9 +48,9 @@ import info3.game.automata.GAutomaton;
 import info3.game.entity.EntityType;
 import info3.game.graphics.AwtGraphics;
 import info3.game.graphics.GameCanvas;
-import info3.game.screen.AutomatonSelectionScreen;
 import info3.game.screen.EndScreen;
 import info3.game.screen.Screen;
+import info3.game.screen.StartScreen;
 import info3.game.sound.RandomFileInputStream;
 
 public class Game {
@@ -83,7 +85,7 @@ public class Game {
 	Sound m_music;
 
 	private final Map<String, GAutomaton> automataList; // can be moved
-	public Map<EntityType, GAutomaton> boundAutomata = null;
+	public Map<EntityType, GAutomaton> boundAutomata = new HashMap<>();
 
 	public GAutomaton getBoundAutomaton(EntityType type) {
 		if (boundAutomata == null)
@@ -112,7 +114,18 @@ public class Game {
 
 		System.out.println("  - setting up the frame...");
 		setupFrame();
-		screen = new AutomatonSelectionScreen(this);
+		screen = new StartScreen(this);
+
+		final List<GAutomaton> allAutomata = new ArrayList<>(automataList.values());
+		final Map<EntityType, Integer> selection = new TreeMap<>();
+		for (EntityType type : EntityType.values()) {
+			GAutomaton aut = automataList.get(type.defaultAutomaton);
+			selection.put(type, allAutomata.indexOf(aut));
+		}
+		
+		for (Map.Entry<EntityType, Integer> entry : selection.entrySet()) {
+			boundAutomata.put(entry.getKey(), allAutomata.get(entry.getValue()));
+		}
 
 	}
 

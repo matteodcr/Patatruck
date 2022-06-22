@@ -33,6 +33,7 @@ public class AutomatonSelectionScreen extends Screen {
 
 	int scrollTop = 0;
 	boolean enterLastPressed = false;
+	boolean escapeLastPressed = false;
 	boolean keyPressed = false;
 
 	private void cycleSelection(int delta) {
@@ -52,8 +53,12 @@ public class AutomatonSelectionScreen extends Screen {
 	public void tick(long elapsed) {
 		if (game.m_listener.isUp("ENTER")) {
 			enterLastPressed = true;
-		} else if (enterLastPressed) {
+		}else if(game.m_listener.isUp("ESCAPE")) {
+			escapeLastPressed = true;
+		}else if (enterLastPressed) {
 			saveAndClose();
+		}else if(escapeLastPressed){
+			changeScreen(new StartScreen(game));
 		}
 
 		boolean upPressed = game.m_listener.isUp("UP");
@@ -61,6 +66,8 @@ public class AutomatonSelectionScreen extends Screen {
 		boolean leftPressed = game.m_listener.isUp("LEFT");
 		boolean rightPressed = game.m_listener.isUp("RIGHT");
 		boolean spacePressed = game.m_listener.isUp("SPACE");
+		boolean escapePressed = game.m_listener.isUp("ESCAPE");
+		
 
 		if (upPressed && !keyPressed) {
 			if (scrollTop != 0)

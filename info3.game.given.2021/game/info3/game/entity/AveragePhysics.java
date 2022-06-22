@@ -161,23 +161,24 @@ public class AveragePhysics implements Physics {
 	}
 
 	@Override
-	public void bounce(AutDirection absoluteDir) {
+	public PositionF bounce(AutDirection absoluteDir) {
+		accX = 0;
+		accY = 0;
+		velX = 0;
+		velY = 0;
 		switch (absoluteDir) {
 		case N:
-			accY -= force / 2;
-			break;
+			return new PositionF(0, (float) (-maxVel));
 		case E:
-			accX += force / 2;
-			break;
+			return new PositionF((float) (maxVel), 0);
 		case S:
-			accY += force / 2;
-			break;
+			return new PositionF(0, (float) (maxVel));
 		case W:
-			accX -= force / 2;
-			break;
+			return new PositionF((float) (-maxVel), 0);
 		default:
-			break;
+			return new PositionF(0, 0);
 		}
+
 	}
 
 	@Override

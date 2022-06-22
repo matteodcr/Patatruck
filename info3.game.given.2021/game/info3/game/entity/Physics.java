@@ -25,7 +25,7 @@ public interface Physics {
 	 * 
 	 * @param absoluteDir
 	 */
-	public void bounce(AutDirection absoluteDir);
+	public PositionF bounce(AutDirection absoluteDir);
 
 	/**
 	 * returns the velocity but updated to a certain frequency

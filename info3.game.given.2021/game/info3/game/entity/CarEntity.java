@@ -108,7 +108,7 @@ public class CarEntity extends Entity {
 
 	@Override
 	public boolean hit(AutDirection direction) {
-		physics.addForce(m_direction.twoapart());
+		this.position = this.position.add(physics.bounce(m_direction.twoapart()));
 		return true;
 	}
 

@@ -30,13 +30,19 @@ public abstract class Entity implements AutomatonListener {
 	AutCategory category;
 	public Item item;
 
+	// If different from what `getType` returns, we should replace the automaton
+	// This is checked at each tick
+	EntityType lastEntityType = null;
+
 	Entity(Scene parent, PositionF pos) {
 		parentScene = parent;
 		position = pos;
 		m_direction = AutDirection.N;
 
-		automaton = parentScene.m_game.getBoundAutomaton(getType());
-		current_state = automaton.initial;
+		/*
+		 * automaton = parentScene.m_game.getBoundAutomaton(getType()); current_state =
+		 * automaton.initial;
+		 */
 		item = null;
 	}
 
@@ -51,6 +57,13 @@ public abstract class Entity implements AutomatonListener {
 	}
 
 	public void tick(long elapsed) {
+		EntityType entityType = getType();
+		if (lastEntityType != entityType) {
+			automaton = parentScene.m_game.getBoundAutomaton(entityType);
+			current_state = automaton.initial;
+			lastEntityType = entityType;
+		}
+
 		GState state = automaton.run(this, current_state);
 		if (state != null) {
 			current_state = state;

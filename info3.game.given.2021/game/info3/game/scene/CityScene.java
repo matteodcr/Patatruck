@@ -14,7 +14,6 @@ import info3.game.graphics.Graphics;
 import info3.game.graphics.Graphics.Align;
 import info3.game.graphics.Sprite;
 import info3.game.position.AutCategory;
-import info3.game.position.AutDirection;
 import info3.game.position.PositionF;
 import info3.game.worldgen.WorldGenerator;
 import info3.game.position.PositionI;
@@ -26,6 +25,7 @@ public class CityScene extends Scene {
 	private CookEntity cook; // To change with vanEntity
 	public final WorldGenerator worldGenerator = new WorldGenerator(0);
 	private CarEntity car;
+	private CarEntity cookCar;
 
 	private HashMap<PositionI, CityTile> cachedCityTiles;
 
@@ -34,30 +34,30 @@ public class CityScene extends Scene {
 		phyCook = new PhysicsEntity(4, 1);
 		cachedCityTiles = new HashMap<PositionI, CityTile>();
 		try {
-			cook = new CookEntity(this, vanPosition); // To change with vanEntity
-			car = new CarEntity(this, center, false);
-			addEntity(car);
+			// car = new CarEntity(this, center, false);
+			// addEntity(car);
+		cookPhysics = new PhysicsClassic(3);
+		cookCar = new CarEntity(this, vanPosition, true);
+		this.entity_list.add(cookCar);
 		} catch (IOException e) {
 			e.printStackTrace();
-		}
+		} // To change with vanEntity
+
 	}
 
 	@Override
 	public void tick(long elapsed) {
 		super.tick(elapsed);
-		if (m_game.m_listener.isUp("UP")) {
-			phyCook.addAcceleration(AutDirection.N);
-		}
-		if (m_game.m_listener.isUp("DOWN")) {
-			phyCook.addAcceleration(AutDirection.S);
-		}
-		if (m_game.m_listener.isUp("LEFT")) {
-			phyCook.addAcceleration(AutDirection.W);
-		}
-		if (m_game.m_listener.isUp("RIGHT")) {
-			phyCook.addAcceleration(AutDirection.E);
-		}
-		cook.setPosition(phyCook.Shift(elapsed).add(cook.getPosition()));
+		/*
+		 * if (this.m_game.m_listener.isUp("UP")) {
+		 * cookPhysics.addForce(AutDirection.N); } if
+		 * (this.m_game.m_listener.isUp("DOWN")) { cookPhysics.addForce(AutDirection.S);
+		 * } if (this.m_game.m_listener.isUp("LEFT")) {
+		 * cookPhysics.addForce(AutDirection.W); } if
+		 * (this.m_game.m_listener.isUp("RIGHT")) {
+		 * cookPhysics.addForce(AutDirection.E); }
+		 * cook.setPosition(cook.getPosition().add(cookPhysics.Shift(elapsed)));
+		 */
 	}
 
 	// Commenté pour tester avec une scène fixe
@@ -129,16 +129,19 @@ public class CityScene extends Scene {
 	@Override
 	public void render(Graphics g) {
 		super.render(g);
-		this.cook.render(g);
-		this.car.render(g);
+		this.cookCar.render(g);
+		// this.cook.render(g);
+		// this.car.render(g);
+
 		Sprite speed = Sprite.SPEEDOMETER;
-		if (phyCook.getVelocity() < 20) {
+		if (cookCar.physics.getVelocity() < 20) {
 			speed = Sprite.SPEEDOMETER_LOW;
-		} else if (phyCook.getVelocity() >= 50) {
+		} else if (cookCar.physics.getVelocity() > 50) {
 			speed = Sprite.SPEEDOMETER_HIGH;
 		}
 		g.drawSprite(speed, 2, 0);
-		g.drawText(phyCook.getVelocity() + "", Align.LEFT, 10, 18);
+		g.drawText(cookCar.physics.getVelocity() + "", Align.CENTER, 12, 18);
+
 	}
 
 //	private void debugCache() {

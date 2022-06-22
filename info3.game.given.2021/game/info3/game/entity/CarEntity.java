@@ -9,7 +9,12 @@ import info3.game.scene.CityScene;
 import info3.game.scene.Scene;
 
 public class CarEntity extends Entity {
+<<<<<<< HEAD
 	boolean isTruck;
+=======
+	public Physics physics = new PhysicsClassic(3);
+	final boolean isTruck;
+>>>>>>> Fin de l'impémentation des physiques et ajout de la possibilité de changer d'avatar facilement et utilisation d'un automate pour controller le camion (avec zqsd car pb avec les flèches
 	// TODO Deplacer hitbox hardocdé et methode de collision (champ ou classe pr pos
 	// bas a droite de l'entite
 
@@ -32,8 +37,13 @@ public class CarEntity extends Entity {
 	}
 
 	@Override
+	public void tick(long elapsed) {
+		super.tick(elapsed);
+		this.position = this.position.add(physics.Shift(elapsed));
+	}
+
+	@Override
 	public boolean pop(AutDirection direction) {
-		// TODO Auto-generated method stub
 		return true;
 	}
 
@@ -42,26 +52,12 @@ public class CarEntity extends Entity {
 		AutDirection newDirection = convertRelativToAbsolutedir(direction);
 		m_direction = newDirection;
 		switch (newDirection) {
-		case N: {
-			PositionF newPos = new PositionF(0, -1);
-			this.position = position.add(newPos);
+		case N:
+		case W:
+		case E:
+		case S:
+			physics.addForce(m_direction);
 			return true;
-		}
-		case W: {
-			PositionF newPos = new PositionF(-1, 0);
-			this.position = position.add(newPos);
-			return true;
-		}
-		case E: {
-			PositionF newPos = new PositionF(1, 0);
-			this.position = position.add(newPos);
-			return true;
-		}
-		case S: {
-			PositionF newPos = new PositionF(0, 1);
-			this.position = position.add(newPos);
-			return true;
-		}
 		default:
 			return false;
 		}
@@ -241,6 +237,24 @@ public class CarEntity extends Entity {
 		}
 		return false;
 
+	}
+
+	public void toNoBreaksPhysics() {
+		this.physics = new PhysicsNoBreaks(3, this.physics.getAccX(), this.physics.getAccY(), this.physics.getVelX(),
+				this.physics.getVelY(), this.physics.getMaxVel(), this.physics.getAvgVelBuff(),
+				this.physics.getAvgVel(), this.physics.getTimerVel(), this.physics.getTimerMaxVel());
+	}
+
+	public void toClassicPhysics() {
+		this.physics = new PhysicsClassic(3, this.physics.getAccX(), this.physics.getAccY(), this.physics.getVelX(),
+				this.physics.getVelY(), this.physics.getMaxVel(), this.physics.getAvgVelBuff(),
+				this.physics.getAvgVel(), this.physics.getTimerVel(), this.physics.getTimerMaxVel());
+	}
+
+	public void toSmokePhysics() {
+		this.physics = new PhysicsSmoke(3, this.physics.getAccX(), this.physics.getAccY(), this.physics.getVelX(),
+				this.physics.getVelY(), this.physics.getMaxVel(), this.physics.getAvgVelBuff(),
+				this.physics.getAvgVel(), this.physics.getTimerVel(), this.physics.getTimerMaxVel());
 	}
 
 }

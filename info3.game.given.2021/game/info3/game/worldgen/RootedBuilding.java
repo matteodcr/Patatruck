@@ -1,6 +1,7 @@
 package info3.game.worldgen;
 
 import java.util.Arrays;
+import java.util.Map;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
@@ -42,16 +43,22 @@ enum RootedBuilding {
 
 	private final GridPos[] offsets;
 	private final GridPos topLeft;
+	private final Map<GridPos, GenTile.CollisionBox> collisionBoxes;
 	public final Sprite[] sprites;
 
 	RootedBuilding(GridPos[] offsets, Sprite[] sprites) {
 		this.offsets = offsets;
 		this.topLeft = computeTopLeft(offsets);
+		this.collisionBoxes = GenTile.CollisionBox.fromOffsets(offsets);
 		this.sprites = sprites;
 	}
 
 	public GridPos topLeft() {
 		return topLeft;
+	}
+
+	public GenTile.CollisionBox getCollision(int spriteU, int spriteV) {
+		return collisionBoxes.get(new GridPos(spriteU, spriteV));
 	}
 
 	public Stream<GridPos> coveredCells(int x, int y) {

@@ -10,6 +10,14 @@ final class GridPos {
 		this.y = y;
 	}
 
+	public GridPos top() {
+		return new GridPos(x, y - 1);
+	}
+
+	public GridPos left() {
+		return new GridPos(x - 1, y);
+	}
+
 	public boolean isWithin(int minX, int maxX, int minY, int maxY) {
 		return x >= minX && x < maxX && y >= minY && y < maxY;
 	}

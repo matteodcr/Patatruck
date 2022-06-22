@@ -22,8 +22,9 @@ public class ChunkLayer implements Layer<Chunk> {
 			GridPos finalFreePos = freePos;
 			chosenBuilding.coveredCells(freePos.x, freePos.y).forEach(bPos -> {
 				int spriteU = bPos.x - finalFreePos.x - topLeft.x, spriteV = bPos.y - finalFreePos.y - topLeft.y;
-				// TODO falses
-				chunk.setBuilding(bPos, new GenTile(sprite, spriteU, spriteV, false, false, false, false));
+				GenTile.CollisionBox collision = chosenBuilding.getCollision(spriteU, spriteV);
+				// TODO market
+				chunk.setBuilding(bPos, new GenTile(sprite, spriteU, spriteV, collision, false));
 			});
 		}
 

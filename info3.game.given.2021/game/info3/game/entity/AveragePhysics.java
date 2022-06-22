@@ -10,6 +10,7 @@ public class AveragePhysics implements Physics {
 	double maxVel = 2.5;
 	double force = 0, friction = 1;
 
+	double lastVel = 0;
 	double avgVelBuff = 0, avgVel = 0;
 	int timerVel = 0, timerMaxVel = 10;
 
@@ -114,6 +115,7 @@ public class AveragePhysics implements Physics {
 			avgVelBuff += Math.hypot(shiftX, shiftY);
 			timerVel--;
 		}
+		lastVel = Math.hypot(shiftX, shiftY);
 		return new PositionF(shiftX, shiftY);
 	}
 
@@ -156,6 +158,31 @@ public class AveragePhysics implements Physics {
 
 	public int getTimerMaxVel() {
 		return timerMaxVel;
+	}
+
+	@Override
+	public void bounce(AutDirection absoluteDir) {
+		switch (absoluteDir) {
+		case N:
+			accY -= force / 2;
+			break;
+		case E:
+			accX += force / 2;
+			break;
+		case S:
+			accY += force / 2;
+			break;
+		case W:
+			accX -= force / 2;
+			break;
+		default:
+			break;
+		}
+	}
+
+	@Override
+	public int getInRealTimeVelocity() {
+		return (int) lastVel;
 	}
 
 }

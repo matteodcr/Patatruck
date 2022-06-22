@@ -20,7 +20,21 @@ public interface Physics {
 	 */
 	public PositionF Shift(long elapsed);
 
+	/**
+	 * Same as addForce but with lower force
+	 * 
+	 * @param absoluteDir
+	 */
+	public void bounce(AutDirection absoluteDir);
+
+	/**
+	 * returns the velocity but updated to a certain frequency
+	 * 
+	 * @return
+	 */
 	public int getVelocity();
+
+	public int getInRealTimeVelocity();
 
 	public double getAccX();
 

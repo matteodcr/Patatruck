@@ -10,16 +10,19 @@ import info3.game.scene.Scene;
 
 public class CarEntity extends Entity {
 	public Physics physics = new PhysicsClassic(3);
-	boolean isTruck;
+	final boolean isTruck;
+	boolean isPlayer;
 	// TODO Deplacer hitbox hardocdé et methode de collision (champ ou classe pr pos
 	// bas a droite de l'entite
 
-	public CarEntity(Scene parent, PositionF position, boolean isTruck) {
+	public CarEntity(Scene parent, PositionF position, boolean isTruck, boolean isPlayer) {
 		super(parent, position);
 		this.isTruck = isTruck;
-		automaton = parentScene.setupAutomaton("Car");
-		current_state = automaton.initial;
-		category = AutCategory.A;
+		this.isPlayer = isPlayer;
+		if (!isPlayer)
+			category = AutCategory.A;
+		else
+			category = AutCategory.AROBASE;
 	}
 
 	@Override
@@ -29,7 +32,7 @@ public class CarEntity extends Entity {
 
 	@Override
 	public EntityType getType() {
-		if (isTruck) {
+		if (isPlayer) {
 			return EntityType.TRUCK;
 		}
 		return EntityType.CAR;
@@ -43,6 +46,7 @@ public class CarEntity extends Entity {
 
 	@Override
 	public boolean pop(AutDirection direction) {
+		System.out.println("pop");
 		// TODO transfert d'automates
 		// penser à donner la physique aussi
 		return true;
@@ -188,6 +192,49 @@ public class CarEntity extends Entity {
 	@Override
 	public boolean cell(AutDirection direction, AutCategory category) {
 		AutDirection newDirection = convertRelativToAbsolutedir(direction);
+		for (Entity entity : parentScene.entity_list) {
+			switch (newDirection) {
+			case N: {
+				if (entity.catAtThisPos(position.add(new PositionF(0, -1))) == category
+						|| entity.catAtThisPos(position.add(new PositionF(3, -1))) == category) {
+					return true;
+				}
+				break;
+			}
+			case W: {
+				if (entity.catAtThisPos(position.add(new PositionF(-1, 0))) == category
+						|| entity.catAtThisPos(position.add(new PositionF(-1, 3))) == category) {
+					return true;
+				}
+				break;
+			}
+			case E: {
+				if (entity.catAtThisPos(position.add(new PositionF(4, 0))) == category
+						|| entity.catAtThisPos(position.add(new PositionF(4, 3))) == category) {
+					return true;
+				}
+				break;
+			}
+			case S: {
+				if (entity.catAtThisPos(position.add(new PositionF(0, 4))) == category
+						|| entity.catAtThisPos(position.add(new PositionF(3, 4))) == category) {
+					return true;
+				}
+				break;
+			}
+			case H: {
+				if (entity.catAtThisPos(position.add(new PositionF(0, 0))) == category
+						|| entity.catAtThisPos(position.add(new PositionF(3, 0))) == category
+						|| entity.catAtThisPos(position.add(new PositionF(0, 3))) == category
+						|| entity.catAtThisPos(position.add(new PositionF(3, 3))) == category) {
+					return true;
+				}
+				break;
+			}
+			default:
+				return false;
+			}
+		}
 		switch (newDirection) {
 		case N: {
 			if (((CityScene) parentScene).whatsTheCategoryOfTile(position.add(new PositionF(0, -1))) == category

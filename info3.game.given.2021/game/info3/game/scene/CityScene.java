@@ -30,13 +30,14 @@ public class CityScene extends Scene {
 		super(pixelWidth, pixelHeight, g);
 		cachedCityTiles = new HashMap<PositionI, CityTile>();
 		try {
-			// car = new CarEntity(this, center, false);
-			// addEntity(car);
-		cookCar = new CarEntity(this, vanPosition, true);
-		this.entity_list.add(cookCar);
+		car = new CarEntity(this, center, false, false);
+		addEntity(car);
+		cookCar = new CarEntity(this, center, true, true);
+		addEntity(cookCar);
 		} catch (IOException e) {
 			e.printStackTrace();
 		} // To change with vanEntity
+
 
 	}
 
@@ -129,7 +130,7 @@ public class CityScene extends Scene {
 	public void render(Graphics g) {
 		super.render(g);
 		this.cookCar.render(g);
-
+		car.render(g);
 		Sprite speed = Sprite.SPEEDOMETER;
 		if (cookCar.physics.getVelocity() < 20) {
 			speed = Sprite.SPEEDOMETER_LOW;

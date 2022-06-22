@@ -289,4 +289,16 @@ public abstract class Entity implements AutomatonListener {
 		}
 
 	}
+
+	/*
+	 * Fct qui renvoit la categoru de l'entite si la position donnée correspond à la
+	 * sienne
+	 */
+	public AutCategory catAtThisPos(PositionF pos) {
+		float posX = position.getX();
+		float posY = position.getY();
+		if (posX <= pos.getX() && pos.getX() <= posX + 3 && posY <= pos.getY() && pos.getY() <= posY + 3)
+			return category;
+		return null;
+	}
 }

@@ -5,5 +5,5 @@ Truck(Init){
   | Key(FD) ? Wizz(S) :(Init)
   | Key(FL) ? Wizz(W) :(Init)
   | Key(FR) ? Wizz(E) :(Init)
-  | Key(ENTER) & Cell(H,A) ? Pop(F) :(Init)
+  | Cell(H,A) ? Pop(F) :(Init)
 }

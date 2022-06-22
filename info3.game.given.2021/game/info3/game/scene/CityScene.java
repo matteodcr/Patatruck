@@ -6,10 +6,7 @@ import info3.game.Game;
 import info3.game.entity.CarEntity;
 import info3.game.entity.CityTile;
 import info3.game.entity.Entity;
-<<<<<<< HEAD
 import info3.game.entity.PhysicsEntity;
-=======
->>>>>>> Changed truck automata and clean cityScene from previous hardcoded physics
 import info3.game.entity.Tile;
 import info3.game.graphics.Graphics;
 import info3.game.graphics.Graphics.Align;

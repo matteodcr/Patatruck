@@ -108,8 +108,8 @@ public class CarEntity extends Entity {
 
 	@Override
 	public boolean hit(AutDirection direction) {
-		// TODO Auto-generated method stub
-		return false;
+		physics.addForce(m_direction.twoapart());
+		return true;
 	}
 
 	@Override

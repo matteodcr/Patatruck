@@ -1,5 +1,6 @@
 Truck(Init){
   * (Init):
+  | Cell(H,O) ? Hit : (Init)
   | Key(FU) ? Wizz(N) :(Init)
   | Key(FD) ? Wizz(S) :(Init)
   | Key(FL) ? Wizz(W) :(Init)

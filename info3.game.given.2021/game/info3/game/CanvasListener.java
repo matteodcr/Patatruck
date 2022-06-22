@@ -86,12 +86,16 @@ public class CanvasListener implements GameCanvasListener {
 			}else {
 				return false;
 			}
+		case "FU":
 		case "UP":
 			return keyboard.contains(VK_UP);
+		case "FR":
 		case "RIGHT":
 			return keyboard.contains(VK_RIGHT);
+		case "FD":
 		case "DOWN":
 			return keyboard.contains(VK_DOWN);
+		case "FL":
 		case "LEFT":
 			return keyboard.contains(VK_LEFT);
 		case "Z":

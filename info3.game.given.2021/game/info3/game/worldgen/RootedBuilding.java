@@ -41,14 +41,29 @@ enum RootedBuilding {
 			new Sprite[] { Sprite.CITY_CORNER_TR });
 
 	private final GridPos[] offsets;
+	private final GridPos topLeft;
 	public final Sprite[] sprites;
 
 	RootedBuilding(GridPos[] offsets, Sprite[] sprites) {
 		this.offsets = offsets;
+		this.topLeft = computeTopLeft(offsets);
 		this.sprites = sprites;
 	}
 
 	public GridPos topLeft() {
+		return topLeft;
+	}
+
+	public Stream<GridPos> coveredCells(int x, int y) {
+		return Arrays.stream(offsets).map(offset -> new GridPos(x + offset.x, y + offset.y));
+	}
+
+	public static RootedBuilding[] valuesWithPredicate(GridPos pos, Predicate<GridPos> isCellFree) {
+		return Arrays.stream(values()).filter(b -> b.coveredCells(pos.x, pos.y).allMatch(isCellFree))
+				.toArray(RootedBuilding[]::new);
+	}
+
+	private static GridPos computeTopLeft(GridPos[] offsets) {
 		int x = Integer.MAX_VALUE;
 		int y = Integer.MAX_VALUE;
 
@@ -58,15 +73,5 @@ enum RootedBuilding {
 		}
 
 		return new GridPos(x, y);
-	}
-
-	public Stream<GridPos> coveredCells(int x, int y) {
-		return Arrays.stream(offsets).map(offset -> new GridPos(x + offset.x, y + offset.y));
-	}
-
-	public static RootedBuilding[] valuesWithPredicate(GridPos pos, Predicate<GridPos> isCellFree) {
-		System.out.println(pos);
-		return Arrays.stream(values()).filter(b -> b.coveredCells(pos.x, pos.y).allMatch(isCellFree))
-				.toArray(RootedBuilding[]::new);
 	}
 }

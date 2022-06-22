@@ -168,13 +168,13 @@ public class AveragePhysics implements Physics {
 		velY = 0;
 		switch (absoluteDir) {
 		case N:
-			return new PositionF(0, (float) (-maxVel));
+			return new PositionF(0, (float) (-maxVel / 2));
 		case E:
-			return new PositionF((float) (maxVel), 0);
+			return new PositionF((float) (maxVel / 2), 0);
 		case S:
-			return new PositionF(0, (float) (maxVel));
+			return new PositionF(0, (float) (maxVel / 2));
 		case W:
-			return new PositionF((float) (-maxVel), 0);
+			return new PositionF((float) (-maxVel / 2), 0);
 		default:
 			return new PositionF(0, 0);
 		}

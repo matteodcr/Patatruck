@@ -1,14 +1,15 @@
 package info3.game.scene;
 
-import java.io.IOException;
 import java.util.HashMap;
 
 import info3.game.Game;
 import info3.game.entity.CarEntity;
 import info3.game.entity.CityTile;
-import info3.game.entity.CookEntity;
 import info3.game.entity.Entity;
+<<<<<<< HEAD
 import info3.game.entity.PhysicsEntity;
+=======
+>>>>>>> Changed truck automata and clean cityScene from previous hardcoded physics
 import info3.game.entity.Tile;
 import info3.game.graphics.Graphics;
 import info3.game.graphics.Graphics.Align;
@@ -22,7 +23,6 @@ public class CityScene extends Scene {
 
 	private final PositionF center = new PositionF((float) pixelWidth / 2F - 4.5F, (float) pixelHeight / 2F - 4.5F);
 	private PositionF vanPosition = PositionF.ZERO;
-	private CookEntity cook; // To change with vanEntity
 	public final WorldGenerator worldGenerator = new WorldGenerator(0);
 	private CarEntity car;
 	private CarEntity cookCar;
@@ -31,12 +31,10 @@ public class CityScene extends Scene {
 
 	public CityScene(int pixelWidth, int pixelHeight, Game g) {
 		super(pixelWidth, pixelHeight, g);
-		phyCook = new PhysicsEntity(4, 1);
 		cachedCityTiles = new HashMap<PositionI, CityTile>();
 		try {
 			// car = new CarEntity(this, center, false);
 			// addEntity(car);
-		cookPhysics = new PhysicsClassic(3);
 		cookCar = new CarEntity(this, vanPosition, true);
 		this.entity_list.add(cookCar);
 		} catch (IOException e) {
@@ -122,16 +120,14 @@ public class CityScene extends Scene {
 		return 0xffeb6c82;
 	}
 
-	public CookEntity getCook() {
-		return cook;
+	public CarEntity getCook() {
+		return cookCar;
 	}
 
 	@Override
 	public void render(Graphics g) {
 		super.render(g);
 		this.cookCar.render(g);
-		// this.cook.render(g);
-		// this.car.render(g);
 
 		Sprite speed = Sprite.SPEEDOMETER;
 		if (cookCar.physics.getVelocity() < 20) {

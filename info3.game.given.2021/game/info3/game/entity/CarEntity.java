@@ -9,12 +9,8 @@ import info3.game.scene.CityScene;
 import info3.game.scene.Scene;
 
 public class CarEntity extends Entity {
-<<<<<<< HEAD
-	boolean isTruck;
-=======
 	public Physics physics = new PhysicsClassic(3);
 	final boolean isTruck;
->>>>>>> Fin de l'impémentation des physiques et ajout de la possibilité de changer d'avatar facilement et utilisation d'un automate pour controller le camion (avec zqsd car pb avec les flèches
 	// TODO Deplacer hitbox hardocdé et methode de collision (champ ou classe pr pos
 	// bas a droite de l'entite
 
@@ -33,6 +29,9 @@ public class CarEntity extends Entity {
 
 	@Override
 	public EntityType getType() {
+		if (isTruck) {
+			return EntityType.TRUCK;
+		}
 		return EntityType.CAR;
 	}
 
@@ -44,6 +43,8 @@ public class CarEntity extends Entity {
 
 	@Override
 	public boolean pop(AutDirection direction) {
+		// TODO transfert d'automates
+		// penser à donner la physique aussi
 		return true;
 	}
 

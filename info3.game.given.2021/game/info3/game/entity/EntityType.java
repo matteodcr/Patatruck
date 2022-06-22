@@ -28,7 +28,9 @@ public enum EntityType {
 
 	TILE_STOCK("garde-manger", "StockTable"),
 
-	TILE_TRASH("poubelle", "Trash");
+	TILE_TRASH("poubelle", "Trash"),
+
+	TRUCK("camion du joueur", "Truck");
 
 	public final String displayName;
 	public final String defaultAutomaton;

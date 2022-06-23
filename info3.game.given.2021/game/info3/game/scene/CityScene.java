@@ -129,8 +129,18 @@ public class CityScene extends Scene {
 	@Override
 	public void render(Graphics g) {
 		super.render(g);
-		this.cookCar.render(g);
-		car.render(g);
+		final int tileWidth = getTileWidth();
+		final PositionF origin = getOriginOffset();
+
+		for (Entity entity : entity_list) {
+			int gX = entity.getGridPosFromPos().getX();
+			int gY = entity.getGridPosFromPos().getY();
+			Graphics subGraphics = g.window(origin.add(entity.getPosition()).getX(),
+					origin.add(entity.getPosition()).getY(), 4, 4);
+
+			entity.render(subGraphics);
+		}
+
 		Sprite speed = Sprite.SPEEDOMETER;
 		if (cookCar.physics.getVelocity() < 20) {
 			speed = Sprite.SPEEDOMETER_LOW;

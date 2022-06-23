@@ -27,7 +27,7 @@ public class CarEntity extends Entity {
 
 	@Override
 	public void render(Graphics g) {
-		g.drawSprite(Sprite.CAR_ENTITY, this.position.getX(), this.position.getY());
+		g.drawSprite(Sprite.CAR_ENTITY, 0, 0);
 	}
 
 	@Override

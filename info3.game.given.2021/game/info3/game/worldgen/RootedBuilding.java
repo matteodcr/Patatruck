@@ -2,6 +2,7 @@ package info3.game.worldgen;
 
 import java.util.Arrays;
 import java.util.Map;
+import java.util.Objects;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
@@ -58,7 +59,7 @@ enum RootedBuilding {
 	}
 
 	public GenTile.CollisionBox getCollision(int spriteU, int spriteV) {
-		return collisionBoxes.get(new GridPos(spriteU, spriteV));
+		return Objects.requireNonNull(collisionBoxes.get(new GridPos(spriteU, spriteV)), "Unknown collision box");
 	}
 
 	public Stream<GridPos> coveredCells(int x, int y) {

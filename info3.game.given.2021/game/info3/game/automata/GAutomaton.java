@@ -18,8 +18,8 @@ public class GAutomaton {
 		this.states.add(gState);
 	}
 
-	public GState run(AutomatonListener aut, GState current_state) {
-		GState state = current_state.checkTransitions(aut);
+	public GState run(AutomatonListener aut, GState currentState) {
+		GState state = currentState.checkTransitions(aut);
 		if (state != null && state.name.equals("_"))
 			state = getRandomState();
 		return state;

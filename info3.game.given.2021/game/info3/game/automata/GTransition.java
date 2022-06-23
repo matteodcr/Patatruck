@@ -40,14 +40,14 @@ public class GTransition {
 
 	// Fonction auxilliaire qui return l'action en fonction du % généré
 	// aléatoirement
-	private IFunction sumMap(Map<IFunction, Integer> map, int drawn_percent) {
+	private IFunction sumMap(Map<IFunction, Integer> map, int drawnPercent) {
 		List<IFunction> keys = new ArrayList<IFunction>(map.keySet());
 		int sum = 0;
 		int cpt = 0;
-		Collection<Integer> percent_list = map.values();
-		for (int percent : percent_list) {
+		Collection<Integer> percentList = map.values();
+		for (int percent : percentList) {
 			sum += percent;
-			if (sum >= drawn_percent) {
+			if (sum >= drawnPercent) {
 				return keys.get(cpt);
 			}
 			cpt++;

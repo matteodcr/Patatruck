@@ -26,11 +26,11 @@ import info3.automata.ast.Value;
 
 public class AutomataGenerator implements IVisitor {
 
-	Integer current_source_state;
+	Integer currentSourceState;
 
 	List<GAutomaton> automata;
 
-	GAutomaton current_automaton;
+	GAutomaton currentAutomaton;
 
 	/**
 	 * /!\ States appear as source and target of transitions.
@@ -48,13 +48,13 @@ public class AutomataGenerator implements IVisitor {
 	private Map<String, GState> stateMap;
 
 	GState getState(State state) {
-		GState stored_state = stateMap.get(state.name);
-		if (stored_state != null) {
-			return stored_state;
+		GState storedState = stateMap.get(state.name);
+		if (storedState != null) {
+			return storedState;
 		} else {
-			GState new_state = new GState(state.name);
-			stateMap.put(state.name, new_state);
-			return new_state;
+			GState newState = new GState(state.name);
+			stateMap.put(state.name, newState);
+			return newState;
 		}
 	}
 
@@ -63,7 +63,7 @@ public class AutomataGenerator implements IVisitor {
 	public AutomataGenerator() {
 		this.stateMap = new HashMap<String, GState>();
 		this.automata = new ArrayList<GAutomaton>();
-		this.current_automaton = null;
+		this.currentAutomaton = null;
 	}
 
 	// Method from Ivisitor
@@ -93,27 +93,27 @@ public class AutomataGenerator implements IVisitor {
 
 	// create a funcall (action or condition)
 	public Object exit(FunCall funcall, List<Object> params) {
-		List<String> params_list = new ArrayList<String>();
+		List<String> paramsList = new ArrayList<String>();
 		for (Object param : params) {
-			params_list.add((String) param);
+			paramsList.add((String) param);
 		}
-		return new GFunCall(funcall.name, params_list, funcall.percent);
+		return new GFunCall(funcall.name, paramsList, funcall.percent);
 	}
 
 	// marche pas pr l'instant
 	public Object visit(BinaryOp operator, Object left, Object right) {
-		IFunction new_condition = null;
+		IFunction newCondition = null;
 		switch (operator.operator) {
 		case "&":
-			new_condition = (IFunction) new AndCondition((IFunction) left, (IFunction) right);
+			newCondition = (IFunction) new AndCondition((IFunction) left, (IFunction) right);
 			break;
 		case "/":
-			new_condition = (IFunction) new OrCondition((IFunction) left, (IFunction) right);
+			newCondition = (IFunction) new OrCondition((IFunction) left, (IFunction) right);
 			break;
 		default:
 			throw new IllegalStateException("opération binaire de condition non défini");
 		}
-		return new_condition;
+		return newCondition;
 	}
 
 	// marche pas pr l'instant
@@ -137,13 +137,13 @@ public class AutomataGenerator implements IVisitor {
 	}
 
 	// on ajoute ttes les transis lies a un etat
-	public Object exit(Mode mode, Object source_state, Object behaviour) {
+	public Object exit(Mode mode, Object sourceState, Object behaviour) {
 		@SuppressWarnings("unchecked") // we always call that after setting up a GTransition list
 		List<GTransition> transitions = (List<GTransition>) behaviour;
 		for (Object transition : transitions) {
-			((GState) source_state).addTransition((GTransition) transition);
+			((GState) sourceState).addTransition((GTransition) transition);
 		}
-		return source_state;
+		return sourceState;
 	}
 
 	public void enter(Condition condition) {
@@ -159,8 +159,8 @@ public class AutomataGenerator implements IVisitor {
 	// fct auxilliaire renvoie somme pourcentage deja present
 	private int sumMap(Map<IFunction, Integer> map) {
 		int sum = 0;
-		Collection<Integer> percent_list = map.values();
-		for (int percent : percent_list)
+		Collection<Integer> percentList = map.values();
+		for (int percent : percentList)
 			sum += percent;
 		return sum;
 	}
@@ -172,16 +172,16 @@ public class AutomataGenerator implements IVisitor {
 	// si le pourcentage n'est pas donne, c'est qu'on a deja rentre ttes les actions
 	// en ayant
 	public Object exit(Action action, List<Object> funcalls) {
-		Map<IFunction, Integer> action_list = new HashMap<IFunction, Integer>();
-		for (Object funcall_tmp : funcalls) {
-			GFunCall funcall = (GFunCall) funcall_tmp;
+		Map<IFunction, Integer> actionList = new HashMap<IFunction, Integer>();
+		for (Object funcallTmp : funcalls) {
+			GFunCall funcall = (GFunCall) funcallTmp;
 			if (funcall.percent == -1) { // si le pourcentage n'est pas donne, on le calcule
-				int sum_in_array = sumMap(action_list);
-				funcall.percent = (100 - sum_in_array) / (funcalls.size() - action_list.size());
+				int sumInArray = sumMap(actionList);
+				funcall.percent = (100 - sumInArray) / (funcalls.size() - actionList.size());
 			}
-			action_list.put((IFunction) funcall, funcall.percent);
+			actionList.put((IFunction) funcall, funcall.percent);
 		}
-		return action_list;
+		return actionList;
 	}
 
 	// on init une nouvelle transition
@@ -197,16 +197,16 @@ public class AutomataGenerator implements IVisitor {
 	public void enter(Automaton automaton) {
 		this.stateMap.clear();
 		// on init un nouvel automate qu'on veut ajouter a la liste
-		current_automaton = new GAutomaton(null, automaton.name, new ArrayList<GState>());
+		currentAutomaton = new GAutomaton(null, automaton.name, new ArrayList<GState>());
 	}
 
 	// On renvoie l'automate actuel apres avoir fait l'ajout des etats
-	public Object exit(Automaton automaton, Object initial_state, List<Object> modes) {
-		current_automaton.initial = (GState) initial_state;
+	public Object exit(Automaton automaton, Object initialState, List<Object> modes) {
+		currentAutomaton.initial = (GState) initialState;
 		for (Object state : modes) {
-			current_automaton.addState((GState) state);
+			currentAutomaton.addState((GState) state);
 		}
-		return current_automaton;
+		return currentAutomaton;
 	}
 
 	// on renvoie la liste d'automates

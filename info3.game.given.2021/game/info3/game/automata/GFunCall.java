@@ -18,7 +18,7 @@ public class GFunCall implements IFunction {
 	int percent;
 	private FunName name;
 
-	public GFunCall(String n, List<String> params_list, int p) {
+	public GFunCall(String n, List<String> paramsList, int p) {
 		switch (n) {
 		// Actions
 		case "Pop":
@@ -86,7 +86,7 @@ public class GFunCall implements IFunction {
 			name = FunName.GOTSTUFF;
 			break;
 		}
-		params = params_list;
+		params = paramsList;
 		percent = p;
 	}
 

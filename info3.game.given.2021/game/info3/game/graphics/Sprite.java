@@ -48,6 +48,7 @@ import static info3.game.graphics.Sprite.Spritesheet.POTATOCOOKED_;
 import static info3.game.graphics.Sprite.Spritesheet.POTATOSALAD_;
 import static info3.game.graphics.Sprite.Spritesheet.POTATO_;
 import static info3.game.graphics.Sprite.Spritesheet.POUTINE_;
+import static info3.game.graphics.Sprite.Spritesheet.RECIPES_;
 import static info3.game.graphics.Sprite.Spritesheet.SALADELEAF_;
 import static info3.game.graphics.Sprite.Spritesheet.SALADE_;
 import static info3.game.graphics.Sprite.Spritesheet.SAUCETABLETILE;
@@ -86,9 +87,8 @@ public enum Sprite {
 	KETCHUP(KETCHUPTABLE, 0, 0, 1, 1), MAYONNAISE(MAYOTABLE, 0, 0, 1, 1), FAILEDITEM(FAILEDITEM_, 0, 0, 1, 1),
 	KITCHEN_TRUCK(KITCHEN, 0, 0, 15, 6), KITCHEN_TRUCK_FLOOR(KITCHEN, 1, 6, 10, 4), ORDER_CARD(MENU, 0, 0, 1, 1),
 	CLOCK(CLOCK_, 0, 0, 1, 1), INDIC_MAYO_(MAYO_INDIC, 0, 0, 1, 1), INDIC_KETCHUP_(KETCHUP_INDIC, 0, 0, 1, 1),
-	KETCHUP_MAYO(KETCHUP_MAYO_, 0, 0, 1, 1),
-	KITCHEN_TRUCK_SMOKE(KITCHEN, 0, 11, 12, 6),
-	KETCHUP_MAYO_INDIC_(KETCHUP_MAYO_INDIC, 0, 0, 1, 1),
+	KETCHUP_MAYO(KETCHUP_MAYO_, 0, 0, 1, 1), KITCHEN_TRUCK_SMOKE(KITCHEN, 0, 11, 12, 6),
+	KETCHUP_MAYO_INDIC_(KETCHUP_MAYO_INDIC, 0, 0, 1, 1), RECIPES(RECIPES_, 0, 0, 32, 9),
 
 	// City building sprites
 	CITY_SQUARE_1_SQUARE(CITY, 0, 0, 1, 1), CITY_SQUARE_1_ROUND(CITY, 0, 1, 1, 1),
@@ -160,7 +160,9 @@ public enum Sprite {
 		DELIVERYTILE("DeliveryTile.png", 13), COCKROACH("cockroach.png", 13), MENU("menu.png", 69),
 
 		MAYO_INDIC("indic_mayo.png", 13), KETCHUP_INDIC("indic_ketchup.png", 13),
-		KETCHUP_MAYO_INDIC("indic_mayo_ketchup.png", 13);
+		KETCHUP_MAYO_INDIC("indic_mayo_ketchup.png", 13),
+
+		RECIPES_("Recipes.png", 8);
 
 		public final String filename;
 		public final int tileSize;

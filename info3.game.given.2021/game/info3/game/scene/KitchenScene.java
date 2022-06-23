@@ -207,6 +207,10 @@ public class KitchenScene extends Scene {
 
 		}
 
+		if (m_game.m_listener.isUp("ESCAPE")) {
+			g.drawSprite(Sprite.RECIPES, 0, 0);
+		}
+
 	}
 
 	public void renderCurrentOrder(Graphics g) {
@@ -271,9 +275,6 @@ public class KitchenScene extends Scene {
 		 * Je l'ai déplacé ici pr l'instant car plus d'acces a kitchenScene depuis Game
 		 * (Vincent
 		 */
-		if (m_game.m_listener.isUp("ESCAPE")) {// used for testing shuffle
-			this.shuffle();
-		}
 	}
 
 }

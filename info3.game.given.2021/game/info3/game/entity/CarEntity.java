@@ -16,7 +16,7 @@ public class CarEntity extends Entity {
 	final boolean isTruck;
 	boolean isPlayer;
 	// TODO Deplacer hitbox hardocdé et methode de collision (champ ou classe pr pos
-	// bas a droite de l'entite
+	// bas a droite de l'entite (sinon on garde comme ça si ttes les entites = 4x4)
 
 	public CarEntity(Scene parent, PositionF position, boolean isTruck, boolean isPlayer) {
 		super(parent, position);
@@ -60,8 +60,6 @@ public class CarEntity extends Entity {
 			this.swap((CarEntity) entityEncountered);
 			start = System.currentTimeMillis();
 		}
-		// TODO transfert d'automates
-		// penser à donner la physique aussi
 		return true;
 	}
 
@@ -113,7 +111,7 @@ public class CarEntity extends Entity {
 
 	@Override
 	public boolean gwait() {
-		// TODO Auto-generated method stub
+		// TODO : modified to prevent car not controlled by player from doing POP
 		return true;
 	}
 
@@ -337,7 +335,6 @@ public class CarEntity extends Entity {
 
 		this.start = System.currentTimeMillis();
 		carentity.start = System.currentTimeMillis();
-		System.out.println("Swap done");
 
 	}
 

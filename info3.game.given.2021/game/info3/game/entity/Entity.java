@@ -40,11 +40,6 @@ public abstract class Entity implements AutomatonListener {
 		parentScene = parent;
 		position = pos;
 		m_direction = AutDirection.N;
-
-		/*
-		 * automaton = parentScene.m_game.getBoundAutomaton(getType()); current_state =
-		 * automaton.initial;
-		 */
 		item = null;
 	}
 
@@ -267,11 +262,7 @@ public abstract class Entity implements AutomatonListener {
 	public void setDirection(AutDirection absDirection) {
 		this.m_direction = absDirection;
 	/*
-	 * Fct qui renvoit la grille correspondante à la position de l'ENTITE en
-	 * pixels(marche ds les 2 scènes) Pour la cityScene 0,0 est le centre du
-	 * viewport, il faut donc faire qq calculs pour les grilles qui peuvent être
-	 * négatives, si on a des valeurs positives, on divise juste la position reçue
-	 * en retirant l'offset.
+	 * Fct qui renvoit la grille correspondante à la position de l'ENTITE en pixels.
 	 * 
 	 */
 	public PositionI getGridPosFromPos() {

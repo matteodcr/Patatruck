@@ -1,6 +1,6 @@
 Car(Drive) {
     * (Drive) 
-    | Cell(H,@) ? Pop(F) :(Stop) 
+    | Cell(H,@) ? Wait :(Stop) 
     | Cell(H,D) ? Wizz(F) :(Slow)
     | Cell(F,O) & (!Cell(R,O)) ? Move(R) :(Drive)                                          
     | Cell(F,O) & (!Cell(L,O)) ? Move(L) :(Drive)

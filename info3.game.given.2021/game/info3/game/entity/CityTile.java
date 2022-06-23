@@ -36,7 +36,6 @@ public class CityTile extends Tile {
 
 	@Override
 	public boolean wizz(AutDirection direction) {
-		this.parentScene.addEntity(new CarEntity(this.parentScene, new PositionF(gridX, gridY), false, Direction.NORD));
 		return true;
 	}
 
@@ -47,7 +46,6 @@ public class CityTile extends Tile {
 
 	@Override
 	public boolean egg(AutDirection direction) {
-		this.parentScene.addEntity(new CarEntity(this.parentScene, new PositionF(gridX, gridY), true, Direction.NORD));
 		return true;
 	}
 

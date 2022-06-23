@@ -322,6 +322,9 @@ public class CarEntity extends Entity {
 		this.changeCategory();
 		carentity.changeCategory();
 
+		((CityScene) this.parentScene).setCook(carentity);
+		((CityScene) this.parentScene).setCar(this);
+
 		Physics physics = this.physics;
 		this.physics = carentity.physics;
 		carentity.physics = physics;

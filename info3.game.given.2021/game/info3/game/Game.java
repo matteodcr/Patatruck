@@ -122,7 +122,7 @@ public class Game {
 			GAutomaton aut = automataList.get(type.defaultAutomaton);
 			selection.put(type, allAutomata.indexOf(aut));
 		}
-		
+
 		for (Map.Entry<EntityType, Integer> entry : selection.entrySet()) {
 			boundAutomata.put(entry.getKey(), allAutomata.get(entry.getValue()));
 		}
@@ -203,27 +203,32 @@ public class Game {
 	 * that elapsed since the last time this method was invoked.
 	 */
 	void tick(long elapsed) {
-		if (screen == null)
-			return;
+		try {
+			if (screen == null)
+				return;
 
-		// Update every second
-		// the text on top of the frame: tick and fps
-		m_textElapsed += elapsed;
-		if (m_textElapsed > (1000 / TPS)) {
-			m_textElapsed = 0;
-			float period = m_canvas.getTickPeriod();
-			int fps = m_canvas.getFPS();
-			int nb_entities_k = screen.getEntityCount();
-			String txt = "Tick=" + period + "ms";
-			while (txt.length() < 15)
-				txt += " ";
-			txt = txt + fps + " fps   ";
-			txt += "Nb_entities=" + nb_entities_k;
-			m_text.setText(txt);
+			// Update every second
+			// the text on top of the frame: tick and fps
+			m_textElapsed += elapsed;
+			if (m_textElapsed > (1000 / TPS)) {
+				m_textElapsed = 0;
+				float period = m_canvas.getTickPeriod();
+				int fps = m_canvas.getFPS();
+				int nb_entities_k = screen.getEntityCount();
+				String txt = "Tick=" + period + "ms";
+				while (txt.length() < 15)
+					txt += " ";
+				txt = txt + fps + " fps   ";
+				txt += "Nb_entities=" + nb_entities_k;
+				m_text.setText(txt);
 
-			screen.tick(elapsed);
+				screen.tick(elapsed);
+			}
+			timer(elapsed);
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.exit(0);
 		}
-		timer(elapsed);
 	}
 
 	AwtGraphics g = null;
@@ -233,10 +238,15 @@ public class Game {
 	 * called from the GameCanvasListener, called from the GameCanvas.
 	 */
 	void paint(java.awt.Graphics ag) {
-		g = new AwtGraphics(g, ag, WIDTH, HEIGHT, SCALE_FACTOR);
+		try {
+			g = new AwtGraphics(g, ag, WIDTH, HEIGHT, SCALE_FACTOR);
 
-		// paint
-		screen.render(g);
+			// paint
+			screen.render(g);
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.exit(0);
+		}
 	}
 
 	/* Generates automata list from .gal file */

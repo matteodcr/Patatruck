@@ -21,4 +21,9 @@ public class SamplerLayer implements Layer<GenTile> {
 		Chunk chunk = chunkLayer.getAt(seed, new GridPos(chunkPosX, chunkPosY));
 		return chunk.getRaw()[localPosX + localPosY * CHUNK_SIZE];
 	}
+
+	@Override
+	public void clearCaches() {
+		chunkLayer.clearCaches();
+	}
 }

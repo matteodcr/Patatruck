@@ -215,7 +215,7 @@ public abstract class Entity implements AutomatonListener {
 		return parentScene.m_game.m_listener.isUp(direction.toString());
 	}
 
-	private PositionI getGridPosFromPos() {
+	public PositionI getGridPosFromPos() {
 		PositionF pos_tmp = position.add(parentScene.getOriginOffset());
 		return pos_tmp.divFloor(parentScene.getTileWidth());
 

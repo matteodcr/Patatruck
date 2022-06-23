@@ -5,7 +5,7 @@ import info3.game.graphics.Sprite;
 public enum ItemType {
 	POTATO(Sprite.POTATO, "patate", false), COOKED_POTATO(Sprite.POTATOCOOKED, "patate cuite", false),
 	MASHED_POTATO(Sprite.MASHEDPOTATO, "puree", false), FRIES(Sprite.FRIES, "frites", false),
-	COOKED_FRIES(Sprite.COOKEDFRIES, "frites cuites", false), GALETTE(Sprite.GALETTE, "galette", false),
+	COOKED_FRIES(Sprite.COOKEDFRIES, "frites cuites", true), GALETTE(Sprite.GALETTE, "galette", false),
 	COOKED_GALETTE(Sprite.GALETTECOOKED, "galette cuite", false), SALAD(Sprite.SALADE, "salade", false),
 	SALAD_LEAF(Sprite.SALADELEAF, "feuille de salade", false),
 	POTATO_SALAD(Sprite.POTATOSALAD, "salade de patate", true), CHEESE(Sprite.CHEESE, "fromage", false),

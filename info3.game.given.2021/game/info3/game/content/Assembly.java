@@ -35,6 +35,7 @@ public class Assembly {
 
 			put(List.of(ItemType.COOKED_GALETTE, ItemType.CHEESE, ItemType.BREAD_SLICE, ItemType.SALAD_LEAF,
 					ItemType.TOMATO_SLICE), ItemType.VEGI_BURGER_SALAD_TOMATO);
+			put(List.of(ItemType.COOKED_FRIES), ItemType.COOKED_FRIES);
 		}
 	};
 
@@ -88,11 +89,8 @@ public class Assembly {
 		for (Item iter : currentItems) {
 			if (iter.getType().isFinalItem()) {
 				sauce = iter.getSauce();
-			}
-			if (iter.getType().isFinalItem()) {
 				tmp = this.getRecipe(iter.getType());
 				this.removeItem(iter);
-				;
 				for (ItemType iter2 : tmp) {
 					this.getItems().add(new Item(iter2, null)); // on utilise pas addItem
 				}
@@ -124,6 +122,7 @@ public class Assembly {
 		Sauce sauce = this.explode(); // on divise les potentielles recettes finales présentes dans le sac du
 		// cuisinier
 		if (this.getItems().size() == 1) {
+			this.items.get(0).setSauce(sauce);
 			return;
 		}
 		List<ItemType> currentItems = getItemTypes();

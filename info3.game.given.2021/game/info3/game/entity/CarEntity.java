@@ -1,6 +1,5 @@
 package info3.game.entity;
 
-import info3.game.automata.GAutomaton;
 import info3.game.graphics.Graphics;
 import info3.game.graphics.Sprite;
 import info3.game.position.AutCategory;
@@ -20,10 +19,7 @@ public class CarEntity extends Entity {
 		super(parent, position);
 		this.isTruck = isTruck;
 		this.isPlayer = isPlayer;
-		if (!isPlayer)
-			category = AutCategory.A;
-		else
-			category = AutCategory.AROBASE;
+		changeCategory();
 	}
 
 	@Override
@@ -295,6 +291,13 @@ public class CarEntity extends Entity {
 
 	}
 
+	public void changeCategory() {
+		if (!isPlayer)
+			category = AutCategory.A;
+		else
+			category = AutCategory.AROBASE;
+	}
+
 	public void toNoBreaksPhysics() {
 		this.physics = new PhysicsNoBreaks(3, this.physics.getAccX(), this.physics.getAccY(), this.physics.getVelX(),
 				this.physics.getVelY(), this.physics.getMaxVel(), this.physics.getAvgVelBuff(),
@@ -316,22 +319,12 @@ public class CarEntity extends Entity {
 	public void swap(CarEntity carentity) {
 		carentity.isPlayer = !carentity.isPlayer;
 		this.isPlayer = !this.isPlayer;
-
-		if (this.isPlayer) {
-			((CityScene) this.parentScene).setCook(this);
-			((CityScene) this.parentScene).setCar(carentity);
-		} else {
-			((CityScene) this.parentScene).setCook(carentity);
-			((CityScene) this.parentScene).setCar(this);
-		}
+		this.changeCategory();
+		carentity.changeCategory();
 
 		Physics physics = this.physics;
 		this.physics = carentity.physics;
 		carentity.physics = physics;
-
-		GAutomaton auto = this.automaton;
-		this.automaton = carentity.automaton;
-		carentity.automaton = auto;
 
 	}
 

@@ -9,6 +9,9 @@ import info3.game.scene.CityScene;
 import info3.game.scene.Scene;
 
 public class CarEntity extends Entity {
+
+	private boolean swapInThisTick;
+	private Entity entityEncountered;
 	public Physics physics = new PhysicsClassic(3);
 	final boolean isTruck;
 	boolean isPlayer;
@@ -20,6 +23,7 @@ public class CarEntity extends Entity {
 		this.isTruck = isTruck;
 		this.isPlayer = isPlayer;
 		changeCategory();
+		this.swapInThisTick = false;
 	}
 
 	@Override
@@ -39,17 +43,21 @@ public class CarEntity extends Entity {
 	public void tick(long elapsed) {
 		super.tick(elapsed);
 		this.position = this.position.add(physics.Shift(elapsed));
+
+		finish = System.currentTimeMillis();
+		timeElapsed = finish - start;
+
+		if (timeElapsed >= 1000) {
+			this.swapInThisTick = false;
+		}
+
 	}
 
 	@Override
 	public boolean pop(AutDirection direction) {
-		// this.swap();
-		if (isPlayer) {
-			CarEntity tmp = this.isNear();
-			if (tmp != null) {
-				System.out.println("pop");
-				this.swap(tmp);
-			}
+		if (!swapInThisTick) {
+			this.swap((CarEntity) entityEncountered);
+			start = System.currentTimeMillis();
 		}
 		// TODO transfert d'automates
 		// penser à donner la physique aussi
@@ -105,7 +113,7 @@ public class CarEntity extends Entity {
 	@Override
 	public boolean gwait() {
 		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	@Override
@@ -201,6 +209,7 @@ public class CarEntity extends Entity {
 			case N: {
 				if (entity.catAtThisPos(position.add(new PositionF(0, -1))) == category
 						|| entity.catAtThisPos(position.add(new PositionF(3, -1))) == category) {
+					entityEncountered = entity;
 					return true;
 				}
 				break;
@@ -208,6 +217,7 @@ public class CarEntity extends Entity {
 			case W: {
 				if (entity.catAtThisPos(position.add(new PositionF(-1, 0))) == category
 						|| entity.catAtThisPos(position.add(new PositionF(-1, 3))) == category) {
+					entityEncountered = entity;
 					return true;
 				}
 				break;
@@ -215,6 +225,7 @@ public class CarEntity extends Entity {
 			case E: {
 				if (entity.catAtThisPos(position.add(new PositionF(4, 0))) == category
 						|| entity.catAtThisPos(position.add(new PositionF(4, 3))) == category) {
+					entityEncountered = entity;
 					return true;
 				}
 				break;
@@ -222,6 +233,7 @@ public class CarEntity extends Entity {
 			case S: {
 				if (entity.catAtThisPos(position.add(new PositionF(0, 4))) == category
 						|| entity.catAtThisPos(position.add(new PositionF(3, 4))) == category) {
+					entityEncountered = entity;
 					return true;
 				}
 				break;
@@ -231,6 +243,7 @@ public class CarEntity extends Entity {
 						|| entity.catAtThisPos(position.add(new PositionF(3, 0))) == category
 						|| entity.catAtThisPos(position.add(new PositionF(0, 3))) == category
 						|| entity.catAtThisPos(position.add(new PositionF(3, 3))) == category) {
+					entityEncountered = entity;
 					return true;
 				}
 				break;
@@ -328,6 +341,14 @@ public class CarEntity extends Entity {
 		Physics physics = this.physics;
 		this.physics = carentity.physics;
 		carentity.physics = physics;
+		carentity.swapInThisTick = true;
+		this.swapInThisTick = true;
+		carentity.physics.bounce(carentity.m_direction.twoapart());
+		this.physics.bounce(this.m_direction.twoapart());
+
+		this.start = System.currentTimeMillis();
+		carentity.start = System.currentTimeMillis();
+		System.out.println("Swap done");
 
 	}
 

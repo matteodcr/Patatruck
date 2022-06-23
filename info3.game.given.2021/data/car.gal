@@ -8,7 +8,7 @@ Car(Drive) {
     | (!Cell(F,O)) & (!Cell(R,O)) ? 30%Move(R) / Move(F) :(Drive)
 
     * (Stop)
-    | Cell(H,@) ? Pop(F) :(Stop)  
+    | Cell(H,@) ? Wait :(Stop)  
     | True ? :(Drive) 
     
     * (Slow)

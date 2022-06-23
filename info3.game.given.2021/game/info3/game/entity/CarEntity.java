@@ -55,7 +55,7 @@ public class CarEntity extends Entity {
 
 	@Override
 	public boolean pop(AutDirection direction) {
-		if (!swapInThisTick) {
+		if (!swapInThisTick && isPlayer) {
 			this.swap((CarEntity) entityEncountered);
 			start = System.currentTimeMillis();
 		}
@@ -341,6 +341,7 @@ public class CarEntity extends Entity {
 		Physics physics = this.physics;
 		this.physics = carentity.physics;
 		carentity.physics = physics;
+
 		carentity.swapInThisTick = true;
 		this.swapInThisTick = true;
 		carentity.physics.bounce(carentity.m_direction.twoapart());

@@ -46,7 +46,10 @@ public class KitchenDeliveryTile extends KitchenTile {
 	}
 
 	boolean recetteReady(Item currentOrder1) {
-		return (!assembly.getItems().isEmpty() && currentOrder1 == assembly.getItems().get(0));
+		System.out.println("ITEM POSE :" + assembly.getItems().get(0));
+		System.out.println("ITEM VOULU :" + currentOrder1);
+
+		return (!assembly.getItems().isEmpty() && currentOrder1.equals(assembly.getItems().get(0)));
 	}
 
 	@Override
@@ -58,8 +61,6 @@ public class KitchenDeliveryTile extends KitchenTile {
 			} else {
 				assembly.addAssembly(player.m_assembly);
 				player.m_assembly.getItems().clear();
-				System.out.println(assembly.getItems());
-				System.out.println(assembly.getItems().get(0).getSauce());
 
 				return true;
 
@@ -78,12 +79,14 @@ public class KitchenDeliveryTile extends KitchenTile {
 			if (recetteReady(((KitchenScene) parentScene).currentOrder0)) {
 				((KitchenScene) parentScene).currentOrder0 = Item.getRandomItem();
 				assembly.getItems().clear();
+				parentScene.m_game.timeGame += 30000;
 				return true;
 			}
 
 			if (recetteReady(((KitchenScene) parentScene).currentOrder1)) {
 				((KitchenScene) parentScene).currentOrder1 = Item.getRandomItem();
 				assembly.getItems().clear();
+				parentScene.m_game.timeGame += 30000;
 				return true;
 			}
 

@@ -59,7 +59,7 @@ public class Game {
 	public static final int HEIGHT = 144;
 
 	public static final int SCALE_FACTOR = 6;
-	public static final int START_TIME = 200000; // ms
+	public static final int START_TIME = 120000; // ms
 
 	/**
 	 * Ticks par seconde
@@ -122,7 +122,7 @@ public class Game {
 			GAutomaton aut = automataList.get(type.defaultAutomaton);
 			selection.put(type, allAutomata.indexOf(aut));
 		}
-		
+
 		for (Map.Entry<EntityType, Integer> entry : selection.entrySet()) {
 			boundAutomata.put(entry.getKey(), allAutomata.get(entry.getValue()));
 		}

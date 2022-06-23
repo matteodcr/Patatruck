@@ -81,22 +81,23 @@ public class CityScene extends Scene {
 
 	/* Renvoit la categorie du cadrant de la tuile a cette pos */
 	public AutCategory whatsTheCategoryOfTile(PositionF pos, Entity entity) {
-		int gX = entity.getGridPosFromPos().getX();
-		int gY = entity.getGridPosFromPos().getY();
-		CityTile tile = cachedCityTiles.get(new PositionI(gX, gY));
-		switch (whereInTile(pos)) {
-		case 0:
-			return tile.category0;
-		case 1:
-			return tile.category1;
-		case 2:
-			return tile.category2;
-		case 3:
-			return tile.category3;
-		default:
-			System.out.println("panic");
-		}
-		return null;
+//		int gX = entity.getGridPosFromPos().getX();
+//		int gY = entity.getGridPosFromPos().getY();
+//		CityTile tile = cachedCityTiles.get(new PositionI(gX, gY));
+//		switch (whereInTile(pos)) {
+//		case 0:
+//			return tile.category0;
+//		case 1:
+//			return tile.category1;
+//		case 2:
+//			return tile.category2;
+//		case 3:
+//			return tile.category3;
+//		default:
+//			System.out.println("panic");
+//		}
+//		return null;
+		return AutCategory.J;
 	}
 
 	/* Fct qui renvoit le cadrant parmi les 4 d'une tuile de la ville */
@@ -129,14 +130,11 @@ public class CityScene extends Scene {
 	@Override
 	public void render(Graphics g) {
 		super.render(g);
-		final int tileWidth = getTileWidth();
-		final PositionF origin = getOriginOffset();
 
 		for (Entity entity : entity_list) {
-			int gX = entity.getGridPosFromPos().getX();
-			int gY = entity.getGridPosFromPos().getY();
-			Graphics subGraphics = g.window(origin.add(entity.getPosition()).getX(),
-					origin.add(entity.getPosition()).getY(), 4, 4);
+			PositionF posGraphics = getPosRelativeToVan(entity);
+			System.out.println("posgraphx=" + posGraphics.getX() + " posgraphy=" + posGraphics.getY());
+			Graphics subGraphics = g.window(posGraphics.getX(), posGraphics.getY(), 4, 4);
 
 			entity.render(subGraphics);
 		}
@@ -152,11 +150,9 @@ public class CityScene extends Scene {
 
 	}
 
-//	private void debugCache() {
-//		System.out.println("==========");
-//		CachedCityTiles.entrySet();
-//		for (Entry<PositionI, CityTile> entry : CachedCityTiles.entrySet()) {
-//			System.out.println(entry.getKey() + "/" + entry.getValue());
-//		}
-//	}
+	/* Visuellement la fenêtre le van n'est PAS en 0,0 mais en center */
+	private PositionF getPosRelativeToVan(Entity entity) {
+		return entity.getPosition().add(center).sub(getCook().getPosition());
+	}
+
 }

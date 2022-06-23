@@ -31,26 +31,35 @@ import info3.game.position.PositionI;
 
 public class KitchenScene extends Scene {
 
+	public Tile[][] kitchenGrid;
+
+	// Position
+	private static final PositionI KITCHEN_ORIGIN = new PositionI(44, 10);
+
+	// Tables de stockage
+	private HashMap<ItemType, StockTable> stockTables;
+	private ArrayList<PositionF> indexStockEmplacements = new ArrayList<>(List.of(new PositionF(0, 6),
+			new PositionF(0, 7), new PositionF(0, 8), new PositionF(3, 6), new PositionF(3, 7), new PositionF(3, 8)));
+
+	// Les deux commandes simultanées
 	public Item currentOrder0;
 	public Item currentOrder1;
-	private HashMap<ItemType, StockTable> stockTables;
 
-	private static final PositionI KITCHEN_ORIGIN = new PositionI(44, 10);
+	// Gestion cafards
 	public static final int MAXIMUM_COCKROACH_NUMBER = 20;
 
+	// Les deux entités qui bougent dans la cuisine
 	private CookEntity cook;
 	private CockroachEntity cockroach;
 	private int cockroachCounter = 1;
+
+	// Gestion de la fumée
 	public boolean smoke = false;
 	public int smokeCounter = 100;
 
 	private ArrayList<PositionF> indexEmplacements = new ArrayList<>(List.of(new PositionF(0, 1), new PositionF(0, 2),
 			new PositionF(0, 3), new PositionF(0, 4), new PositionF(0, 5), new PositionF(3, 1), new PositionF(3, 2),
 			new PositionF(3, 3), new PositionF(3, 4), new PositionF(3, 5)));
-	private ArrayList<PositionF> indexStockEmplacements = new ArrayList<>(List.of(new PositionF(0, 6),
-			new PositionF(0, 7), new PositionF(0, 8), new PositionF(3, 6), new PositionF(3, 7), new PositionF(3, 8)));
-
-	public Tile[][] kitchenGrid;
 
 	public KitchenScene(int pixelWidth, int pixelHeight, Game g) {
 		super(pixelWidth, pixelHeight, g);
@@ -67,6 +76,7 @@ public class KitchenScene extends Scene {
 			currentOrder1 = Item.getRandomItem();
 			m_game.setTimer();
 
+			// Construction de la grille
 			kitchenGrid = new Tile[][] {
 					new Tile[] { new BasicTableTile(this, 0, 0, AutDirection.S),
 							new BasicTableTile(this, 1, 0, AutDirection.S),
@@ -94,6 +104,9 @@ public class KitchenScene extends Scene {
 		}
 	}
 
+	/**
+	 * Echange aléatoirement les KitchenTiles entre elles
+	 */
 	public void shuffle() {
 		// generate future emplacements
 		Random rdm = new Random();
@@ -186,6 +199,12 @@ public class KitchenScene extends Scene {
 		return stockTables;
 	}
 
+	/**
+	 * Affiche le fond ou la liste des recettes si la touche [ESC] est enclenchée
+	 * 
+	 * @param g
+	 */
+
 	@Override
 	public void render(Graphics g) {
 		g.fill(0xff511e43);
@@ -222,6 +241,11 @@ public class KitchenScene extends Scene {
 
 	}
 
+	/**
+	 * Affiche la commande en cours : 2 plats + leurs options
+	 * 
+	 * @param g
+	 */
 	public void renderCurrentOrder(Graphics g) {
 		g.drawSprite(currentOrder0.getType().getSprite(), 226, 7);
 		g.drawSprite(currentOrder1.getType().getSprite(), 240, 7);
@@ -256,6 +280,8 @@ public class KitchenScene extends Scene {
 	@Override
 	public void tick(long elapsed) {
 		super.tick(elapsed);
+
+		// On réduit le temps qu'il reste pour l'affichage de la fumée
 		if (smoke) {
 			smokeCounter--;
 		}
@@ -263,6 +289,18 @@ public class KitchenScene extends Scene {
 			smoke = false;
 			smokeCounter = 100;
 		}
+
+		// Réapparition aléatoire des cafards
+		Random rand = new Random();
+		if (rand.nextInt(1000) < 2) {
+			try {
+				this.addEntity(new CockroachEntity(this, new PositionF(135, 36)));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+
+		// On tick chaque Tile
 		for (int i = 0; i < kitchenGrid.length; i++) {
 			for (int j = 0; j < kitchenGrid[i].length; j++) {
 				if (kitchenGrid[i][j] != null) {
@@ -271,19 +309,6 @@ public class KitchenScene extends Scene {
 			}
 		}
 
-		Random rand = new Random();
-		if (rand.nextInt(10000) < 2) {
-			try {
-				this.addEntity(new CockroachEntity(this, new PositionF(135, 36)));
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		/*
-		 * Je l'ai déplacé ici pr l'instant car plus d'acces a kitchenScene depuis Game
-		 * (Vincent
-		 */
 	}
 
 }

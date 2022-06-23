@@ -59,6 +59,12 @@ public class TestRecipes {
 		burger.getItems().get(0).setSauce(Sauce.MAYO);
 		assert burger.getItems().get(0).getSauce() == Sauce.KETCHUP_MAYO;
 
+		Assembly frite = new Assembly();
+		frite.addItem(new Item(ItemType.COOKED_FRIES));
+		frite.getItems().get(0).setSauce(Sauce.MAYO);
+		assert frite.getItems().get(0).getSauce() == Sauce.MAYO;
+		assert frite.getItems().get(0).getType().isFinalItem() == true;
+
 		// random recette
 		Item.getRandomItem();
 

@@ -21,6 +21,7 @@ public class CityScene extends Scene {
 	private PositionF vanPosition = PositionF.ZERO;
 	public final WorldGenerator worldGenerator = new WorldGenerator(0);
 	private CarEntity car;
+	private CarEntity car2;
 	private CarEntity cookCar;
 
 	private HashMap<PositionI, CityTile> cachedCityTiles;
@@ -139,6 +140,7 @@ public class CityScene extends Scene {
 	@Override
 	public void render(Graphics g) {
 		super.render(g);
+<<<<<<< HEAD
 
 		for (Entity entity : entity_list) {
 			PositionF posGraphics = getPosRelativeToVan(entity);
@@ -148,6 +150,11 @@ public class CityScene extends Scene {
 			entity.render(subGraphics);
 		}
 
+=======
+		this.cookCar.render(g);
+		car.render(g);
+		car.render(g);
+>>>>>>> render car
 		Sprite speed = Sprite.SPEEDOMETER;
 		if (cookCar.physics.getVelocity() < 20) {
 			speed = Sprite.SPEEDOMETER_LOW;

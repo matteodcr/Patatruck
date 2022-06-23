@@ -29,6 +29,8 @@ public abstract class Entity implements AutomatonListener {
 
 	AutCategory category;
 	public Item item;
+	boolean isTruck = false;
+	boolean isPlayer = false;
 
 	// If different from what `getType` returns, we should replace the automaton
 	// This is checked at each tick
@@ -301,5 +303,13 @@ public abstract class Entity implements AutomatonListener {
 		if (posX <= pos.getX() && pos.getX() <= posX + 3 && posY <= pos.getY() && pos.getY() <= posY + 3)
 			return category;
 		return null;
+	}
+
+	public boolean getIsTruck() {
+		return this.isTruck;
+	}
+
+	public boolean getIsPlayer() {
+		return this.isPlayer;
 	}
 }

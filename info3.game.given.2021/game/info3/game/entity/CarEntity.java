@@ -1,5 +1,6 @@
 package info3.game.entity;
 
+import info3.game.automata.GAutomaton;
 import info3.game.graphics.Graphics;
 import info3.game.graphics.Sprite;
 import info3.game.position.AutCategory;
@@ -46,7 +47,14 @@ public class CarEntity extends Entity {
 
 	@Override
 	public boolean pop(AutDirection direction) {
-		System.out.println("pop");
+		// this.swap();
+		if (isPlayer) {
+			CarEntity tmp = this.isNear();
+			if (tmp != null) {
+				System.out.println("pop");
+				this.swap(tmp);
+			}
+		}
 		// TODO transfert d'automates
 		// penser à donner la physique aussi
 		return true;
@@ -306,17 +314,41 @@ public class CarEntity extends Entity {
 	}
 
 	public void swap(CarEntity carentity) {
-		carentity.isTruck = !carentity.isTruck;
-		this.isTruck = !this.isTruck;
-		if (this.isTruck) {
+		carentity.isPlayer = !carentity.isPlayer;
+		this.isPlayer = !this.isPlayer;
+
+		if (this.isPlayer) {
 			((CityScene) this.parentScene).setCook(this);
+			((CityScene) this.parentScene).setCar(carentity);
 		} else {
 			((CityScene) this.parentScene).setCook(carentity);
+			((CityScene) this.parentScene).setCar(this);
 		}
+
 		Physics physics = this.physics;
 		this.physics = carentity.physics;
 		carentity.physics = physics;
 
+		GAutomaton auto = this.automaton;
+		this.automaton = carentity.automaton;
+		carentity.automaton = auto;
+
+	}
+
+	public CarEntity isNear() {
+		PositionF posTmp = null;
+		for (Entity entity : parentScene.entity_list) {
+			if (entity.getIsTruck() && !entity.getIsPlayer()) {
+				posTmp = entity.getPosition();
+				if (posTmp.getX() - this.position.getX() < 10F && posTmp.getX() - this.position.getX() > -10F) {
+					if (posTmp.getY() - this.position.getY() < 10F && posTmp.getY() - this.position.getY() > -10F) {
+						return (CarEntity) entity;
+					}
+				}
+
+			}
+		}
+		return null;
 	}
 
 }

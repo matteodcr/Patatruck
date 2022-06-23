@@ -8,7 +8,8 @@ import info3.game.scene.Scene;
 import info3.game.worldgen.GenTile;
 
 public class CityTile extends Tile {
-	private final GenTile genTile;
+
+	public final GenTile genTile;
 
 	public CityTile(Scene parent, int gridX, int gridY) {
 		super(parent, gridX, gridY);

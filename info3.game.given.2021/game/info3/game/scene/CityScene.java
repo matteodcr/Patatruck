@@ -1,7 +1,5 @@
 package info3.game.scene;
 
-import java.util.HashMap;
-
 import info3.game.Game;
 import info3.game.entity.CarEntity;
 import info3.game.entity.CityTile;
@@ -28,9 +26,8 @@ public class CityScene extends Scene {
 
 	public CityScene(int pixelWidth, int pixelHeight, Game g) {
 		super(pixelWidth, pixelHeight, g);
-		cachedCityTiles = new HashMap<PositionI, CityTile>();
 		try {
-		car = new CarEntity(this, center, false, false);
+		car = new CarEntity(this, vanPosition, false, false);
 		addEntity(car);
 		cookCar = new CarEntity(this, center, true, true);
 		addEntity(cookCar);
@@ -75,35 +72,42 @@ public class CityScene extends Scene {
 	@Override
 	public Tile getTileAt(int gridX, int gridY) {
 		Tile tile = new CityTile(this, gridX, gridY);
-		cachedCityTiles.put(new PositionI(gridX, gridY), (CityTile) tile);
 		return tile;
 	}
 
 	/* Renvoit la categorie du cadrant de la tuile a cette pos */
 	public AutCategory whatsTheCategoryOfTile(PositionF pos, Entity entity) {
-//		int gX = entity.getGridPosFromPos().getX();
-//		int gY = entity.getGridPosFromPos().getY();
-//		CityTile tile = cachedCityTiles.get(new PositionI(gX, gY));
-//		switch (whereInTile(pos)) {
-//		case 0:
-//			return tile.category0;
-//		case 1:
-//			return tile.category1;
-//		case 2:
-//			return tile.category2;
-//		case 3:
-//			return tile.category3;
-//		default:
-//			System.out.println("panic");
-//		}
-//		return null;
-		return AutCategory.J;
+		int gX = entity.getGridPosFromPos().getX();
+		int gY = entity.getGridPosFromPos().getY();
+		CityTile tile = (CityTile) getTileAt(gX, gY);
+
+		switch (whereInTile(pos)) {
+		case 0:
+			if (tile.genTile.collisionBox.topLeft)
+				return AutCategory.O;
+			else
+				return AutCategory.J;
+		case 1:
+			if (tile.genTile.collisionBox.top)
+				return AutCategory.O;
+			else
+				return AutCategory.J;
+		case 2:
+			if (tile.genTile.collisionBox.left)
+				return AutCategory.O;
+			else
+				return AutCategory.J;
+		case 3:
+			return AutCategory.O;
+		default:
+			System.out.println("panic");
+		}
+		return null;
 	}
 
 	/* Fct qui renvoit le cadrant parmi les 4 d'une tuile de la ville */
 	public int whereInTile(PositionF pos) {
-		PositionF removedOriginOffset = pos.minus(center);
-		PositionF posModuloTileWidth = removedOriginOffset.divMod(getTileWidth());
+		PositionF posModuloTileWidth = pos.divMod(getTileWidth());
 		if (posModuloTileWidth.getX() < 9 && posModuloTileWidth.getY() < 9)
 			return 0;
 		if (posModuloTileWidth.getX() >= 9 && posModuloTileWidth.getY() < 9)

@@ -266,20 +266,20 @@ public abstract class Entity implements AutomatonListener {
 	 * 
 	 */
 	public PositionI getGridPosFromPos() {
-		PositionF pos_tmp = position.add(parentScene.getOriginOffset());
-		if (pos_tmp.getX() < 0 || pos_tmp.getY() < 0) {
-			pos_tmp = pos_tmp.divFloorF(parentScene.getTileWidth());
-			float pos_tmp_x = pos_tmp.getX();
-			float pos_tmp_y = pos_tmp.getY();
-			int pos_x = (int) pos_tmp_x;
-			int pos_y = (int) pos_tmp_y;
-			if (pos_tmp_x < 0)
-				pos_x = (int) Math.floor(pos_tmp_x);
-			if (pos_tmp_y < 0)
-				pos_y = (int) Math.floor(pos_tmp_y);
-			return new PositionI(pos_x, pos_y);
+		PositionF posTmp = position.add(parentScene.getOriginOffset());
+		if (posTmp.getX() < 0 || posTmp.getY() < 0) {
+			posTmp = posTmp.divFloorF(parentScene.getTileWidth());
+			float posTmpX = posTmp.getX();
+			float posTmpY = posTmp.getY();
+			int posX = (int) posTmpX;
+			int posY = (int) posTmpY;
+			if (posTmpX < 0)
+				posX = (int) Math.floor(posTmpX);
+			if (posTmpY < 0)
+				posY = (int) Math.floor(posTmpY);
+			return new PositionI(posX, posY);
 		} else {
-			return pos_tmp.divFloor(parentScene.getTileWidth());
+			return posTmp.divFloor(parentScene.getTileWidth());
 		}
 
 	}

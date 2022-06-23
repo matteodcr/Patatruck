@@ -174,15 +174,15 @@ public class CityScene extends Scene {
 	public PositionI getGridPosFromPosCity(PositionF pos) {
 		if (pos.getX() < 0 || pos.getY() < 0) {
 			pos = pos.divFloorF(getTileWidth());
-			float pos_tmp_x = pos.getX();
-			float pos_tmp_y = pos.getY();
-			int pos_x = (int) pos_tmp_x;
-			int pos_y = (int) pos_tmp_y;
-			if (pos_tmp_x < 0)
-				pos_x = (int) Math.floor(pos_tmp_x);
-			if (pos_tmp_y < 0)
-				pos_y = (int) Math.floor(pos_tmp_y);
-			return new PositionI(pos_x, pos_y);
+			float posTmpX = pos.getX();
+			float posTmpY = pos.getY();
+			int posX = (int) posTmpX;
+			int posY = (int) posTmpY;
+			if (posTmpX < 0)
+				posX = (int) Math.floor(posTmpX);
+			if (posTmpY < 0)
+				posY = (int) Math.floor(posTmpY);
+			return new PositionI(posX, posY);
 		} else {
 			return pos.divFloor(getTileWidth());
 		}

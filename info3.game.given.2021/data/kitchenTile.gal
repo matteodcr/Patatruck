@@ -1,4 +1,4 @@
-Firecook(Init){
+CookTable(Init){
     *(Init)
     |Key(SPACE) & Cell(F,@) ? Pop:(Cook)         
     
@@ -13,7 +13,7 @@ Firecook(Init){
     |(!Key(SPACE)) & Cell(F,@) ? :(Init)  
 }
 
-Fry(Init){
+FryTable(Init){
     *(Init)
     |Key(SPACE) & Cell(F,@) ? Pop:(Cook)         
     
@@ -39,7 +39,7 @@ StockTable(Still){
 | True() ? :(Empty)
 }
 
-Table(Init){
+BasicTable(Init){
     *(Init)
     |Cell(F,@) & Key(SPACE) ? Pop:(Presswait1)       
     |True ?    :(Init)   
@@ -63,7 +63,7 @@ SauceTable(Still){
     |True ? Pop() :(Still)
 }
 
-Cut(Init){
+CutTable(Init){
     *(Init)
     |Key(SPACE) & Cell(F,@) ? Pop:(Cut)         
     
@@ -77,7 +77,7 @@ Cut(Init){
     |(!Key(SPACE)) & Cell(F,@) ? :(Init)                                   
 }
 
-Kitchen_Delivery(Init){
+DeliveryTable(Init){
      *(Init)
     |Cell(F,@) & Key(SPACE) ? Pop:(Presswait1)       
     |True ?    :(Init)   
@@ -95,7 +95,7 @@ Kitchen_Delivery(Init){
     |True ?    :(Presswait2)  
 }
 
-Trash(Vide){
+TrashTable(Vide){
 	*(Vide)
 	|Cell(F,@) & Key(SPACE) ? Pop:(Plein)
 	*(Plein)

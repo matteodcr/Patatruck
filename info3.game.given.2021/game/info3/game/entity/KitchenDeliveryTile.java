@@ -46,9 +46,6 @@ public class KitchenDeliveryTile extends KitchenTile {
 	}
 
 	boolean recetteReady(Item currentOrder1) {
-		System.out.println("ITEM POSE :" + assembly.getItems().get(0));
-		System.out.println("ITEM VOULU :" + currentOrder1);
-
 		return (!assembly.getItems().isEmpty() && currentOrder1.equals(assembly.getItems().get(0)));
 	}
 
@@ -71,8 +68,6 @@ public class KitchenDeliveryTile extends KitchenTile {
 
 	@Override
 	public boolean wizz(AutDirection direction) {
-		System.out.println("Wizz" + "");
-
 		Entity eInteracting = selectEntityToInteractWith();
 		if (eInteracting instanceof CookEntity && ((CookEntity) eInteracting) != null) {
 
@@ -101,8 +96,6 @@ public class KitchenDeliveryTile extends KitchenTile {
 				assembly.addAssembly(player.m_assembly);
 				player.m_assembly.getItems().clear();
 			}
-
-			System.out.println(assembly.getItems());
 			return true;
 
 		}

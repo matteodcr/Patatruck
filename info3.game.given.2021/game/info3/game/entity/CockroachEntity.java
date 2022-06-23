@@ -98,14 +98,14 @@ public class CockroachEntity extends Entity {
 	@Override
 	public boolean egg(AutDirection direction) {
 		if (((KitchenScene) parentScene).getCockroachCounter() <= KitchenScene.MAXIMUM_COCKROACH_NUMBER) {
-			Entity nouveau_carfard = null;
+			Entity newCockroach = null;
 			try {
-				nouveau_carfard = new CockroachEntity(this.parentScene, position);
+				newCockroach = new CockroachEntity(this.parentScene, position);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			return this.parentScene.addEntity(nouveau_carfard);
+			return this.parentScene.addEntity(newCockroach);
 		}
 		return false;
 	}

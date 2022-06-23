@@ -24,8 +24,8 @@ public abstract class Entity implements AutomatonListener {
 	AutDirection m_direction;
 	GAutomaton automaton;
 	int deathTime = 0;
-	int move_timer = 0, move_timer_max = 0; // allows to move only when move_timer==0
-	GState current_state;
+	int moveTimer = 0, moveTimerMax = 0; // allows to move only when moveTimer==0
+	GState currentState;
 	long start, finish, timeElapsed;
 
 	AutCategory category;
@@ -60,11 +60,11 @@ public abstract class Entity implements AutomatonListener {
 			lastEntityType = entityType;
 		}
 
-		GState state = automaton.run(this, current_state);
+		GState state = automaton.run(this, currentState);
 		if (state != null) {
-			current_state = state;
+			currentState = state;
 		}
-		if (current_state.name.equals(""))
+		if (currentState.name.equals(""))
 			parentScene.removeEntity(this);
 	}
 
@@ -101,11 +101,11 @@ public abstract class Entity implements AutomatonListener {
 	}
 
 	public boolean canMove() {
-		return move_timer == 0;
+		return moveTimer == 0;
 	}
 
 	public void hasMoved() {
-		this.move_timer = move_timer_max;
+		this.moveTimer = moveTimerMax;
 	}
 
 	public AutDirection convertRelativToAbsolutedir(AutDirection direction) {
@@ -211,7 +211,6 @@ public abstract class Entity implements AutomatonListener {
 			return false;
 		}
 		return false;
-
 	}
 
 	private boolean isItThatGrid(int gY, int gX) {

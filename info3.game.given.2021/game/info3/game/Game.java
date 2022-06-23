@@ -218,12 +218,12 @@ public class Game {
 				m_textElapsed = 0;
 				float period = m_canvas.getTickPeriod();
 				int fps = m_canvas.getFPS();
-				int nb_entities_k = screen.getEntityCount();
+				int nbEntities = screen.getEntityCount();
 				String txt = "Tick=" + period + "ms";
 				while (txt.length() < 15)
 					txt += " ";
 				txt = txt + fps + " fps   ";
-				txt += "Nb_entities=" + nb_entities_k;
+				txt += "Nb_entities=" + nbEntities;
 				m_text.setText(txt);
 
 				screen.tick(elapsed);

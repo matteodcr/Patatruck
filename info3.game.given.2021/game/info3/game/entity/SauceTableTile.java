@@ -9,15 +9,15 @@ import info3.game.scene.Scene;
 
 public class SauceTableTile extends KitchenTile {
 	Sauce sauce;
-	static final Sprite mayo = Sprite.MAYONNAISE, ketchup = Sprite.KETCHUP;
+	static final Sprite MAYO = Sprite.MAYONNAISE, KETCHUP = Sprite.KETCHUP;
 
 	public SauceTableTile(Scene parent, int gridX, int gridY, AutDirection d, Sauce sauce) {
 		super(parent, gridX, gridY, null, d);
 		this.sauce = sauce;
 		if (sauce == Sauce.KETCHUP) {
-			defaultSprite = ketchup;
+			defaultSprite = KETCHUP;
 		} else {
-			defaultSprite = mayo;
+			defaultSprite = MAYO;
 		}
 	}
 

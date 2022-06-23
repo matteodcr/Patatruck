@@ -11,11 +11,11 @@ import info3.game.scene.Scene;
 public class PanTile extends KitchenTile {
 	Item item;
 	int compteur;
-	static final Sprite empty = Sprite.OFF_PAN_TILE, full = Sprite.ON_PAN_TILE;
+	static final Sprite EMPTY = Sprite.OFF_PAN_TILE, FULL = Sprite.ON_PAN_TILE;
 
 	public PanTile(Scene parent, int gridX, int gridY, AutDirection d) {
 		super(parent, gridX, gridY, null, d);
-		defaultSprite = empty;
+		defaultSprite = EMPTY;
 	}
 
 	@Override
@@ -34,7 +34,7 @@ public class PanTile extends KitchenTile {
 			this.item = player.m_assembly.getItems().get(0);
 			player.m_assembly.getItems().clear();
 			this.compteur = 100;
-			defaultSprite = full;
+			defaultSprite = FULL;
 			return true;
 		}
 	}
@@ -52,7 +52,7 @@ public class PanTile extends KitchenTile {
 			this.compteur--;
 			return false;
 		} else {
-			defaultSprite = empty;
+			defaultSprite = EMPTY;
 			this.item = item.cook();
 			this.compteur = 100;
 			return true;

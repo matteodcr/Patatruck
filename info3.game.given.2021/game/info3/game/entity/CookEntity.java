@@ -19,7 +19,7 @@ public class CookEntity extends Entity {
 
 	public CookEntity(Scene parent, PositionF position) throws IOException {
 		super(parent, position);
-		move_timer_max = 100;
+		moveTimerMax = 100;
 		category = AutCategory.AROBASE;
 		m_assembly = new Assembly();
 	}

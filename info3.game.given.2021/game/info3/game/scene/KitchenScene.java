@@ -273,8 +273,8 @@ public class KitchenScene extends Scene {
 		return cockroachCounter;
 	}
 
-	public void setCockroachCounter(int cockroack_counter) {
-		this.cockroachCounter = cockroack_counter;
+	public void setCockroachCounter(int cockroackCounter) {
+		this.cockroachCounter = cockroackCounter;
 	}
 
 	@Override

@@ -214,7 +214,7 @@ public class KitchenScene extends Scene {
 		final int tileWidth = getTileWidth();
 		final PositionF origin = getOriginOffset();
 
-		for (Entity entity : entity_list) {
+		for (Entity entity : entityList) {
 			int gX = entity.getGridPosFromPos().getX();
 			int gY = entity.getGridPosFromPos().getY();
 			Graphics subGraphics = g.window(gX * tileWidth - origin.getX(), gY * tileWidth - origin.getY(), tileWidth,

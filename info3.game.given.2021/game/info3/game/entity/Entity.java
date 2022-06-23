@@ -135,7 +135,7 @@ public abstract class Entity implements AutomatonListener {
 		int gridX = getGridPosFromPos().getX();
 		int gridY = getGridPosFromPos().getY();
 		AutDirection newDirection = convertRelativToAbsolutedir(direction);
-		for (Entity entity : parentScene.entity_list) {
+		for (Entity entity : parentScene.entityList) {
 			switch (newDirection) {
 			case N: {
 				if (entity.isItThatGrid(gridY - 1, gridX) && entity.category == category) {
@@ -226,7 +226,7 @@ public abstract class Entity implements AutomatonListener {
 	public Entity selectEntityToInteractWith() {
 		int gridX = getGridPosFromPos().getX();
 		int gridY = getGridPosFromPos().getY();
-		for (Entity entity : parentScene.entity_list) {
+		for (Entity entity : parentScene.entityList) {
 			switch (m_direction) {
 			case N:
 				if (entity.isItThatGrid(gridY - 1, gridX) && entity.m_direction == AutDirection.S)

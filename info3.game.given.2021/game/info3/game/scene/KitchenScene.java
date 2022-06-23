@@ -219,16 +219,16 @@ public class KitchenScene extends Scene {
 			g.drawSprite(currentOrder1.getSauce().getSprite(), 240, 25);
 		}
 		if (currentOrder0.hasOptionalSalad()) {
-			g.drawSprite(Sprite.SALADE, 226, 40);
+			g.drawSprite(Sprite.SALADELEAF, 227, 40);
 		}
 		if (currentOrder1.hasOptionalSalad()) {
-			g.drawSprite(Sprite.SALADE, 240, 40);
+			g.drawSprite(Sprite.SALADELEAF, 241, 40);
 		}
 		if (currentOrder0.hasOptionalTomato()) {
-			g.drawSprite(Sprite.TOMATO, 226, 54);
+			g.drawSprite(Sprite.TOMATOSLICE, 226, 53);
 		}
 		if (currentOrder1.hasOptionalTomato()) {
-			g.drawSprite(Sprite.TOMATO, 240, 54);
+			g.drawSprite(Sprite.TOMATOSLICE, 240, 53);
 		}
 	}
 

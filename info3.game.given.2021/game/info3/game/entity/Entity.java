@@ -265,10 +265,11 @@ public abstract class Entity implements AutomatonListener {
 	public void setDirection(AutDirection absDirection) {
 		this.m_direction = absDirection;
 	/*
-	 * Fct qui renvoit la grille correspondante à une position en pixels(marche ds
-	 * les 2 scènes) Pour la cityScene 0,0 est le centre du viewport, il faut donc
-	 * faire qq calculs pour les grilles qui peuvent être négatives, si on a des
-	 * valeurs positives, on divise juste la position reçue en retirant l'offset.
+	 * Fct qui renvoit la grille correspondante à la position de l'ENTITE en
+	 * pixels(marche ds les 2 scènes) Pour la cityScene 0,0 est le centre du
+	 * viewport, il faut donc faire qq calculs pour les grilles qui peuvent être
+	 * négatives, si on a des valeurs positives, on divise juste la position reçue
+	 * en retirant l'offset.
 	 * 
 	 */
 	public PositionI getGridPosFromPos() {
@@ -291,7 +292,7 @@ public abstract class Entity implements AutomatonListener {
 	}
 
 	/*
-	 * Fct qui renvoit la categoru de l'entite si la position donnée correspond à la
+	 * Fct qui renvoit la category de l'entite si la position donnée correspond à la
 	 * sienne
 	 */
 	public AutCategory catAtThisPos(PositionF pos) {

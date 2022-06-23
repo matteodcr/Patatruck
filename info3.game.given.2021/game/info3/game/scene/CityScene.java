@@ -11,6 +11,7 @@ import info3.game.graphics.Graphics.Align;
 import info3.game.graphics.Sprite;
 import info3.game.position.AutCategory;
 import info3.game.position.PositionF;
+import info3.game.position.PositionI;
 import info3.game.worldgen.WorldGenerator;
 import info3.game.position.PositionI;
 
@@ -77,8 +78,8 @@ public class CityScene extends Scene {
 
 	/* Renvoit la categorie du cadrant de la tuile a cette pos */
 	public AutCategory whatsTheCategoryOfTile(PositionF pos, Entity entity) {
-		int gX = entity.getGridPosFromPos().getX();
-		int gY = entity.getGridPosFromPos().getY();
+		int gX = getGridPosFromPosCity(pos).getX();
+		int gY = getGridPosFromPosCity(pos).getY();
 		CityTile tile = (CityTile) getTileAt(gX, gY);
 
 		switch (whereInTile(pos)) {
@@ -157,6 +158,31 @@ public class CityScene extends Scene {
 	/* Visuellement la fenêtre le van n'est PAS en 0,0 mais en center */
 	private PositionF getPosRelativeToVan(Entity entity) {
 		return entity.getPosition().add(center).sub(getCook().getPosition());
+	}
+
+	/*
+	 * Fct qui renvoit la grille correspondante à une position en pixels(marche ds
+	 * les 2 scènes) Pour la cityScene 0,0 est le centre du viewport, il faut donc
+	 * faire qq calculs pour les grilles qui peuvent être négatives, si on a des
+	 * valeurs positives, on divise juste la position reçue en retirant l'offset.
+	 * 
+	 */
+	public PositionI getGridPosFromPosCity(PositionF pos) {
+		if (pos.getX() < 0 || pos.getY() < 0) {
+			pos = pos.divFloorF(getTileWidth());
+			float pos_tmp_x = pos.getX();
+			float pos_tmp_y = pos.getY();
+			int pos_x = (int) pos_tmp_x;
+			int pos_y = (int) pos_tmp_y;
+			if (pos_tmp_x < 0)
+				pos_x = (int) Math.floor(pos_tmp_x);
+			if (pos_tmp_y < 0)
+				pos_y = (int) Math.floor(pos_tmp_y);
+			return new PositionI(pos_x, pos_y);
+		} else {
+			return pos.divFloor(getTileWidth());
+		}
+
 	}
 
 }

@@ -53,7 +53,7 @@ BasicTable(Init){
     |True ?    :(Pleine)      
     
     *(Presswait2)
-    |!Key(SPACE) ? :(Pleine)       
+    |!Key(SPACE) ? :(Init)       
     |True ?    :(Presswait2)  
 }
 

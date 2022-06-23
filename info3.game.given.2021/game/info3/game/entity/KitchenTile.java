@@ -12,7 +12,7 @@ public abstract class KitchenTile extends Tile {
 	protected KitchenTile(Scene parent, int gridX, int gridY, Sprite sprite, AutDirection d) {
 		super(parent, gridX, gridY, sprite);
 		category = AutCategory.O;
-		m_direction = d; // field inherited from Entity
+		m_direction = d;
 		player = ((KitchenScene) parent).getCook();
 
 	}

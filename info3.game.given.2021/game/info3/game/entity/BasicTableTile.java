@@ -17,11 +17,6 @@ public class BasicTableTile extends KitchenTile {
 	}
 
 	@Override
-	public EntityType getType() {
-		return EntityType.TILE_TABLE;
-	}
-
-	@Override
 	public boolean pop(AutDirection direction) {// poser
 		Entity eInteracting = selectEntityToInteractWith();
 		if (eInteracting instanceof CookEntity && ((CookEntity) eInteracting) != null) {
@@ -39,24 +34,30 @@ public class BasicTableTile extends KitchenTile {
 	}
 
 	@Override
-	public boolean wizz(AutDirection direction) {// rendre au player si fini / donner si pas fini
+	public boolean wizz(AutDirection direction) {
 		Entity eInteracting = selectEntityToInteractWith();
 		if (eInteracting instanceof CookEntity && ((CookEntity) eInteracting) != null) {
 
+			// Si le joueur ne tient rien
 			if (player.m_assembly.getItems().size() == 0 && assembly.getItems().size() != 0) {
+
+				// Si l'item à tenir est final : on le prend
 				if (assembly.getItems().get(0).getType().isFinalItem()) {
 					player.m_assembly.addAssembly(assembly);
 					assembly.getItems().clear();
+					return true;
 				} else {
+					// Si il s'agit juste d'item empilés : on reprend le dernier posé
 					player.m_assembly.addItem(assembly.getItems().remove(assembly.getItems().size() - 1));
+					return false;
 				}
+
+				// Si le joueur tient un objet, il le dépose sur la table
 			} else if (player.m_assembly.getItems().size() == 1) {
 				assembly.addAssembly(player.m_assembly);
 				player.m_assembly.getItems().clear();
+				return true;
 			}
-
-			return true;
-
 		}
 		return false;
 	}
@@ -85,6 +86,11 @@ public class BasicTableTile extends KitchenTile {
 
 			}
 		}
+	}
+
+	@Override
+	public EntityType getType() {
+		return EntityType.TILE_TABLE;
 	}
 
 	@Override

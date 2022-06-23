@@ -79,13 +79,13 @@ public class CockroachEntity extends Entity {
 	@Override
 	public void render(Graphics g) {
 		if (m_direction == AutDirection.N) {
-			g.drawSprite(Sprite.COCKROACH_ENTITY_N, this.position.getX(), this.position.getY());
+			g.drawSprite(Sprite.COCKROACH_ENTITY_N, 0, 0);
 		} else if (m_direction == AutDirection.E) {
-			g.drawSprite(Sprite.COCKROACH_ENTITY_E, this.position.getX(), this.position.getY());
+			g.drawSprite(Sprite.COCKROACH_ENTITY_E, 0, 0);
 		} else if (m_direction == AutDirection.W) {
-			g.drawSprite(Sprite.COCKROACH_ENTITY_W, this.position.getX(), this.position.getY());
+			g.drawSprite(Sprite.COCKROACH_ENTITY_W, 0, 0);
 		} else {
-			g.drawSprite(Sprite.COCKROACH_ENTITY_S, this.position.getX(), this.position.getY());
+			g.drawSprite(Sprite.COCKROACH_ENTITY_S, 0, 0);
 		}
 	}
 

@@ -193,11 +193,22 @@ public class KitchenScene extends Scene {
 		g.fill(0xff511e43);
 		g.drawSprite(Sprite.KITCHEN_TRUCK_FLOOR, KITCHEN_ORIGIN.getX(), KITCHEN_ORIGIN.getY());
 		super.render(g); // Fond et case
+
+		final int tileWidth = getTileWidth();
+		final PositionF origin = getOriginOffset();
+
 		for (Entity entity : entity_list) {
-			entity.render(g);
+			int gX = entity.getGridPosFromPos().getX();
+			int gY = entity.getGridPosFromPos().getY();
+			Graphics subGraphics = g.window(gX * tileWidth - origin.getX(), gY * tileWidth - origin.getY(), tileWidth,
+					tileWidth);
+
+			entity.render(subGraphics);
 		}
+
 		g.drawSprite(Sprite.KITCHEN_TRUCK, KITCHEN_ORIGIN.getX() - 13, KITCHEN_ORIGIN.getY() - 13);
 		g.drawSprite(Sprite.ORDER_CARD, 224, 1);
+
 		renderCurrentOrder(g);
 
 		g.drawText(String.valueOf((int) m_game.timeGame / 1000), Align.CENTER, 17, 24);

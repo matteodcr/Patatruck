@@ -32,16 +32,16 @@ public class CookEntity extends Entity {
 	public void render(Graphics g) {
 
 		if (m_direction == AutDirection.N) {
-			g.drawSprite(Sprite.PLAYER_KITCHEN_N, this.position.getX(), this.position.getY());
+			g.drawSprite(Sprite.PLAYER_KITCHEN_N, 0, 0);
 		} else if (m_direction == AutDirection.E) {
-			g.drawSprite(Sprite.PLAYER_KITCHEN_E, this.position.getX(), this.position.getY());
+			g.drawSprite(Sprite.PLAYER_KITCHEN_E, 0, 0);
 		} else if (m_direction == AutDirection.W) {
-			g.drawSprite(Sprite.PLAYER_KITCHEN_W, this.position.getX(), this.position.getY());
+			g.drawSprite(Sprite.PLAYER_KITCHEN_W, 0, 0);
 		} else {
-			g.drawSprite(Sprite.PLAYER_KITCHEN_S, this.position.getX(), this.position.getY());
+			g.drawSprite(Sprite.PLAYER_KITCHEN_S, 0, 0);
 		}
 		if (m_assembly.getItems().size() >= 1) {
-			g.drawItem(m_assembly.getItems().get(0), this.position.getX(), this.position.getY());
+			g.drawItem(m_assembly.getItems().get(0), 0, 0);
 		}
 	}
 

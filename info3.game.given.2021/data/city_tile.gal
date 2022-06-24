@@ -1,6 +1,6 @@
 CityTile(Init) {
 	* (Init):
-	| True ? 10%Egg(F) / 5%Wizz(F) / Pop(F) :(Still)
+	| True ? 2%Egg(F) / 4%Wizz(F) / Pop(F) :(Still)
 	
     * (Still):
     | True ? Pop(F): (Still)

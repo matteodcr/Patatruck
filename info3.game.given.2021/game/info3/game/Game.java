@@ -128,6 +128,10 @@ public class Game {
 		}
 
 	}
+	
+	public Screen getScreen() {
+		return screen;
+	}
 
 	public void changeScreen(Screen newScreen) {
 		screen = newScreen;

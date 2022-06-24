@@ -1,45 +1,52 @@
 package info3.game.entity;
 
-import info3.game.graphics.Graphics;
 import info3.game.position.AutCategory;
+
 import info3.game.position.AutDirection;
-import info3.game.position.Direction;
 import info3.game.position.PositionF;
-import info3.game.scene.CityScene;
 import info3.game.scene.Scene;
-import info3.game.worldgen.GenTile;
+import info3.game.entity.CityTile;
 
-public class CityTile extends Tile {
-	private final GenTile genTile;
+public class CityDeliveryTile extends CityTile {
+	private int deliveries = 0;
+	
+	static int RADIUS = 10;
 
-	public CityTile(Scene parent, int gridX, int gridY) {
-		super(parent, gridX, gridY);
-		genTile = ((CityScene) parent).worldGenerator.generate(gridX, gridY);
+	public CityDeliveryTile(Scene parent) {
+		super(parent, 0, 0);
+	}
+
+	public void delivered() {
+		deliveries += 1;
 	}
 	
-	public GenTile getGenTile() {
-		return genTile;
-	}
-
-	@Override
-	public EntityType getType() {
-		return EntityType.TILE_CITY;
-	}
-
-	@Override
-	public void render(Graphics g) {
-		g.drawSpritePart(genTile.buildingSprite, 0, 0, genTile.buildingSpriteOffsetX, genTile.buildingSpriteOffsetY);
-	}
-
 	@Override
 	public boolean pop(AutDirection direction) {
-		// Don't know what to do with this method
+		// TODO Change tile sprite to make it blink
 		return false;
 	}
 
 	@Override
 	public boolean wizz(AutDirection direction) {
-		this.parentScene.addEntity(new CarEntity(this.parentScene, new PositionF(gridX, gridY), false, Direction.NORD));
+		RADIUS += 10;
+		deliveries = 0;
+	
+		double a = (Math.random() * 2 * 3.14);
+		double r = (RADIUS * Math.sqrt(Math.random()));
+			
+		float x = (float)(r * Math.cos(a));
+		float y = (float)(r * Math.sin(a));
+		
+		while (!(((CityTile)(parentScene.getTileAt((int)x, (int)y))).getGenTile().hasRoad())) {
+			a = (Math.random() * 2 * 3.14);
+			r = (RADIUS * Math.sqrt(Math.random()));
+				
+			x = (float)(r * Math.cos(a));
+			y = (float)(r * Math.sin(a));
+		}
+		
+		this.setPosition(new PositionF(this.gridX+x, this.gridY+y));
+		
 		return true;
 	}
 
@@ -50,8 +57,7 @@ public class CityTile extends Tile {
 
 	@Override
 	public boolean egg(AutDirection direction) {
-		this.parentScene.addEntity(new CarEntity(this.parentScene, new PositionF(gridX, gridY), true, Direction.NORD));
-		return true;
+		return false;
 	}
 
 	@Override
@@ -116,6 +122,12 @@ public class CityTile extends Tile {
 
 	@Override
 	public boolean gotStuff() {
-		return false;
+		return deliveries == 2;
 	}
+
+	@Override
+	public EntityType getType() {
+		return EntityType.TILE_DELIVERY_CITY;
+	}
+
 }

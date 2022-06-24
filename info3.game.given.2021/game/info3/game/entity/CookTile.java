@@ -8,12 +8,12 @@ import info3.game.position.AutDirection;
 import info3.game.scene.KitchenScene;
 import info3.game.scene.Scene;
 
-public class PanTile extends KitchenTile {
+public class CookTile extends KitchenTile {
 	Item item;
 	int compteur;
 	static final Sprite EMPTY = Sprite.OFF_PAN_TILE, FULL = Sprite.ON_PAN_TILE;
 
-	public PanTile(Scene parent, int gridX, int gridY, AutDirection d) {
+	public CookTile(Scene parent, int gridX, int gridY, AutDirection d) {
 		super(parent, gridX, gridY, null, d);
 		defaultSprite = EMPTY;
 	}

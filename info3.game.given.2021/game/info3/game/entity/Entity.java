@@ -19,17 +19,19 @@ import info3.game.position.PositionI;
 import info3.game.scene.Scene;
 
 public abstract class Entity implements AutomatonListener {
-	Scene parentScene = null;
-	PositionF position;
-	AutDirection m_direction;
-	GAutomaton automaton;
-	int deathTime = 0;
-	int moveTimer = 0, moveTimerMax = 0; // allows to move only when moveTimer==0
-	GState currentState;
-	long start, finish, timeElapsed;
-
-	AutCategory category;
+	Scene parentScene;
 	public Item item;
+
+	GAutomaton automaton;
+	GState currentState;
+
+	AutDirection m_direction;
+	AutCategory category;
+
+	PositionF position;
+
+	int deathTime = 0;
+	long start, finish, timeElapsed;
 
 	// If different from what `getType` returns, we should replace the automaton
 	// This is checked at each tick
@@ -100,14 +102,6 @@ public abstract class Entity implements AutomatonListener {
 		return null;
 	}
 
-	public boolean canMove() {
-		return moveTimer == 0;
-	}
-
-	public void hasMoved() {
-		this.moveTimer = moveTimerMax;
-	}
-
 	public AutDirection convertRelativToAbsolutedir(AutDirection direction) {
 		switch (direction) {
 		case F:
@@ -135,6 +129,7 @@ public abstract class Entity implements AutomatonListener {
 		int gridX = getGridPosFromPos().getX();
 		int gridY = getGridPosFromPos().getY();
 		AutDirection newDirection = convertRelativToAbsolutedir(direction);
+		// Les entités qui bougent
 		for (Entity entity : parentScene.entityList) {
 			switch (newDirection) {
 			case N: {
@@ -171,6 +166,7 @@ public abstract class Entity implements AutomatonListener {
 				return false;
 			}
 		}
+		// Les Tiles qui ne bougent pas
 		switch (newDirection) {
 		case N: {
 			if (parentScene.getTileAt(gridX, gridY - 1) != null
@@ -248,7 +244,7 @@ public abstract class Entity implements AutomatonListener {
 				break;
 			}
 		}
-		return null; // no entity fills the criteria
+		return null;
 	}
 
 	public void setDirection(AutDirection absDirection) {

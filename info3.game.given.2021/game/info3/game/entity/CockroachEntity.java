@@ -72,8 +72,8 @@ public class CockroachEntity extends Entity {
 
 	@Override
 	public boolean pop(AutDirection direction) { // explode
-
-		return true; // temporary to prevent cockroach from being stuck in dupli statedd
+		// to prevent cockroach from being stuck in dupli statedd
+		return true;
 	}
 
 	@Override
@@ -102,7 +102,6 @@ public class CockroachEntity extends Entity {
 			try {
 				newCockroach = new CockroachEntity(this.parentScene, position);
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			return this.parentScene.addEntity(newCockroach);

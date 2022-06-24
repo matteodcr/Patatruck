@@ -19,7 +19,6 @@ public class CookEntity extends Entity {
 
 	public CookEntity(Scene parent, PositionF position) throws IOException {
 		super(parent, position);
-		moveTimerMax = 100;
 		category = AutCategory.AROBASE;
 		m_assembly = new Assembly();
 	}
@@ -48,16 +47,13 @@ public class CookEntity extends Entity {
 
 	@Override
 	public boolean pop(AutDirection direction) {
-		// System.out.println("");
-		// System.out.print(this.m_assembly.getItems().toString());
-		// if (!this.m_assembly.getItems().isEmpty())
-		// System.out.print(this.m_assembly.getItems().get(0).getSauce());
-
+		// changer le sprite
 		return false;
 	}
 
 	@Override
 	public boolean wizz(AutDirection direction) {
+		// le timeElapsed permet de limiter la vitesse du joueur
 		finish = System.currentTimeMillis();
 		timeElapsed = finish - start;
 

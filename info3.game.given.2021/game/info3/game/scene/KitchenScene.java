@@ -17,7 +17,7 @@ import info3.game.entity.CutTile;
 import info3.game.entity.Entity;
 import info3.game.entity.FrieTile;
 import info3.game.entity.KitchenDeliveryTile;
-import info3.game.entity.PanTile;
+import info3.game.entity.CookTile;
 import info3.game.entity.SauceTableTile;
 import info3.game.entity.StockTable;
 import info3.game.entity.Tile;
@@ -92,7 +92,7 @@ public class KitchenScene extends Scene {
 							null, null, null, new SauceTableTile(this, 9, 2, AutDirection.W, Sauce.MAYO) },
 					new Tile[] { new BasicTableTile(this, 0, 3, AutDirection.N),
 							new TrashTile(this, 1, 3, AutDirection.N), new BasicTableTile(this, 2, 3, AutDirection.N),
-							new PanTile(this, 3, 3, AutDirection.N), new PanTile(this, 4, 3, AutDirection.N),
+							new CookTile(this, 3, 3, AutDirection.N), new CookTile(this, 4, 3, AutDirection.N),
 							new CutTile(this, 5, 3, AutDirection.N),
 							new StockTable(this, 6, 3, AutDirection.N, new Item(ItemType.SALAD), Sprite.SALADE),
 							new StockTable(this, 7, 3, AutDirection.N, new Item(ItemType.BREAD), Sprite.BREAD),

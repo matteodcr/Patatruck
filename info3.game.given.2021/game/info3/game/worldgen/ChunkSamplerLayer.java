@@ -4,10 +4,10 @@ import static info3.game.worldgen.WorldGenerator.CHUNK_SIZE;
 import static info3.game.worldgen.WorldGenerator.CHUNK_SIZE_LOG;
 import static info3.game.worldgen.WorldGenerator.CHUNK_SIZE_MASK;
 
-public class SamplerLayer implements Layer<GenTile> {
+public class ChunkSamplerLayer implements Layer<GenTile> {
 	private final Layer<Chunk> chunkLayer;
 
-	public SamplerLayer(Layer<Chunk> chunkLayer) {
+	public ChunkSamplerLayer(Layer<Chunk> chunkLayer) {
 		this.chunkLayer = chunkLayer;
 	}
 

@@ -59,7 +59,7 @@ public class Game {
 	public static final int HEIGHT = 144;
 
 	public static final int SCALE_FACTOR = 6;
-	public static final int START_TIME = 200000; // ms
+	public static final int START_TIME = 120000; // ms
 
 	/**
 	 * Ticks par seconde

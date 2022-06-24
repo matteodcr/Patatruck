@@ -40,21 +40,14 @@ StockTable(Still){
 }
 
 BasicTable(Init){
-    *(Init)
-    |Cell(F,@) & Key(SPACE) ? Pop:(Presswait1)       
-    |True ?    :(Init)   
+    *(Init)   
+    |GotStuff() & Cell(F,@) & Key(SPACE) ? Pop:(Presswait)   
+    |Cell(F,@) & Key(SPACE)  ? Wizz:(Presswait) 
+    |True ?    :(Init)      
     
-     *(Presswait1)
-    |!Key(SPACE) ? :(Pleine)       
-    |True ?    :(Presswait1)          
-    
-    *(Pleine)       
-    |Cell(F,@) & Key(SPACE)  ? Wizz:(Presswait2)   
-    |True ?    :(Pleine)      
-    
-    *(Presswait2)
-    |!Key(SPACE) ? :(Init)       
-    |True ?    :(Presswait2)  
+    *(Presswait)
+    |!Key(SPACE) ? :(Init)      
+    |True ?    :(Presswait)  
 }
 
 SauceTable(Still){
@@ -79,20 +72,14 @@ CutTable(Init){
 
 DeliveryTable(Init){
      *(Init)
-    |Cell(F,@) & Key(SPACE) ? Pop:(Presswait1)       
+    |GotPower() ? Hit:(Presswait) 
+    |GotStuff() & Cell(F,@) & Key(SPACE) ? Pop:(Presswait)  
+    |Cell(F,@) & Key(SPACE) ? Wizz:(Presswait)       
     |True ?    :(Init)   
     
-     *(Presswait1)
-    |!Key(SPACE) ? :(Pleine)       
-    |True ?    :(Presswait1)          
-    
-    *(Pleine)       
-    |Cell(F,@) & Key(SPACE)  ? Wizz:(Presswait2)   
-    |True ?    :(Pleine)      
-    
-    *(Presswait2)
+     *(Presswait)
     |!Key(SPACE) ? :(Init)       
-    |True ?    :(Presswait2)  
+    |True ?    :(Presswait)          
 }
 
 TrashTable(Vide){

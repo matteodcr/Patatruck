@@ -55,7 +55,7 @@ public class KitchenDeliveryTile extends KitchenTile {
 	public boolean pop(AutDirection direction) {
 		Entity eInteracting = selectEntityToInteractWith();
 		if (eInteracting instanceof CookEntity && ((CookEntity) eInteracting) != null) {
-			if (((CookEntity) eInteracting).m_assembly.getItems().size() == 0) {
+			if (player.m_assembly.getItems().isEmpty()) {
 				return false;
 			} else {
 				assembly.addAssembly(player.m_assembly);
@@ -72,23 +72,6 @@ public class KitchenDeliveryTile extends KitchenTile {
 	public boolean wizz(AutDirection direction) {
 		Entity eInteracting = selectEntityToInteractWith();
 		if (eInteracting instanceof CookEntity && ((CookEntity) eInteracting) != null) {
-
-			if (recetteReady(((KitchenScene) parentScene).currentOrder0)) {
-				((KitchenScene) parentScene).currentOrder0 = Item.getRandomItem();
-				assembly.getItems().clear();
-				parentScene.m_game.timeGame += 30000;
-				((CityScene)((GameScreen)(parentScene.m_game.getScreen())).getCityScene()).getDeliveryTile().delivered();
-				return true;
-			}
-
-			if (recetteReady(((KitchenScene) parentScene).currentOrder1)) {
-				((KitchenScene) parentScene).currentOrder1 = Item.getRandomItem();
-				assembly.getItems().clear();
-				parentScene.m_game.timeGame += 30000;
-				((CityScene)((GameScreen)(parentScene.m_game.getScreen())).getCityScene()).getDeliveryTile().delivered();
-				return true;
-			}
-
 			if (player.m_assembly.getItems().size() == 0 && assembly.getItems().size() != 0) {
 				if (assembly.getItems().get(0).getType().isFinalItem()) {
 					player.m_assembly.addAssembly(assembly);
@@ -96,9 +79,6 @@ public class KitchenDeliveryTile extends KitchenTile {
 				} else {
 					player.m_assembly.addItem(assembly.getItems().remove(assembly.getItems().size() - 1));
 				}
-			} else if (player.m_assembly.getItems().size() == 1) {
-				assembly.addAssembly(player.m_assembly);
-				player.m_assembly.getItems().clear();
 			}
 			return true;
 		}
@@ -119,7 +99,23 @@ public class KitchenDeliveryTile extends KitchenTile {
 
 	@Override
 	public boolean hit(AutDirection direction) {
-		// TODO Auto-generated method stub
+		Entity eInteracting = selectEntityToInteractWith();
+		if (eInteracting instanceof CookEntity && ((CookEntity) eInteracting) != null) {
+
+			if (recetteReady(((KitchenScene) parentScene).currentOrder0)) {
+				((KitchenScene) parentScene).currentOrder0 = Item.getRandomItem();
+				assembly.getItems().clear();
+				parentScene.m_game.timeGame += 30000;
+				return true;
+			}
+
+			if (recetteReady(((KitchenScene) parentScene).currentOrder1)) {
+				((KitchenScene) parentScene).currentOrder1 = Item.getRandomItem();
+				assembly.getItems().clear();
+				parentScene.m_game.timeGame += 30000;
+				return true;
+			}
+		}
 		return false;
 	}
 
@@ -185,20 +181,19 @@ public class KitchenDeliveryTile extends KitchenTile {
 
 	@Override
 	public boolean gotPower() {
-		// TODO Auto-generated method stub
+		Entity eInteracting = selectEntityToInteractWith();
+		if (eInteracting instanceof CookEntity && ((CookEntity) eInteracting) != null) {
+			if (recetteReady(((KitchenScene) parentScene).currentOrder0)
+					|| recetteReady(((KitchenScene) parentScene).currentOrder1)) {
+				return true;
+			}
+		}
 		return false;
 	}
 
 	@Override
 	public boolean gotStuff() {
-		// TODO Auto-generated method stub
-		return false;
+		return !player.m_assembly.getItems().isEmpty();
 	}
-
-	/*
-	 * TODO void addItem(Item item) { // TODO }
-	 * 
-	 * TODO Item removeItem() { // TODO }
-	 */
 
 }

@@ -97,7 +97,6 @@ public class KitchenDeliveryTile extends KitchenTile {
 				player.m_assembly.getItems().clear();
 			}
 			return true;
-
 		}
 		return false;
 	}

@@ -65,8 +65,6 @@ public class KitchenScene extends Scene {
 			addEntity(cockroach);
 			currentOrder0 = Item.getRandomItem();
 			currentOrder1 = Item.getRandomItem();
-			System.out.println(currentOrder0);
-			System.out.println(currentOrder1);
 			m_game.setTimer();
 
 			kitchenGrid = new Tile[][] {

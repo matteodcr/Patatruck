@@ -15,6 +15,7 @@ import info3.game.position.AutCategory;
 import info3.game.position.AutDirection;
 import info3.game.position.AutKey;
 import info3.game.position.PositionF;
+import info3.game.position.PositionI;
 import info3.game.scene.Scene;
 
 public abstract class Entity implements AutomatonListener {
@@ -224,12 +225,6 @@ public abstract class Entity implements AutomatonListener {
 		return parentScene.m_game.m_listener.isUp(direction.toString());
 	}
 
-	public PositionI getGridPosFromPos() {
-		PositionF pos_tmp = position.add(parentScene.getOriginOffset());
-		return pos_tmp.divFloor(parentScene.getTileWidth());
-
-	}
-
 	// To handle corner equipments cases in the kitchen
 	public Entity selectEntityToInteractWith() {
 		int gridX = getGridPosFromPos().getX();
@@ -261,6 +256,8 @@ public abstract class Entity implements AutomatonListener {
 
 	public void setDirection(AutDirection absDirection) {
 		this.m_direction = absDirection;
+	}
+
 	/*
 	 * Fct qui renvoit la grille correspondante à la position de l'ENTITE en pixels.
 	 * 

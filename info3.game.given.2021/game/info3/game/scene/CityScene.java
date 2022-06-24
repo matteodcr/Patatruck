@@ -4,7 +4,6 @@ import info3.game.Game;
 import info3.game.entity.CarEntity;
 import info3.game.entity.CityTile;
 import info3.game.entity.Entity;
-import info3.game.entity.PhysicsEntity;
 import info3.game.entity.Tile;
 import info3.game.graphics.Graphics;
 import info3.game.graphics.Graphics.Align;
@@ -13,7 +12,6 @@ import info3.game.position.AutCategory;
 import info3.game.position.PositionF;
 import info3.game.position.PositionI;
 import info3.game.worldgen.WorldGenerator;
-import info3.game.position.PositionI;
 
 public class CityScene extends Scene {
 
@@ -23,19 +21,12 @@ public class CityScene extends Scene {
 	private CarEntity car;
 	private CarEntity cookCar;
 
-	private HashMap<PositionI, CityTile> cachedCityTiles;
-
 	public CityScene(int pixelWidth, int pixelHeight, Game g) {
 		super(pixelWidth, pixelHeight, g);
-		try {
 		car = new CarEntity(this, vanPosition, false, false);
 		addEntity(car);
-		cookCar = new CarEntity(this, center, true, true);
+		cookCar = new CarEntity(this, vanPosition, true, true);
 		addEntity(cookCar);
-		} catch (IOException e) {
-			e.printStackTrace();
-		} // To change with vanEntity
-
 
 	}
 
@@ -67,7 +58,7 @@ public class CityScene extends Scene {
 
 	@Override
 	public PositionF getOriginOffset() {
-		return vanPosition.add(center.neg()).add(vanPosition);
+		return cookCar.getPosition().sub(center);
 	}
 
 	@Override
@@ -142,7 +133,6 @@ public class CityScene extends Scene {
 
 		for (Entity entity : entity_list) {
 			PositionF posGraphics = getPosRelativeToVan(entity);
-			System.out.println("posgraphx=" + posGraphics.getX() + " posgraphy=" + posGraphics.getY());
 			Graphics subGraphics = g.window(posGraphics.getX(), posGraphics.getY(), 4, 4);
 
 			entity.render(subGraphics);

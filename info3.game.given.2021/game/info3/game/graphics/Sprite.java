@@ -158,6 +158,7 @@ public enum Sprite {
 
 		BASICTABLE("BasicTableTile.png", 13), COOK("cook.png", 13), KITCHEN("kitchen.png", 13),
 		DELIVERYTILE("DeliveryTile.png", 13), COCKROACH("cockroach.png", 13), MENU("menu.png", 69),
+		CITYTRUCK("cityTruck.png", 13), CAR("car.png", 13),
 
 		MAYO_INDIC("indic_mayo.png", 13), KETCHUP_INDIC("indic_ketchup.png", 13),
 		KETCHUP_MAYO_INDIC("indic_mayo_ketchup.png", 13);

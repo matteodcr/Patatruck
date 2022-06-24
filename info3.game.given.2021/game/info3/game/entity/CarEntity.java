@@ -10,6 +10,8 @@ import info3.game.scene.Scene;
 
 public class CarEntity extends Entity {
 
+	boolean isTruck;
+	boolean isPlayer;
 	private boolean swapInThisTick;
 	private Entity entityEncountered;
 	public Physics physics = new PhysicsClassic(3);

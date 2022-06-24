@@ -1,8 +1,5 @@
 package info3.game.graphics;
 
-import info3.game.content.Item;
-import info3.game.content.Sauce;
-
 public interface Graphics {
 
 	enum Align {
@@ -42,21 +39,6 @@ public interface Graphics {
 	 * tile de la spritesheet
 	 */
 	void drawSpritePart(Sprite sprite, int x, int y, int offsetU, int offsetV);
-
-	default void drawItem(Item i, float x, float y) {
-		drawSprite(i.getType().getSprite(), x, y);
-		if (i.getSauce() == Sauce.KETCHUP) {
-			drawSprite(Sprite.INDIC_KETCHUP_, x, y);
-		}
-		if (i.getSauce() == Sauce.MAYO) {
-			drawSprite(Sprite.INDIC_MAYO_, x, y);
-
-		}
-		if (i.getSauce() == Sauce.KETCHUP_MAYO) {
-			drawSprite(Sprite.KETCHUP_MAYO_INDIC_, x, y);
-		}
-
-	}
 
 	int measureText(String text);
 

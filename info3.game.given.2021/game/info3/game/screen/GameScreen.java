@@ -4,6 +4,7 @@ import info3.game.Game;
 import info3.game.graphics.Graphics;
 import info3.game.scene.CityScene;
 import info3.game.scene.KitchenScene;
+import info3.game.scene.Scene;
 
 public class GameScreen extends Screen {
 	private final KitchenScene kitchenScene = new KitchenScene(Game.WIDTH, Game.HEIGHT / 2, this.game);
@@ -11,6 +12,10 @@ public class GameScreen extends Screen {
 
 	public GameScreen(Game game) {
 		super(game);
+	}
+	
+	public Scene getCityScene() {
+		return cityScene;
 	}
 
 	@Override

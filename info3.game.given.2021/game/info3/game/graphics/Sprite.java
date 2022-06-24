@@ -11,6 +11,9 @@ import static info3.game.graphics.Sprite.Spritesheet.CAR;
 import static info3.game.graphics.Sprite.Spritesheet.CHEESE_;
 import static info3.game.graphics.Sprite.Spritesheet.CITY;
 import static info3.game.graphics.Sprite.Spritesheet.CLASSICBURGER_;
+import static info3.game.graphics.Sprite.Spritesheet.CLASSICBURGER_SALAD_;
+import static info3.game.graphics.Sprite.Spritesheet.CLASSICBURGER_SALAD_TOMATO_;
+import static info3.game.graphics.Sprite.Spritesheet.CLASSICBURGER_TOMATO_;
 import static info3.game.graphics.Sprite.Spritesheet.CLOCK_;
 import static info3.game.graphics.Sprite.Spritesheet.COCKROACHE;
 import static info3.game.graphics.Sprite.Spritesheet.COCKROACHN;
@@ -49,6 +52,7 @@ import static info3.game.graphics.Sprite.Spritesheet.POTATOCOOKED_;
 import static info3.game.graphics.Sprite.Spritesheet.POTATOSALAD_;
 import static info3.game.graphics.Sprite.Spritesheet.POTATO_;
 import static info3.game.graphics.Sprite.Spritesheet.POUTINE_;
+import static info3.game.graphics.Sprite.Spritesheet.RECIPES_;
 import static info3.game.graphics.Sprite.Spritesheet.SALADELEAF_;
 import static info3.game.graphics.Sprite.Spritesheet.SALADE_;
 import static info3.game.graphics.Sprite.Spritesheet.SAUCETABLETILE;
@@ -61,6 +65,9 @@ import static info3.game.graphics.Sprite.Spritesheet.TOMATO_;
 import static info3.game.graphics.Sprite.Spritesheet.TRASHTILE_EMPTY;
 import static info3.game.graphics.Sprite.Spritesheet.TRASHTILE_FULL;
 import static info3.game.graphics.Sprite.Spritesheet.VEGIBURGER_;
+import static info3.game.graphics.Sprite.Spritesheet.VEGIBURGER_SALAD_;
+import static info3.game.graphics.Sprite.Spritesheet.VEGIBURGER_SALAD_TOMATO_;
+import static info3.game.graphics.Sprite.Spritesheet.VEGIBURGER_TOMATO_;
 
 public enum Sprite {
 	AS_LOGO(AUTOMATON_SELECTION, 11, 10, 5, 2), AS_BACKDROP(AUTOMATON_SELECTION, 0, 0, 16, 9),
@@ -91,7 +98,11 @@ public enum Sprite {
 	KITCHEN_TRUCK(KITCHEN, 0, 0, 15, 6), KITCHEN_TRUCK_FLOOR(KITCHEN, 1, 6, 10, 4), ORDER_CARD(MENU, 0, 0, 1, 1),
 	CLOCK(CLOCK_, 0, 0, 1, 1), INDIC_MAYO_(MAYO_INDIC, 0, 0, 1, 1), INDIC_KETCHUP_(KETCHUP_INDIC, 0, 0, 1, 1),
 	KETCHUP_MAYO(KETCHUP_MAYO_, 0, 0, 1, 1), KITCHEN_TRUCK_SMOKE(KITCHEN, 0, 11, 12, 6),
-	KETCHUP_MAYO_INDIC_(KETCHUP_MAYO_INDIC, 0, 0, 1, 1),
+	KETCHUP_MAYO_INDIC_(KETCHUP_MAYO_INDIC, 0, 0, 1, 1), CLASSICBURGER_SALAD(CLASSICBURGER_SALAD_, 0, 0, 1, 1),
+	CLASSICBURGER_SALAD_TOMATO(CLASSICBURGER_SALAD_TOMATO_, 0, 0, 1, 1),
+	CLASSICBURGER_TOMATO(CLASSICBURGER_TOMATO_, 0, 0, 1, 1), VEGIBURGER_SALAD(VEGIBURGER_SALAD_, 0, 0, 1, 1),
+	VEGIBURGER_SALAD_TOMATO(VEGIBURGER_SALAD_TOMATO_, 0, 0, 1, 1), VEGIBURGER_TOMATO(VEGIBURGER_TOMATO_, 0, 0, 1, 1),
+	RECIPES(RECIPES_, 0, 0, 32, 9),
 
 	// City building sprites
 	CITY_SQUARE_1_SQUARE(CITY, 0, 0, 1, 1), CITY_SQUARE_1_ROUND(CITY, 0, 1, 1, 1),
@@ -151,23 +162,31 @@ public enum Sprite {
 		HASHEDMEAT_("Sprite_cuisine_ingredient/viande hachee.png", 13),
 		MASHEDPOTATO_("Sprite_cuisine_ingredient/puree.png", 13),
 		CLASSICBURGER_("Sprite_cuisine_ingredient/burger classique.png", 13),
+		CLASSICBURGER_SALAD_("Sprite_cuisine_ingredient/burger classique salade.png", 13),
+		CLASSICBURGER_SALAD_TOMATO_("Sprite_cuisine_ingredient/burger classique salade tomate.png", 13),
+		CLASSICBURGER_TOMATO_("Sprite_cuisine_ingredient/burger classique tomate.png", 13),
 		POTATOCOOKED_("Sprite_cuisine_ingredient/patate cuite.png", 13),
 		POTATOSALAD_("Sprite_cuisine_ingredient/salade de patate.png", 13),
 		POUTINE_("Sprite_cuisine_ingredient/poutine.png", 13),
 		SALADELEAF_("Sprite_cuisine_ingredient/feuille de salade.png", 13),
 		TOMATOSLICE_("Sprite_cuisine_ingredient/rondelle de tomate.png", 13), KETCHUPTABLE("ketchup.png", 13),
 		MAYOTABLE("mayonnaise.png", 13), VEGIBURGER_("Sprite_cuisine_ingredient/burger vegetarien.png", 13),
+		VEGIBURGER_SALAD_("Sprite_cuisine_ingredient/burger vegetarien salade.png", 13),
+		VEGIBURGER_SALAD_TOMATO_("Sprite_cuisine_ingredient/burger vegetarien salade tomate.png", 13),
+		VEGIBURGER_TOMATO_("Sprite_cuisine_ingredient/burger vegetarien tomate.png", 13),
 		FAILEDITEM_("Sprite_cuisine_ingredient/garbageplate.png", 13),
 		AUTOMATON_SELECTION("automaton_selection.png", 16), CLOCK_("clock.png", 19),
 		KETCHUP_MAYO_("ketchup_mayo.png", 13),
 
 		BASICTABLE("BasicTableTile.png", 13), COOK("cook.png", 13), KITCHEN("kitchen.png", 13),
 		DELIVERYTILE("DeliveryTile.png", 13), COCKROACH("cockroach.png", 13), MENU("menu.png", 69),
+		CITYTRUCK("cityTruck.png", 13),
 
 		MAYO_INDIC("indic_mayo.png", 13), KETCHUP_INDIC("indic_ketchup.png", 13),
 		KETCHUP_MAYO_INDIC("indic_mayo_ketchup.png", 13), CAR("car2.png", 4), SPEEDOMETER_("speedometer.png", 19),
 		SPEEDOMETER_LOW_("speedometerLow.png", 19), SPEEDOMETER_HIGH_("speedometerHigh.png", 19),
-		CITYTRUCK("cityTruck.png", 13);
+
+		RECIPES_("Recipes.png", 8);
 
 		public final String filename;
 		public final int tileSize;

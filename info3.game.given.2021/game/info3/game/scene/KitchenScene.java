@@ -65,8 +65,6 @@ public class KitchenScene extends Scene {
 			addEntity(cockroach);
 			currentOrder0 = Item.getRandomItem();
 			currentOrder1 = Item.getRandomItem();
-			System.out.println(currentOrder0);
-			System.out.println(currentOrder1);
 			m_game.setTimer();
 
 			kitchenGrid = new Tile[][] {
@@ -218,6 +216,10 @@ public class KitchenScene extends Scene {
 
 		}
 
+		if (m_game.m_listener.isUp("ESCAPE")) {
+			g.drawSprite(Sprite.RECIPES, 0, 0);
+		}
+
 	}
 
 	public void renderCurrentOrder(Graphics g) {
@@ -230,16 +232,16 @@ public class KitchenScene extends Scene {
 			g.drawSprite(currentOrder1.getSauce().getSprite(), 240, 25);
 		}
 		if (currentOrder0.hasOptionalSalad()) {
-			g.drawSprite(Sprite.SALADE, 226, 40);
+			g.drawSprite(Sprite.SALADELEAF, 227, 40);
 		}
 		if (currentOrder1.hasOptionalSalad()) {
-			g.drawSprite(Sprite.SALADE, 240, 40);
+			g.drawSprite(Sprite.SALADELEAF, 241, 40);
 		}
 		if (currentOrder0.hasOptionalTomato()) {
-			g.drawSprite(Sprite.TOMATO, 226, 54);
+			g.drawSprite(Sprite.TOMATOSLICE, 226, 53);
 		}
 		if (currentOrder1.hasOptionalTomato()) {
-			g.drawSprite(Sprite.TOMATO, 240, 54);
+			g.drawSprite(Sprite.TOMATOSLICE, 240, 53);
 		}
 	}
 
@@ -282,9 +284,6 @@ public class KitchenScene extends Scene {
 		 * Je l'ai déplacé ici pr l'instant car plus d'acces a kitchenScene depuis Game
 		 * (Vincent
 		 */
-		if (m_game.m_listener.isUp("ESCAPE")) {// used for testing shuffle
-			this.shuffle();
-		}
 	}
 
 }

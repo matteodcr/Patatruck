@@ -7,7 +7,6 @@ import info3.game.graphics.Sprite;
 
 public class StartScreen extends Screen {
 
-
 	public StartScreen(Game game) {
 		super(game);
 	}
@@ -27,7 +26,7 @@ public class StartScreen extends Screen {
 		}
 
 		if (downPressed && !keyPressed) {
-			if (scrollTop < 2)
+			if (scrollTop < 3)
 				scrollTop++;
 		}
 
@@ -37,11 +36,14 @@ public class StartScreen extends Screen {
 				changeScreen(new GameScreen(game));
 				break;
 			case 1:
-				
+
 				changeScreen(new AutomatonSelectionScreen(game));
 				break;
 			case 2:
 				changeScreen(new CreditScreen(game));
+				break;
+			case 3:
+				System.exit(0);
 				break;
 			default:
 				break;
@@ -60,10 +62,12 @@ public class StartScreen extends Screen {
 		g.drawSprite(Sprite.AS_BOX, 100, 47);
 		g.drawSprite(Sprite.AS_BOX, 100, 62);
 		g.drawSprite(Sprite.AS_BOX, 100, 77);
-		g.drawSprite(Sprite.AS_RIGHT, 86, 47 + scrollTop*15);
-		
+		g.drawSprite(Sprite.AS_BOX, 100, 92);
+		g.drawSprite(Sprite.AS_RIGHT, 86, 47 + scrollTop * 15);
+
 		g.drawText("JOUER", Align.LEFT, 103, 50);
 		g.drawText("CHOIX AUTOMATES", Align.LEFT, 103, 65);
 		g.drawText("CRÉDITS", Align.LEFT, 103, 80);
+		g.drawText("QUITTER", Align.LEFT, 103, 95);
 	}
 }

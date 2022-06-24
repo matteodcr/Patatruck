@@ -2,6 +2,7 @@ package info3.game.scene;
 
 import info3.game.Game;
 import info3.game.entity.CarEntity;
+import info3.game.entity.CityDeliveryTile;
 import info3.game.entity.CityTile;
 import info3.game.entity.Entity;
 import info3.game.entity.Tile;
@@ -17,6 +18,7 @@ public class CityScene extends Scene {
 
 	private final PositionF center = new PositionF((float) pixelWidth / 2F - 4.5F, (float) pixelHeight / 2F - 4.5F);
 	private PositionF vanPosition = PositionF.ZERO;
+	private CityDeliveryTile deliveryTile;
 	public final WorldGenerator worldGenerator = new WorldGenerator(0);
 	private CarEntity car;
 	private CarEntity cookCar;
@@ -27,29 +29,14 @@ public class CityScene extends Scene {
 		addEntity(car);
 		cookCar = new CarEntity(this, vanPosition, true, true);
 		addEntity(cookCar);
+		deliveryTile = new CityDeliveryTile(this);
 
 	}
 
 	@Override
 	public void tick(long elapsed) {
 		super.tick(elapsed);
-		/*
-		 * if (this.m_game.m_listener.isUp("UP")) {
-		 * cookPhysics.addForce(AutDirection.N); } if
-		 * (this.m_game.m_listener.isUp("DOWN")) { cookPhysics.addForce(AutDirection.S);
-		 * } if (this.m_game.m_listener.isUp("LEFT")) {
-		 * cookPhysics.addForce(AutDirection.W); } if
-		 * (this.m_game.m_listener.isUp("RIGHT")) {
-		 * cookPhysics.addForce(AutDirection.E); }
-		 * cook.setPosition(cook.getPosition().add(cookPhysics.Shift(elapsed)));
-		 */
 	}
-
-	// Commenté pour tester avec une scène fixe
-	// @Override
-	// public void tick(long elapsed) {
-	// vanPosition = vanPosition.add(new PositionF(0.2F, 0.1F));
-	// }
 
 	@Override
 	public int getTileWidth() {
@@ -125,6 +112,10 @@ public class CityScene extends Scene {
 
 	public void setCar(CarEntity cookCar) {
 		car = cookCar;
+	}
+
+	public CityDeliveryTile getDeliveryTile() {
+		return deliveryTile;
 	}
 
 	@Override

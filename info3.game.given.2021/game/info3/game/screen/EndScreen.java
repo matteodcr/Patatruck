@@ -35,8 +35,8 @@ public class EndScreen extends Screen {
 	}
 
 	private void reloadGame() {
-		// TODO boucle on StartScreen instead of AutomatonSelectionScreen
-		changeScreen(new AutomatonSelectionScreen(game));
+
+		changeScreen(new StartScreen(game));
 	}
 
 	@Override

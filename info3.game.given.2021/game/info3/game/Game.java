@@ -59,7 +59,7 @@ public class Game {
 	public static final int HEIGHT = 144;
 
 	public static final int SCALE_FACTOR = 6;
-	public static final int START_TIME = 200000; // ms
+	public static final int START_TIME = 120000; // ms
 
 	/**
 	 * Ticks par seconde
@@ -128,6 +128,10 @@ public class Game {
 		}
 
 	}
+	
+	public Screen getScreen() {
+		return screen;
+	}
 
 	public void changeScreen(Screen newScreen) {
 		screen = newScreen;
@@ -152,7 +156,7 @@ public class Game {
 	 */
 	private void setupFrame() {
 
-		m_frame.setTitle("Game");
+		m_frame.setTitle("Patatruck");
 		m_frame.setLayout(new BorderLayout());
 
 		m_frame.add(m_canvas, BorderLayout.CENTER);

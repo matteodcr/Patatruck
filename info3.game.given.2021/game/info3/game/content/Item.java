@@ -187,12 +187,37 @@ public class Item {
 		int j = 0;
 		for (ItemType item : ItemType.values()) {
 			if (item.isFinalItem()) {
-				if (i == j)
-					return item;
+				if (i == j) {
+					if (item == ItemType.CLASSIC_BURGER || item == ItemType.CLASSIC_BURGER_SALAD
+							|| item == ItemType.CLASSIC_BURGER_TOMATO || item == ItemType.CLASSIC_BURGER_SALAD_TOMATO
+							|| item == ItemType.VEGI_BURGER || item == ItemType.VEGI_BURGER_SALAD
+							|| item == ItemType.VEGI_BURGER_TOMATO || item == ItemType.VEGI_BURGER_SALAD_TOMATO) {
+						Random rand2 = new Random();
+						int x = rand2.nextInt(2);
+						if (x == 0) {
+							return item;
+						} else {
+							Random rand3 = new Random();
+							int y = rand3.nextInt(4);
+							if (y == 0) {
+								return ItemType.COOKED_FRIES;
+							} else if (y == 1) {
+								return ItemType.SHEPHERDS_PIE;
+							} else if (y == 2) {
+								return ItemType.POTATO_SALAD;
+							} else {
+								return ItemType.POUTINE;
+							}
+						}
+					} else {
+						return item;
+					}
+				}
 				j++;
 			}
 		}
 		throw new IllegalStateException("no recipe found");
+
 	}
 
 	public static Item getRandomItem() {

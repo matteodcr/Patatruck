@@ -42,7 +42,7 @@ public class CookEntity extends Entity {
 			g.drawSprite(Sprite.PLAYER_KITCHEN_S, 0, 0);
 		}
 		if (m_assembly.getItems().size() >= 1) {
-			RenderUtils.drawItem(g, m_assembly.getItems().get(0), this.position.getX(), this.position.getY());
+			RenderUtils.drawItem(g, m_assembly.getItems().get(0), 0, 0);
 		}
 	}
 

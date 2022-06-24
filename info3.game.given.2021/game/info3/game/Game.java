@@ -152,7 +152,7 @@ public class Game {
 	 */
 	private void setupFrame() {
 
-		m_frame.setTitle("Game");
+		m_frame.setTitle("Patatruck");
 		m_frame.setLayout(new BorderLayout());
 
 		m_frame.add(m_canvas, BorderLayout.CENTER);

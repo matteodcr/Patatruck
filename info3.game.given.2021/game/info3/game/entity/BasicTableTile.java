@@ -17,6 +17,11 @@ public class BasicTableTile extends KitchenTile {
 	}
 
 	@Override
+	public EntityType getType() {
+		return EntityType.TILE_TABLE;
+	}
+
+	@Override
 	public boolean pop(AutDirection direction) {// poser
 		Entity eInteracting = selectEntityToInteractWith();
 		if (eInteracting instanceof CookEntity && ((CookEntity) eInteracting) != null) {
@@ -80,11 +85,6 @@ public class BasicTableTile extends KitchenTile {
 
 			}
 		}
-	}
-
-	@Override
-	public EntityType getType() {
-		return EntityType.TILE_TABLE;
 	}
 
 	@Override

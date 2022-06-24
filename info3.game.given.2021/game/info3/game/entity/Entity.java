@@ -9,7 +9,6 @@ import javax.imageio.ImageIO;
 import info3.game.automata.AutomatonListener;
 import info3.game.automata.GAutomaton;
 import info3.game.automata.GState;
-import info3.game.content.Item;
 import info3.game.graphics.Graphics;
 import info3.game.position.AutCategory;
 import info3.game.position.AutDirection;
@@ -20,7 +19,6 @@ import info3.game.scene.Scene;
 
 public abstract class Entity implements AutomatonListener {
 	Scene parentScene;
-	public Item item;
 
 	GAutomaton automaton;
 	GState currentState;
@@ -41,7 +39,9 @@ public abstract class Entity implements AutomatonListener {
 		parentScene = parent;
 		position = pos;
 		m_direction = AutDirection.N;
-		item = null;
+
+		automaton = parentScene.m_game.getBoundAutomaton(getType());
+		currentState = automaton.initial;
 	}
 
 	public abstract EntityType getType();
@@ -253,7 +253,7 @@ public abstract class Entity implements AutomatonListener {
 
 	/*
 	 * Fct qui renvoit la grille correspondante à la position de l'ENTITE en pixels.
-	 * 
+	 *
 	 */
 	public PositionI getGridPosFromPos() {
 		PositionF posTmp = position.add(parentScene.getOriginOffset());

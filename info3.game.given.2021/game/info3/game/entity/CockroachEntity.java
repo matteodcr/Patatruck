@@ -2,6 +2,7 @@ package info3.game.entity;
 
 import java.io.IOException;
 
+import info3.game.content.Item;
 import info3.game.graphics.Graphics;
 import info3.game.graphics.Sprite;
 import info3.game.position.AutCategory;
@@ -11,6 +12,7 @@ import info3.game.scene.KitchenScene;
 import info3.game.scene.Scene;
 
 public class CockroachEntity extends Entity {
+	public Item item;
 
 	public CockroachEntity(Scene parent, PositionF position) throws IOException {
 		super(parent, position);

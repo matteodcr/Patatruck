@@ -3,6 +3,7 @@ package info3.game.entity;
 import java.io.IOException;
 
 import info3.game.content.Assembly;
+import info3.game.content.Item;
 import info3.game.graphics.Graphics;
 import info3.game.graphics.RenderUtils;
 import info3.game.graphics.Sprite;
@@ -16,6 +17,8 @@ public class CookEntity extends Entity {
 	long m_moveElapsed;
 	int m_imageIndex;
 	Assembly m_assembly;
+
+	public Item item;
 
 	public CookEntity(Scene parent, PositionF position) throws IOException {
 		super(parent, position);

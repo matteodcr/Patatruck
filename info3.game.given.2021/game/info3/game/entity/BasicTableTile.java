@@ -10,6 +10,7 @@ import info3.game.scene.Scene;
 
 public class BasicTableTile extends KitchenTile {
 	Assembly assembly;
+	public Item item;
 
 	public BasicTableTile(Scene parent, int gridX, int gridY, AutDirection d) {
 		super(parent, gridX, gridY, null, d);

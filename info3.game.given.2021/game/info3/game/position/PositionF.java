@@ -36,8 +36,16 @@ public class PositionF {
 		return new PositionF(-this.x, -this.y);
 	}
 
+	public PositionF divMod(int b) {
+		return new PositionF(Math.floorMod((int) this.x, b), Math.floorMod((int) this.y, b));
+	}
+
 	public PositionI divFloor(int b) {
 		return new PositionI((int) (this.x / b), (int) (this.y / b));
+	}
+
+	public PositionF divFloorF(int b) {
+		return new PositionF((this.x / b), (this.y / b));
 	}
 
 	public PositionF mul(int tileWidth) {

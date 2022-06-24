@@ -30,14 +30,17 @@ public abstract class Entity implements AutomatonListener {
 
 	AutCategory category;
 	public Item item;
+	boolean isTruck = false;
+	boolean isPlayer = false;
+
+	// If different from what `getType` returns, we should replace the automaton
+	// This is checked at each tick
+	EntityType lastEntityType = null;
 
 	Entity(Scene parent, PositionF pos) {
 		parentScene = parent;
 		position = pos;
 		m_direction = AutDirection.N;
-
-		automaton = parentScene.m_game.getBoundAutomaton(getType());
-		current_state = automaton.initial;
 		item = null;
 	}
 
@@ -47,11 +50,18 @@ public abstract class Entity implements AutomatonListener {
 		position = pos;
 	}
 
-	PositionF getPosition() {
+	public PositionF getPosition() {
 		return position;
 	}
 
 	public void tick(long elapsed) {
+		EntityType entityType = getType();
+		if (lastEntityType != entityType) {
+			automaton = parentScene.m_game.getBoundAutomaton(entityType);
+			current_state = automaton.initial;
+			lastEntityType = entityType;
+		}
+
 		GState state = automaton.run(this, current_state);
 		if (state != null) {
 			current_state = state;
@@ -201,9 +211,9 @@ public abstract class Entity implements AutomatonListener {
 		}
 		default:
 			return false;
-
 		}
 		return false;
+
 	}
 
 	private boolean isItThatGrid(int gY, int gX) {
@@ -213,12 +223,6 @@ public abstract class Entity implements AutomatonListener {
 	@Override
 	public boolean key(AutKey direction) {
 		return parentScene.m_game.m_listener.isUp(direction.toString());
-	}
-
-	public PositionI getGridPosFromPos() {
-		PositionF pos_tmp = position.add(parentScene.getOriginOffset());
-		return pos_tmp.divFloor(parentScene.getTileWidth());
-
 	}
 
 	// To handle corner equipments cases in the kitchen
@@ -252,5 +256,48 @@ public abstract class Entity implements AutomatonListener {
 
 	public void setDirection(AutDirection absDirection) {
 		this.m_direction = absDirection;
+	}
+
+	/*
+	 * Fct qui renvoit la grille correspondante à la position de l'ENTITE en pixels.
+	 * 
+	 */
+	public PositionI getGridPosFromPos() {
+		PositionF posTmp = position.add(parentScene.getOriginOffset());
+		if (posTmp.getX() < 0 || posTmp.getY() < 0) {
+			posTmp = posTmp.divFloorF(parentScene.getTileWidth());
+			float posTmpX = posTmp.getX();
+			float posTmpY = posTmp.getY();
+			int posX = (int) posTmpX;
+			int posY = (int) posTmpY;
+			if (posTmpX < 0)
+				posX = (int) Math.floor(posTmpX);
+			if (posTmpY < 0)
+				posY = (int) Math.floor(posTmpY);
+			return new PositionI(posX, posY);
+		} else {
+			return posTmp.divFloor(parentScene.getTileWidth());
+		}
+
+	}
+
+	/*
+	 * Fct qui renvoit la category de l'entite si la position donnée correspond à la
+	 * sienne
+	 */
+	public AutCategory catAtThisPos(PositionF pos) {
+		float posX = position.getX();
+		float posY = position.getY();
+		if (posX <= pos.getX() && pos.getX() <= posX + 3 && posY <= pos.getY() && pos.getY() <= posY + 3)
+			return category;
+		return null;
+	}
+
+	public boolean getIsTruck() {
+		return this.isTruck;
+	}
+
+	public boolean getIsPlayer() {
+		return this.isPlayer;
 	}
 }

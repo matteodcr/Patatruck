@@ -1,97 +1,105 @@
 package info3.game.entity;
 
+import info3.game.graphics.Graphics;
 import info3.game.graphics.Sprite;
 import info3.game.position.AutCategory;
 import info3.game.position.AutDirection;
-import info3.game.position.Direction;
 import info3.game.position.PositionF;
+import info3.game.scene.CityScene;
 import info3.game.scene.Scene;
 
 public class CarEntity extends Entity {
-	boolean isTruck;
-	Direction dir;
-	Sprite sprite;
 
-	CarEntity(Scene parent, PositionF position, boolean isTruck, Direction direction) {
+	private boolean swapInThisTick;
+	private Entity entityEncountered;
+	public Physics physics = new PhysicsClassic(3);
+	// TODO Deplacer hitbox hardocdé et methode de collision (champ ou classe pr pos
+	// bas a droite de l'entite (sinon on garde comme ça si ttes les entites = 4x4)
+
+	public CarEntity(Scene parent, PositionF position, boolean isTruck, boolean isPlayer) {
 		super(parent, position);
 		category = AutCategory.A;
 		this.isTruck = isTruck;
-		if (isTruck) {
-			//sprite = Sprite.CITYTRUCK;
-		} else {
-			//sprite = Sprite.CAR;
-		}
-		this.dir = direction;
+		this.isPlayer = isPlayer;
+		changeCategory();
+		this.swapInThisTick = false;
+	}
+
+	@Override
+	public void render(Graphics g) {
+		g.drawSprite(Sprite.CAR_ENTITY, 0, 0);
 	}
 
 	@Override
 	public EntityType getType() {
+		if (isPlayer) {
+			return EntityType.TRUCK;
+		}
 		return EntityType.CAR;
 	}
 
 	@Override
+	public void tick(long elapsed) {
+		super.tick(elapsed);
+		this.position = this.position.add(physics.Shift(elapsed));
+
+		finish = System.currentTimeMillis();
+		timeElapsed = finish - start;
+
+		if (timeElapsed >= 1000) {
+			this.swapInThisTick = false;
+		}
+
+	}
+
+	@Override
 	public boolean pop(AutDirection direction) {
+		if (!swapInThisTick && isPlayer) {
+			this.swap((CarEntity) entityEncountered);
+			start = System.currentTimeMillis();
+		}
 		return true;
 	}
 
 	@Override
 	public boolean wizz(AutDirection direction) {
-		return changePos(this.dir, parentScene.getTileWidth()/2);
-	}
-
-	public boolean move(AutDirection direction) {
-		switch (direction) {
-		case L: {
-			this.changeDir(direction);
-			return changePos(this.dir, parentScene.getTileWidth());
-		}
-		case F: {
-			return changePos(this.dir, parentScene.getTileWidth());
-		}
-		case R: {
-			this.changeDir(direction);
-			return changePos(this.dir, parentScene.getTileWidth());
-		}
+		AutDirection newDirection = convertRelativToAbsolutedir(direction);
+		m_direction = newDirection;
+		switch (newDirection) {
+		case N:
+		case W:
+		case E:
+		case S:
+			physics.addForce(m_direction);
+			return true;
 		default:
 			return false;
 		}
 
 	}
 
-	void changeDir(AutDirection direction) {
-		switch (direction) {
-		case L:
-			this.dir = this.dir.previous();
-
-		case R:
-			this.dir = this.dir.next();
-
-		default:
-			break;
-		}
-
-	}
-
-	boolean changePos(Direction direction, int distance) {
-		switch (direction) {
-		case NORD: {
-			PositionF newPos = new PositionF(0, -distance);
-			position.add(newPos);
+	public boolean move(AutDirection direction) {
+		AutDirection newDirection = convertRelativToAbsolutedir(direction);
+		m_direction = newDirection;
+		switch (newDirection) {
+		case N: {
+			PositionF newPos = new PositionF(0, -1);
+			this.position = position.add(newPos);
 			return true;
 		}
-		case SUD: {
-			PositionF newPos = new PositionF(-distance, 0);
-			position.add(newPos);
+		case W: {
+			PositionF newPos = new PositionF(-1, 0);
+			this.position = position.add(newPos);
 			return true;
 		}
-		case OUEST: {
-			PositionF newPos = new PositionF(distance, 0);
-			position.add(newPos);
+		case E: {
+			PositionF newPos = new PositionF(1, 0);
+			this.position = position.add(newPos);
 			return true;
 		}
-		case EST: {
-			PositionF newPos = new PositionF(0, distance);
-			position.add(newPos);
+		case S: {
+			PositionF newPos = new PositionF(0, 1);
+			this.position = position.add(newPos);
 			return true;
 		}
 		default:
@@ -101,7 +109,8 @@ public class CarEntity extends Entity {
 
 	@Override
 	public boolean gwait() {
-		return false;
+		// TODO : modified to prevent car not controlled by player from doing POP
+		return true;
 	}
 
 	@Override
@@ -111,7 +120,8 @@ public class CarEntity extends Entity {
 
 	@Override
 	public boolean hit(AutDirection direction) {
-		return false;
+		this.position = this.position.add(physics.bounce(m_direction.twoapart()));
+		return true;
 	}
 
 	@Override
@@ -172,6 +182,160 @@ public class CarEntity extends Entity {
 	@Override
 	public boolean gotStuff() {
 		return false;
+	}
+
+	// TODO Point de collision pr l'instant HARDCODE a l'entite CarEntity
+	@Override
+	public boolean cell(AutDirection direction, AutCategory category) {
+		AutDirection newDirection = convertRelativToAbsolutedir(direction);
+		for (Entity entity : parentScene.entity_list) {
+			switch (newDirection) {
+			case N: {
+				if (entity.catAtThisPos(position.add(new PositionF(0, -1))) == category
+						|| entity.catAtThisPos(position.add(new PositionF(3, -1))) == category) {
+					entityEncountered = entity;
+					return true;
+				}
+				break;
+			}
+			case W: {
+				if (entity.catAtThisPos(position.add(new PositionF(-1, 0))) == category
+						|| entity.catAtThisPos(position.add(new PositionF(-1, 3))) == category) {
+					entityEncountered = entity;
+					return true;
+				}
+				break;
+			}
+			case E: {
+				if (entity.catAtThisPos(position.add(new PositionF(4, 0))) == category
+						|| entity.catAtThisPos(position.add(new PositionF(4, 3))) == category) {
+					entityEncountered = entity;
+					return true;
+				}
+				break;
+			}
+			case S: {
+				if (entity.catAtThisPos(position.add(new PositionF(0, 4))) == category
+						|| entity.catAtThisPos(position.add(new PositionF(3, 4))) == category) {
+					entityEncountered = entity;
+					return true;
+				}
+				break;
+			}
+			case H: {
+				if (entity.catAtThisPos(position.add(new PositionF(0, 0))) == category
+						|| entity.catAtThisPos(position.add(new PositionF(3, 0))) == category
+						|| entity.catAtThisPos(position.add(new PositionF(0, 3))) == category
+						|| entity.catAtThisPos(position.add(new PositionF(3, 3))) == category) {
+					entityEncountered = entity;
+					return true;
+				}
+				break;
+			}
+			default:
+				return false;
+			}
+		}
+		switch (newDirection) {
+		case N: {
+			if (((CityScene) parentScene).whatsTheCategoryOfTile(position.add(new PositionF(0, -1)), this) == category
+					|| ((CityScene) parentScene).whatsTheCategoryOfTile(position.add(new PositionF(3, -1)),
+							this) == category) {
+				return true;
+			}
+			break;
+		}
+		case W: {
+			if (((CityScene) parentScene).whatsTheCategoryOfTile(position.add(new PositionF(-1, 0)), this) == category
+					|| ((CityScene) parentScene).whatsTheCategoryOfTile(position.add(new PositionF(-1, 3)),
+							this) == category) {
+				return true;
+			}
+			break;
+		}
+		case E: {
+			if (((CityScene) parentScene).whatsTheCategoryOfTile(position.add(new PositionF(4, 0)), this) == category
+					|| ((CityScene) parentScene).whatsTheCategoryOfTile(position.add(new PositionF(4, 3)),
+							this) == category) {
+				return true;
+			}
+			break;
+		}
+		case S: {
+			if (((CityScene) parentScene).whatsTheCategoryOfTile(position.add(new PositionF(0, 4)), this) == category
+					|| ((CityScene) parentScene).whatsTheCategoryOfTile(position.add(new PositionF(3, 4)),
+							this) == category) {
+				return true;
+			}
+			break;
+		}
+		case H: {
+			if (((CityScene) parentScene).whatsTheCategoryOfTile(position.add(new PositionF(0, 0)), this) == category
+					|| ((CityScene) parentScene).whatsTheCategoryOfTile(position.add(new PositionF(3, 0)),
+							this) == category
+					|| ((CityScene) parentScene).whatsTheCategoryOfTile(position.add(new PositionF(0, 3)),
+							this) == category
+					|| ((CityScene) parentScene).whatsTheCategoryOfTile(position.add(new PositionF(3, 3)),
+							this) == category) {
+				return true;
+
+			}
+			break;
+		}
+		default:
+			return false;
+
+		}
+		return false;
+
+	}
+
+	public void changeCategory() {
+		if (!isPlayer)
+			category = AutCategory.A;
+		else
+			category = AutCategory.AROBASE;
+	}
+
+	public void toNoBreaksPhysics() {
+		this.physics = new PhysicsNoBrakes(3, this.physics.getAccX(), this.physics.getAccY(), this.physics.getVelX(),
+				this.physics.getVelY(), this.physics.getMaxVel(), this.physics.getAvgVelBuff(),
+				this.physics.getAvgVel(), this.physics.getTimerVel(), this.physics.getTimerMaxVel());
+	}
+
+	public void toClassicPhysics() {
+		this.physics = new PhysicsClassic(3, this.physics.getAccX(), this.physics.getAccY(), this.physics.getVelX(),
+				this.physics.getVelY(), this.physics.getMaxVel(), this.physics.getAvgVelBuff(),
+				this.physics.getAvgVel(), this.physics.getTimerVel(), this.physics.getTimerMaxVel());
+	}
+
+	public void toSmokePhysics() {
+		this.physics = new PhysicsSmoke(3, this.physics.getAccX(), this.physics.getAccY(), this.physics.getVelX(),
+				this.physics.getVelY(), this.physics.getMaxVel(), this.physics.getAvgVelBuff(),
+				this.physics.getAvgVel(), this.physics.getTimerVel(), this.physics.getTimerMaxVel());
+	}
+
+	public void swap(CarEntity carentity) {
+		carentity.isPlayer = !carentity.isPlayer;
+		this.isPlayer = !this.isPlayer;
+		this.changeCategory();
+		carentity.changeCategory();
+
+		((CityScene) this.parentScene).setCook(carentity);
+		((CityScene) this.parentScene).setCar(this);
+
+		Physics physics = this.physics;
+		this.physics = carentity.physics;
+		carentity.physics = physics;
+
+		carentity.swapInThisTick = true;
+		this.swapInThisTick = true;
+		carentity.physics.bounce(carentity.m_direction.twoapart());
+		this.physics.bounce(this.m_direction.twoapart());
+
+		this.start = System.currentTimeMillis();
+		carentity.start = System.currentTimeMillis();
+
 	}
 
 }

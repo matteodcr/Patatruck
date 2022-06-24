@@ -12,6 +12,11 @@ public final class PositionI {
 		this.y = y;
 	}
 
+	public PositionI(PositionF f) {
+		this.x = (int) f.getX();
+		this.y = (int) f.getY();
+	}
+
 	public int getX() {
 		return x;
 	}

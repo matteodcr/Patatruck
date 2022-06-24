@@ -3,20 +3,19 @@ package info3.game.entity;
 import info3.game.graphics.Graphics;
 import info3.game.position.AutCategory;
 import info3.game.position.AutDirection;
-import info3.game.position.Direction;
-import info3.game.position.PositionF;
 import info3.game.scene.CityScene;
 import info3.game.scene.Scene;
 import info3.game.worldgen.GenTile;
 
 public class CityTile extends Tile {
-	private final GenTile genTile;
+
+	public final GenTile genTile;
 
 	public CityTile(Scene parent, int gridX, int gridY) {
 		super(parent, gridX, gridY);
 		genTile = ((CityScene) parent).worldGenerator.generate(gridX, gridY);
 	}
-	
+
 	public GenTile getGenTile() {
 		return genTile;
 	}
@@ -39,7 +38,7 @@ public class CityTile extends Tile {
 
 	@Override
 	public boolean wizz(AutDirection direction) {
-		this.parentScene.addEntity(new CarEntity(this.parentScene, new PositionF(gridX, gridY), false, Direction.NORD));
+		this.parentScene.addEntity(new CarEntity(this.parentScene, position, false, false));
 		return true;
 	}
 
@@ -50,7 +49,7 @@ public class CityTile extends Tile {
 
 	@Override
 	public boolean egg(AutDirection direction) {
-		this.parentScene.addEntity(new CarEntity(this.parentScene, new PositionF(gridX, gridY), true, Direction.NORD));
+		this.parentScene.addEntity(new CarEntity(this.parentScene, position, true, false));
 		return true;
 	}
 

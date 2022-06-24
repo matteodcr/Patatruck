@@ -1,9 +1,8 @@
 Player(Init){
   * (Init):
-  | !(Key(FU) & True) ? 24%Move(N) /  Move : ()
-  | Key(FD) ? Move(S) :(Init)
-  | Key(FL) ? Move(O) :(Init)
-  | Key(FR) ? Move(E) :(Init)
-  * (Test):
-  | True ? Pop : (Init)
+  | Key(z) ? Wizz(N) :(Init)
+  | Key(s) ? Wizz(S) :(Init)
+  | Key(q) ? Wizz(W) :(Init)
+  | Key(d) ? Wizz(E) :(Init)
+  | Key(ENTER) ? Pop(N) :(Init)
 }

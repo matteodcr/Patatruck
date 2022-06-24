@@ -41,4 +41,8 @@ public class GenTile {
 			}));
 		}
 	}
+	
+	public boolean hasRoad() {
+		return !(collisionBox.topLeft && collisionBox.top && collisionBox.left);
+	}
 }

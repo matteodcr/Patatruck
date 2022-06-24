@@ -11,6 +11,8 @@ public enum EntityType {
 	MARKET("marché", "Market"),
 
 	CAR("voiture", "Car"),
+	
+	TILE_DELIVERY_CITY("zone de livraison", "CityDeliveryTile"),
 
 	COCKROACH("cafard", "Cockroach"),
 
@@ -18,7 +20,7 @@ public enum EntityType {
 
 	TILE_CUT("planche à découp.", "Cut"),
 
-	TILE_DELIVERY("table de livraison", "Kitchen_Delivery"),
+	TILE_DELIVERY_KITCHEN("table de livraison", "Kitchen_Delivery"),
 
 	TILE_FRYER("friteuse", "Fry"),
 

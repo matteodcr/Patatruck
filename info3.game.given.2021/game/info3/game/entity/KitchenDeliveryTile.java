@@ -8,7 +8,9 @@ import info3.game.position.AutCategory;
 import info3.game.position.AutDirection;
 import info3.game.position.Direction;
 import info3.game.scene.KitchenScene;
+import info3.game.scene.CityScene;
 import info3.game.scene.Scene;
+import info3.game.screen.GameScreen;
 
 public class KitchenDeliveryTile extends KitchenTile {
 
@@ -21,7 +23,7 @@ public class KitchenDeliveryTile extends KitchenTile {
 
 	@Override
 	public EntityType getType() {
-		return EntityType.TILE_DELIVERY;
+		return EntityType.TILE_DELIVERY_KITCHEN;
 	}
 
 	boolean wizz(Direction direction) {
@@ -75,6 +77,7 @@ public class KitchenDeliveryTile extends KitchenTile {
 				((KitchenScene) parentScene).currentOrder0 = Item.getRandomItem();
 				assembly.getItems().clear();
 				parentScene.m_game.timeGame += 30000;
+				((CityScene)((GameScreen)(parentScene.m_game.getScreen())).getCityScene()).getDeliveryTile().delivered();
 				return true;
 			}
 
@@ -82,6 +85,7 @@ public class KitchenDeliveryTile extends KitchenTile {
 				((KitchenScene) parentScene).currentOrder1 = Item.getRandomItem();
 				assembly.getItems().clear();
 				parentScene.m_game.timeGame += 30000;
+				((CityScene)((GameScreen)(parentScene.m_game.getScreen())).getCityScene()).getDeliveryTile().delivered();
 				return true;
 			}
 

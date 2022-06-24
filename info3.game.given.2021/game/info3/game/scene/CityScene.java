@@ -3,6 +3,7 @@ package info3.game.scene;
 import java.io.IOException;
 
 import info3.game.Game;
+import info3.game.entity.CityDeliveryTile;
 import info3.game.entity.CityTile;
 import info3.game.entity.CookEntity;
 import info3.game.entity.Tile;
@@ -15,12 +16,14 @@ public class CityScene extends Scene {
 	private final PositionF center = new PositionF((float) pixelWidth / 2F - 4.5F, (float) pixelHeight / 2F - 4.5F);
 	private PositionF vanPosition = PositionF.ZERO;
 	private CookEntity cook; // To change with vanEntity
+	private CityDeliveryTile deliveryTile;
 	public final WorldGenerator worldGenerator = new WorldGenerator(0);
 
 	public CityScene(int pixelWidth, int pixelHeight, Game g) {
 		super(pixelWidth, pixelHeight, g);
 		try {
 			cook = new CookEntity(this, vanPosition);
+			deliveryTile = new CityDeliveryTile(this);
 		} catch (IOException e) {
 			e.printStackTrace();
 		} // To change with vanEntity
@@ -53,6 +56,10 @@ public class CityScene extends Scene {
 
 	public CookEntity getCook() {
 		return cook;
+	}
+	
+	public CityDeliveryTile getDeliveryTile() {
+		return deliveryTile;
 	}
 
 	@Override

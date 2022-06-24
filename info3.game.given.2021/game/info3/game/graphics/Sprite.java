@@ -1,6 +1,7 @@
 package info3.game.graphics;
 
 import static info3.game.graphics.Sprite.Spritesheet.AUTOMATON_SELECTION;
+
 import static info3.game.graphics.Sprite.Spritesheet.BASICTABLEE;
 import static info3.game.graphics.Sprite.Spritesheet.BASICTABLEN;
 import static info3.game.graphics.Sprite.Spritesheet.BASICTABLES;
@@ -68,6 +69,7 @@ import static info3.game.graphics.Sprite.Spritesheet.VEGIBURGER_;
 import static info3.game.graphics.Sprite.Spritesheet.VEGIBURGER_SALAD_;
 import static info3.game.graphics.Sprite.Spritesheet.VEGIBURGER_SALAD_TOMATO_;
 import static info3.game.graphics.Sprite.Spritesheet.VEGIBURGER_TOMATO_;
+import static info3.game.graphics.Sprite.Spritesheet.CITY_ARROWS;
 
 public enum Sprite {
 	AS_LOGO(AUTOMATON_SELECTION, 11, 10, 5, 2), AS_BACKDROP(AUTOMATON_SELECTION, 0, 0, 16, 9),
@@ -114,7 +116,17 @@ public enum Sprite {
 	CITY_SQUARE_2_DENTED(CITY, 6, 2, 2, 2), CITY_SQUARE_2_BISCUIT(CITY, 6, 4, 2, 2), CITY_CORNER_BR(CITY, 12, 0, 2, 2),
 	CITY_CORNER_TL(CITY, 12, 4, 2, 2), CITY_CORNER_BL(CITY, 12, 2, 2, 2), CITY_CORNER_TR(CITY, 12, 6, 2, 2),
 	SPEEDOMETER(SPEEDOMETER_, 0, 0, 1, 1), CAR_ENTITY(CAR, 0, 0, 1, 1), SPEEDOMETER_LOW(SPEEDOMETER_LOW_, 0, 0, 1, 1),
-	SPEEDOMETER_HIGH(SPEEDOMETER_HIGH_, 0, 0, 1, 1);
+	SPEEDOMETER_HIGH(SPEEDOMETER_HIGH_, 0, 0, 1, 1),
+	
+	// City direction arrows sprites
+	MARKET_LEFT_ARROW(CITY_ARROWS, 0, 0, 1, 1), MARKET_UP_ARROW(CITY_ARROWS, 1, 0, 1, 1), 
+	MARKET_RIGHT_ARROW(CITY_ARROWS, 2, 0, 1, 1), MARKET_DOWN_ARROW(CITY_ARROWS, 3, 0, 1, 1), 
+	MARKET_UPLEFT_ARROW(CITY_ARROWS, 0, 1, 1, 1), MARKET_UPRIGHT_ARROW(CITY_ARROWS, 1, 1, 1, 1), 
+	MARKET_DOWNRIGHT_ARROW(CITY_ARROWS, 2, 1, 1, 1), MARKET_DOWNLEFT_ARROW(CITY_ARROWS, 3, 1, 1, 1),
+	DELIVERY_LEFT_ARROW(CITY_ARROWS, 0, 2, 1, 1), DELIVERY_UP_ARROW(CITY_ARROWS, 1, 2, 1, 1), 
+	DELIVERY_RIGHT_ARROW(CITY_ARROWS, 2, 2, 1, 1), DELIVERY_DOWN_ARROW(CITY_ARROWS, 3, 2, 1, 1), 
+	DELIVERY_UPLEFT_ARROW(CITY_ARROWS, 0, 3, 1, 1), DELIVERY_UPRIGHT_ARROW(CITY_ARROWS, 1, 3, 1, 1), 
+	DELIVERY_DOWNRIGHT_ARROW(CITY_ARROWS, 2, 3, 1, 1), DELIVERY_DOWNLEFT_ARROW(CITY_ARROWS, 3, 3, 1, 1),;
 
 	public static final Sprite[] CITY_SQUARES_1 = new Sprite[] { CITY_SQUARE_1_SQUARE, CITY_SQUARE_1_ROUND,
 			CITY_SQUARE_1_SQUIRCLE };
@@ -185,6 +197,8 @@ public enum Sprite {
 		MAYO_INDIC("indic_mayo.png", 13), KETCHUP_INDIC("indic_ketchup.png", 13),
 		KETCHUP_MAYO_INDIC("indic_mayo_ketchup.png", 13), CAR("car2.png", 4), SPEEDOMETER_("speedometer.png", 19),
 		SPEEDOMETER_LOW_("speedometerLow.png", 19), SPEEDOMETER_HIGH_("speedometerHigh.png", 19),
+		
+		CITY_ARROWS("city-arrows.png", 7),
 
 		RECIPES_("Recipes.png", 8);
 

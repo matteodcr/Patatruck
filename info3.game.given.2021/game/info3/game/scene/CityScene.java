@@ -22,6 +22,8 @@ public class CityScene extends Scene {
 	public final WorldGenerator worldGenerator = new WorldGenerator(0);
 	private CarEntity car;
 	private CarEntity cookCar;
+	private Sprite deliveryArrowSprite = Sprite.DELIVERY_DOWN_ARROW;
+	private PositionF deliveryArrowPos = new PositionF(-10 ,-10);
 
 	public CityScene(int pixelWidth, int pixelHeight, Game g) {
 		super(pixelWidth, pixelHeight, g);
@@ -30,12 +32,14 @@ public class CityScene extends Scene {
 		cookCar = new CarEntity(this, vanPosition, true, true);
 		addEntity(cookCar);
 		deliveryTile = new CityDeliveryTile(this);
+		addEntity(deliveryTile);
 
 	}
 
 	@Override
 	public void tick(long elapsed) {
 		super.tick(elapsed);
+		this.updateArrow();
 	}
 
 	@Override
@@ -136,6 +140,7 @@ public class CityScene extends Scene {
 			speed = Sprite.SPEEDOMETER_HIGH;
 		}
 		g.drawSprite(speed, 2, 0);
+		g.drawSprite(deliveryArrowSprite, deliveryArrowPos.getX(), deliveryArrowPos.getY());
 		g.drawText(cookCar.physics.getVelocity() + "", Align.CENTER, 12, 18);
 
 	}
@@ -168,6 +173,57 @@ public class CityScene extends Scene {
 			return pos.divFloor(getTileWidth());
 		}
 
+	}
+	
+	public void updateArrow() {
+		float xCar = cookCar.getPosition().getX();
+		float yCar = cookCar.getPosition().getY();
+		float xTile = deliveryTile.getPosition().getX();
+		float yTile = deliveryTile.getPosition().getY();
+		
+		if (yTile < yCar-pixelHeight/2) {
+			if (xTile > xCar+pixelWidth/2) {
+				deliveryArrowSprite = Sprite.DELIVERY_UPRIGHT_ARROW;
+				deliveryArrowPos = new PositionF(pixelWidth-10, 0);
+			}
+			else if (xTile < xCar-pixelWidth/2) {
+				deliveryArrowSprite = Sprite.DELIVERY_UPLEFT_ARROW;
+				deliveryArrowPos = new PositionF(0, 0);
+			}
+			else {
+				deliveryArrowSprite = Sprite.DELIVERY_UP_ARROW;
+				deliveryArrowPos = new PositionF(Math.abs(xTile-(xCar-pixelWidth/2)), 0);
+			}
+		}
+		
+		else if (yTile > yCar+pixelHeight/2) {
+			if (xTile > xCar+pixelWidth/2) {	
+				deliveryArrowSprite = Sprite.DELIVERY_DOWNRIGHT_ARROW;
+				deliveryArrowPos = new PositionF(pixelWidth-10, pixelHeight-15);
+			}
+			else if (xTile < xCar-pixelWidth/2) {
+				deliveryArrowSprite = Sprite.DELIVERY_DOWNLEFT_ARROW;
+				deliveryArrowPos = new PositionF(0, pixelHeight-15);
+			}
+			else {
+				deliveryArrowSprite = Sprite.DELIVERY_DOWN_ARROW;
+				deliveryArrowPos = new PositionF(Math.abs(xTile-(xCar-pixelWidth/2)), pixelHeight-15);
+			}
+		}
+		
+		else if (xTile > xCar+pixelWidth/2) {
+			deliveryArrowSprite = Sprite.DELIVERY_RIGHT_ARROW;
+			deliveryArrowPos = new PositionF(pixelWidth-10, Math.abs(yTile-yCar+pixelHeight/2));
+		}
+		
+		else if (xTile < xCar-pixelWidth/2) {
+			deliveryArrowSprite = Sprite.DELIVERY_LEFT_ARROW;
+			deliveryArrowPos = new PositionF(0, Math.abs(yTile-yCar+pixelHeight/2));
+		}
+		else {
+			deliveryArrowSprite = Sprite.DELIVERY_DOWN_ARROW;
+			deliveryArrowPos = new PositionF(-10 ,-10);
+		}
 	}
 
 }

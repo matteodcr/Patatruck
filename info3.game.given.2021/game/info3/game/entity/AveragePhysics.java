@@ -7,15 +7,16 @@ public class AveragePhysics implements Physics {
 
 	double accX = 0, accY = 0;
 	double velX = 0, velY = 0;
-	double maxVel = 2.5;
-	double force = 0, friction = 1;
+	double maxVel = 100;
+	double force = 0, friction = 1.5f;
 
 	double lastVel = 0;
 	double avgVelBuff = 0, avgVel = 0;
 	int timerVel = 0, timerMaxVel = 10;
+	PositionF lastPosChange;
 
 	/**
-	 * average force is 3
+	 * average force is 15
 	 * 
 	 * @param force
 	 */
@@ -24,12 +25,12 @@ public class AveragePhysics implements Physics {
 	}
 
 	/**
-	 * average force is 3
+	 * average force is 15
 	 * 
 	 * @param force
 	 */
 	public AveragePhysics(int force, double accX, double accY, double velX, double velY, double maxVel,
-			double avgVelBuff, double avgVel, int timerVel, int timerMaxVel) {
+			double avgVelBuff, double avgVel, int timerVel, int timerMaxVel, PositionF lastPosChange) {
 		this.force = force;
 		this.accX = accX;
 		this.accY = accY;
@@ -40,6 +41,7 @@ public class AveragePhysics implements Physics {
 		this.avgVel = avgVel;
 		this.timerVel = timerVel;
 		this.timerMaxVel = timerMaxVel;
+		this.lastPosChange = lastPosChange;
 	}
 
 	@Override
@@ -47,15 +49,23 @@ public class AveragePhysics implements Physics {
 		switch (absoluteDir) {
 		case N:
 			accY -= force;
+			accX = 0;
+			velX /= friction;
 			break;
 		case E:
 			accX += force;
+			accY = 0;
+			velY /= friction;
 			break;
 		case S:
 			accY += force;
+			accX = 0;
+			velX /= friction;
 			break;
 		case W:
 			accX -= force;
+			accY = 0;
+			velY /= friction;
 			break;
 		default:
 			break;
@@ -63,49 +73,40 @@ public class AveragePhysics implements Physics {
 	}
 
 	@Override
-	public PositionF Shift(long elapsed) {
+	public void removeForce() {
+		accY = 0;
+		accX = 0;
+		velX /= friction;
+		velY /= friction;
+	}
+
+	@Override
+	public PositionF shift() {
 		float shiftX = 0, shiftY = 0;
-		for (int i = 0; i < elapsed; i++) {
-			shiftX += velX;
-			shiftY += velY;
 
-			velX += accX;
-			velY += accY;
+		shiftX += velX;
+		shiftY += velY;
 
-			if (velX >= friction) {
-				velX -= friction;
-			} else if (velX <= -friction) {
-				velX += friction;
-			} else {
-				velX = 0;
-			}
-			if (velY >= friction) {
-				velY -= friction;
-			} else if (velY <= -friction) {
-				velY += friction;
-			} else {
-				velY = 0;
-			}
-
-		}
+		velX += accX;
+		velY += accY;
 
 		if (shiftX > maxVel) {
 			shiftX = (float) maxVel;
-			accX = 0;
 			velX = maxVel;
+			accX = 0;
 		} else if (shiftX < -maxVel) {
 			shiftX = (float) -maxVel;
-			accX = 0;
 			velX = -maxVel;
+			accX = 0;
 		}
 		if (shiftY > maxVel) {
 			shiftY = (float) maxVel;
-			accY = 0;
 			velY = maxVel;
+			accY = 0;
 		} else if (shiftY < -maxVel) {
 			shiftY = (float) -maxVel;
-			accY = 0;
 			velY = -maxVel;
+			accY = 0;
 		}
 		if (timerVel == 0) {
 			timerVel = timerMaxVel;
@@ -116,12 +117,14 @@ public class AveragePhysics implements Physics {
 			timerVel--;
 		}
 		lastVel = Math.hypot(shiftX, shiftY);
-		return new PositionF(shiftX, shiftY);
+		lastPosChange = new PositionF(shiftX / 100, shiftY / 100);
+
+		return lastPosChange;
 	}
 
 	@Override
 	public int getVelocity() {
-		return (int) (25 * avgVel);
+		return (int) (avgVel / 3);
 	}
 
 	public double getAccX() {
@@ -161,29 +164,23 @@ public class AveragePhysics implements Physics {
 	}
 
 	@Override
-	public PositionF bounce(AutDirection absoluteDir) {
+	public PositionF bounce() {
 		accX = 0;
 		accY = 0;
-		velX = 0;
-		velY = 0;
-		switch (absoluteDir) {
-		case N:
-			return new PositionF(0, (float) (-maxVel / 2));
-		case E:
-			return new PositionF((float) (maxVel / 2), 0);
-		case S:
-			return new PositionF(0, (float) (maxVel / 2));
-		case W:
-			return new PositionF((float) (-maxVel / 2), 0);
-		default:
-			return new PositionF(0, 0);
-		}
+		velX = -velX / 16;
+		velY = -velY / 16;
+		return lastPosChange.neg();
 
 	}
 
 	@Override
 	public int getInRealTimeVelocity() {
 		return (int) lastVel;
+	}
+
+	@Override
+	public PositionF getLastPosChange() {
+		return lastPosChange;
 	}
 
 }

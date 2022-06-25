@@ -23,7 +23,6 @@ public class CityScene extends Scene {
 	private CityDeliveryTile deliveryTile;
 	public final WorldGenerator worldGenerator = new WorldGenerator(0);
 	private CarEntity cookCar;
-	private CarEntity truck;
 	private Sprite deliveryArrowSprite = Sprite.DELIVERY_DOWN_ARROW;
 	private PositionF deliveryArrowPos = new PositionF(-10, -10);
 
@@ -31,8 +30,6 @@ public class CityScene extends Scene {
 		super(pixelWidth, pixelHeight, g);
 		cookCar = new CarEntity(this, vanPosition, true, true);
 		addEntity(cookCar);
-		truck = new CarEntity(this, vanPosition, true, false);
-		addEntity(truck);
 		deliveryTile = new CityDeliveryTile(this);
 		addEntity(deliveryTile);
 

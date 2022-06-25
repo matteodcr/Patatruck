@@ -14,7 +14,7 @@ public class CarEntity extends Entity {
 	boolean isPlayer;
 	private boolean swapInThisTick;
 	private Entity entityEncountered;
-	public Physics physics = new PhysicsClassic(3);
+	public Physics physics = new PhysicsClassic(15);
 	// TODO Deplacer hitbox hardocdé et methode de collision (champ ou classe pr pos
 	// bas a droite de l'entite (sinon on garde comme ça si ttes les entites = 4x4)
 
@@ -87,7 +87,7 @@ public class CarEntity extends Entity {
 			this.parentScene.removeEntity(this);
 		else {
 			super.tick(elapsed);
-			this.position = this.position.add(physics.Shift(elapsed));
+			this.position = this.position.add(physics.shift());
 
 			finish = System.currentTimeMillis();
 			timeElapsed = finish - start;
@@ -167,7 +167,7 @@ public class CarEntity extends Entity {
 
 	@Override
 	public boolean hit(AutDirection direction) {
-		this.position = this.position.add(physics.bounce(m_direction.twoapart()));
+		this.position = this.position.add(physics.bounce());
 		return true;
 	}
 
@@ -208,7 +208,8 @@ public class CarEntity extends Entity {
 
 	@Override
 	public boolean gthrow(AutDirection direction) {
-		return false;
+		physics.removeForce();
+		return true;
 	}
 
 	@Override
@@ -285,44 +286,44 @@ public class CarEntity extends Entity {
 		}
 		switch (newDirection) {
 		case N: {
-			if (((CityScene) parentScene).whatsTheCategoryOfTile(position.add(new PositionF(0, -1)), this) == category
-					|| ((CityScene) parentScene).whatsTheCategoryOfTile(position.add(new PositionF(3, -1)),
+			if (((CityScene) parentScene).whatsTheCategoryOfTile(position.add(new PositionF(1, -1)), this) == category
+					|| ((CityScene) parentScene).whatsTheCategoryOfTile(position.add(new PositionF(2, -1)),
 							this) == category) {
 				return true;
 			}
 			break;
 		}
 		case W: {
-			if (((CityScene) parentScene).whatsTheCategoryOfTile(position.add(new PositionF(-1, 0)), this) == category
-					|| ((CityScene) parentScene).whatsTheCategoryOfTile(position.add(new PositionF(-1, 3)),
+			if (((CityScene) parentScene).whatsTheCategoryOfTile(position.add(new PositionF(-1, 1)), this) == category
+					|| ((CityScene) parentScene).whatsTheCategoryOfTile(position.add(new PositionF(-1, 2)),
 							this) == category) {
 				return true;
 			}
 			break;
 		}
 		case E: {
-			if (((CityScene) parentScene).whatsTheCategoryOfTile(position.add(new PositionF(4, 0)), this) == category
-					|| ((CityScene) parentScene).whatsTheCategoryOfTile(position.add(new PositionF(4, 3)),
+			if (((CityScene) parentScene).whatsTheCategoryOfTile(position.add(new PositionF(4, 1)), this) == category
+					|| ((CityScene) parentScene).whatsTheCategoryOfTile(position.add(new PositionF(4, 2)),
 							this) == category) {
 				return true;
 			}
 			break;
 		}
 		case S: {
-			if (((CityScene) parentScene).whatsTheCategoryOfTile(position.add(new PositionF(0, 4)), this) == category
-					|| ((CityScene) parentScene).whatsTheCategoryOfTile(position.add(new PositionF(3, 4)),
+			if (((CityScene) parentScene).whatsTheCategoryOfTile(position.add(new PositionF(1, 4)), this) == category
+					|| ((CityScene) parentScene).whatsTheCategoryOfTile(position.add(new PositionF(2, 4)),
 							this) == category) {
 				return true;
 			}
 			break;
 		}
 		case H: {
-			if (((CityScene) parentScene).whatsTheCategoryOfTile(position.add(new PositionF(0, 0)), this) == category
-					|| ((CityScene) parentScene).whatsTheCategoryOfTile(position.add(new PositionF(3, 0)),
+			if (((CityScene) parentScene).whatsTheCategoryOfTile(position.add(new PositionF(1, 1)), this) == category
+					|| ((CityScene) parentScene).whatsTheCategoryOfTile(position.add(new PositionF(2, 1)),
 							this) == category
-					|| ((CityScene) parentScene).whatsTheCategoryOfTile(position.add(new PositionF(0, 3)),
+					|| ((CityScene) parentScene).whatsTheCategoryOfTile(position.add(new PositionF(1, 2)),
 							this) == category
-					|| ((CityScene) parentScene).whatsTheCategoryOfTile(position.add(new PositionF(3, 3)),
+					|| ((CityScene) parentScene).whatsTheCategoryOfTile(position.add(new PositionF(2, 2)),
 							this) == category) {
 				return true;
 
@@ -345,21 +346,24 @@ public class CarEntity extends Entity {
 	}
 
 	public void toNoBreaksPhysics() {
-		this.physics = new PhysicsNoBrakes(3, this.physics.getAccX(), this.physics.getAccY(), this.physics.getVelX(),
+		this.physics = new PhysicsNoBrakes(15, this.physics.getAccX(), this.physics.getAccY(), this.physics.getVelX(),
 				this.physics.getVelY(), this.physics.getMaxVel(), this.physics.getAvgVelBuff(),
-				this.physics.getAvgVel(), this.physics.getTimerVel(), this.physics.getTimerMaxVel());
+				this.physics.getAvgVel(), this.physics.getTimerVel(), this.physics.getTimerMaxVel(),
+				this.physics.getLastPosChange());
 	}
 
 	public void toClassicPhysics() {
-		this.physics = new PhysicsClassic(3, this.physics.getAccX(), this.physics.getAccY(), this.physics.getVelX(),
+		this.physics = new PhysicsClassic(15, this.physics.getAccX(), this.physics.getAccY(), this.physics.getVelX(),
 				this.physics.getVelY(), this.physics.getMaxVel(), this.physics.getAvgVelBuff(),
-				this.physics.getAvgVel(), this.physics.getTimerVel(), this.physics.getTimerMaxVel());
+				this.physics.getAvgVel(), this.physics.getTimerVel(), this.physics.getTimerMaxVel(),
+				this.physics.getLastPosChange());
 	}
 
 	public void toSmokePhysics() {
-		this.physics = new PhysicsSmoke(3, this.physics.getAccX(), this.physics.getAccY(), this.physics.getVelX(),
+		this.physics = new PhysicsSmoke(15, this.physics.getAccX(), this.physics.getAccY(), this.physics.getVelX(),
 				this.physics.getVelY(), this.physics.getMaxVel(), this.physics.getAvgVelBuff(),
-				this.physics.getAvgVel(), this.physics.getTimerVel(), this.physics.getTimerMaxVel());
+				this.physics.getAvgVel(), this.physics.getTimerVel(), this.physics.getTimerMaxVel(),
+				this.physics.getLastPosChange());
 	}
 
 	public void swap(CarEntity carentity) {
@@ -376,8 +380,8 @@ public class CarEntity extends Entity {
 
 		carentity.swapInThisTick = true;
 		this.swapInThisTick = true;
-		carentity.physics.bounce(carentity.m_direction.twoapart());
-		this.physics.bounce(this.m_direction.twoapart());
+		carentity.physics.bounce();
+		this.physics.bounce();
 
 		this.start = System.currentTimeMillis();
 		carentity.start = System.currentTimeMillis();

@@ -64,7 +64,7 @@ public class Game {
 	/**
 	 * Ticks par seconde
 	 */
-	private static final int TPS = 20;
+	private static final int TPS = 40;
 
 	static Game game;
 

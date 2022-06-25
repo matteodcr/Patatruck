@@ -13,11 +13,11 @@ import info3.game.content.Sauce;
 import info3.game.entity.BasicTableTile;
 import info3.game.entity.CockroachEntity;
 import info3.game.entity.CookEntity;
+import info3.game.entity.CookTile;
 import info3.game.entity.CutTile;
 import info3.game.entity.Entity;
 import info3.game.entity.FrieTile;
 import info3.game.entity.KitchenDeliveryTile;
-import info3.game.entity.CookTile;
 import info3.game.entity.SauceTableTile;
 import info3.game.entity.StockTable;
 import info3.game.entity.Tile;
@@ -55,7 +55,7 @@ public class KitchenScene extends Scene {
 
 	// Gestion de la fumée
 	public boolean smoke = false;
-	public int smokeCounter = 100;
+	public int smokeCounter = 200;
 
 	private ArrayList<PositionF> indexEmplacements = new ArrayList<>(List.of(new PositionF(0, 1), new PositionF(0, 2),
 			new PositionF(0, 3), new PositionF(0, 4), new PositionF(0, 5), new PositionF(3, 1), new PositionF(3, 2),
@@ -287,12 +287,12 @@ public class KitchenScene extends Scene {
 		}
 		if (smokeCounter == 0) {
 			smoke = false;
-			smokeCounter = 100;
+			smokeCounter = 200;
 		}
 
 		// Réapparition aléatoire des cafards
 		Random rand = new Random();
-		if (rand.nextInt(1000) < 2) {
+		if (rand.nextInt(1000) < 1) {
 			try {
 				this.addEntity(new CockroachEntity(this, new PositionF(135, 36)));
 			} catch (IOException e) {

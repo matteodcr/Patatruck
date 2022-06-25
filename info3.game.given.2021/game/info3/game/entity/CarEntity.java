@@ -42,14 +42,18 @@ public class CarEntity extends Entity {
 
 	@Override
 	public void tick(long elapsed) {
-		super.tick(elapsed);
-		this.position = this.position.add(physics.Shift(elapsed));
+		if (((CityScene) parentScene).isTooFarFromVan(this))
+			this.parentScene.removeEntity(this);
+		else {
+			super.tick(elapsed);
+			this.position = this.position.add(physics.Shift(elapsed));
 
-		finish = System.currentTimeMillis();
-		timeElapsed = finish - start;
+			finish = System.currentTimeMillis();
+			timeElapsed = finish - start;
 
-		if (timeElapsed >= 1000) {
-			this.swapInThisTick = false;
+			if (timeElapsed >= 1000) {
+				this.swapInThisTick = false;
+			}
 		}
 
 	}
@@ -324,7 +328,6 @@ public class CarEntity extends Entity {
 		carentity.changeCategory();
 
 		((CityScene) this.parentScene).setCook(carentity);
-		((CityScene) this.parentScene).setCar(this);
 
 		Physics physics = this.physics;
 		this.physics = carentity.physics;

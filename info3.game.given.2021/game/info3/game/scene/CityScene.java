@@ -1,5 +1,7 @@
 package info3.game.scene;
 
+import java.util.Random;
+
 import info3.game.Game;
 import info3.game.entity.CarEntity;
 import info3.game.entity.CityDeliveryTile;
@@ -20,13 +22,10 @@ public class CityScene extends Scene {
 	private PositionF vanPosition = PositionF.ZERO;
 	private CityDeliveryTile deliveryTile;
 	public final WorldGenerator worldGenerator = new WorldGenerator(0);
-	private CarEntity car;
 	private CarEntity cookCar;
 
 	public CityScene(int pixelWidth, int pixelHeight, Game g) {
 		super(pixelWidth, pixelHeight, g);
-		car = new CarEntity(this, vanPosition, false, false);
-		addEntity(car);
 		cookCar = new CarEntity(this, vanPosition, true, true);
 		addEntity(cookCar);
 		deliveryTile = new CityDeliveryTile(this);
@@ -36,6 +35,9 @@ public class CityScene extends Scene {
 	@Override
 	public void tick(long elapsed) {
 		super.tick(elapsed);
+		if (this.entity_list.size() < 50)
+			getRandomTileNearViewport().tick(elapsed);
+
 	}
 
 	@Override
@@ -110,10 +112,6 @@ public class CityScene extends Scene {
 		cookCar = car;
 	}
 
-	public void setCar(CarEntity cookCar) {
-		car = cookCar;
-	}
-
 	public CityDeliveryTile getDeliveryTile() {
 		return deliveryTile;
 	}
@@ -141,7 +139,7 @@ public class CityScene extends Scene {
 	}
 
 	/* Visuellement la fenêtre le van n'est PAS en 0,0 mais en center */
-	private PositionF getPosRelativeToVan(Entity entity) {
+	public PositionF getPosRelativeToVan(Entity entity) {
 		return entity.getPosition().add(center).sub(getCook().getPosition());
 	}
 
@@ -170,4 +168,26 @@ public class CityScene extends Scene {
 
 	}
 
+	private CityTile getRandomTileNearViewport() {
+		Random rand = new Random();
+		CityTile tile;
+		do {
+			PositionF randPos = new PositionF(rand.nextInt(13) * getTileWidth(), rand.nextInt(4) * getTileWidth());
+
+			PositionF pos = randPos.sub(center).add(getCook().getPosition());
+			PositionI gridPos = getGridPosFromPosCity(pos);
+			tile = (CityTile) getTileAt(gridPos.getX(), gridPos.getY());
+		} while (tile.genTile.collisionBox.topLeft);
+
+		return tile;
+	}
+
+	public boolean isTooFarFromVan(Entity entity) {
+		PositionF posFromVan = getPosRelativeToVan(entity).sub(center);
+		float posFromVanX = posFromVan.getX();
+		float posFromVanY = posFromVan.getY();
+		if (Math.abs(posFromVanX) > 192f || Math.abs(posFromVanY) > 108f)
+			return true;
+		return false;
+	}
 }

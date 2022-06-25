@@ -6,6 +6,7 @@ import info3.game.graphics.Graphics;
 import info3.game.graphics.Sprite;
 import info3.game.position.AutCategory;
 import info3.game.position.AutDirection;
+import info3.game.position.PositionF;
 import info3.game.scene.CityScene;
 import info3.game.scene.Scene;
 import info3.game.worldgen.GenTile;
@@ -62,7 +63,8 @@ public class CityTile extends Tile {
 
 	@Override
 	public boolean wizz(AutDirection direction) {
-		this.parentScene.addEntity(new CarEntity(this.parentScene, position, false, false));
+		this.parentScene.addEntity(new CarEntity(this.parentScene,
+				new PositionF(gridX * parentScene.getTileWidth(), gridY * parentScene.getTileWidth()), false, false));
 		return true;
 	}
 
@@ -73,7 +75,8 @@ public class CityTile extends Tile {
 
 	@Override
 	public boolean egg(AutDirection direction) {
-		this.parentScene.addEntity(new CarEntity(this.parentScene, position, true, false));
+		this.parentScene.addEntity(new CarEntity(this.parentScene,
+				new PositionF(gridX * parentScene.getTileWidth(), gridY * parentScene.getTileWidth()), true, false));
 		return true;
 	}
 

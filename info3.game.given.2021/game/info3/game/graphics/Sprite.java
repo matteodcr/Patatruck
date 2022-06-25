@@ -8,6 +8,8 @@ import static info3.game.graphics.Sprite.Spritesheet.CLOCK_;
 import static info3.game.graphics.Sprite.Spritesheet.COCKROACH;
 import static info3.game.graphics.Sprite.Spritesheet.COCKROACH_POP;
 import static info3.game.graphics.Sprite.Spritesheet.COOK;
+import static info3.game.graphics.Sprite.Spritesheet.COOK_END_;
+import static info3.game.graphics.Sprite.Spritesheet.DELIVERY_BLINK;
 import static info3.game.graphics.Sprite.Spritesheet.INGREDIENTS;
 import static info3.game.graphics.Sprite.Spritesheet.KETCHUP_INDIC;
 import static info3.game.graphics.Sprite.Spritesheet.KETCHUP_MAYO_INDIC;
@@ -22,7 +24,6 @@ import static info3.game.graphics.Sprite.Spritesheet.SPEEDOMETER_;
 import static info3.game.graphics.Sprite.Spritesheet.SPEEDOMETER_HIGH_;
 import static info3.game.graphics.Sprite.Spritesheet.SPEEDOMETER_LOW_;
 import static info3.game.graphics.Sprite.Spritesheet.YELLOW_CAR;
-import static info3.game.graphics.Sprite.Spritesheet.DELIVERY_BLINK;
 
 public enum Sprite {
 	AS_LOGO(AUTOMATON_SELECTION, 10, 10, 6, 2), AS_BACKDROP(AUTOMATON_SELECTION, 0, 0, 16, 9),
@@ -98,8 +99,8 @@ public enum Sprite {
 	DELIVERY_RIGHT_ARROW(CITY_ARROWS, 2, 2, 1, 1), DELIVERY_DOWN_ARROW(CITY_ARROWS, 3, 2, 1, 1),
 	DELIVERY_UPLEFT_ARROW(CITY_ARROWS, 0, 3, 1, 1), DELIVERY_UPRIGHT_ARROW(CITY_ARROWS, 1, 3, 1, 1),
 	DELIVERY_DOWNRIGHT_ARROW(CITY_ARROWS, 2, 3, 1, 1), DELIVERY_DOWNLEFT_ARROW(CITY_ARROWS, 3, 3, 1, 1),
-	
-	DELIVERY_TILE_FRAME(DELIVERY_BLINK, 0, 0, 1, 1);
+
+	DELIVERY_TILE_FRAME(DELIVERY_BLINK, 0, 0, 1, 1), COOK_END(COOK_END_, 0, 0, 4, 5);
 
 	public static final Sprite[] FULL_INDICATORS = new Sprite[] { FULL_0, FULL_1, FULL_2, FULL_3, FULL_4, FULL_5,
 			FULL_6, FULL_7 };
@@ -141,7 +142,8 @@ public enum Sprite {
 		DELIVERY_BLINK("city_delivery_frame.png", 20),
 
 		// Other
-		AUTOMATON_SELECTION("automaton_selection.png", 16), CITY_ARROWS("city-arrows.png", 7);
+		AUTOMATON_SELECTION("automaton_selection.png", 16), CITY_ARROWS("city-arrows.png", 7),
+		COOK_END_("cook_end.png", 20);
 
 		public final String filename;
 		public final int tileSize;

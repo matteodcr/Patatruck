@@ -24,6 +24,7 @@ public class CookEntity extends Entity {
 		super(parent, position);
 		category = AutCategory.AROBASE;
 		m_assembly = new Assembly();
+		this.timerToWait = 200;
 	}
 
 	@Override
@@ -56,137 +57,27 @@ public class CookEntity extends Entity {
 
 	@Override
 	public boolean wizz(AutDirection direction) {
-		// le timeElapsed permet de limiter la vitesse du joueur
-		finish = System.currentTimeMillis();
-		timeElapsed = finish - start;
-
-		if (timeElapsed >= 200) {
-			switch (direction) {
-			case N: {
-				PositionF newPos = new PositionF(0, -parentScene.getTileWidth());
-				this.position = position.add(newPos);
-				start = System.currentTimeMillis();
-
-				return true;
-			}
-			case W: {
-				PositionF newPos = new PositionF(-parentScene.getTileWidth(), 0);
-				this.position = position.add(newPos);
-				start = System.currentTimeMillis();
-
-				return true;
-			}
-			case E: {
-				PositionF newPos = new PositionF(parentScene.getTileWidth(), 0);
-				this.position = position.add(newPos);
-				start = System.currentTimeMillis();
-
-				return true;
-			}
-			case S: {
-				PositionF newPos = new PositionF(0, parentScene.getTileWidth());
-				this.position = position.add(newPos);
-				start = System.currentTimeMillis();
-
-				return true;
-			}
-			default:
-				start = System.currentTimeMillis();
-
-				return false;
-			}
-		}
-		return false;
-	}
-
-	@Override
-	public boolean gwait() {
-		// TODO Auto-generated method stub
+		move(direction);
 		return false;
 	}
 
 	@Override
 	public boolean egg(AutDirection direction) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean hit(AutDirection direction) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean jump(AutDirection direction) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean explode() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean pick(AutDirection direction) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean power() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean protect(AutDirection direction) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean store() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean turn(AutDirection direction) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean gthrow(AutDirection direction) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean myDir(AutDirection direction) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean closest(AutCategory category, AutDirection direction) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean gotPower() {
-		// TODO Auto-generated method stub
+		if (parentScene.entityList.size() <= Scene.MAXIMUM_ENTITIES) {
+			Entity newEntity = null;
+			try {
+				newEntity = new CookEntity(this.parentScene, position);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			return this.parentScene.addEntity(newEntity);
+		}
 		return false;
 	}
 
 	@Override
 	public boolean gotStuff() {
-		// TODO Auto-generated method stub
-		return false;
+		return (this.item != null || this.m_assembly != null);
 	}
 
 	@Override

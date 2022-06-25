@@ -10,7 +10,12 @@ import info3.game.automata.AutomatonListener;
 import info3.game.automata.GAutomaton;
 import info3.game.automata.GState;
 import info3.game.graphics.Graphics;
-import info3.game.position.*;
+import info3.game.position.AutCategory;
+import info3.game.position.AutDirection;
+import info3.game.position.AutKey;
+import info3.game.position.PositionF;
+import info3.game.position.PositionI;
+import info3.game.scene.KitchenScene;
 import info3.game.scene.Scene;
 
 public abstract class Entity implements AutomatonListener {
@@ -25,7 +30,7 @@ public abstract class Entity implements AutomatonListener {
 	PositionF position;
 
 	int deathTime = 0;
-	long start, finish, timeElapsed;
+	long start, finish, timeElapsed, timerToWait = 0;
 
 	// If different from what `getType` returns, we should replace the automaton
 	// This is checked at each tick
@@ -114,9 +119,57 @@ public abstract class Entity implements AutomatonListener {
 		return direction;
 	}
 
+	/**
+	 * Allows to move tile by tile
+	 */
 	@Override
 	public boolean move(AutDirection direction) {
-		// TODO Auto-generated method stub
+		finish = System.currentTimeMillis();
+		timeElapsed = finish - start;
+		float shift = 0;
+		if (parentScene instanceof KitchenScene)
+			shift = parentScene.getTileWidth();
+		else
+			shift = 1;
+
+		if (timeElapsed >= timerToWait) {
+			AutDirection newDirection = convertRelativToAbsolutedir(direction);
+			m_direction = newDirection;
+			switch (newDirection) {
+			case N: {
+				PositionF newPos = new PositionF(0, -shift);
+				this.position = position.add(newPos);
+				start = System.currentTimeMillis();
+
+				return true;
+			}
+			case W: {
+				PositionF newPos = new PositionF(-shift, 0);
+				this.position = position.add(newPos);
+				start = System.currentTimeMillis();
+
+				return true;
+			}
+			case E: {
+				PositionF newPos = new PositionF(shift, 0);
+				this.position = position.add(newPos);
+				start = System.currentTimeMillis();
+
+				return true;
+			}
+			case S: {
+				PositionF newPos = new PositionF(0, shift);
+				this.position = position.add(newPos);
+				start = System.currentTimeMillis();
+
+				return true;
+			}
+			default:
+				start = System.currentTimeMillis();
+
+				return false;
+			}
+		}
 		return false;
 	}
 
@@ -280,6 +333,112 @@ public abstract class Entity implements AutomatonListener {
 		if (posX <= pos.getX() && pos.getX() <= posX + 3 && posY <= pos.getY() && pos.getY() <= posY + 3)
 			return category;
 		return null;
+	}
+
+	@Override
+	public boolean turn(AutDirection direction) {
+		this.m_direction = convertRelativToAbsolutedir(direction);
+		return true;
+	}
+
+	@Override
+	public boolean hit(AutDirection direction) {
+		return false;
+	}
+
+	@Override
+	public boolean jump(AutDirection direction) {
+		return false;
+	}
+
+	@Override
+	public boolean pick(AutDirection direction) {
+		return false;
+	}
+
+	@Override
+	public boolean power() {
+		return false;
+	}
+
+	@Override
+	public boolean protect(AutDirection direction) {
+		return false;
+	}
+
+	@Override
+	public boolean store() {
+		return false;
+	}
+
+	@Override
+	public boolean gthrow(AutDirection direction) {
+		return false;
+	}
+
+	@Override
+	public boolean myDir(AutDirection direction) {
+		return direction == m_direction;
+	}
+
+	/**
+	 * returns if the closest entity is this category and in this direction
+	 */
+	@Override
+	public boolean closest(AutCategory category, AutDirection direction) {
+		PositionF closest = null;
+		Entity closestEnt = null;
+		// searching for the closest
+		for (Entity entity : this.parentScene.entityList) {
+			if (entity != null && entity.position != null && !(entity instanceof CityTile)) { // not to detect every
+																								// road
+				if (closest == null) {
+					closest = entity.position;
+					closestEnt = entity;
+				} else if (Math.hypot(closest.getX() - this.position.getX(),
+						closest.getY() - this.position.getY()) > Math.hypot(
+								entity.position.getX() - this.position.getX(),
+								entity.position.getY() - this.position.getY())) {
+					closest = entity.position;
+					closestEnt = entity;
+				}
+			}
+		}
+		if (closest == null || closestEnt == null || closestEnt.category != category)
+			return false;
+		// checking if in the right direction;
+		AutDirection itsDir = null;
+		if (closest.getY() >= Math.abs(closest.getX()))
+			itsDir = AutDirection.N;
+		else if (Math.abs(closest.getY()) >= Math.abs(closest.getX()))
+			itsDir = AutDirection.S;
+		else if (closest.getX() > 0)
+			itsDir = AutDirection.E;
+		else
+			itsDir = AutDirection.W;
+		AutDirection newDirection = convertRelativToAbsolutedir(direction);
+
+		return (newDirection == itsDir);
+	}
+
+	@Override
+	public boolean gotPower() {
+		return false;
+	}
+
+	@Override
+	public boolean gotStuff() {
+		return false;
+	}
+
+	@Override
+	public boolean gwait() {
+		return false;
+	}
+
+	@Override
+	public boolean explode() {
+		return this.parentScene.entityList.remove(this);
 	}
 
 }

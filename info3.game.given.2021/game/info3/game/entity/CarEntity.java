@@ -26,14 +26,14 @@ public class CarEntity extends Entity {
 		changeCategory();
 		this.swapInThisTick = false;
 	}
-	
+
 	public boolean canDeliver() {
 		if (isPlayer) {
 			float tileX = ((CityScene)parentScene).getDeliveryTile().position.getX();
 			float tileY = ((CityScene)parentScene).getDeliveryTile().position.getY();
 			float truckX = this.position.getX();
 			float truckY = this.position.getY();
-			
+
 			return truckX > tileX-15 && truckX < tileX+15 && truckY > tileY-15 && truckY < tileY+15;
 		}
 		return false;
@@ -120,6 +120,7 @@ public class CarEntity extends Entity {
 		return true;
 	}
 
+	// seulement utilisé pour le déplacement du joueur
 	@Override
 	public boolean wizz(AutDirection direction) {
 		AutDirection newDirection = convertRelativToAbsolutedir(direction);
@@ -137,43 +138,13 @@ public class CarEntity extends Entity {
 
 	}
 
-	public boolean move(AutDirection direction) {
-		AutDirection newDirection = convertRelativToAbsolutedir(direction);
-		m_direction = newDirection;
-		switch (newDirection) {
-		case N: {
-			PositionF newPos = new PositionF(0, -1);
-			this.position = position.add(newPos);
-			return true;
-		}
-		case W: {
-			PositionF newPos = new PositionF(-1, 0);
-			this.position = position.add(newPos);
-			return true;
-		}
-		case E: {
-			PositionF newPos = new PositionF(1, 0);
-			this.position = position.add(newPos);
-			return true;
-		}
-		case S: {
-			PositionF newPos = new PositionF(0, 1);
-			this.position = position.add(newPos);
-			return true;
-		}
-		default:
-			return false;
-		}
-	}
-
-	@Override
-	public boolean gwait() {
-		// TODO : modified to prevent car not controlled by player from doing POP
-		return true;
-	}
-
 	@Override
 	public boolean egg(AutDirection direction) {
+		if (parentScene.entityList.size() <= Scene.MAXIMUM_ENTITIES) {
+			Entity newEntity = null;
+			newEntity = new CarEntity(this.parentScene, position, isTruck, isPlayer);
+			return this.parentScene.addEntity(newEntity);
+		}
 		return false;
 	}
 
@@ -184,64 +155,9 @@ public class CarEntity extends Entity {
 	}
 
 	@Override
-	public boolean jump(AutDirection direction) {
-		return false;
-	}
-
-	@Override
-	public boolean explode() {
-		return false;
-	}
-
-	@Override
-	public boolean pick(AutDirection direction) {
-		return false;
-	}
-
-	@Override
-	public boolean power() {
-		return false;
-	}
-
-	@Override
-	public boolean protect(AutDirection direction) {
-		return false;
-	}
-
-	@Override
-	public boolean store() {
-		return false;
-	}
-
-	@Override
-	public boolean turn(AutDirection direction) {
-		return false;
-	}
-
-	@Override
 	public boolean gthrow(AutDirection direction) {
 		physics.removeForce();
 		return true;
-	}
-
-	@Override
-	public boolean myDir(AutDirection direction) {
-		return false;
-	}
-
-	@Override
-	public boolean closest(AutCategory category, AutDirection direction) {
-		return false;
-	}
-
-	@Override
-	public boolean gotPower() {
-		return false;
-	}
-
-	@Override
-	public boolean gotStuff() {
-		return false;
 	}
 
 	// TODO Point de collision pr l'instant HARDCODE a l'entite CarEntity

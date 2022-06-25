@@ -19,4 +19,15 @@ public abstract class KitchenTile extends Tile {
 
 	}
 
+	@Override
+	public boolean move(AutDirection direction) {
+		// Can't move
+		return false;
+	}
+
+	@Override
+	public boolean gotStuff() {
+		return this.item != null;
+	}
+
 }

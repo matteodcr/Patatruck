@@ -13,6 +13,8 @@ public abstract class Scene {
 
 	public Game m_game;
 
+	public static final int MAXIMUM_ENTITIES = 30;
+
 	protected final int pixelWidth, pixelHeight;
 	public ArrayList<Entity> entityList = new ArrayList<>();
 

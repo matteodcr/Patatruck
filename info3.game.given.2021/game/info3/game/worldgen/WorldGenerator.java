@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
+import java.util.function.Predicate;
 import java.util.stream.Stream;
 
 public class WorldGenerator {
@@ -40,7 +41,7 @@ public class WorldGenerator {
 
 	public Stream<LocatedMarket> locateMarkets(int centerX, int centerY) {
 		return SpiralStream.create(centerX, centerY).filter(pos -> markets.getAt(seed, pos))
-				.filter(seenMarketTiles::contains).map(pos -> new LocatedMarket(pos.x, pos.y));
+				.filter(Predicate.not(seenMarketTiles::contains)).map(pos -> new LocatedMarket(pos.x, pos.y));
 	}
 
 	public void markMarketAsSeen(int gridX, int gridY) {

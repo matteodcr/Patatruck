@@ -14,6 +14,9 @@ import info3.game.scene.Scene;
 public class CockroachEntity extends Entity {
 	public Item item;
 
+	private boolean usePopSprite = false;
+	private int timerPopSprite = 0, maxTimerPopSprite = 3;
+
 	public CockroachEntity(Scene parent, PositionF position) throws IOException {
 		super(parent, position);
 		category = AutCategory.A;
@@ -26,8 +29,20 @@ public class CockroachEntity extends Entity {
 	}
 
 	@Override
-	public boolean wizz(AutDirection direction) {
+	public void tick(long elapsed) {
+		super.tick(elapsed);
+		if (usePopSprite) {
+			if (timerPopSprite > 0) {
+				timerPopSprite--;
+			} else {
+				timerPopSprite = maxTimerPopSprite;
+				usePopSprite = false;
+			}
+		}
+	}
 
+	@Override
+	public boolean wizz(AutDirection direction) {
 		finish = System.currentTimeMillis();
 		timeElapsed = finish - start;
 
@@ -69,25 +84,37 @@ public class CockroachEntity extends Entity {
 			}
 		}
 		return false;
-
 	}
 
 	@Override
 	public boolean pop(AutDirection direction) { // explode
-		// to prevent cockroach from being stuck in dupli statedd
-		return true;
+		timerPopSprite = maxTimerPopSprite;
+		usePopSprite = true;
+		return true; // to prevent cockroach from being stuck in dupli statedd
 	}
 
 	@Override
 	public void render(Graphics g) {
 		if (m_direction == AutDirection.N) {
-			g.drawSprite(Sprite.COCKROACH_ENTITY_N, 0, 0);
+			if (usePopSprite)
+				g.drawSprite(Sprite.COCKROACH_POP_N, 0, 0);
+			else
+				g.drawSprite(Sprite.COCKROACH_ENTITY_N, 0, 0);
 		} else if (m_direction == AutDirection.E) {
-			g.drawSprite(Sprite.COCKROACH_ENTITY_E, 0, 0);
+			if (usePopSprite)
+				g.drawSprite(Sprite.COCKROACH_POP_E, 0, 0);
+			else
+				g.drawSprite(Sprite.COCKROACH_ENTITY_E, 0, 0);
 		} else if (m_direction == AutDirection.W) {
-			g.drawSprite(Sprite.COCKROACH_ENTITY_W, 0, 0);
+			if (usePopSprite)
+				g.drawSprite(Sprite.COCKROACH_POP_W, 0, 0);
+			else
+				g.drawSprite(Sprite.COCKROACH_ENTITY_W, 0, 0);
 		} else {
-			g.drawSprite(Sprite.COCKROACH_ENTITY_S, 0, 0);
+			if (usePopSprite)
+				g.drawSprite(Sprite.COCKROACH_POP_S, 0, 0);
+			else
+				g.drawSprite(Sprite.COCKROACH_ENTITY_S, 0, 0);
 		}
 	}
 

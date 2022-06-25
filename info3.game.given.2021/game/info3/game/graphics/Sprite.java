@@ -1,109 +1,72 @@
 package info3.game.graphics;
 
 import static info3.game.graphics.Sprite.Spritesheet.AUTOMATON_SELECTION;
-import static info3.game.graphics.Sprite.Spritesheet.BASICTABLEE;
-import static info3.game.graphics.Sprite.Spritesheet.BASICTABLEN;
-import static info3.game.graphics.Sprite.Spritesheet.BASICTABLES;
-import static info3.game.graphics.Sprite.Spritesheet.BASICTABLEW;
-import static info3.game.graphics.Sprite.Spritesheet.BREADSLICE_;
-import static info3.game.graphics.Sprite.Spritesheet.BREAD_;
-import static info3.game.graphics.Sprite.Spritesheet.CAR;
-import static info3.game.graphics.Sprite.Spritesheet.CHEESE_;
+import static info3.game.graphics.Sprite.Spritesheet.BLUE_CAR;
 import static info3.game.graphics.Sprite.Spritesheet.CITY;
-import static info3.game.graphics.Sprite.Spritesheet.CLASSICBURGER_;
-import static info3.game.graphics.Sprite.Spritesheet.CLASSICBURGER_SALAD_;
-import static info3.game.graphics.Sprite.Spritesheet.CLASSICBURGER_SALAD_TOMATO_;
-import static info3.game.graphics.Sprite.Spritesheet.CLASSICBURGER_TOMATO_;
+import static info3.game.graphics.Sprite.Spritesheet.CITY_ARROWS;
 import static info3.game.graphics.Sprite.Spritesheet.CLOCK_;
-import static info3.game.graphics.Sprite.Spritesheet.COCKROACHE;
-import static info3.game.graphics.Sprite.Spritesheet.COCKROACHN;
-import static info3.game.graphics.Sprite.Spritesheet.COCKROACHS;
-import static info3.game.graphics.Sprite.Spritesheet.COCKROACHW;
-import static info3.game.graphics.Sprite.Spritesheet.COOKE;
-import static info3.game.graphics.Sprite.Spritesheet.COOKEDFRIES_;
-import static info3.game.graphics.Sprite.Spritesheet.COOKEDHASHMEAT_;
-import static info3.game.graphics.Sprite.Spritesheet.COOKEDMEAT_;
-import static info3.game.graphics.Sprite.Spritesheet.COOKN;
-import static info3.game.graphics.Sprite.Spritesheet.COOKS;
-import static info3.game.graphics.Sprite.Spritesheet.COOKW;
-import static info3.game.graphics.Sprite.Spritesheet.CUTTILE;
-import static info3.game.graphics.Sprite.Spritesheet.DELIVERY;
-import static info3.game.graphics.Sprite.Spritesheet.FAILEDITEM_;
-import static info3.game.graphics.Sprite.Spritesheet.FRIES_;
-import static info3.game.graphics.Sprite.Spritesheet.GALETTECOOKED_;
-import static info3.game.graphics.Sprite.Spritesheet.GALETTE_;
-import static info3.game.graphics.Sprite.Spritesheet.HACHI_;
-import static info3.game.graphics.Sprite.Spritesheet.HASHEDMEAT_;
-import static info3.game.graphics.Sprite.Spritesheet.KETCHUPTABLE;
+import static info3.game.graphics.Sprite.Spritesheet.COCKROACH;
+import static info3.game.graphics.Sprite.Spritesheet.COCKROACH_POP;
+import static info3.game.graphics.Sprite.Spritesheet.COOK;
+import static info3.game.graphics.Sprite.Spritesheet.INGREDIENTS;
 import static info3.game.graphics.Sprite.Spritesheet.KETCHUP_INDIC;
-import static info3.game.graphics.Sprite.Spritesheet.KETCHUP_MAYO_;
 import static info3.game.graphics.Sprite.Spritesheet.KETCHUP_MAYO_INDIC;
 import static info3.game.graphics.Sprite.Spritesheet.KITCHEN;
-import static info3.game.graphics.Sprite.Spritesheet.MASHEDPOTATO_;
-import static info3.game.graphics.Sprite.Spritesheet.MAYOTABLE;
+import static info3.game.graphics.Sprite.Spritesheet.KITCHENTILES;
 import static info3.game.graphics.Sprite.Spritesheet.MAYO_INDIC;
-import static info3.game.graphics.Sprite.Spritesheet.MEAT_;
 import static info3.game.graphics.Sprite.Spritesheet.MENU;
-import static info3.game.graphics.Sprite.Spritesheet.OFFFRIETILE;
-import static info3.game.graphics.Sprite.Spritesheet.OFFPANTILE;
-import static info3.game.graphics.Sprite.Spritesheet.ONFRIETILE;
-import static info3.game.graphics.Sprite.Spritesheet.ONPANTILE;
-import static info3.game.graphics.Sprite.Spritesheet.POTATOCOOKED_;
-import static info3.game.graphics.Sprite.Spritesheet.POTATOSALAD_;
-import static info3.game.graphics.Sprite.Spritesheet.POTATO_;
-import static info3.game.graphics.Sprite.Spritesheet.POUTINE_;
 import static info3.game.graphics.Sprite.Spritesheet.RECIPES_;
-import static info3.game.graphics.Sprite.Spritesheet.SALADELEAF_;
-import static info3.game.graphics.Sprite.Spritesheet.SALADE_;
-import static info3.game.graphics.Sprite.Spritesheet.SAUCETABLETILE;
+import static info3.game.graphics.Sprite.Spritesheet.RED_CAR;
+import static info3.game.graphics.Sprite.Spritesheet.SAUCES;
 import static info3.game.graphics.Sprite.Spritesheet.SPEEDOMETER_;
 import static info3.game.graphics.Sprite.Spritesheet.SPEEDOMETER_HIGH_;
 import static info3.game.graphics.Sprite.Spritesheet.SPEEDOMETER_LOW_;
-import static info3.game.graphics.Sprite.Spritesheet.STOCKTABLE;
-import static info3.game.graphics.Sprite.Spritesheet.TOMATOSLICE_;
-import static info3.game.graphics.Sprite.Spritesheet.TOMATO_;
-import static info3.game.graphics.Sprite.Spritesheet.TRASHTILE_EMPTY;
-import static info3.game.graphics.Sprite.Spritesheet.TRASHTILE_FULL;
-import static info3.game.graphics.Sprite.Spritesheet.VEGIBURGER_;
-import static info3.game.graphics.Sprite.Spritesheet.VEGIBURGER_SALAD_;
-import static info3.game.graphics.Sprite.Spritesheet.VEGIBURGER_SALAD_TOMATO_;
-import static info3.game.graphics.Sprite.Spritesheet.VEGIBURGER_TOMATO_;
-import static info3.game.graphics.Sprite.Spritesheet.CITY_ARROWS;
+import static info3.game.graphics.Sprite.Spritesheet.YELLOW_CAR;
 
 public enum Sprite {
-	AS_LOGO(AUTOMATON_SELECTION, 11, 10, 5, 2), AS_BACKDROP(AUTOMATON_SELECTION, 0, 0, 16, 9),
+	AS_LOGO(AUTOMATON_SELECTION, 10, 10, 6, 2), AS_BACKDROP(AUTOMATON_SELECTION, 0, 0, 16, 9),
 	AS_LEFT(AUTOMATON_SELECTION, 0, 10, 1, 1), AS_RIGHT(AUTOMATON_SELECTION, 1, 10, 1, 1),
 	AS_RESET(AUTOMATON_SELECTION, 8, 10, 1, 1), AS_LEFT_BOX(AUTOMATON_SELECTION, 0, 11, 1, 1),
 	AS_RIGHT_BOX(AUTOMATON_SELECTION, 1, 11, 1, 1), AS_BOX(AUTOMATON_SELECTION, 2, 11, 6, 1),
 	AS_RESET_BOX(AUTOMATON_SELECTION, 8, 11, 1, 1),
 
 	// Kitchen tiles
-	PLAYER_KITCHEN_N(COOKN, 0, 0, 1, 1), PLAYER_KITCHEN_E(COOKE, 0, 0, 1, 1), PLAYER_KITCHEN_W(COOKW, 0, 0, 1, 1),
-	PLAYER_KITCHEN_S(COOKS, 0, 0, 1, 1), SAUCE_TABLE_TILE(SAUCETABLETILE, 0, 0, 1, 1),
-	OFF_FRIE_TILE(OFFFRIETILE, 0, 0, 1, 1), ON_FRIE_TILE(ONFRIETILE, 0, 0, 1, 1), CUT_TILE(CUTTILE, 0, 0, 1, 1),
-	OFF_PAN_TILE(OFFPANTILE, 0, 0, 1, 1), ON_PAN_TILE(ONPANTILE, 0, 0, 1, 1),
-	TRASH_TILE_EMPTY(TRASHTILE_EMPTY, 0, 0, 1, 1), TRASH_TILE_FULL(TRASHTILE_FULL, 0, 0, 1, 1),
-	STOCK_TABLE(STOCKTABLE, 0, 0, 1, 1), BASICTABLE_N(BASICTABLEN, 0, 0, 1, 1), BASICTABLE_E(BASICTABLEE, 0, 0, 1, 1),
-	BASICTABLE_W(BASICTABLEW, 0, 0, 1, 1), BASICTABLE_S(BASICTABLES, 0, 0, 1, 1), DELIVERYTILE(DELIVERY, 0, 0, 1, 1),
-	TOMATO(TOMATO_, 0, 0, 1, 1), POTATO(POTATO_, 0, 0, 1, 1), SALADE(SALADE_, 0, 0, 1, 1), BREAD(BREAD_, 0, 0, 1, 1),
-	CHEESE(CHEESE_, 0, 0, 1, 1), MEAT(MEAT_, 0, 0, 1, 1), COCKROACH_ENTITY_N(COCKROACHN, 0, 0, 1, 1),
-	COCKROACH_ENTITY_E(COCKROACHE, 0, 0, 1, 1), COCKROACH_ENTITY_W(COCKROACHW, 0, 0, 1, 1),
-	COCKROACH_ENTITY_S(COCKROACHS, 0, 0, 1, 1), BREADSLICE(BREADSLICE_, 0, 0, 1, 1),
-	COOKEDFRIES(COOKEDFRIES_, 0, 0, 1, 1), COOKEDHASHMEAT(COOKEDHASHMEAT_, 0, 0, 1, 1),
-	COOKEDMEAT(COOKEDMEAT_, 0, 0, 1, 1), FRIES(FRIES_, 0, 0, 1, 1), GALETTE(GALETTE_, 0, 0, 1, 1),
-	GALETTECOOKED(GALETTECOOKED_, 0, 0, 1, 1), HACHI(HACHI_, 0, 0, 1, 1), HASHEDMEAT(HASHEDMEAT_, 0, 0, 1, 1),
-	MASHEDPOTATO(MASHEDPOTATO_, 0, 0, 1, 1), CLASSICBURGER(CLASSICBURGER_, 0, 0, 1, 1),
-	POTATOCOOKED(POTATOCOOKED_, 0, 0, 1, 1), POTATOSALAD(POTATOSALAD_, 0, 0, 1, 1), POUTINE(POUTINE_, 0, 0, 1, 1),
-	SALADELEAF(SALADELEAF_, 0, 0, 1, 1), TOMATOSLICE(TOMATOSLICE_, 0, 0, 1, 1), VEGIBURGER(VEGIBURGER_, 0, 0, 1, 1),
-	KETCHUP(KETCHUPTABLE, 0, 0, 1, 1), MAYONNAISE(MAYOTABLE, 0, 0, 1, 1), FAILEDITEM(FAILEDITEM_, 0, 0, 1, 1),
-	KITCHEN_TRUCK(KITCHEN, 0, 0, 15, 6), KITCHEN_TRUCK_FLOOR(KITCHEN, 1, 6, 10, 4), ORDER_CARD(MENU, 0, 0, 1, 1),
+	SAUCE_TABLE_TILE(KITCHENTILES, 0, 0, 1, 1), OFF_FRIE_TILE(KITCHENTILES, 2, 2, 1, 1),
+	ON_FRIE_TILE(KITCHENTILES, 3, 1, 1, 1), CUT_TILE(KITCHENTILES, 1, 1, 1, 1), OFF_PAN_TILE(KITCHENTILES, 3, 0, 1, 1),
+	ON_PAN_TILE(KITCHENTILES, 3, 2, 1, 1), TRASH_TILE_EMPTY(KITCHENTILES, 0, 2, 1, 1),
+	TRASH_TILE_FULL(KITCHENTILES, 1, 2, 1, 1), STOCK_TABLE(KITCHENTILES, 0, 3, 1, 1),
+	BASICTABLE_N(KITCHENTILES, 1, 0, 1, 1), BASICTABLE_E(KITCHENTILES, 0, 1, 1, 1),
+	BASICTABLE_W(KITCHENTILES, 0, 0, 1, 1), BASICTABLE_S(KITCHENTILES, 2, 0, 1, 1),
+	DELIVERYTILE(KITCHENTILES, 2, 1, 1, 1), ORDER_CARD(MENU, 0, 0, 1, 1), RECIPES(RECIPES_, 0, 0, 32, 9),
 	CLOCK(CLOCK_, 0, 0, 1, 1), INDIC_MAYO_(MAYO_INDIC, 0, 0, 1, 1), INDIC_KETCHUP_(KETCHUP_INDIC, 0, 0, 1, 1),
-	KETCHUP_MAYO(KETCHUP_MAYO_, 0, 0, 1, 1), KITCHEN_TRUCK_SMOKE(KITCHEN, 0, 11, 12, 6),
-	KETCHUP_MAYO_INDIC_(KETCHUP_MAYO_INDIC, 0, 0, 1, 1), CLASSICBURGER_SALAD(CLASSICBURGER_SALAD_, 0, 0, 1, 1),
-	CLASSICBURGER_SALAD_TOMATO(CLASSICBURGER_SALAD_TOMATO_, 0, 0, 1, 1),
-	CLASSICBURGER_TOMATO(CLASSICBURGER_TOMATO_, 0, 0, 1, 1), VEGIBURGER_SALAD(VEGIBURGER_SALAD_, 0, 0, 1, 1),
-	VEGIBURGER_SALAD_TOMATO(VEGIBURGER_SALAD_TOMATO_, 0, 0, 1, 1), VEGIBURGER_TOMATO(VEGIBURGER_TOMATO_, 0, 0, 1, 1),
-	RECIPES(RECIPES_, 0, 0, 32, 9),
+
+	// Ingredients
+	TOMATO(INGREDIENTS, 4, 4, 1, 1), POTATO(INGREDIENTS, 2, 3, 1, 1), SALADE(INGREDIENTS, 2, 4, 1, 1),
+	BREAD(INGREDIENTS, 1, 3, 1, 1), CHEESE(INGREDIENTS, 1, 2, 1, 1), MEAT(INGREDIENTS, 5, 1, 1, 1),
+	BREADSLICE(INGREDIENTS, 5, 0, 1, 1), COOKEDFRIES(INGREDIENTS, 0, 2, 1, 1), COOKEDHASHMEAT(INGREDIENTS, 5, 4, 1, 1),
+	COOKEDMEAT(INGREDIENTS, 5, 2, 1, 1), FRIES(INGREDIENTS, 4, 1, 1, 1), GALETTE(INGREDIENTS, 2, 2, 1, 1),
+	GALETTECOOKED(INGREDIENTS, 3, 2, 1, 1), HACHI(INGREDIENTS, 0, 3, 1, 1), HASHEDMEAT(INGREDIENTS, 5, 3, 1, 1),
+	MASHEDPOTATO(INGREDIENTS, 0, 4, 1, 1), CLASSICBURGER(INGREDIENTS, 0, 0, 1, 1),
+	POTATOCOOKED(INGREDIENTS, 3, 3, 1, 1), POTATOSALAD(INGREDIENTS, 3, 4, 1, 1), POUTINE(INGREDIENTS, 4, 3, 1, 1),
+	SALADELEAF(INGREDIENTS, 3, 1, 1, 1), TOMATOSLICE(INGREDIENTS, 1, 4, 1, 1), VEGIBURGER(INGREDIENTS, 4, 0, 1, 1),
+	KETCHUP(SAUCES, 0, 0, 1, 1), MAYONNAISE(SAUCES, 0, 1, 1, 1), FAILEDITEM(INGREDIENTS, 4, 2, 1, 1),
+	KITCHEN_TRUCK(KITCHEN, 0, 0, 15, 6), KITCHEN_TRUCK_FLOOR(KITCHEN, 1, 6, 10, 4), KETCHUP_MAYO(SAUCES, 1, 0, 1, 1),
+	KITCHEN_TRUCK_SMOKE(KITCHEN, 0, 11, 12, 6), KETCHUP_MAYO_INDIC_(KETCHUP_MAYO_INDIC, 0, 0, 1, 1),
+	CLASSICBURGER_SALAD(INGREDIENTS, 1, 0, 1, 1), CLASSICBURGER_SALAD_TOMATO(INGREDIENTS, 2, 0, 1, 1),
+	CLASSICBURGER_TOMATO(INGREDIENTS, 3, 0, 1, 1), VEGIBURGER_SALAD(INGREDIENTS, 0, 1, 1, 1),
+	VEGIBURGER_SALAD_TOMATO(INGREDIENTS, 1, 1, 1, 1), VEGIBURGER_TOMATO(INGREDIENTS, 2, 1, 1, 1),
+
+	// Entities
+	PLAYER_KITCHEN_N(COOK, 1, 0, 1, 1), PLAYER_KITCHEN_E(COOK, 0, 0, 1, 1), PLAYER_KITCHEN_W(COOK, 1, 1, 1, 1),
+	PLAYER_KITCHEN_S(COOK, 0, 1, 1, 1), COCKROACH_POP_N(COCKROACH_POP, 1, 0, 1, 1),
+	COCKROACH_POP_S(COCKROACH_POP, 0, 1, 1, 1), COCKROACH_POP_E(COCKROACH_POP, 0, 0, 1, 1),
+	COCKROACH_POP_W(COCKROACH_POP, 1, 0, 1, 1), COCKROACH_ENTITY_N(COCKROACH, 1, 0, 1, 1),
+	COCKROACH_ENTITY_E(COCKROACH, 0, 0, 1, 1), COCKROACH_ENTITY_W(COCKROACH, 1, 1, 1, 1),
+	COCKROACH_ENTITY_S(COCKROACH, 0, 1, 1, 1), BLUE_CAR_N(BLUE_CAR, 0, 0, 1, 1), BLUE_CAR_S(BLUE_CAR, 1, 0, 1, 1),
+	BLUE_CAR_E(BLUE_CAR, 0, 1, 1, 1), BLUE_CAR_W(BLUE_CAR, 1, 1, 1, 1), RED_CAR_N(RED_CAR, 0, 0, 1, 1),
+	RED_CAR_S(RED_CAR, 1, 1, 1, 1), RED_CAR_E(RED_CAR, 1, 0, 1, 1), RED_CAR_W(RED_CAR, 0, 1, 1, 1),
+	YELLOW_CAR_N(YELLOW_CAR, 0, 0, 1, 1), YELLOW_CAR_S(YELLOW_CAR, 1, 0, 1, 1), YELLOW_CAR_E(YELLOW_CAR, 0, 1, 1, 1),
+	YELLOW_CAR_W(YELLOW_CAR, 1, 1, 1, 1),
 
 	// City building sprites
 	CITY_SQUARE_1_SQUARE(CITY, 0, 0, 1, 1), CITY_SQUARE_1_ROUND(CITY, 0, 1, 1, 1),
@@ -114,10 +77,10 @@ public enum Sprite {
 	CITY_BAR_3_HORIZ_ROUNDED(CITY, 0, 7, 3, 1), CITY_SQUARE_2_SQUARE(CITY, 6, 0, 2, 2),
 	CITY_SQUARE_2_DENTED(CITY, 6, 2, 2, 2), CITY_SQUARE_2_BISCUIT(CITY, 6, 4, 2, 2), CITY_CORNER_BR(CITY, 12, 0, 2, 2),
 	CITY_CORNER_TL(CITY, 12, 4, 2, 2), CITY_CORNER_BL(CITY, 12, 2, 2, 2), CITY_CORNER_TR(CITY, 12, 6, 2, 2),
-	CITY_MARKET_CROSSING(CITY, 0, 8, 1, 1), CITY_MARKET_T(CITY, 1, 8, 1, 1), CITY_MARKET_L(CITY, 2, 8, 1, 1),
-	CITY_MARKET_TR(CITY, 3, 8, 1, 1), CITY_MARKET_LB(CITY, 4, 8, 1, 1), CITY_MARKET_TL(CITY, 5, 8, 1, 1),
-	CITY_MARKET_LT(CITY, 6, 8, 1, 1), SPEEDOMETER(SPEEDOMETER_, 0, 0, 1, 1), CAR_ENTITY(CAR, 0, 0, 1, 1),
-	SPEEDOMETER_LOW(SPEEDOMETER_LOW_, 0, 0, 1, 1), SPEEDOMETER_HIGH(SPEEDOMETER_HIGH_, 0, 0, 1, 1),
+	SPEEDOMETER(SPEEDOMETER_, 0, 0, 1, 1), SPEEDOMETER_LOW(SPEEDOMETER_LOW_, 0, 0, 1, 1),
+	SPEEDOMETER_HIGH(SPEEDOMETER_HIGH_, 0, 0, 1, 1), CITY_MARKET_CROSSING(CITY, 0, 8, 1, 1),
+	CITY_MARKET_T(CITY, 1, 8, 1, 1), CITY_MARKET_L(CITY, 2, 8, 1, 1), CITY_MARKET_TR(CITY, 3, 8, 1, 1),
+	CITY_MARKET_LB(CITY, 4, 8, 1, 1), CITY_MARKET_TL(CITY, 5, 8, 1, 1), CITY_MARKET_LT(CITY, 6, 8, 1, 1),
 
 	// City direction arrows sprites
 	MARKET_LEFT_ARROW(CITY_ARROWS, 0, 0, 1, 1), MARKET_UP_ARROW(CITY_ARROWS, 1, 0, 1, 1),
@@ -127,7 +90,7 @@ public enum Sprite {
 	DELIVERY_LEFT_ARROW(CITY_ARROWS, 0, 2, 1, 1), DELIVERY_UP_ARROW(CITY_ARROWS, 1, 2, 1, 1),
 	DELIVERY_RIGHT_ARROW(CITY_ARROWS, 2, 2, 1, 1), DELIVERY_DOWN_ARROW(CITY_ARROWS, 3, 2, 1, 1),
 	DELIVERY_UPLEFT_ARROW(CITY_ARROWS, 0, 3, 1, 1), DELIVERY_UPRIGHT_ARROW(CITY_ARROWS, 1, 3, 1, 1),
-	DELIVERY_DOWNRIGHT_ARROW(CITY_ARROWS, 2, 3, 1, 1), DELIVERY_DOWNLEFT_ARROW(CITY_ARROWS, 3, 3, 1, 1),;
+	DELIVERY_DOWNRIGHT_ARROW(CITY_ARROWS, 2, 3, 1, 1), DELIVERY_DOWNLEFT_ARROW(CITY_ARROWS, 3, 3, 1, 1);
 
 	public static final Sprite[] CITY_SQUARES_1 = new Sprite[] { CITY_SQUARE_1_SQUARE, CITY_SQUARE_1_ROUND,
 			CITY_SQUARE_1_SQUIRCLE };
@@ -151,57 +114,21 @@ public enum Sprite {
 	}
 
 	public enum Spritesheet {
-		// TODO
 
-		COOKN("cookN.png", 13), CITY("city.png", 20), SAUCETABLETILE("BasicTableTile.png", 13),
-		OFFPANTILE("OffPanTable.png", 13), ONPANTILE("OnPanTable.png", 13), OFFFRIETILE("OffFrieTile.png", 13),
-		ONFRIETILE("OnFrieTile.png", 13), CUTTILE("CutTile.png", 13), KITCHEN_TRUCK("kitchen.png", 256),
-		TRASHTILE_EMPTY("EmptyTrash.png", 13), TRASHTILE_FULL("FullTrash.png", 13), STOCKTABLE("StockTable.png", 13),
-		BASICTABLEN("BasicTableTileN.png", 13), BASICTABLEE("BasicTableTileE.png", 13),
-		BASICTABLEW("BasicTableTileW.png", 13), BASICTABLES("BasicTableTileS.png", 13),
-		DELIVERY("DeliveryTile.png", 13), TOMATO_("Sprite_cuisine_ingredient/tomate.png", 13),
-		POTATO_("Sprite_cuisine_ingredient/patate.png", 13), SALADE_("Sprite_cuisine_ingredient/salade.png", 13),
-		BREAD_("Sprite_cuisine_ingredient/pain.png", 13), CHEESE_("Sprite_cuisine_ingredient/fromage.png", 13),
-		MEAT_("Sprite_cuisine_ingredient/viande.png", 13), COCKROACHN("cockroachN.png", 13),
-		COCKROACHE("cockroachE.png", 13), COCKROACHW("cockroachW.png", 13), COCKROACHS("cockroachS.png", 13),
-		COOKE("cookE.png", 13), COOKW("cookW.png", 13), COOKS("cookS.png", 13),
-		BREADSLICE_("Sprite_cuisine_ingredient/tranche de pain.png", 13),
-		COOKEDFRIES_("Sprite_cuisine_ingredient/frites cuite.png", 13),
-		COOKEDHASHMEAT_("Sprite_cuisine_ingredient/viande hachee cuite.png", 13),
-		COOKEDMEAT_("Sprite_cuisine_ingredient/viande cuite.png", 13),
-		FRIES_("Sprite_cuisine_ingredient/frites.png", 13), GALETTE_("Sprite_cuisine_ingredient/galette.png", 13),
-		GALETTECOOKED_("Sprite_cuisine_ingredient/galette cuite.png", 13),
-		HACHI_("Sprite_cuisine_ingredient/hachis parmentier.png", 13),
-		HASHEDMEAT_("Sprite_cuisine_ingredient/viande hachee.png", 13),
-		MASHEDPOTATO_("Sprite_cuisine_ingredient/puree.png", 13),
-		CLASSICBURGER_("Sprite_cuisine_ingredient/burger classique.png", 13),
-		CLASSICBURGER_SALAD_("Sprite_cuisine_ingredient/burger classique salade.png", 13),
-		CLASSICBURGER_SALAD_TOMATO_("Sprite_cuisine_ingredient/burger classique salade tomate.png", 13),
-		CLASSICBURGER_TOMATO_("Sprite_cuisine_ingredient/burger classique tomate.png", 13),
-		POTATOCOOKED_("Sprite_cuisine_ingredient/patate cuite.png", 13),
-		POTATOSALAD_("Sprite_cuisine_ingredient/salade de patate.png", 13),
-		POUTINE_("Sprite_cuisine_ingredient/poutine.png", 13),
-		SALADELEAF_("Sprite_cuisine_ingredient/feuille de salade.png", 13),
-		TOMATOSLICE_("Sprite_cuisine_ingredient/rondelle de tomate.png", 13), KETCHUPTABLE("ketchup.png", 13),
-		MAYOTABLE("mayonnaise.png", 13), VEGIBURGER_("Sprite_cuisine_ingredient/burger vegetarien.png", 13),
-		VEGIBURGER_SALAD_("Sprite_cuisine_ingredient/burger vegetarien salade.png", 13),
-		VEGIBURGER_SALAD_TOMATO_("Sprite_cuisine_ingredient/burger vegetarien salade tomate.png", 13),
-		VEGIBURGER_TOMATO_("Sprite_cuisine_ingredient/burger vegetarien tomate.png", 13),
-		FAILEDITEM_("Sprite_cuisine_ingredient/garbageplate.png", 13),
-		AUTOMATON_SELECTION("automaton_selection.png", 16), CLOCK_("clock.png", 19),
-		KETCHUP_MAYO_("ketchup_mayo.png", 13),
+		// Kitchen
+		KITCHENTILES("kitchen_tiles.png", 13), KITCHEN_TRUCK("kitchen.png", 256), COOK("cook.png", 13),
+		KITCHEN("kitchen.png", 13), COCKROACH("cockroach.png", 13), MENU("menu.png", 69),
+		COCKROACH_POP("cockroach_pop.png", 13), RECIPES_("Recipes.png", 8), INGREDIENTS("ingredients.png", 13),
+		CLOCK_("clock.png", 19), MAYO_INDIC("indic_mayo.png", 13), KETCHUP_INDIC("indic_ketchup.png", 13),
+		KETCHUP_MAYO_INDIC("indic_mayo_ketchup.png", 13), SAUCES("sauces.png", 13),
 
-		BASICTABLE("BasicTableTile.png", 13), COOK("cook.png", 13), KITCHEN("kitchen.png", 13),
-		DELIVERYTILE("DeliveryTile.png", 13), COCKROACH("cockroach.png", 13), MENU("menu.png", 69),
-		CITYTRUCK("cityTruck.png", 13),
-
-		MAYO_INDIC("indic_mayo.png", 13), KETCHUP_INDIC("indic_ketchup.png", 13),
-		KETCHUP_MAYO_INDIC("indic_mayo_ketchup.png", 13), CAR("car2.png", 4), SPEEDOMETER_("speedometer.png", 19),
+		// City
+		CITY("city.png", 20), CITYTRUCK("cityTruck.png", 13), SPEEDOMETER_("speedometer.png", 19),
 		SPEEDOMETER_LOW_("speedometerLow.png", 19), SPEEDOMETER_HIGH_("speedometerHigh.png", 19),
+		BLUE_CAR("blue_car.png", 4), RED_CAR("red_car.png", 4), YELLOW_CAR("yellow_car.png", 4),
 
-		CITY_ARROWS("city-arrows.png", 7),
-
-		RECIPES_("Recipes.png", 8);
+		// Other
+		AUTOMATON_SELECTION("automaton_selection.png", 16), CITY_ARROWS("city-arrows.png", 7);
 
 		public final String filename;
 		public final int tileSize;

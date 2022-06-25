@@ -12,6 +12,8 @@ import info3.game.screen.GameScreen;
 
 public class CarEntity extends Entity {
 
+	long startJump;
+	long finishJump;
 	boolean isTruck;
 	boolean isPlayer;
 	private boolean swapInThisTick;
@@ -207,14 +209,17 @@ public class CarEntity extends Entity {
 
 	@Override
 	public boolean gwait() {
-		move(m_direction.twoapart());
 		return true;
 	}
 
+	/* Slows down player when crosses path with another car */
 	@Override
 	public boolean jump(AutDirection direction) {
-		if (isPlayer && !((CarEntity) entityEncountered).isTruck) {
+		finishJump = System.currentTimeMillis();
+		long timeElapsedJump = finishJump - startJump;
+		if (isPlayer && timeElapsedJump > 300) {
 			physics.stop();
+			startJump = System.currentTimeMillis();
 			return true;
 		}
 		return false;

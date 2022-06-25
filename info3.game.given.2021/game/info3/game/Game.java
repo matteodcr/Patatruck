@@ -128,7 +128,7 @@ public class Game {
 		}
 
 	}
-	
+
 	public Screen getScreen() {
 		return screen;
 	}

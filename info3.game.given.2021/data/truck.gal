@@ -6,4 +6,5 @@ Truck(Init){
   | Key(FL) ? Wizz(W) :(Init)
   | Key(FR) ? Wizz(E) :(Init)
   | Cell(H,A) &  Key(ENTER) ? Pop() : (Init)
+  | True ? Throw : (Init)
 }

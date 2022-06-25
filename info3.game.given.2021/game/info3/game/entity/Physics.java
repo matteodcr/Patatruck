@@ -15,17 +15,17 @@ public interface Physics {
 	/**
 	 * Returns a PositionF which corresponds to the shift the entity has to do
 	 * 
-	 * @param elapsed
+	 * @param
 	 * @return
 	 */
-	public PositionF Shift(long elapsed);
+	public PositionF shift();
 
 	/**
-	 * Same as addForce but with lower force
+	 * Reset acc and vel and moves back by the same amount as the last change
 	 * 
-	 * @param absoluteDir
+	 * 
 	 */
-	public PositionF bounce(AutDirection absoluteDir);
+	public PositionF bounce();
 
 	/**
 	 * returns the velocity but updated to a certain frequency
@@ -53,4 +53,11 @@ public interface Physics {
 	public int getTimerVel();
 
 	public int getTimerMaxVel();
+
+	public PositionF getLastPosChange();
+
+	/*
+	 * reinitialize acceleration and reduces speed if no key is pressed
+	 */
+	void removeForce();
 }

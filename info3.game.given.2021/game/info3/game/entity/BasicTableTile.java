@@ -3,13 +3,13 @@ package info3.game.entity;
 import info3.game.content.Assembly;
 import info3.game.content.Item;
 import info3.game.graphics.Graphics;
+import info3.game.graphics.Sprite;
 import info3.game.position.AutCategory;
 import info3.game.position.AutDirection;
 import info3.game.scene.Scene;
 
 public class BasicTableTile extends KitchenTile {
 	Assembly assembly;
-	public Item item;
 
 	public BasicTableTile(Scene parent, int gridX, int gridY, AutDirection d) {
 		super(parent, gridX, gridY, null, d);
@@ -72,86 +72,12 @@ public class BasicTableTile extends KitchenTile {
 	}
 
 	@Override
-	public boolean gwait() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
 	public boolean egg(AutDirection direction) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean hit(AutDirection direction) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean jump(AutDirection direction) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean explode() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean pick(AutDirection direction) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean power() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean protect(AutDirection direction) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean store() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean turn(AutDirection direction) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean gthrow(AutDirection direction) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean myDir(AutDirection direction) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean closest(AutCategory category, AutDirection direction) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean gotPower() {
-		// TODO Auto-generated method stub
+		if (parentScene.entityList.size() <= Scene.MAXIMUM_ENTITIES) {
+			Entity newEntity = null;
+			newEntity = new BasicTableTile(this.parentScene, this.gridX, this.gridY, this.m_direction);
+			return this.parentScene.addEntity(newEntity);
+		}
 		return false;
 	}
 

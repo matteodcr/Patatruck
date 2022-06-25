@@ -45,13 +45,9 @@ public class KitchenScene extends Scene {
 	public Item currentOrder0;
 	public Item currentOrder1;
 
-	// Gestion cafards
-	public static final int MAXIMUM_COCKROACH_NUMBER = 20;
-
 	// Les deux entités qui bougent dans la cuisine
 	private CookEntity cook;
 	private CockroachEntity cockroach;
-	private int cockroachCounter = 1;
 
 	// Gestion de la fumée
 	public boolean smoke = false;
@@ -201,7 +197,7 @@ public class KitchenScene extends Scene {
 
 	/**
 	 * Affiche le fond ou la liste des recettes si la touche [ESC] est enclenchée
-	 * 
+	 *
 	 * @param g
 	 */
 
@@ -243,7 +239,7 @@ public class KitchenScene extends Scene {
 
 	/**
 	 * Affiche la commande en cours : 2 plats + leurs options
-	 * 
+	 *
 	 * @param g
 	 */
 	public void renderCurrentOrder(Graphics g) {
@@ -267,14 +263,6 @@ public class KitchenScene extends Scene {
 		if (currentOrder1.hasOptionalTomato()) {
 			g.drawSprite(Sprite.TOMATOSLICE, 240, 53);
 		}
-	}
-
-	public int getCockroachCounter() {
-		return cockroachCounter;
-	}
-
-	public void setCockroachCounter(int cockroackCounter) {
-		this.cockroachCounter = cockroackCounter;
 	}
 
 	@Override

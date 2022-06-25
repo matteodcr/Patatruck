@@ -3,7 +3,6 @@ package info3.game.entity;
 import info3.game.graphics.Graphics;
 import info3.game.graphics.Sprite;
 import info3.game.position.AutCategory;
-
 import info3.game.position.AutDirection;
 import info3.game.position.PositionF;
 import info3.game.scene.Scene;
@@ -12,13 +11,13 @@ public class CityDeliveryTile extends CityTile {
 	private boolean delivered = false;
 	private int count = 0;
 	private boolean blinkState = false;
-	
+
 	static int RADIUS = 20;
 
 	public CityDeliveryTile(Scene parent) {
 		super(parent, 0, 0);
 	}
-	
+
 	public boolean getBlinkState() {
 		return blinkState;
 	}
@@ -26,7 +25,7 @@ public class CityDeliveryTile extends CityTile {
 	public void delivered() {
 		delivered = !delivered;
 	}
-	
+
 	@Override
 	public boolean pop(AutDirection direction) { // Update the boolean used to display a blinking frame indicating the delivery area
 		count += 1;
@@ -41,26 +40,26 @@ public class CityDeliveryTile extends CityTile {
 	public boolean wizz(AutDirection direction) { // Find a new position for the delivery
 		RADIUS += 10;
 		delivered = false;
-	
+
 		double a = (Math.random() * 2 * 3.14);
 		double r = (RADIUS * Math.sqrt(Math.random()));
-			
-		float x = (float)(r * Math.cos(a));
-		float y = (float)(r * Math.sin(a));
-		
-		while (!(((CityTile)(parentScene.getTileAt((int)x, (int)y))).getGenTile().hasRoad())) {
+
+		float x = (float) (r * Math.cos(a));
+		float y = (float) (r * Math.sin(a));
+
+		while (!(((CityTile) (parentScene.getTileAt((int) x, (int) y))).getGenTile().hasRoad())) {
 			a = (Math.random() * 2 * 3.14);
 			r = 10 + (RADIUS * Math.sqrt(Math.random()));
-				
+
 			x = (float)(r * Math.cos(a));
 			y = (float)(r * Math.sin(a));
 		}
-		
-		this.setPosition(new PositionF(Math.abs(gridX+x)*parentScene.getTileWidth(), Math.abs(gridY+y)*parentScene.getTileWidth()));
-		
+
+		this.setPosition(new PositionF(Math.abs(gridX + x) * parentScene.getTileWidth(), Math.abs(gridY + y) * parentScene.getTileWidth()));
+
 		return true;
 	}
-	
+
 	@Override
 	public void render(Graphics g) {
 		if (blinkState) {
@@ -71,72 +70,18 @@ public class CityDeliveryTile extends CityTile {
 	}
 
 	@Override
-	public boolean gwait() {
+	public boolean move(AutDirection direction) {
+		// Can't move
 		return false;
 	}
 
 	@Override
 	public boolean egg(AutDirection direction) {
-		return false;
-	}
-
-	@Override
-	public boolean hit(AutDirection direction) {
-		return false;
-	}
-
-	@Override
-	public boolean jump(AutDirection direction) {
-		return false;
-	}
-
-	@Override
-	public boolean explode() {
-		return false;
-	}
-
-	@Override
-	public boolean pick(AutDirection direction) {
-		return false;
-	}
-
-	@Override
-	public boolean power() {
-		return false;
-	}
-
-	@Override
-	public boolean protect(AutDirection direction) {
-		return false;
-	}
-
-	@Override
-	public boolean store() {
-		return false;
-	}
-
-	@Override
-	public boolean turn(AutDirection direction) {
-		return false;
-	}
-
-	@Override
-	public boolean gthrow(AutDirection direction) {
-		return false;
-	}
-
-	@Override
-	public boolean myDir(AutDirection direction) {
-		return false;
-	}
-
-	@Override
-	public boolean closest(AutCategory category, AutDirection direction) {
-		return false;
-	}
-
-	@Override
-	public boolean gotPower() {
+		if (parentScene.entityList.size() <= Scene.MAXIMUM_ENTITIES) {
+			Entity newEntity = null;
+			newEntity = new CityDeliveryTile(this.parentScene);
+			return this.parentScene.addEntity(newEntity);
+		}
 		return false;
 	}
 

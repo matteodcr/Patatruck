@@ -40,7 +40,12 @@ public class Assembly {
 	};
 
 	private List<ItemType> getItemTypes() {
-		return items.stream().map(item -> item.type).collect(Collectors.toList());
+		return items.stream().map(item -> {
+			if (item != null)
+				return item.type;
+			else
+				return null;
+		}).collect(Collectors.toList());
 	}
 
 	private static boolean includes(List<ItemType> a, List<ItemType> b) {
@@ -87,7 +92,7 @@ public class Assembly {
 		Sauce sauce = null;
 
 		for (Item iter : currentItems) {
-			if (iter.getType().isFinalItem()) {
+			if (iter != null && iter.getType().isFinalItem()) {
 				sauce = iter.getSauce();
 				tmp = this.getRecipe(iter.getType());
 				this.removeItem(iter);
@@ -122,7 +127,9 @@ public class Assembly {
 		Sauce sauce = this.explode(); // on divise les potentielles recettes finales présentes dans le sac du
 		// cuisinier
 		if (this.getItems().size() == 1) {
-			this.items.get(0).setSauce(sauce);
+			for (Item iter : items)
+				if (iter != null)
+					iter.setSauce(sauce);
 			return;
 		}
 		List<ItemType> currentItems = getItemTypes();

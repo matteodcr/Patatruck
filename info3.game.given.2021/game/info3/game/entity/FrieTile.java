@@ -35,7 +35,7 @@ public class FrieTile extends KitchenTile {
 			;
 			((KitchenScene) this.parentScene).getCook().item = null;
 			player.m_assembly.getItems().clear();
-			this.compteur = 100;
+			this.compteur = 200;
 			defaultSprite = FULL;
 			return true;
 		}
@@ -57,7 +57,7 @@ public class FrieTile extends KitchenTile {
 		} else {
 			this.item = item.fry();
 			defaultSprite = EMPTY;
-			this.compteur = 100;
+			this.compteur = 200;
 			return true;
 
 		}

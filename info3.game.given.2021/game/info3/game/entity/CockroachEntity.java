@@ -15,7 +15,7 @@ public class CockroachEntity extends Entity {
 	public Item item;
 
 	private boolean usePopSprite = false;
-	private int timerPopSprite = 0, maxTimerPopSprite = 3;
+	private int timerPopSprite = 0, maxTimerPopSprite = 6;
 
 	public CockroachEntity(Scene parent, PositionF position) throws IOException {
 		super(parent, position);

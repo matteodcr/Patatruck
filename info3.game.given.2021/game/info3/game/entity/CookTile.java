@@ -33,7 +33,7 @@ public class CookTile extends KitchenTile {
 			}
 			this.item = player.m_assembly.getItems().get(0);
 			player.m_assembly.getItems().clear();
-			this.compteur = 100;
+			this.compteur = 200;
 			defaultSprite = FULL;
 			return true;
 		}
@@ -54,7 +54,7 @@ public class CookTile extends KitchenTile {
 		} else {
 			defaultSprite = EMPTY;
 			this.item = item.cook();
-			this.compteur = 100;
+			this.compteur = 200;
 			return true;
 		}
 	}

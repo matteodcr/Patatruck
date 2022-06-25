@@ -25,7 +25,7 @@ public class CutTile extends KitchenTile {
 			}
 			this.item = player.m_assembly.getItems().get(0);
 			player.m_assembly.getItems().clear();
-			this.compteur = 100;
+			this.compteur = 200;
 			return true;
 		}
 	}

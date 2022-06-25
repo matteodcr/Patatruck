@@ -51,7 +51,7 @@ public class TrashTile extends KitchenTile {
 
 	@Override
 	public void render(Graphics g) {
-		g.drawSprite(defaultSprite, 0, 0);
+		g.drawSprite(defaultSprite, 0, m_direction == AutDirection.S ? 0 : 2);
 	}
 
 	@Override

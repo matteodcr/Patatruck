@@ -2,13 +2,14 @@ package info3.game.entity;
 
 import info3.game.content.Item;
 import info3.game.graphics.Graphics;
-import info3.game.graphics.Graphics.Align;
 import info3.game.graphics.Sprite;
 import info3.game.position.AutCategory;
 import info3.game.position.AutDirection;
 import info3.game.scene.Scene;
 
 public class StockTable extends KitchenTile {
+	private static final int[] FULL_INDICATOR_AMOUNTS = new int[] { 0, 1, 2, 3, 3, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6, 6 };
+
 	Item item;
 	int stock;
 	Sprite stockItem, background = Sprite.STOCK_TABLE;
@@ -89,11 +90,17 @@ public class StockTable extends KitchenTile {
 
 	@Override
 	public void render(Graphics g) {
-		g.drawSprite(defaultSprite, 0, 0);
+		g.drawSprite(m_direction == AutDirection.S ? Sprite.STOCK_TABLE : Sprite.STOCK_TABLE_N, 0, 0);
 		if (!empty)
 			g.drawSprite(this.stockItem, 0, 0);
-		String tmp = Integer.toString(stock);
-		g.drawText(tmp, Align.LEFT, 0, 0);
+
+		Sprite fullIndicator;
+		if (stock < FULL_INDICATOR_AMOUNTS.length) {
+			fullIndicator = Sprite.FULL_INDICATORS[FULL_INDICATOR_AMOUNTS[stock]];
+		} else {
+			fullIndicator = Sprite.FULL_7;
+		}
+		g.drawSprite(fullIndicator, 0, m_direction == AutDirection.S ? 0 : 9);
 	}
 
 	@Override

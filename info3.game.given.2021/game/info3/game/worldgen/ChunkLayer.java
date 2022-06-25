@@ -7,7 +7,7 @@ import info3.game.graphics.Sprite;
 public class ChunkLayer implements Layer<Chunk> {
 	@Override
 	public Chunk getAt(long seed, GridPos pos) {
-		Random rng = new Random((seed * 31L + pos.x) * 31L + pos.y);
+		Random rng = Utils.seedRandom(seed, pos);
 		Chunk chunk = new Chunk();
 
 		GridPos freePos;
@@ -24,8 +24,7 @@ public class ChunkLayer implements Layer<Chunk> {
 				int localX = bPos.x - finalFreePos.x, localY = bPos.y - finalFreePos.y;
 				int spriteU = localX - topLeft.x, spriteV = localY - topLeft.y;
 				GenTile.CollisionBox collision = chosenBuilding.getCollision(localX, localY);
-				// TODO market
-				chunk.setBuilding(bPos, new GenTile(sprite, spriteU, spriteV, collision, false));
+				chunk.setBuilding(bPos, new GenTile(sprite, spriteU, spriteV, collision));
 			});
 		}
 

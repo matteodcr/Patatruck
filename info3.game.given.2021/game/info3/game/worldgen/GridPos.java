@@ -14,6 +14,14 @@ final class GridPos {
 		return new GridPos(x, y - 1);
 	}
 
+	public GridPos right() {
+		return new GridPos(x + 1, y);
+	}
+
+	public GridPos bottom() {
+		return new GridPos(x, y + 1);
+	}
+
 	public GridPos left() {
 		return new GridPos(x - 1, y);
 	}

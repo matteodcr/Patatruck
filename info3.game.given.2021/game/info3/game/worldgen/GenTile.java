@@ -70,9 +70,9 @@ public class GenTile {
 
 		static Map<GridPos, CollisionBox> fromOffsets(GridPos[] offsets) {
 			return Arrays.stream(offsets).collect(Collectors.toMap(Function.identity(), pos -> {
-				boolean topLeft = Arrays.asList(offsets).contains(pos.top().left());
 				boolean top = Arrays.asList(offsets).contains(pos.top());
 				boolean left = Arrays.asList(offsets).contains(pos.left());
+				boolean topLeft = top && left && Arrays.asList(offsets).contains(pos.top().left());
 
 				return new CollisionBox(topLeft, top, left);
 			}));

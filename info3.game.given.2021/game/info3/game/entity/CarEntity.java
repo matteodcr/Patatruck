@@ -101,7 +101,7 @@ public class CarEntity extends Entity {
 
 	@Override
 	public boolean pop(AutDirection direction) {
-		if (!swapInThisTick && isPlayer) {
+		if (!swapInThisTick && isPlayer && ((CarEntity) entityEncountered).isTruck) {
 			this.swap((CarEntity) entityEncountered);
 			start = System.currentTimeMillis();
 		}

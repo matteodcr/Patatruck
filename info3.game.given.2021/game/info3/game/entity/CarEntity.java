@@ -29,7 +29,48 @@ public class CarEntity extends Entity {
 
 	@Override
 	public void render(Graphics g) {
-		g.drawSprite(Sprite.CAR_ENTITY, 0, 0);
+		switch (this.m_direction) {
+		case N:
+			if (!isTruck) {
+				g.drawSprite(Sprite.RED_CAR_N, 0, 0);
+			} else if (isPlayer) {
+				g.drawSprite(Sprite.YELLOW_CAR_N, 0, 0);
+			} else {
+				g.drawSprite(Sprite.BLUE_CAR_N, 0, 0);
+			}
+			break;
+		case S:
+			if (!isTruck) {
+				g.drawSprite(Sprite.RED_CAR_S, 0, 0);
+			} else if (isPlayer) {
+				g.drawSprite(Sprite.YELLOW_CAR_S, 0, 0);
+			} else {
+				g.drawSprite(Sprite.BLUE_CAR_S, 0, 0);
+			}
+			break;
+		case E:
+			if (!isTruck) {
+				g.drawSprite(Sprite.RED_CAR_E, 0, 0);
+			} else if (isPlayer) {
+				g.drawSprite(Sprite.YELLOW_CAR_E, 0, 0);
+			} else {
+				g.drawSprite(Sprite.BLUE_CAR_E, 0, 0);
+			}
+			break;
+		case W:
+			if (!isTruck) {
+				g.drawSprite(Sprite.RED_CAR_W, 0, 0);
+			} else if (isPlayer) {
+				g.drawSprite(Sprite.YELLOW_CAR_W, 0, 0);
+			} else {
+				g.drawSprite(Sprite.BLUE_CAR_W, 0, 0);
+			}
+			break;
+		default:
+			break;
+
+		}
+
 	}
 
 	@Override

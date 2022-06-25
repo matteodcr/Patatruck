@@ -34,7 +34,7 @@ public class CityScene extends Scene {
 	@Override
 	public void tick(long elapsed) {
 		super.tick(elapsed);
-		if (this.entity_list.size() < 50)
+		if (this.entityList.size() < 50)
 			getRandomTileNearViewport().tick(elapsed);
 
 		this.updateArrow();

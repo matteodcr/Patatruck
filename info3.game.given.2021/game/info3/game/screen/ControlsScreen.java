@@ -31,6 +31,8 @@ public class ControlsScreen extends Screen {
 		g.drawText("Flèches : Directions J2", Align.LEFT, 103, 65);
 		g.drawText("ENTER : Action J2", Align.LEFT, 103, 85);
 		g.drawText("ESC : Revenir en arr. / Aff. recettes", Align.LEFT, 103, 105);
+
+		g.drawSprite(Sprite.COOK_END, 20, 35);
 	}
 
 }

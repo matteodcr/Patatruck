@@ -77,5 +77,7 @@ public class StartScreen extends Screen {
 		g.drawText("CRÉDITS", Align.LEFT, 103, 80);
 		g.drawText("QUITTER", Align.LEFT, 103, 95);
 		g.drawText("Meilleur score : " + game.highScore, Align.LEFT, 103, 115);
+
+		g.drawSprite(Sprite.COOK_END, 20, 35);
 	}
 }

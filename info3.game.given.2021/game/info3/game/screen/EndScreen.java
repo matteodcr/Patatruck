@@ -67,5 +67,7 @@ public class EndScreen extends Screen {
 		g.drawText("REVENIR À L'ACCUEIL", Align.LEFT, 103, 65);
 		g.drawText("QUITTER", Align.LEFT, 103, 80);
 
+		g.drawSprite(Sprite.COOK_END, 20, 35);
+
 	}
 }

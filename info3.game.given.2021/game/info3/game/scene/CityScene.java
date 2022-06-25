@@ -142,6 +142,7 @@ public class CityScene extends Scene {
 		}
 		g.drawSprite(speed, 2, 0);
 		g.drawSprite(deliveryArrowSprite, deliveryArrowPos.getX(), deliveryArrowPos.getY());
+		deliveryTile.render(g);
 		g.drawText(cookCar.physics.getVelocity() + "", Align.CENTER, 12, 18);
 
 	}

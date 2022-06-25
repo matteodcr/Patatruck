@@ -7,8 +7,10 @@ import info3.game.graphics.Sprite;
 import info3.game.position.AutCategory;
 import info3.game.position.AutDirection;
 import info3.game.position.Direction;
+import info3.game.scene.CityScene;
 import info3.game.scene.KitchenScene;
 import info3.game.scene.Scene;
+import info3.game.screen.GameScreen;
 
 public class KitchenDeliveryTile extends KitchenTile {
 
@@ -99,18 +101,24 @@ public class KitchenDeliveryTile extends KitchenTile {
 	public boolean hit(AutDirection direction) {
 		Entity eInteracting = selectEntityToInteractWith();
 		if (eInteracting instanceof CookEntity && ((CookEntity) eInteracting) != null) {
+			
+			CityScene cityScene = ((CityScene)((GameScreen)this.parentScene.m_game.getScreen()).getCityScene());
 
-			if (recetteReady(((KitchenScene) parentScene).currentOrder0)) {
+			if (recetteReady(((KitchenScene) parentScene).currentOrder0) && cityScene.getCook().canDeliver()) {
 				((KitchenScene) parentScene).currentOrder0 = Item.getRandomItem();
 				assembly.getItems().clear();
 				parentScene.m_game.timeGame += 30000;
+				// Indicates that the delivery has been done
+				((CityScene)((GameScreen)this.parentScene.m_game.getScreen()).getCityScene()).getDeliveryTile().delivered();
 				return true;
 			}
 
-			if (recetteReady(((KitchenScene) parentScene).currentOrder1)) {
+			if (recetteReady(((KitchenScene) parentScene).currentOrder1) && cityScene.getCook().canDeliver()) {
 				((KitchenScene) parentScene).currentOrder1 = Item.getRandomItem();
 				assembly.getItems().clear();
 				parentScene.m_game.timeGame += 30000;
+				// Indicates that the delivery has been done
+				((CityScene)((GameScreen)this.parentScene.m_game.getScreen()).getCityScene()).getDeliveryTile().delivered();
 				return true;
 			}
 		}

@@ -26,6 +26,18 @@ public class CarEntity extends Entity {
 		changeCategory();
 		this.swapInThisTick = false;
 	}
+	
+	public boolean canDeliver() {
+		if (isPlayer) {
+			float tileX = ((CityScene)parentScene).getDeliveryTile().position.getX();
+			float tileY = ((CityScene)parentScene).getDeliveryTile().position.getY();
+			float truckX = this.position.getX();
+			float truckY = this.position.getY();
+			
+			return truckX > tileX-15 && truckX < tileX+15 && truckY > tileY-15 && truckY < tileY+15;
+		}
+		return false;
+	}
 
 	@Override
 	public void render(Graphics g) {

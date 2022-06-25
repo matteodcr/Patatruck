@@ -5,25 +5,22 @@ import java.util.stream.Stream;
 
 class SpiralStream {
 	private static GridPos spiral(int n) {
-		int k = (int) Math.ceil((Math.sqrt(n) - 1) / 2);
-		int t = 2 * k + 1;
-		int m = t * t;
-		t = t - 1;
-
-		if (n >= m - t)
-			return new GridPos(k - (m - n), -k);
-
-		m = m - t;
-
-		if (n >= m - t)
-			return new GridPos(-k, -k + (m - n));
-
-		m = m - t;
-
-		if (n >= m - t)
-			return new GridPos(-k + (m - n), k);
-
-		return new GridPos(k, k - (m - n - t));
+		int r = (int) (Math.floor((Math.sqrt(n + 1) - 1) / 2)) + 1;
+		int p = (8 * r * (r - 1)) / 2;
+		int en = r * 2;
+		int a = (1 + n - p) % (r * 8);
+		switch (a / (r * 2)) {
+		case 0:
+			return new GridPos(a - r, -r);
+		case 1:
+			return new GridPos(r, (a % en) - r);
+		case 2:
+			return new GridPos(r - (a % en), r);
+		case 3:
+			return new GridPos(-r, r - (a % en));
+		default:
+			throw new IllegalStateException();
+		}
 	}
 
 	public static Stream<GridPos> create(int centerX, int centerY) {

@@ -8,9 +8,7 @@ import info3.game.position.AutCategory;
 import info3.game.position.AutDirection;
 import info3.game.position.Direction;
 import info3.game.scene.KitchenScene;
-import info3.game.scene.CityScene;
 import info3.game.scene.Scene;
-import info3.game.screen.GameScreen;
 
 public class KitchenDeliveryTile extends KitchenTile {
 
@@ -23,7 +21,7 @@ public class KitchenDeliveryTile extends KitchenTile {
 
 	@Override
 	public EntityType getType() {
-		return EntityType.TILE_DELIVERY_KITCHEN;
+		return EntityType.TILE_DELIVERY;
 	}
 
 	boolean wizz(Direction direction) {

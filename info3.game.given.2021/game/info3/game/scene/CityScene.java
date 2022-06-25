@@ -1,11 +1,7 @@
 package info3.game.scene;
 
 import info3.game.Game;
-import info3.game.entity.CarEntity;
-import info3.game.entity.CityDeliveryTile;
-import info3.game.entity.CityTile;
-import info3.game.entity.Entity;
-import info3.game.entity.Tile;
+import info3.game.entity.*;
 import info3.game.graphics.Graphics;
 import info3.game.graphics.Graphics.Align;
 import info3.game.graphics.Sprite;
@@ -23,7 +19,7 @@ public class CityScene extends Scene {
 	private CarEntity car;
 	private CarEntity cookCar;
 	private Sprite deliveryArrowSprite = Sprite.DELIVERY_DOWN_ARROW;
-	private PositionF deliveryArrowPos = new PositionF(-10 ,-10);
+	private PositionF deliveryArrowPos = new PositionF(-10, -10);
 
 	public CityScene(int pixelWidth, int pixelHeight, Game g) {
 		super(pixelWidth, pixelHeight, g);
@@ -126,7 +122,7 @@ public class CityScene extends Scene {
 	public void render(Graphics g) {
 		super.render(g);
 
-		for (Entity entity : entity_list) {
+		for (Entity entity : entityList) {
 			PositionF posGraphics = getPosRelativeToVan(entity);
 			Graphics subGraphics = g.window(posGraphics.getX(), posGraphics.getY(), 4, 4);
 
@@ -174,55 +170,50 @@ public class CityScene extends Scene {
 		}
 
 	}
-	
+
 	public void updateArrow() {
 		float xCar = cookCar.getPosition().getX();
 		float yCar = cookCar.getPosition().getY();
 		float xTile = deliveryTile.getPosition().getX();
 		float yTile = deliveryTile.getPosition().getY();
-		
-		if (yTile < yCar-pixelHeight/2) {
-			if (xTile > xCar+pixelWidth/2) {
+
+		if (yTile < yCar - pixelHeight / 2) {
+			if (xTile > xCar + pixelWidth / 2) {
 				deliveryArrowSprite = Sprite.DELIVERY_UPRIGHT_ARROW;
-				deliveryArrowPos = new PositionF(pixelWidth-10, 0);
-			}
-			else if (xTile < xCar-pixelWidth/2) {
+				deliveryArrowPos = new PositionF(pixelWidth - 10, 0);
+			} else if (xTile < xCar - pixelWidth / 2) {
 				deliveryArrowSprite = Sprite.DELIVERY_UPLEFT_ARROW;
 				deliveryArrowPos = new PositionF(0, 0);
-			}
-			else {
+			} else {
 				deliveryArrowSprite = Sprite.DELIVERY_UP_ARROW;
-				deliveryArrowPos = new PositionF(Math.abs(xTile-(xCar-pixelWidth/2)), 0);
+				deliveryArrowPos = new PositionF(Math.abs(xTile - (xCar - pixelWidth / 2)), 0);
 			}
 		}
-		
-		else if (yTile > yCar+pixelHeight/2) {
-			if (xTile > xCar+pixelWidth/2) {	
+
+		else if (yTile > yCar + pixelHeight / 2) {
+			if (xTile > xCar + pixelWidth / 2) {
 				deliveryArrowSprite = Sprite.DELIVERY_DOWNRIGHT_ARROW;
-				deliveryArrowPos = new PositionF(pixelWidth-10, pixelHeight-15);
-			}
-			else if (xTile < xCar-pixelWidth/2) {
+				deliveryArrowPos = new PositionF(pixelWidth - 10, pixelHeight - 15);
+			} else if (xTile < xCar - pixelWidth / 2) {
 				deliveryArrowSprite = Sprite.DELIVERY_DOWNLEFT_ARROW;
-				deliveryArrowPos = new PositionF(0, pixelHeight-15);
-			}
-			else {
+				deliveryArrowPos = new PositionF(0, pixelHeight - 15);
+			} else {
 				deliveryArrowSprite = Sprite.DELIVERY_DOWN_ARROW;
-				deliveryArrowPos = new PositionF(Math.abs(xTile-(xCar-pixelWidth/2)), pixelHeight-15);
+				deliveryArrowPos = new PositionF(Math.abs(xTile - (xCar - pixelWidth / 2)), pixelHeight - 15);
 			}
 		}
-		
-		else if (xTile > xCar+pixelWidth/2) {
+
+		else if (xTile > xCar + pixelWidth / 2) {
 			deliveryArrowSprite = Sprite.DELIVERY_RIGHT_ARROW;
-			deliveryArrowPos = new PositionF(pixelWidth-10, Math.abs(yTile-yCar+pixelHeight/2));
+			deliveryArrowPos = new PositionF(pixelWidth - 10, Math.abs(yTile - yCar + pixelHeight / 2));
 		}
-		
-		else if (xTile < xCar-pixelWidth/2) {
+
+		else if (xTile < xCar - pixelWidth / 2) {
 			deliveryArrowSprite = Sprite.DELIVERY_LEFT_ARROW;
-			deliveryArrowPos = new PositionF(0, Math.abs(yTile-yCar+pixelHeight/2));
-		}
-		else {
+			deliveryArrowPos = new PositionF(0, Math.abs(yTile - yCar + pixelHeight / 2));
+		} else {
 			deliveryArrowSprite = Sprite.DELIVERY_DOWN_ARROW;
-			deliveryArrowPos = new PositionF(-10 ,-10);
+			deliveryArrowPos = new PositionF(-10, -10);
 		}
 	}
 

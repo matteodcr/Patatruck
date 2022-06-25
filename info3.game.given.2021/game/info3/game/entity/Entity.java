@@ -10,11 +10,7 @@ import info3.game.automata.AutomatonListener;
 import info3.game.automata.GAutomaton;
 import info3.game.automata.GState;
 import info3.game.graphics.Graphics;
-import info3.game.position.AutCategory;
-import info3.game.position.AutDirection;
-import info3.game.position.AutKey;
-import info3.game.position.PositionF;
-import info3.game.position.PositionI;
+import info3.game.position.*;
 import info3.game.scene.Scene;
 
 public abstract class Entity implements AutomatonListener {
@@ -58,7 +54,7 @@ public abstract class Entity implements AutomatonListener {
 		EntityType entityType = getType();
 		if (lastEntityType != entityType) {
 			automaton = parentScene.m_game.getBoundAutomaton(entityType);
-			current_state = automaton.initial;
+			currentState = automaton.initial;
 			lastEntityType = entityType;
 		}
 

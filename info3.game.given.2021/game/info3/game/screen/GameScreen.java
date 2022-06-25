@@ -13,9 +13,13 @@ public class GameScreen extends Screen {
 	public GameScreen(Game game) {
 		super(game);
 	}
-	
+
 	public Scene getCityScene() {
 		return cityScene;
+	}
+
+	public Scene getKitchenScene() {
+		return kitchenScene;
 	}
 
 	@Override

@@ -1,4 +1,4 @@
-Firecook(Init){
+CookTable(Init){
     *(Init)
     |Key(SPACE) & Cell(F,@) ? Pop:(Cook)         
     
@@ -13,7 +13,7 @@ Firecook(Init){
     |(!Key(SPACE)) & Cell(F,@) ? :(Init)  
 }
 
-Fry(Init){
+FryTable(Init){
     *(Init)
     |Key(SPACE) & Cell(F,@) ? Pop:(Cook)         
     
@@ -39,22 +39,15 @@ StockTable(Still){
 | True() ? :(Empty)
 }
 
-Table(Init){
-    *(Init)
-    |Cell(F,@) & Key(SPACE) ? Pop:(Presswait1)       
-    |True ?    :(Init)   
+BasicTable(Init){
+    *(Init)   
+    |GotStuff() & Cell(F,@) & Key(SPACE) ? Pop:(Presswait)   
+    |Cell(F,@) & Key(SPACE)  ? Wizz:(Presswait) 
+    |True ?    :(Init)      
     
-     *(Presswait1)
-    |!Key(SPACE) ? :(Pleine)       
-    |True ?    :(Presswait1)          
-    
-    *(Pleine)       
-    |Cell(F,@) & Key(SPACE)  ? Wizz:(Presswait2)   
-    |True ?    :(Pleine)      
-    
-    *(Presswait2)
-    |!Key(SPACE) ? :(Pleine)       
-    |True ?    :(Presswait2)  
+    *(Presswait)
+    |!Key(SPACE) ? :(Init)      
+    |True ?    :(Presswait)  
 }
 
 SauceTable(Still){
@@ -63,7 +56,7 @@ SauceTable(Still){
     |True ? Pop() :(Still)
 }
 
-Cut(Init){
+CutTable(Init){
     *(Init)
     |Key(SPACE) & Cell(F,@) ? Pop:(Cut)         
     
@@ -77,25 +70,19 @@ Cut(Init){
     |(!Key(SPACE)) & Cell(F,@) ? :(Init)                                   
 }
 
-Kitchen_Delivery(Init){
+DeliveryTable(Init){
      *(Init)
-    |Cell(F,@) & Key(SPACE) ? Pop:(Presswait1)       
+    |GotPower() ? Hit:(Presswait) 
+    |GotStuff() & Cell(F,@) & Key(SPACE) ? Pop:(Presswait)  
+    |Cell(F,@) & Key(SPACE) ? Wizz:(Presswait)       
     |True ?    :(Init)   
     
-     *(Presswait1)
-    |!Key(SPACE) ? :(Pleine)       
-    |True ?    :(Presswait1)          
-    
-    *(Pleine)       
-    |Cell(F,@) & Key(SPACE)  ? Wizz:(Presswait2)   
-    |True ?    :(Pleine)      
-    
-    *(Presswait2)
+     *(Presswait)
     |!Key(SPACE) ? :(Init)       
-    |True ?    :(Presswait2)  
+    |True ?    :(Presswait)          
 }
 
-Trash(Vide){
+TrashTable(Vide){
 	*(Vide)
 	|Cell(F,@) & Key(SPACE) ? Pop:(Plein)
 	*(Plein)

@@ -1,4 +1,4 @@
-Cook(Init){
+KitchenPlayer(Init){
   * (Init):
   | Key(z) &! Cell(N, O) ? Wizz(N):(Init)
   | Key(q) &! Cell(W, O) ? Wizz(W):(Init)
@@ -7,7 +7,7 @@ Cook(Init){
   | Key(SPACE) ? Pop(F):(Init)  
 }
 
-Cook_Inverse(Init){
+KitchenPlayer_Inverse(Init){
   * (Init):
   | Key(d) &! Cell(N, O) ? Wizz(N):(Init)
   | Key(s) &! Cell(W, O) ? Wizz(W):(Init)

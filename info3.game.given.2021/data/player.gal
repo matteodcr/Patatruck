@@ -1,8 +1,0 @@
-Player(Init){
-  * (Init):
-  | Key(z) ? Wizz(N) :(Init)
-  | Key(s) ? Wizz(S) :(Init)
-  | Key(q) ? Wizz(W) :(Init)
-  | Key(d) ? Wizz(E) :(Init)
-  | Key(ENTER) ? Pop(N) :(Init)
-}

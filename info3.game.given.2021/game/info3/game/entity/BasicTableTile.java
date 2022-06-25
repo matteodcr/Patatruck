@@ -10,6 +10,7 @@ import info3.game.scene.Scene;
 
 public class BasicTableTile extends KitchenTile {
 	Assembly assembly;
+	public Item item;
 
 	public BasicTableTile(Scene parent, int gridX, int gridY, AutDirection d) {
 		super(parent, gridX, gridY, null, d);
@@ -39,26 +40,26 @@ public class BasicTableTile extends KitchenTile {
 	}
 
 	@Override
-	public boolean wizz(AutDirection direction) {// rendre au player si fini / donner si pas fini
+	public boolean wizz(AutDirection direction) {
 		Entity eInteracting = selectEntityToInteractWith();
 		if (eInteracting instanceof CookEntity && ((CookEntity) eInteracting) != null) {
 
-			if (player.m_assembly.getItems().size() == 0 && assembly.getItems().size() != 0) {
+			if (!assembly.getItems().isEmpty()) {
+				// Si l'item à tenir est final : on le prend
 				if (assembly.getItems().get(0).getType().isFinalItem()) {
 					player.m_assembly.addAssembly(assembly);
 					assembly.getItems().clear();
+					return true;
 				} else {
+					// Si il s'agit juste d'item empilés : on reprend le dernier posé
 					player.m_assembly.addItem(assembly.getItems().remove(assembly.getItems().size() - 1));
+					return true;
 				}
-			} else if (player.m_assembly.getItems().size() == 1) {
-				assembly.addAssembly(player.m_assembly);
-				player.m_assembly.getItems().clear();
 			}
-
-			return true;
 
 		}
 		return false;
+
 	}
 
 	@Override
@@ -173,8 +174,7 @@ public class BasicTableTile extends KitchenTile {
 
 	@Override
 	public boolean gotStuff() {
-		// TODO Auto-generated method stub
-		return false;
+		return !player.m_assembly.getItems().isEmpty();
 	}
 
 }

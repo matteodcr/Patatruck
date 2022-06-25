@@ -1,9 +1,8 @@
 package info3.game.entity;
 
 public enum EntityType {
-	TILE_TABLE("table", "Table"),
+	TILE_TABLE("table", "BasicTable"),
 
-	// TODO
 	TILE_CITY("ville", "CityTile"),
 
 	CONE("cone", "TrafficCone"),
@@ -11,26 +10,26 @@ public enum EntityType {
 	MARKET("marché", "Market"),
 
 	CAR("voiture", "Car"),
-	
+
 	TILE_DELIVERY_CITY("zone de livraison", "CityDeliveryTile"),
 
 	COCKROACH("cafard", "Cockroach"),
 
-	COOK("cuisinier", "Cook"),
+	COOK("cuisinier", "KitchenPlayer"),
 
-	TILE_CUT("planche à découp.", "Cut"),
+	TILE_CUT("planche à découp.", "CutTable"),
 
-	TILE_DELIVERY_KITCHEN("table de livraison", "Kitchen_Delivery"),
+	TILE_DELIVERY("table de livraison", "DeliveryTable"),
 
-	TILE_FRYER("friteuse", "Fry"),
+	TILE_FRYER("friteuse", "FryTable"),
 
-	TILE_PAN("plaques de cuiss.", "Firecook"),
+	TILE_PAN("plaques de cuiss.", "CookTable"),
 
 	TILE_SAUCE("table à sauce", "SauceTable"),
 
 	TILE_STOCK("garde-manger", "StockTable"),
 
-	TILE_TRASH("poubelle", "Trash"),
+	TILE_TRASH("poubelle", "TrashTable"),
 
 	TRUCK("camion du joueur", "Truck");
 

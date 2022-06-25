@@ -1,5 +1,6 @@
 package info3.game.entity;
 
+import info3.game.content.Item;
 import info3.game.graphics.Graphics;
 import info3.game.graphics.Sprite;
 import info3.game.position.AutCategory;
@@ -8,6 +9,7 @@ import info3.game.scene.Scene;
 
 public class CutTile extends KitchenTile {
 	int compteur = 0;
+	public Item item;
 
 	public CutTile(Scene parent, int gridX, int gridY, AutDirection d) {
 		super(parent, gridX, gridY, null, d);

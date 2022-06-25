@@ -14,7 +14,7 @@ public abstract class Scene {
 	public Game m_game;
 
 	protected final int pixelWidth, pixelHeight;
-	public ArrayList<Entity> entity_list = new ArrayList<>();
+	public ArrayList<Entity> entityList = new ArrayList<>();
 
 	public Scene(int pixelWidth, int pixelHeight, Game g) {
 		this.pixelWidth = pixelWidth;
@@ -23,15 +23,15 @@ public abstract class Scene {
 	}
 
 	public boolean addEntity(Entity entity) {
-		return entity_list.add(entity);
+		return entityList.add(entity);
 	}
 
 	public boolean removeEntity(Entity entity) {
-		return entity_list.remove(entity);
+		return entityList.remove(entity);
 	}
 
 	public void tick(long elapsed) {
-		ArrayList<Entity> entityListBuffered = new ArrayList<Entity>(entity_list);
+		ArrayList<Entity> entityListBuffered = new ArrayList<Entity>(entityList);
 		for (Entity entity : entityListBuffered) {
 			entity.tick(elapsed);
 		}
@@ -90,6 +90,6 @@ public abstract class Scene {
 	}
 
 	public int getNbEntities() {
-		return entity_list.size();
+		return entityList.size();
 	}
 }

@@ -6,7 +6,9 @@ import info3.game.position.AutCategory;
 import info3.game.position.AutDirection;
 import info3.game.position.PositionF;
 import info3.game.scene.CityScene;
+import info3.game.scene.KitchenScene;
 import info3.game.scene.Scene;
+import info3.game.screen.GameScreen;
 
 public class CarEntity extends Entity {
 
@@ -15,6 +17,7 @@ public class CarEntity extends Entity {
 	private boolean swapInThisTick;
 	private Entity entityEncountered;
 	public Physics physics = new PhysicsClassic(15);
+	boolean isClassicPhysic = true;
 	// TODO Deplacer hitbox hardocdé et methode de collision (champ ou classe pr pos
 	// bas a droite de l'entite (sinon on garde comme ça si ttes les entites = 4x4)
 
@@ -29,12 +32,12 @@ public class CarEntity extends Entity {
 
 	public boolean canDeliver() {
 		if (isPlayer) {
-			float tileX = ((CityScene)parentScene).getDeliveryTile().position.getX();
-			float tileY = ((CityScene)parentScene).getDeliveryTile().position.getY();
+			float tileX = ((CityScene) parentScene).getDeliveryTile().position.getX();
+			float tileY = ((CityScene) parentScene).getDeliveryTile().position.getY();
 			float truckX = this.position.getX();
 			float truckY = this.position.getY();
 
-			return truckX > tileX-15 && truckX < tileX+15 && truckY > tileY-15 && truckY < tileY+15;
+			return truckX > tileX - 15 && truckX < tileX + 15 && truckY > tileY - 15 && truckY < tileY + 15;
 		}
 		return false;
 	}
@@ -107,6 +110,15 @@ public class CarEntity extends Entity {
 			if (timeElapsed >= 1000) {
 				this.swapInThisTick = false;
 			}
+		}
+		KitchenScene kitchenScene = ((KitchenScene) ((GameScreen) this.parentScene.m_game.getScreen())
+				.getKitchenScene());
+		if (isClassicPhysic && kitchenScene.smoke) {
+			this.toSmokePhysics();
+			isClassicPhysic = false;
+		} else if (!isClassicPhysic && !kitchenScene.smoke) {
+			this.toClassicPhysics();
+			isClassicPhysic = true;
 		}
 
 	}

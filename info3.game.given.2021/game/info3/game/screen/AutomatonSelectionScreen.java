@@ -32,8 +32,6 @@ public class AutomatonSelectionScreen extends Screen {
 	}
 
 	int scrollTop = 0;
-	boolean enterLastPressed = false;
-	boolean escapeLastPressed = false;
 	boolean keyPressed = false;
 
 	private void cycleSelection(int delta) {
@@ -51,39 +49,38 @@ public class AutomatonSelectionScreen extends Screen {
 
 	@Override
 	public void tick(long elapsed) {
-		if (game.m_listener.isUp("ENTER")) {
-			enterLastPressed = true;
-		}else if(game.m_listener.isUp("ESCAPE")) {
-			escapeLastPressed = true;
-		}else if (enterLastPressed) {
-			saveAndClose();
-		}else if(escapeLastPressed){
-			changeScreen(new StartScreen(game));
-		}
-
 		boolean upPressed = game.m_listener.isUp("UP");
 		boolean downPressed = game.m_listener.isUp("DOWN");
 		boolean leftPressed = game.m_listener.isUp("LEFT");
 		boolean rightPressed = game.m_listener.isUp("RIGHT");
 		boolean spacePressed = game.m_listener.isUp("SPACE");
 		boolean escapePressed = game.m_listener.isUp("ESCAPE");
-		
+		boolean zPressed = game.m_listener.isUp("Z");
+		boolean sPressed = game.m_listener.isUp("S");
+		boolean qPressed = game.m_listener.isUp("Q");
+		boolean dPressed = game.m_listener.isUp("D");
+		boolean enterPressed = game.m_listener.isUp("ENTER");
 
-		if (upPressed && !keyPressed) {
+		if (enterPressed) {
+			saveAndClose();
+		} else if (escapePressed) {
+			changeScreen(new StartScreen(game));
+		}
+		if ((upPressed || zPressed) && !keyPressed) {
 			if (scrollTop != 0)
 				scrollTop--;
 		}
 
-		if (downPressed && !keyPressed) {
+		if ((downPressed || sPressed) && !keyPressed) {
 			if (scrollTop < selection.size() - 1)
 				scrollTop++;
 		}
 
-		if (leftPressed && !keyPressed) {
+		if ((leftPressed || qPressed) && !keyPressed) {
 			cycleSelection(-1);
 		}
 
-		if (rightPressed && !keyPressed) {
+		if ((rightPressed || dPressed) && !keyPressed) {
 			cycleSelection(1);
 		}
 
@@ -91,7 +88,8 @@ public class AutomatonSelectionScreen extends Screen {
 			cycleSelection(0);
 		}
 
-		keyPressed = upPressed || downPressed || leftPressed || rightPressed || spacePressed;
+		keyPressed = upPressed || downPressed || leftPressed || rightPressed || spacePressed || zPressed || qPressed
+				|| sPressed || dPressed;
 	}
 
 	private void saveAndClose() {
@@ -108,6 +106,8 @@ public class AutomatonSelectionScreen extends Screen {
 	public void render(Graphics g) {
 		g.drawSprite(Sprite.AS_BACKDROP, 0, 0);
 		g.drawSprite(Sprite.AS_LOGO, 0, -scrollTop * 16);
+		g.drawText("SPACE : Réinit. sélection automates", Graphics.Align.LEFT, 98, -scrollTop * 16 + 5);
+		g.drawText("ENTER : Lancer le jeu avec ces aut.", Graphics.Align.LEFT, 98, -scrollTop * 16 + 17);
 
 		int i = 0;
 		int si = 3 - scrollTop;

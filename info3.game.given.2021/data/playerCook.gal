@@ -7,7 +7,7 @@ KitchenPlayer(Init){
   | Key(SPACE) ? Pop(F):(Init)  
 }
 
-KitchenPlayer_Inverse(Init){
+KitchenPlayer_Inv(Init){
   * (Init):
   | Key(d) &! Cell(N, O) ? Wizz(N):(Init)
   | Key(s) &! Cell(W, O) ? Wizz(W):(Init)

@@ -205,56 +205,73 @@ public class CarEntity extends Entity {
 		return true;
 	}
 
+	@Override
+	public boolean gwait() {
+		move(m_direction.twoapart());
+		return true;
+	}
+
+	@Override
+	public boolean jump(AutDirection direction) {
+		if (isPlayer && !((CarEntity) entityEncountered).isTruck) {
+			physics.stop();
+			return true;
+		}
+		return false;
+	}
+
 	// TODO Point de collision pr l'instant HARDCODE a l'entite CarEntity
 	@Override
 	public boolean cell(AutDirection direction, AutCategory category) {
 		AutDirection newDirection = convertRelativToAbsolutedir(direction);
 		for (Entity entity : parentScene.entityList) {
-			switch (newDirection) {
-			case N: {
-				if (entity.catAtThisPos(position.add(new PositionF(0, -1))) == category
-						|| entity.catAtThisPos(position.add(new PositionF(3, -1))) == category) {
-					entityEncountered = entity;
-					return true;
+			if (entity != this) {
+				switch (newDirection) {
+				case N: {
+					if (entity.catAtThisPos(position.add(new PositionF(0, -1))) == category
+							|| entity.catAtThisPos(position.add(new PositionF(3, -1))) == category) {
+						entityEncountered = entity;
+						return true;
+					}
+					break;
 				}
-				break;
-			}
-			case W: {
-				if (entity.catAtThisPos(position.add(new PositionF(-1, 0))) == category
-						|| entity.catAtThisPos(position.add(new PositionF(-1, 3))) == category) {
-					entityEncountered = entity;
-					return true;
+				case W: {
+					if (entity.catAtThisPos(position.add(new PositionF(-1, 0))) == category
+							|| entity.catAtThisPos(position.add(new PositionF(-1, 3))) == category) {
+						entityEncountered = entity;
+						return true;
+					}
+					break;
 				}
-				break;
-			}
-			case E: {
-				if (entity.catAtThisPos(position.add(new PositionF(4, 0))) == category
-						|| entity.catAtThisPos(position.add(new PositionF(4, 3))) == category) {
-					entityEncountered = entity;
-					return true;
+				case E: {
+					if (entity.catAtThisPos(position.add(new PositionF(4, 0))) == category
+							|| entity.catAtThisPos(position.add(new PositionF(4, 3))) == category) {
+						entityEncountered = entity;
+						return true;
+					}
+					break;
 				}
-				break;
-			}
-			case S: {
-				if (entity.catAtThisPos(position.add(new PositionF(0, 4))) == category
-						|| entity.catAtThisPos(position.add(new PositionF(3, 4))) == category) {
-					entityEncountered = entity;
-					return true;
+				case S: {
+					if (entity.catAtThisPos(position.add(new PositionF(0, 4))) == category
+							|| entity.catAtThisPos(position.add(new PositionF(3, 4))) == category) {
+						entityEncountered = entity;
+						return true;
+					}
+					break;
 				}
-				break;
-			}
-			case H: {
-				if (entity.catAtThisPos(position.add(new PositionF(0, 0))) == category
-						|| entity.catAtThisPos(position.add(new PositionF(3, 0))) == category
-						|| entity.catAtThisPos(position.add(new PositionF(0, 3))) == category
-						|| entity.catAtThisPos(position.add(new PositionF(3, 3))) == category) {
-					entityEncountered = entity;
-					return true;
+				case H: {
+					if (entity.catAtThisPos(position.add(new PositionF(0, 0))) == category
+							|| entity.catAtThisPos(position.add(new PositionF(3, 0))) == category
+							|| entity.catAtThisPos(position.add(new PositionF(0, 3))) == category
+							|| entity.catAtThisPos(position.add(new PositionF(3, 3))) == category) {
+						entityEncountered = entity;
+						return true;
+					}
+					break;
 				}
-				break;
-			}
-			default:
-				return false;
+				default:
+					return false;
+				}
 			}
 		}
 		switch (newDirection) {

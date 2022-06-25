@@ -24,5 +24,8 @@ public class DecorateLayer implements Layer<GenTile> {
 	@Override
 	public void clearCaches() {
 		builtTiles.clearCaches();
+		speedBumps.clearCaches();
+		markets.clearCaches();
+
 	}
 }

@@ -218,12 +218,12 @@ public class Game {
 				m_textElapsed = 0;
 				float period = m_canvas.getTickPeriod();
 				int fps = m_canvas.getFPS();
-				int nb_entities_k = screen.getEntityCount();
+				int nbEntities = screen.getEntityCount();
 				String txt = "Tick=" + period + "ms";
 				while (txt.length() < 15)
 					txt += " ";
 				txt = txt + fps + " fps   ";
-				txt += "Nb_entities=" + nb_entities_k;
+				txt += "Nb_entities=" + nbEntities;
 				m_text.setText(txt);
 
 				screen.tick(elapsed);
@@ -257,17 +257,17 @@ public class Game {
 	Map<String, GAutomaton> loadAutomata(String filename) {
 		try {
 			Map<String, GAutomaton> automata = new TreeMap<>();
-			List<GAutomaton> automata_tmp;
+			List<GAutomaton> automataTmp;
 			File folder = new File(filename);
 			for (File file : folder.listFiles()) {
 				if (!file.isDirectory()) {
 					try {
 						AST ast = AutomataParser.from_file(file.getAbsolutePath());
-						AutomataGenerator ast_visitor = new AutomataGenerator();
-						automata_tmp = (List<GAutomaton>) ast.accept(ast_visitor);
+						AutomataGenerator astVisitor = new AutomataGenerator();
+						automataTmp = (List<GAutomaton>) ast.accept(astVisitor);
 
 						automata.putAll(
-								automata_tmp.stream().collect(Collectors.toMap(a -> a.name, Function.identity())));
+								automataTmp.stream().collect(Collectors.toMap(a -> a.name, Function.identity())));
 
 						System.out.printf("successfully loaded automata from %s \n", file.getName());
 					} catch (Exception e) {

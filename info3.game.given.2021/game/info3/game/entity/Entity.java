@@ -9,27 +9,23 @@ import javax.imageio.ImageIO;
 import info3.game.automata.AutomatonListener;
 import info3.game.automata.GAutomaton;
 import info3.game.automata.GState;
-import info3.game.content.Item;
 import info3.game.graphics.Graphics;
-import info3.game.position.AutCategory;
-import info3.game.position.AutDirection;
-import info3.game.position.AutKey;
-import info3.game.position.PositionF;
-import info3.game.position.PositionI;
+import info3.game.position.*;
 import info3.game.scene.Scene;
 
 public abstract class Entity implements AutomatonListener {
-	Scene parentScene = null;
-	PositionF position;
-	AutDirection m_direction;
-	GAutomaton automaton;
-	int deathTime = 0;
-	int move_timer = 0, move_timer_max = 0; // allows to move only when move_timer==0
-	GState current_state;
-	long start, finish, timeElapsed;
+	Scene parentScene;
 
+	GAutomaton automaton;
+	GState currentState;
+
+	AutDirection m_direction;
 	AutCategory category;
-	public Item item;
+
+	PositionF position;
+
+	int deathTime = 0;
+	long start, finish, timeElapsed;
 
 	// If different from what `getType` returns, we should replace the automaton
 	// This is checked at each tick
@@ -39,7 +35,9 @@ public abstract class Entity implements AutomatonListener {
 		parentScene = parent;
 		position = pos;
 		m_direction = AutDirection.N;
-		item = null;
+
+		automaton = parentScene.m_game.getBoundAutomaton(getType());
+		currentState = automaton.initial;
 	}
 
 	public abstract EntityType getType();
@@ -56,15 +54,15 @@ public abstract class Entity implements AutomatonListener {
 		EntityType entityType = getType();
 		if (lastEntityType != entityType) {
 			automaton = parentScene.m_game.getBoundAutomaton(entityType);
-			current_state = automaton.initial;
+			currentState = automaton.initial;
 			lastEntityType = entityType;
 		}
 
-		GState state = automaton.run(this, current_state);
+		GState state = automaton.run(this, currentState);
 		if (state != null) {
-			current_state = state;
+			currentState = state;
 		}
-		if (current_state.name.equals(""))
+		if (currentState.name.equals(""))
 			parentScene.removeEntity(this);
 	}
 
@@ -100,14 +98,6 @@ public abstract class Entity implements AutomatonListener {
 		return null;
 	}
 
-	public boolean canMove() {
-		return move_timer == 0;
-	}
-
-	public void hasMoved() {
-		this.move_timer = move_timer_max;
-	}
-
 	public AutDirection convertRelativToAbsolutedir(AutDirection direction) {
 		switch (direction) {
 		case F:
@@ -135,7 +125,8 @@ public abstract class Entity implements AutomatonListener {
 		int gridX = getGridPosFromPos().getX();
 		int gridY = getGridPosFromPos().getY();
 		AutDirection newDirection = convertRelativToAbsolutedir(direction);
-		for (Entity entity : parentScene.entity_list) {
+		// Les entités qui bougent
+		for (Entity entity : parentScene.entityList) {
 			switch (newDirection) {
 			case N: {
 				if (entity.isItThatGrid(gridY - 1, gridX) && entity.category == category) {
@@ -171,6 +162,7 @@ public abstract class Entity implements AutomatonListener {
 				return false;
 			}
 		}
+		// Les Tiles qui ne bougent pas
 		switch (newDirection) {
 		case N: {
 			if (parentScene.getTileAt(gridX, gridY - 1) != null
@@ -211,7 +203,6 @@ public abstract class Entity implements AutomatonListener {
 			return false;
 		}
 		return false;
-
 	}
 
 	private boolean isItThatGrid(int gY, int gX) {
@@ -227,7 +218,7 @@ public abstract class Entity implements AutomatonListener {
 	public Entity selectEntityToInteractWith() {
 		int gridX = getGridPosFromPos().getX();
 		int gridY = getGridPosFromPos().getY();
-		for (Entity entity : parentScene.entity_list) {
+		for (Entity entity : parentScene.entityList) {
 			switch (m_direction) {
 			case N:
 				if (entity.isItThatGrid(gridY - 1, gridX) && entity.m_direction == AutDirection.S)
@@ -249,7 +240,7 @@ public abstract class Entity implements AutomatonListener {
 				break;
 			}
 		}
-		return null; // no entity fills the criteria
+		return null;
 	}
 
 	public void setDirection(AutDirection absDirection) {
@@ -258,7 +249,7 @@ public abstract class Entity implements AutomatonListener {
 
 	/*
 	 * Fct qui renvoit la grille correspondante à la position de l'ENTITE en pixels.
-	 * 
+	 *
 	 */
 	public PositionI getGridPosFromPos() {
 		PositionF posTmp = position.add(parentScene.getOriginOffset());

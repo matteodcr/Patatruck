@@ -2,6 +2,7 @@ package info3.game.entity;
 
 import java.io.IOException;
 
+import info3.game.content.Item;
 import info3.game.graphics.Graphics;
 import info3.game.graphics.Sprite;
 import info3.game.position.AutCategory;
@@ -11,6 +12,7 @@ import info3.game.scene.KitchenScene;
 import info3.game.scene.Scene;
 
 public class CockroachEntity extends Entity {
+	public Item item;
 
 	public CockroachEntity(Scene parent, PositionF position) throws IOException {
 		super(parent, position);
@@ -72,8 +74,8 @@ public class CockroachEntity extends Entity {
 
 	@Override
 	public boolean pop(AutDirection direction) { // explode
-
-		return true; // temporary to prevent cockroach from being stuck in dupli statedd
+		// to prevent cockroach from being stuck in dupli statedd
+		return true;
 	}
 
 	@Override
@@ -98,14 +100,13 @@ public class CockroachEntity extends Entity {
 	@Override
 	public boolean egg(AutDirection direction) {
 		if (((KitchenScene) parentScene).getCockroachCounter() <= KitchenScene.MAXIMUM_COCKROACH_NUMBER) {
-			Entity nouveau_carfard = null;
+			Entity newCockroach = null;
 			try {
-				nouveau_carfard = new CockroachEntity(this.parentScene, position);
+				newCockroach = new CockroachEntity(this.parentScene, position);
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			return this.parentScene.addEntity(nouveau_carfard);
+			return this.parentScene.addEntity(newCockroach);
 		}
 		return false;
 	}

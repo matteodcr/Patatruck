@@ -194,7 +194,7 @@ public class CarEntity extends Entity {
 	@Override
 	public boolean cell(AutDirection direction, AutCategory category) {
 		AutDirection newDirection = convertRelativToAbsolutedir(direction);
-		for (Entity entity : parentScene.entity_list) {
+		for (Entity entity : parentScene.entityList) {
 			switch (newDirection) {
 			case N: {
 				if (entity.catAtThisPos(position.add(new PositionF(0, -1))) == category

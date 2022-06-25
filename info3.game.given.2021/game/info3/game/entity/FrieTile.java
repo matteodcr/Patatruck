@@ -11,11 +11,11 @@ import info3.game.scene.Scene;
 public class FrieTile extends KitchenTile {
 	Item item;
 	int compteur;
-	static final Sprite empty = Sprite.OFF_FRIE_TILE, full = Sprite.ON_FRIE_TILE;
+	static final Sprite EMPTY = Sprite.OFF_FRIE_TILE, FULL = Sprite.ON_FRIE_TILE;
 
 	public FrieTile(Scene parent, int gridX, int gridY, AutDirection d) {
 		super(parent, gridX, gridY, null, d);
-		defaultSprite = empty;
+		defaultSprite = EMPTY;
 	}
 
 	@Override
@@ -36,7 +36,7 @@ public class FrieTile extends KitchenTile {
 			((KitchenScene) this.parentScene).getCook().item = null;
 			player.m_assembly.getItems().clear();
 			this.compteur = 100;
-			defaultSprite = full;
+			defaultSprite = FULL;
 			return true;
 		}
 	}
@@ -56,7 +56,7 @@ public class FrieTile extends KitchenTile {
 			return false;
 		} else {
 			this.item = item.fry();
-			defaultSprite = empty;
+			defaultSprite = EMPTY;
 			this.compteur = 100;
 			return true;
 
@@ -67,7 +67,7 @@ public class FrieTile extends KitchenTile {
 	public void render(Graphics g) {
 		g.drawSprite(defaultSprite, 0, 0);
 
-		if (defaultSprite == empty && item != null) {
+		if (defaultSprite == EMPTY && item != null) {
 			g.drawSprite(item.getType().getSprite(), 0, 0);
 
 		}

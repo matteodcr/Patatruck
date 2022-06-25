@@ -3,7 +3,6 @@ package info3.game.entity;
 import info3.game.content.Assembly;
 import info3.game.content.Item;
 import info3.game.graphics.Graphics;
-import info3.game.graphics.Sprite;
 import info3.game.position.AutCategory;
 import info3.game.position.AutDirection;
 import info3.game.scene.Scene;
@@ -64,22 +63,6 @@ public class BasicTableTile extends KitchenTile {
 
 	@Override
 	public void render(Graphics g) {
-		switch (m_direction) {
-		case E:
-			g.drawSprite(Sprite.BASICTABLE_E, 0, 0);
-			break;
-		case N:
-			g.drawSprite(Sprite.BASICTABLE_N, 0, 0);
-			break;
-		case S:
-			g.drawSprite(Sprite.BASICTABLE_S, 0, 0);
-			break;
-		case W:
-			g.drawSprite(Sprite.BASICTABLE_W, 0, 0);
-			break;
-		default:
-			break;
-		}
 		if (!assembly.getItems().isEmpty()) {
 			for (Item item : assembly.getItems()) {
 				g.drawSprite(item.getType().getSprite(), 0, 0);

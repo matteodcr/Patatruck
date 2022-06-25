@@ -22,6 +22,7 @@ import static info3.game.graphics.Sprite.Spritesheet.SPEEDOMETER_;
 import static info3.game.graphics.Sprite.Spritesheet.SPEEDOMETER_HIGH_;
 import static info3.game.graphics.Sprite.Spritesheet.SPEEDOMETER_LOW_;
 import static info3.game.graphics.Sprite.Spritesheet.YELLOW_CAR;
+import static info3.game.graphics.Sprite.Spritesheet.DELIVERY_BLINK;
 
 public enum Sprite {
 	AS_LOGO(AUTOMATON_SELECTION, 10, 10, 6, 2), AS_BACKDROP(AUTOMATON_SELECTION, 0, 0, 16, 9),
@@ -90,7 +91,9 @@ public enum Sprite {
 	DELIVERY_LEFT_ARROW(CITY_ARROWS, 0, 2, 1, 1), DELIVERY_UP_ARROW(CITY_ARROWS, 1, 2, 1, 1),
 	DELIVERY_RIGHT_ARROW(CITY_ARROWS, 2, 2, 1, 1), DELIVERY_DOWN_ARROW(CITY_ARROWS, 3, 2, 1, 1),
 	DELIVERY_UPLEFT_ARROW(CITY_ARROWS, 0, 3, 1, 1), DELIVERY_UPRIGHT_ARROW(CITY_ARROWS, 1, 3, 1, 1),
-	DELIVERY_DOWNRIGHT_ARROW(CITY_ARROWS, 2, 3, 1, 1), DELIVERY_DOWNLEFT_ARROW(CITY_ARROWS, 3, 3, 1, 1);
+	DELIVERY_DOWNRIGHT_ARROW(CITY_ARROWS, 2, 3, 1, 1), DELIVERY_DOWNLEFT_ARROW(CITY_ARROWS, 3, 3, 1, 1),
+	
+	DELIVERY_TILE_FRAME(DELIVERY_BLINK, 0, 0, 1, 1);
 
 	public static final Sprite[] CITY_SQUARES_1 = new Sprite[] { CITY_SQUARE_1_SQUARE, CITY_SQUARE_1_ROUND,
 			CITY_SQUARE_1_SQUIRCLE };
@@ -126,6 +129,7 @@ public enum Sprite {
 		CITY("city.png", 20), CITYTRUCK("cityTruck.png", 13), SPEEDOMETER_("speedometer.png", 19),
 		SPEEDOMETER_LOW_("speedometerLow.png", 19), SPEEDOMETER_HIGH_("speedometerHigh.png", 19),
 		BLUE_CAR("blue_car.png", 4), RED_CAR("red_car.png", 4), YELLOW_CAR("yellow_car.png", 4),
+		DELIVERY_BLINK("city_delivery_frame.png", 20),
 
 		// Other
 		AUTOMATON_SELECTION("automaton_selection.png", 16), CITY_ARROWS("city-arrows.png", 7);

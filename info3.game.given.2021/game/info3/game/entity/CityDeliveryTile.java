@@ -1,35 +1,46 @@
 package info3.game.entity;
 
+import info3.game.graphics.Graphics;
+import info3.game.graphics.Sprite;
 import info3.game.position.AutCategory;
 
 import info3.game.position.AutDirection;
 import info3.game.position.PositionF;
 import info3.game.scene.Scene;
-import info3.game.entity.CityTile;
 
 public class CityDeliveryTile extends CityTile {
-	private int deliveries = 0;
+	private boolean delivered = false;
+	private int count = 0;
+	private boolean blinkState = false;
 	
-	static int RADIUS = 10;
+	static int RADIUS = 20;
 
 	public CityDeliveryTile(Scene parent) {
 		super(parent, 0, 0);
 	}
+	
+	public boolean getBlinkState() {
+		return blinkState;
+	}
 
 	public void delivered() {
-		deliveries += 1;
+		delivered = !delivered;
 	}
 	
 	@Override
-	public boolean pop(AutDirection direction) {
-		// TODO Change tile sprite to make it blink
-		return false;
+	public boolean pop(AutDirection direction) { // Update the boolean used to display a blinking frame indicating the delivery area
+		count += 1;
+		if (count == 5) {
+			blinkState = !blinkState;
+			count = 0;
+		}
+		return true;
 	}
 
 	@Override
-	public boolean wizz(AutDirection direction) {
+	public boolean wizz(AutDirection direction) { // Find a new position for the delivery
 		RADIUS += 10;
-		deliveries = 0;
+		delivered = false;
 	
 		double a = (Math.random() * 2 * 3.14);
 		double r = (RADIUS * Math.sqrt(Math.random()));
@@ -39,15 +50,24 @@ public class CityDeliveryTile extends CityTile {
 		
 		while (!(((CityTile)(parentScene.getTileAt((int)x, (int)y))).getGenTile().hasRoad())) {
 			a = (Math.random() * 2 * 3.14);
-			r = (RADIUS * Math.sqrt(Math.random()));
+			r = 10 + (RADIUS * Math.sqrt(Math.random()));
 				
 			x = (float)(r * Math.cos(a));
 			y = (float)(r * Math.sin(a));
 		}
 		
-		this.setPosition(new PositionF(this.gridX+x, this.gridY+y));
+		this.setPosition(new PositionF(Math.abs(gridX+x)*parentScene.getTileWidth(), Math.abs(gridY+y)*parentScene.getTileWidth()));
 		
 		return true;
+	}
+	
+	@Override
+	public void render(Graphics g) {
+		if (blinkState) {
+			int gX = (int)(this.position.getX()-parentScene.getOriginOffset().getX());
+	        int gY = (int)(this.position.getY()-parentScene.getOriginOffset().getY());
+			g.drawSprite(Sprite.DELIVERY_TILE_FRAME, gX, gY);
+		}
 	}
 
 	@Override
@@ -122,7 +142,7 @@ public class CityDeliveryTile extends CityTile {
 
 	@Override
 	public boolean gotStuff() {
-		return deliveries == 2;
+		return delivered;
 	}
 
 	@Override

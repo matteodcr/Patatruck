@@ -1,6 +1,6 @@
 CityDeliveryTile(Init) {
 	*(Init)
-	| True() ? Wizz(F) :(Delivery)
+	| True ? Wizz(F) :(Delivery)
 	
 	* (Delivery)
 	| !GotStuff() ? Pop(F) :(Delivery)

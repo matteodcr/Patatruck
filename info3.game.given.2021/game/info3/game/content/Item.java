@@ -7,7 +7,7 @@ public class Item {
 	final ItemType type;
 	Sauce sauce;
 
-	private HashMap<ItemType, ItemType> cookItem = new HashMap<>() {
+	private final static HashMap<ItemType, ItemType> COOK_RECIPES = new HashMap<>() {
 		private static final long serialVersionUID = 1L;
 
 		{
@@ -17,7 +17,7 @@ public class Item {
 		}
 	};
 
-	private HashMap<ItemType, ItemType> cutItem = new HashMap<>() {
+	private final static HashMap<ItemType, ItemType> CHOP_RECIPES = new HashMap<>() {
 		private static final long serialVersionUID = 1L;
 
 		{
@@ -31,7 +31,7 @@ public class Item {
 		}
 	};
 
-	private HashMap<ItemType, ItemType> fryItem = new HashMap<>() {
+	private final static HashMap<ItemType, ItemType> FRY_RECIPES = new HashMap<>() {
 		private static final long serialVersionUID = 1L;
 
 		{
@@ -58,22 +58,14 @@ public class Item {
 	}
 
 	public boolean hasOptionalSalad() {
-		if (this.getType() == ItemType.CLASSIC_BURGER_SALAD || this.getType() == ItemType.CLASSIC_BURGER_SALAD_TOMATO
-				|| this.getType() == ItemType.VEGI_BURGER_SALAD
-				|| this.getType() == ItemType.VEGI_BURGER_SALAD_TOMATO) {
-			return true;
-		}
-		return false;
+		return this.getType() == ItemType.CLASSIC_BURGER_SALAD || this.getType() == ItemType.CLASSIC_BURGER_SALAD_TOMATO
+				|| this.getType() == ItemType.VEGI_BURGER_SALAD || this.getType() == ItemType.VEGI_BURGER_SALAD_TOMATO;
 	}
 
 	public boolean hasOptionalTomato() {
-		if (this.getType() == ItemType.CLASSIC_BURGER_TOMATO || this.getType() == ItemType.CLASSIC_BURGER_SALAD_TOMATO
-				|| this.getType() == ItemType.VEGI_BURGER_TOMATO
-				|| this.getType() == ItemType.VEGI_BURGER_SALAD_TOMATO) {
-			return true;
-		}
-		return false;
-
+		return this.getType() == ItemType.CLASSIC_BURGER_TOMATO
+				|| this.getType() == ItemType.CLASSIC_BURGER_SALAD_TOMATO
+				|| this.getType() == ItemType.VEGI_BURGER_TOMATO || this.getType() == ItemType.VEGI_BURGER_SALAD_TOMATO;
 	}
 
 	public void setSauce(Sauce sauce) {
@@ -89,25 +81,19 @@ public class Item {
 
 	/**
 	 * Returns the cooked element if possible, null otherwise
-	 * 
-	 * @param ingredient
-	 * @return
 	 */
 	public Item cook() {
-		ItemType result = cookItem.get(this.type);
+		ItemType result = COOK_RECIPES.get(this.type);
 		if (result == null)
 			return null;
 		return new Item(result);
 	}
 
 	/**
-	 * Returns the cut element if possible, null otherwise
-	 * 
-	 * @param ingredient
-	 * @return
+	 * Returns the chopped element if possible, null otherwise
 	 */
 	public Item cut() {
-		ItemType result = cutItem.get(this.type);
+		ItemType result = CHOP_RECIPES.get(this.type);
 		if (result == null)
 			return null;
 		return new Item(result);
@@ -115,12 +101,9 @@ public class Item {
 
 	/**
 	 * Returns the fried element if possible, null otherwise
-	 * 
-	 * @param ingredient
-	 * @return
 	 */
 	public Item fry() {
-		ItemType result = fryItem.get(this.type);
+		ItemType result = FRY_RECIPES.get(this.type);
 		if (result == null)
 			return null;
 		return new Item(result);
@@ -128,7 +111,7 @@ public class Item {
 
 	@Override
 	public String toString() {
-		String result = new String();
+		String result = "";
 		result = result + this.type.toString();
 		if (sauce != null) {
 			result = result + "+ " + this.sauce;
@@ -156,9 +139,7 @@ public class Item {
 		Item other = (Item) obj;
 		if (sauce != other.sauce)
 			return false;
-		if (type != other.type)
-			return false;
-		return true;
+		return type == other.type;
 	}
 
 	private void getRandomSauce() {

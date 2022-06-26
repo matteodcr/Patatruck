@@ -35,7 +35,6 @@ class Chunk {
 		assert pos.y >= 0 && pos.y < CHUNK_SIZE;
 
 		int localOffset = pos.x + pos.y * CHUNK_SIZE;
-		assert localOffset < CHUNK_SIZE * CHUNK_SIZE;
 
 		assert tiles[localOffset] == null : "attempt to overwrite chunk tile";
 

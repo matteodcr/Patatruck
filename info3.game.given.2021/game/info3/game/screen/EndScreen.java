@@ -2,11 +2,11 @@ package info3.game.screen;
 
 import info3.game.Game;
 import info3.game.graphics.Graphics;
-import info3.game.graphics.Graphics.Align;
 import info3.game.graphics.Sprite;
+import info3.game.graphics.Graphics.Align;
 
 public class EndScreen extends Screen {
-	long score;
+	final long score;
 
 	public EndScreen(Game game, long s) {
 		super(game);
@@ -18,12 +18,12 @@ public class EndScreen extends Screen {
 
 	@Override
 	public void tick(long elapsed) {
-		boolean upPressed = game.m_listener.isUp("UP");
-		boolean downPressed = game.m_listener.isUp("DOWN");
-		boolean zPressed = game.m_listener.isUp("Z");
-		boolean sPressed = game.m_listener.isUp("S");
-		boolean enterPressed = game.m_listener.isUp("ENTER");
-		boolean spacePressed = game.m_listener.isUp("SPACE");
+		boolean upPressed = game.listener.isUp("UP");
+		boolean downPressed = game.listener.isUp("DOWN");
+		boolean zPressed = game.listener.isUp("Z");
+		boolean sPressed = game.listener.isUp("S");
+		boolean enterPressed = game.listener.isUp("ENTER");
+		boolean spacePressed = game.listener.isUp("SPACE");
 
 		if ((upPressed || zPressed) && !keyPressed) {
 			if (scrollTop != 0)

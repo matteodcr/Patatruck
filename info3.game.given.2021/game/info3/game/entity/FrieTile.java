@@ -8,11 +8,10 @@ import info3.game.scene.Scene;
 
 public class FrieTile extends KitchenTile {
 	int compteur;
-	static final Sprite EMPTY = Sprite.OFF_FRIE_TILE, FULL = Sprite.ON_FRIE_TILE;
+	private boolean isOn = false;
 
 	public FrieTile(Scene parent, int gridX, int gridY, AutDirection d) {
-		super(parent, gridX, gridY, null, d);
-		defaultSprite = EMPTY;
+		super(parent, gridX, gridY, Sprite.OFF_FRIE_TILE, d);
 	}
 
 	@Override
@@ -22,30 +21,28 @@ public class FrieTile extends KitchenTile {
 
 	@Override
 	public boolean pop(AutDirection direction) {// prend un ingrédiant à frire
-		if (player.m_assembly.getItems().size() != 1 || this.item != null) {
+		if (player.assembly.getItems().size() != 1 || this.item != null) {
 			return false;
 		} else {
-			if (player.m_assembly.getItems().get(0).fry() == null) { // est-ce qu'on peut frire ?
+			if (player.assembly.getItems().get(0).fry() == null) { // est-ce qu'on peut frire ?
 				return false;
 			}
-			this.item = player.m_assembly.getItems().get(0);
-			;
+			this.item = player.assembly.getItems().get(0);
 			((KitchenScene) this.parentScene).getCook().item = null;
-			player.m_assembly.getItems().clear();
+			player.assembly.getItems().clear();
 			this.compteur = 200;
-			defaultSprite = FULL;
-			parentScene.m_game.playSound("frying");
+			isOn = true;
+			parentScene.game.playSound("frying");
 			return true;
 		}
 	}
 
 	@Override
 	public boolean wizz(AutDirection direction) {// rend l'ingrédient cuit au joueur
-		parentScene.m_game.playSound("drop");
-		player.m_assembly.addItem(item);
+		parentScene.game.playSound("drop");
+		player.assembly.addItem(item);
 		this.item = null;
 		return true;
-
 	}
 
 	@Override
@@ -55,18 +52,17 @@ public class FrieTile extends KitchenTile {
 			return false;
 		} else {
 			this.item = item.fry();
-			defaultSprite = EMPTY;
+			isOn = false;
 			this.compteur = 200;
 			return true;
-
 		}
 	}
 
 	@Override
 	public void render(Graphics g) {
-		g.drawSprite(defaultSprite, 0, 0);
+		g.drawSprite(!isOn ? defaultSprite : Sprite.ON_FRIE_TILE, 0, 0);
 
-		if (defaultSprite == EMPTY && item != null) {
+		if (!isOn && item != null) {
 			g.drawSprite(item.getType().getSprite(), 0, 0);
 
 		}
@@ -75,8 +71,8 @@ public class FrieTile extends KitchenTile {
 	@Override
 	public boolean egg(AutDirection direction) {
 		if (parentScene.entityList.size() <= Scene.MAXIMUM_ENTITIES) {
-			Entity newEntity = null;
-			newEntity = new FrieTile(this.parentScene, this.gridX, this.gridY, this.m_direction);
+			Entity newEntity;
+			newEntity = new FrieTile(this.parentScene, this.gridX, this.gridY, this.direction);
 			return this.parentScene.addEntity(newEntity);
 		}
 		return false;
@@ -88,11 +84,10 @@ public class FrieTile extends KitchenTile {
 			this.compteur--;
 			return false;
 		} else {
-			parentScene.m_game.playSound("kitchen_fail");
+			parentScene.game.playSound("kitchen_fail");
 			((KitchenScene) parentScene).smokeFryingOil = true;
 			item = null;
 			return true;
-
 		}
 	}
 

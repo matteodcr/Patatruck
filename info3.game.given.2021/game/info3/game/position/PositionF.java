@@ -58,7 +58,7 @@ public class PositionF {
 
 	@Override
 	public String toString() {
-		return new String("(" + this.x + "," + this.y + ")");
+		return "(" + this.x + "," + this.y + ")";
 	}
 
 }

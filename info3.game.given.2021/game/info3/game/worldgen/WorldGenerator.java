@@ -8,9 +8,9 @@ import java.util.function.Predicate;
 import java.util.stream.Stream;
 
 public class WorldGenerator {
-	public static int CHUNK_SIZE_LOG = 4;
-	public static int CHUNK_SIZE = 1 << CHUNK_SIZE_LOG;
-	public static int CHUNK_SIZE_MASK = CHUNK_SIZE - 1;
+	public static final int CHUNK_SIZE_LOG = 4;
+	public static final int CHUNK_SIZE = 1 << CHUNK_SIZE_LOG;
+	public static final int CHUNK_SIZE_MASK = CHUNK_SIZE - 1;
 
 	private long seed;
 	private final Layer<Boolean> markets;

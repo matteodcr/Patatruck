@@ -8,11 +8,10 @@ import info3.game.scene.Scene;
 
 public class CookTile extends KitchenTile {
 	int compteur;
-	static final Sprite EMPTY = Sprite.OFF_PAN_TILE, FULL = Sprite.ON_PAN_TILE;
+	private boolean isOn = false;
 
 	public CookTile(Scene parent, int gridX, int gridY, AutDirection d) {
-		super(parent, gridX, gridY, null, d);
-		defaultSprite = EMPTY;
+		super(parent, gridX, gridY, Sprite.OFF_PAN_TILE, d);
 	}
 
 	@Override
@@ -22,24 +21,24 @@ public class CookTile extends KitchenTile {
 
 	@Override
 	public boolean pop(AutDirection direction) {// prend un ingrédiant à cuire et le cuit
-		if (player.m_assembly.getItems().size() != 1 || this.item != null) {
+		if (player.assembly.getItems().size() != 1 || this.item != null) {
 			return false;
 		} else {
-			if (player.m_assembly.getItems().get(0).cook() == null) { // est-ce qu'on peut cuire ?
+			if (player.assembly.getItems().get(0).cook() == null) { // est-ce qu'on peut cuire ?
 				return false;
 			}
-			this.item = player.m_assembly.getItems().get(0);
-			player.m_assembly.getItems().clear();
+			this.item = player.assembly.getItems().get(0);
+			player.assembly.getItems().clear();
 			this.compteur = 200;
-			defaultSprite = FULL;
-			parentScene.m_game.playSound("cooking");
+			isOn = true;
+			parentScene.game.playSound("cooking");
 			return true;
 		}
 	}
 
 	@Override
 	public boolean wizz(AutDirection direction) {// rend l'ingrédient au joueur
-		player.m_assembly.addItem(item);
+		player.assembly.addItem(item);
 		this.item = null;
 		return true;
 	}
@@ -50,7 +49,7 @@ public class CookTile extends KitchenTile {
 			this.compteur--;
 			return false;
 		} else {
-			defaultSprite = EMPTY;
+			isOn = false;
 			this.item = item.cook();
 			this.compteur = 200;
 			return true;
@@ -59,7 +58,7 @@ public class CookTile extends KitchenTile {
 
 	@Override
 	public void render(Graphics g) {
-		g.drawSprite(defaultSprite, 0, m_direction == AutDirection.S ? 0 : 2);
+		g.drawSprite(!isOn ? defaultSprite : Sprite.ON_PAN_TILE, 0, direction == AutDirection.S ? 0 : 2);
 		if (item != null) {
 			g.drawSprite(item.getType().getSprite(), 0, 0);
 		}
@@ -68,8 +67,8 @@ public class CookTile extends KitchenTile {
 	@Override
 	public boolean egg(AutDirection direction) {
 		if (parentScene.entityList.size() <= Scene.MAXIMUM_ENTITIES) {
-			Entity newEntity = null;
-			newEntity = new CookTile(this.parentScene, this.gridX, this.gridY, this.m_direction);
+			Entity newEntity;
+			newEntity = new CookTile(this.parentScene, this.gridX, this.gridY, this.direction);
 			return this.parentScene.addEntity(newEntity);
 		}
 		return false;
@@ -81,7 +80,7 @@ public class CookTile extends KitchenTile {
 			this.compteur--;
 			return false;
 		} else {
-			parentScene.m_game.playSound("kitchen_fail");
+			parentScene.game.playSound("kitchen_fail");
 			((KitchenScene) parentScene).smoke = true;
 			item = null;
 			return true;

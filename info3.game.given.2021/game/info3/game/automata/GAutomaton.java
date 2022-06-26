@@ -5,8 +5,8 @@ import java.util.Random;
 
 public class GAutomaton {
 	public GState initial;
-	public String name;
-	public List<GState> states;
+	public final String name;
+	public final List<GState> states;
 
 	public GAutomaton(GState initial, String name, List<GState> states) {
 		this.initial = initial;

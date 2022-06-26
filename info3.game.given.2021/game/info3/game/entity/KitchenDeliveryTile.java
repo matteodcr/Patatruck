@@ -12,11 +12,10 @@ import info3.game.screen.GameScreen;
 
 public class KitchenDeliveryTile extends KitchenTile {
 
-	Assembly assembly;
+	final Assembly assembly = new Assembly();
 
 	public KitchenDeliveryTile(Scene parent, int gridX, int gridY, AutDirection d) {
 		super(parent, gridX, gridY, null, d);
-		assembly = new Assembly();
 	}
 
 	@Override
@@ -42,13 +41,13 @@ public class KitchenDeliveryTile extends KitchenTile {
 	@Override
 	public boolean pop(AutDirection direction) {
 		Entity eInteracting = selectEntityToInteractWith();
-		if (eInteracting instanceof CookEntity && ((CookEntity) eInteracting) != null) {
-			if (player.m_assembly.getItems().isEmpty()) {
+		if (eInteracting instanceof CookEntity) {
+			if (player.assembly.getItems().isEmpty()) {
 				return false;
 			} else {
-				parentScene.m_game.playSound("drop");
-				assembly.addAssembly(player.m_assembly);
-				player.m_assembly.getItems().clear();
+				parentScene.game.playSound("drop");
+				assembly.addAssembly(player.assembly);
+				player.assembly.getItems().clear();
 
 				return true;
 
@@ -60,13 +59,13 @@ public class KitchenDeliveryTile extends KitchenTile {
 	@Override
 	public boolean wizz(AutDirection direction) {
 		Entity eInteracting = selectEntityToInteractWith();
-		if (eInteracting instanceof CookEntity && ((CookEntity) eInteracting) != null) {
-			if (player.m_assembly.getItems().size() == 0 && assembly.getItems().size() != 0) {
+		if (eInteracting instanceof CookEntity) {
+			if (player.assembly.getItems().size() == 0 && assembly.getItems().size() != 0) {
 				if (assembly.getItems().get(0).getType().isFinalItem()) {
-					player.m_assembly.addAssembly(assembly);
+					player.assembly.addAssembly(assembly);
 					assembly.getItems().clear();
 				} else {
-					player.m_assembly.addItem(assembly.getItems().remove(assembly.getItems().size() - 1));
+					player.assembly.addItem(assembly.getItems().remove(assembly.getItems().size() - 1));
 				}
 			}
 			return true;
@@ -77,8 +76,8 @@ public class KitchenDeliveryTile extends KitchenTile {
 	@Override
 	public boolean egg(AutDirection direction) {
 		if (parentScene.entityList.size() <= Scene.MAXIMUM_ENTITIES) {
-			Entity newEntity = null;
-			newEntity = new KitchenDeliveryTile(this.parentScene, this.gridX, this.gridY, this.m_direction);
+			Entity newEntity;
+			newEntity = new KitchenDeliveryTile(this.parentScene, this.gridX, this.gridY, this.direction);
 			return this.parentScene.addEntity(newEntity);
 		}
 		return false;
@@ -86,25 +85,23 @@ public class KitchenDeliveryTile extends KitchenTile {
 
 	@Override
 	public boolean hit(AutDirection direction) {
-		CityScene cityScene = ((CityScene) ((GameScreen) this.parentScene.m_game.getScreen()).getCityScene());
+		CityScene cityScene = ((CityScene) ((GameScreen) this.parentScene.game.getScreen()).getCityScene());
 
 		if (recetteReady(((KitchenScene) parentScene).currentOrder0) && cityScene.getCook().canDeliver()) {
 			((KitchenScene) parentScene).currentOrder0 = Item.getRandomItem();
 			assembly.getItems().clear();
-			parentScene.m_game.addTime(50);
+			parentScene.game.addTime(50);
 			// Indicates that the delivery has been done
-			((CityScene) ((GameScreen) this.parentScene.m_game.getScreen()).getCityScene()).getDeliveryTile()
-					.delivered();
+			((CityScene) ((GameScreen) this.parentScene.game.getScreen()).getCityScene()).getDeliveryTile().delivered();
 			return true;
 		}
 
 		if (recetteReady(((KitchenScene) parentScene).currentOrder1) && cityScene.getCook().canDeliver()) {
 			((KitchenScene) parentScene).currentOrder1 = Item.getRandomItem();
 			assembly.getItems().clear();
-			parentScene.m_game.addTime(50);
+			parentScene.game.addTime(50);
 			// Indicates that the delivery has been done
-			((CityScene) ((GameScreen) this.parentScene.m_game.getScreen()).getCityScene()).getDeliveryTile()
-					.delivered();
+			((CityScene) ((GameScreen) this.parentScene.game.getScreen()).getCityScene()).getDeliveryTile().delivered();
 			return true;
 		}
 		return false;
@@ -112,16 +109,13 @@ public class KitchenDeliveryTile extends KitchenTile {
 
 	@Override
 	public boolean gotPower() {
-		if (recetteReady(((KitchenScene) parentScene).currentOrder0)
-				|| recetteReady(((KitchenScene) parentScene).currentOrder1)) {
-			return true;
-		}
-		return false;
+		return recetteReady(((KitchenScene) parentScene).currentOrder0)
+				|| recetteReady(((KitchenScene) parentScene).currentOrder1);
 	}
 
 	@Override
 	public boolean gotStuff() {
-		return !player.m_assembly.getItems().isEmpty();
+		return !player.assembly.getItems().isEmpty();
 	}
 
 }

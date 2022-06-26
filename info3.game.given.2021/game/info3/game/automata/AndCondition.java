@@ -2,8 +2,8 @@ package info3.game.automata;
 
 public class AndCondition implements IFunction {
 
-	IFunction left;
-	IFunction right;
+	final IFunction left;
+	final IFunction right;
 
 	public AndCondition(IFunction l, IFunction r) {
 		left = l;

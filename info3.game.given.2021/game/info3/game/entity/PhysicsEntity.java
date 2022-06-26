@@ -5,13 +5,17 @@ import info3.game.position.PositionF;
 
 public class PhysicsEntity {
 
-	double maxShiftX = 2, maxShiftY = 2; // en pixels
+	final double maxShiftX = 2;
+	final double maxShiftY = 2; // en pixels
 	double accelerationX = 0, accelerationY = 0;
 	double velocityX = 0, velocityY = 0;
-	double power, airbreak = 2;
-	double maxVelocity = 1.5;// max velocity for turning otherwise do mess
-	double previousElapsed[] = { 0, 0 };
-	int velocityToPrint = 0, refreshTimerVelocity = 5, timerVelocity = 0;
+	final double power;
+	final double airbreak = 2;
+	final double maxVelocity = 1.5;// max velocity for turning otherwise do mess
+	final double[] previousElapsed = { 0, 0 };
+	int velocityToPrint = 0;
+	final int refreshTimerVelocity = 5;
+	int timerVelocity = 0;
 
 	/**
 	 * Average power is 4
@@ -33,9 +37,7 @@ public class PhysicsEntity {
 	}
 
 	/**
-	 * 
 	 * @param absoluteDir
-	 * @param elapsed     time in ms
 	 * @return if the truck is going too fast to turn
 	 */
 	public boolean addAcceleration(AutDirection absoluteDir) {
@@ -55,13 +57,10 @@ public class PhysicsEntity {
 		default:
 			break;
 		}
-		if (Math.abs(velocityX) >= maxVelocity && Math.abs(velocityY) >= maxVelocity) {
-			return true;
-		}
-		return false;
+		return Math.abs(velocityX) >= maxVelocity && Math.abs(velocityY) >= maxVelocity;
 	}
 
-	public PositionF Shift(long elapsed) {
+	public PositionF shift(long elapsed) {
 		double minValue = 0.001;
 		double smoothElapsed = (elapsed + previousElapsed[0] + previousElapsed[1]) / 3;// used because of spikes due to
 																						// garbage collector

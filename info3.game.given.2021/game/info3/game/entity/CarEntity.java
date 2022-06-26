@@ -14,16 +14,16 @@ public class CarEntity extends Entity {
 
 	long startJump;
 	long finishJump;
-	boolean isTruck;
+	final boolean isTruck;
 	boolean isPlayer;
-	private boolean swapInThisTick;
+	private boolean swapInThisTick = false;
 	private Entity entityEncountered;
 	public Physics physics = new PhysicsClassic(15);
-	public int shuffleCooldown; // only for player controlled car
+	public int shuffleCooldown = 0; // only for player controlled car
 	public int marketScreamsCooldown;
 	boolean isClassicPhysic = true;
 
-	boolean truckHasStock;
+	boolean truckHasStock = true;
 
 	public CarEntity(Scene parent, PositionF position, boolean isTruck, boolean isPlayer) {
 		super(parent, position);
@@ -31,9 +31,6 @@ public class CarEntity extends Entity {
 		this.isTruck = isTruck;
 		this.isPlayer = isPlayer;
 		changeCategory();
-		this.swapInThisTick = false;
-		shuffleCooldown = 0;
-		truckHasStock = true;
 	}
 
 	public boolean canDeliver() {
@@ -50,7 +47,7 @@ public class CarEntity extends Entity {
 
 	@Override
 	public void render(Graphics g) {
-		switch (this.m_direction) {
+		switch (this.direction) {
 		case N:
 			if (!isTruck) {
 				g.drawSprite(Sprite.RED_CAR_N, 0, 0);
@@ -123,8 +120,7 @@ public class CarEntity extends Entity {
 				this.marketScreamsCooldown--;
 
 		}
-		KitchenScene kitchenScene = ((KitchenScene) ((GameScreen) this.parentScene.m_game.getScreen())
-				.getKitchenScene());
+		KitchenScene kitchenScene = ((KitchenScene) ((GameScreen) this.parentScene.game.getScreen()).getKitchenScene());
 		if (isClassicPhysic && kitchenScene.smoke) {
 			this.toSmokePhysics();
 			isClassicPhysic = false;
@@ -141,7 +137,7 @@ public class CarEntity extends Entity {
 	@Override
 	public boolean pop(AutDirection direction) {
 		if (!swapInThisTick && isPlayer && entityEncountered != null && ((CarEntity) entityEncountered).isTruck) {
-			parentScene.m_game.playSound("woosh");
+			parentScene.game.playSound("woosh");
 			this.swap((CarEntity) entityEncountered);
 			start = System.currentTimeMillis();
 		}
@@ -152,13 +148,13 @@ public class CarEntity extends Entity {
 	@Override
 	public boolean wizz(AutDirection direction) {
 		AutDirection newDirection = convertRelativToAbsolutedir(direction);
-		m_direction = newDirection;
+		this.direction = newDirection;
 		switch (newDirection) {
 		case N:
 		case W:
 		case E:
 		case S:
-			physics.addForce(m_direction);
+			physics.addForce(this.direction);
 			return true;
 		default:
 			return false;
@@ -169,7 +165,7 @@ public class CarEntity extends Entity {
 	@Override
 	public boolean egg(AutDirection direction) {
 		if (parentScene.entityList.size() <= Scene.MAXIMUM_ENTITIES) {
-			Entity newEntity = null;
+			Entity newEntity;
 			newEntity = new CarEntity(this.parentScene, position, isTruck, isPlayer);
 			return this.parentScene.addEntity(newEntity);
 		}
@@ -178,7 +174,7 @@ public class CarEntity extends Entity {
 
 	@Override
 	public boolean hit(AutDirection direction) {
-		parentScene.m_game.playSound("crash");
+		parentScene.game.playSound("crash");
 		this.position = this.position.add(physics.bounce());
 		return true;
 	}
@@ -186,7 +182,7 @@ public class CarEntity extends Entity {
 	@Override
 	public boolean protect(AutDirection direction) {
 		AutDirection newDirection = convertRelativToAbsolutedir(direction);
-		m_direction = newDirection;
+		this.direction = newDirection;
 		switch (newDirection) {
 		case N: {
 			PositionF newPos = new PositionF(0, -0.5f);
@@ -294,45 +290,43 @@ public class CarEntity extends Entity {
 		}
 		switch (newDirection) {
 		case N: {
-			if (((CityScene) parentScene).whatsTheCategoryOfTile(position.add(new PositionF(1, -1)), this) == category
-					|| ((CityScene) parentScene).whatsTheCategoryOfTile(position.add(new PositionF(2, -1)),
-							this) == category) {
+			if (((CityScene) parentScene).whatsTheCategoryOfTile(position.add(new PositionF(1, -1))) == category
+					|| ((CityScene) parentScene)
+							.whatsTheCategoryOfTile(position.add(new PositionF(2, -1))) == category) {
 				return true;
 			}
 			break;
 		}
 		case W: {
-			if (((CityScene) parentScene).whatsTheCategoryOfTile(position.add(new PositionF(-1, 1)), this) == category
-					|| ((CityScene) parentScene).whatsTheCategoryOfTile(position.add(new PositionF(-1, 2)),
-							this) == category) {
+			if (((CityScene) parentScene).whatsTheCategoryOfTile(position.add(new PositionF(-1, 1))) == category
+					|| ((CityScene) parentScene)
+							.whatsTheCategoryOfTile(position.add(new PositionF(-1, 2))) == category) {
 				return true;
 			}
 			break;
 		}
 		case E: {
-			if (((CityScene) parentScene).whatsTheCategoryOfTile(position.add(new PositionF(4, 1)), this) == category
-					|| ((CityScene) parentScene).whatsTheCategoryOfTile(position.add(new PositionF(4, 2)),
-							this) == category) {
+			if (((CityScene) parentScene).whatsTheCategoryOfTile(position.add(new PositionF(4, 1))) == category
+					|| ((CityScene) parentScene)
+							.whatsTheCategoryOfTile(position.add(new PositionF(4, 2))) == category) {
 				return true;
 			}
 			break;
 		}
 		case S: {
-			if (((CityScene) parentScene).whatsTheCategoryOfTile(position.add(new PositionF(1, 4)), this) == category
-					|| ((CityScene) parentScene).whatsTheCategoryOfTile(position.add(new PositionF(2, 4)),
-							this) == category) {
+			if (((CityScene) parentScene).whatsTheCategoryOfTile(position.add(new PositionF(1, 4))) == category
+					|| ((CityScene) parentScene)
+							.whatsTheCategoryOfTile(position.add(new PositionF(2, 4))) == category) {
 				return true;
 			}
 			break;
 		}
 		case H: {
-			if (((CityScene) parentScene).whatsTheCategoryOfTile(position.add(new PositionF(1, 1)), this) == category
-					|| ((CityScene) parentScene).whatsTheCategoryOfTile(position.add(new PositionF(2, 1)),
-							this) == category
-					|| ((CityScene) parentScene).whatsTheCategoryOfTile(position.add(new PositionF(1, 2)),
-							this) == category
-					|| ((CityScene) parentScene).whatsTheCategoryOfTile(position.add(new PositionF(2, 2)),
-							this) == category) {
+			if (((CityScene) parentScene).whatsTheCategoryOfTile(position.add(new PositionF(1, 1))) == category
+					|| ((CityScene) parentScene).whatsTheCategoryOfTile(position.add(new PositionF(2, 1))) == category
+					|| ((CityScene) parentScene).whatsTheCategoryOfTile(position.add(new PositionF(1, 2))) == category
+					|| ((CityScene) parentScene)
+							.whatsTheCategoryOfTile(position.add(new PositionF(2, 2))) == category) {
 				return true;
 
 			}
@@ -395,7 +389,7 @@ public class CarEntity extends Entity {
 		carentity.start = System.currentTimeMillis();
 
 		if (this.truckHasStock) {
-			((KitchenScene) ((GameScreen) this.parentScene.m_game.getScreen()).getKitchenScene()).addRandomItem();
+			((KitchenScene) ((GameScreen) this.parentScene.game.getScreen()).getKitchenScene()).addRandomItem();
 			this.truckHasStock = false;
 		}
 	}

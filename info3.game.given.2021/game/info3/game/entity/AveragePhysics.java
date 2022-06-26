@@ -8,7 +8,8 @@ public class AveragePhysics implements Physics {
 	double accX = 0, accY = 0;
 	double velX = 0, velY = 0;
 	double maxVel = 100;
-	double force = 0, friction = 1.5f;
+	final double force;
+	double friction = 1.5f;
 
 	double lastVel = 0;
 	double avgVelBuff = 0, avgVel = 0;

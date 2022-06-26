@@ -7,10 +7,10 @@ import info3.game.scene.Scene;
 
 // TODO extends Entity
 public abstract class Tile extends Entity {
-	protected Sprite defaultSprite;
+	protected final Sprite defaultSprite;
 
-	int gridX;
-	int gridY;
+	final int gridX;
+	final int gridY;
 
 	protected Tile(Scene parent, int gX, int gY) {
 		this(parent, gX, gY, null);

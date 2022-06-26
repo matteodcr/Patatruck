@@ -10,7 +10,7 @@ import info3.game.scene.Scene;
 
 public class ConeEntity extends Entity {
 
-	public Physics physics = new PhysicsClassic(5);
+	public final Physics physics = new PhysicsClassic(5);
 	private Sprite currentSprite = Sprite.CONE;
 	private boolean onWizz = false;
 	private int timerWizz = 20;
@@ -68,7 +68,7 @@ public class ConeEntity extends Entity {
 	@Override
 	public boolean egg(AutDirection direction) {
 		if (parentScene.entityList.size() <= Scene.MAXIMUM_ENTITIES) {
-			Entity newEntity = null;
+			Entity newEntity;
 			newEntity = new ConeEntity(this.parentScene, position);
 			return this.parentScene.addEntity(newEntity);
 		}
@@ -124,45 +124,43 @@ public class ConeEntity extends Entity {
 		}
 		switch (newDirection) {
 		case N: {
-			if (((CityScene) parentScene).whatsTheCategoryOfTile(position.add(new PositionF(1, -1)), this) == category
-					|| ((CityScene) parentScene).whatsTheCategoryOfTile(position.add(new PositionF(2, -1)),
-							this) == category) {
+			if (((CityScene) parentScene).whatsTheCategoryOfTile(position.add(new PositionF(1, -1))) == category
+					|| ((CityScene) parentScene)
+							.whatsTheCategoryOfTile(position.add(new PositionF(2, -1))) == category) {
 				return true;
 			}
 			break;
 		}
 		case W: {
-			if (((CityScene) parentScene).whatsTheCategoryOfTile(position.add(new PositionF(-1, 1)), this) == category
-					|| ((CityScene) parentScene).whatsTheCategoryOfTile(position.add(new PositionF(-1, 2)),
-							this) == category) {
+			if (((CityScene) parentScene).whatsTheCategoryOfTile(position.add(new PositionF(-1, 1))) == category
+					|| ((CityScene) parentScene)
+							.whatsTheCategoryOfTile(position.add(new PositionF(-1, 2))) == category) {
 				return true;
 			}
 			break;
 		}
 		case E: {
-			if (((CityScene) parentScene).whatsTheCategoryOfTile(position.add(new PositionF(3, 1)), this) == category
-					|| ((CityScene) parentScene).whatsTheCategoryOfTile(position.add(new PositionF(3, 2)),
-							this) == category) {
+			if (((CityScene) parentScene).whatsTheCategoryOfTile(position.add(new PositionF(3, 1))) == category
+					|| ((CityScene) parentScene)
+							.whatsTheCategoryOfTile(position.add(new PositionF(3, 2))) == category) {
 				return true;
 			}
 			break;
 		}
 		case S: {
-			if (((CityScene) parentScene).whatsTheCategoryOfTile(position.add(new PositionF(1, 3)), this) == category
-					|| ((CityScene) parentScene).whatsTheCategoryOfTile(position.add(new PositionF(2, 3)),
-							this) == category) {
+			if (((CityScene) parentScene).whatsTheCategoryOfTile(position.add(new PositionF(1, 3))) == category
+					|| ((CityScene) parentScene)
+							.whatsTheCategoryOfTile(position.add(new PositionF(2, 3))) == category) {
 				return true;
 			}
 			break;
 		}
 		case H: {
-			if (((CityScene) parentScene).whatsTheCategoryOfTile(position.add(new PositionF(1, 1)), this) == category
-					|| ((CityScene) parentScene).whatsTheCategoryOfTile(position.add(new PositionF(1, 2)),
-							this) == category
-					|| ((CityScene) parentScene).whatsTheCategoryOfTile(position.add(new PositionF(2, 1)),
-							this) == category
-					|| ((CityScene) parentScene).whatsTheCategoryOfTile(position.add(new PositionF(2, 2)),
-							this) == category) {
+			if (((CityScene) parentScene).whatsTheCategoryOfTile(position.add(new PositionF(1, 1))) == category
+					|| ((CityScene) parentScene).whatsTheCategoryOfTile(position.add(new PositionF(1, 2))) == category
+					|| ((CityScene) parentScene).whatsTheCategoryOfTile(position.add(new PositionF(2, 1))) == category
+					|| ((CityScene) parentScene)
+							.whatsTheCategoryOfTile(position.add(new PositionF(2, 2))) == category) {
 				return true;
 
 			}

@@ -10,7 +10,7 @@ import info3.game.screen.GameScreen;
 
 public class SpeedBumpEntity extends Entity {
 
-	private CityTile parentTile;
+	private final CityTile parentTile;
 	int startPosX;
 	int startPosY;
 	int endPosX;
@@ -40,7 +40,7 @@ public class SpeedBumpEntity extends Entity {
 	public boolean pop(AutDirection direction) {
 		CarEntity cookCar = ((CityScene) parentScene).getCook();
 		if (cookCar.physics.getVelocity() >= 40 && cookCar.shuffleCooldown == 0) {
-			KitchenScene kitchenScene = ((KitchenScene) ((GameScreen) this.parentScene.m_game.getScreen())
+			KitchenScene kitchenScene = ((KitchenScene) ((GameScreen) this.parentScene.game.getScreen())
 					.getKitchenScene());
 			kitchenScene.shuffle();
 			cookCar.shuffleCooldown = 100;
@@ -74,18 +74,14 @@ public class SpeedBumpEntity extends Entity {
 					endPosY = 19;
 					left = false;
 				}
-				switch (newDirection) {
-				case H: {
+				if (newDirection == AutDirection.H) {
 					if (this.carInsideThisPos(entity) == category) {
 						return true;
 					}
-					break;
-				}
-				default:
+				} else {
 					super.cell(direction, category);
-					break;
 				}
-			} while (left || top);
+			} while (left);
 			top = parentTile.genTile.speedbumpTop;
 			left = parentTile.genTile.speedbumpLeft;
 		}

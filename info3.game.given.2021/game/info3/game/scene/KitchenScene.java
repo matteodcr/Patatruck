@@ -23,8 +23,8 @@ import info3.game.entity.StockTable;
 import info3.game.entity.Tile;
 import info3.game.entity.TrashTile;
 import info3.game.graphics.Graphics;
-import info3.game.graphics.Sprite;
 import info3.game.graphics.Graphics.Align;
+import info3.game.graphics.Sprite;
 import info3.game.position.AutDirection;
 import info3.game.position.PositionF;
 import info3.game.position.PositionI;
@@ -59,6 +59,7 @@ public class KitchenScene extends Scene {
 
 	public KitchenScene(int pixelWidth, int pixelHeight, Game g) {
 		super(pixelWidth, pixelHeight, g);
+		stockTables = new HashMap<ItemType, StockTable>();
 		try {
 			cook = new CookEntity(this,
 					new PositionF(KITCHEN_ORIGIN.getX() + getTileWidth(), KITCHEN_ORIGIN.getY() + getTileWidth()));
@@ -91,6 +92,13 @@ public class KitchenScene extends Scene {
 							new StockTable(this, 8, 3, AutDirection.N, new Item(ItemType.MEAT), Sprite.MEAT),
 							new BasicTableTile(this, 9, 3, AutDirection.N) } };
 			m_game.setTimer();
+			stockTables.put(ItemType.TOMATO, (StockTable) kitchenGrid[0][6]);
+			stockTables.put(ItemType.POTATO, (StockTable) kitchenGrid[0][7]);
+			stockTables.put(ItemType.CHEESE, (StockTable) kitchenGrid[0][8]);
+			stockTables.put(ItemType.SALAD, (StockTable) kitchenGrid[3][6]);
+			stockTables.put(ItemType.BREAD, (StockTable) kitchenGrid[3][7]);
+			stockTables.put(ItemType.MEAT, (StockTable) kitchenGrid[3][8]);
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

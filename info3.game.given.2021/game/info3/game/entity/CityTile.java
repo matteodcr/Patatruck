@@ -1,6 +1,7 @@
 package info3.game.entity;
 
 import java.util.Map;
+import java.util.Random;
 
 import info3.game.graphics.Graphics;
 import info3.game.graphics.Sprite;
@@ -20,7 +21,9 @@ public class CityTile extends Tile {
 
 	public final GenTile genTile;
 	private final Sprite topRoadSprite, leftRoadSprite;
+	private Sprite stallSprite, stallSprite2, stallSprite3, stallSprite4;
 	public SpeedBumpEntity eSpeedbump = null;
+	public MarketEntity eMarketStall = null;
 
 	public CityTile(Scene parent, int gridX, int gridY) {
 		super(parent, gridX, gridY);
@@ -30,6 +33,16 @@ public class CityTile extends Tile {
 		leftRoadSprite = genTile.marketPavingLeft == null ? null : MARKET_SPRITE_LEFT.get(genTile.marketPavingLeft);
 		if (genTile.speedbumpLeft || genTile.speedbumpTop)
 			eSpeedbump = new SpeedBumpEntity(parent, position, this);
+		if (genTile.hasMarketPaving)
+			eMarketStall = new MarketEntity(parent, position, this);
+
+		if (genTile.hasMarketPaving == true) {
+			Random rng = new Random();
+			stallSprite = Sprite.STALLS_[rng.nextInt(Sprite.STALLS_.length)];
+			stallSprite2 = Sprite.STALLS_[rng.nextInt(Sprite.STALLS_.length)];
+			stallSprite3 = Sprite.STALLS_[rng.nextInt(Sprite.STALLS_.length)];
+			stallSprite4 = Sprite.STALLS_[rng.nextInt(Sprite.STALLS_.length)];
+		}
 	}
 
 	public GenTile getGenTile() {
@@ -66,6 +79,12 @@ public class CityTile extends Tile {
 
 		if (genTile.speedbumpLeft == true) {
 			g.drawSprite(Sprite.CITY_SPEEDBUMP_LEFT, 0, 0);
+		}
+		if (genTile.hasMarketPaving == true) {
+			g.drawSprite(stallSprite, 0, 0);
+			g.drawSprite(stallSprite2, 15, 5);
+			g.drawSprite(stallSprite3, 5, 5);
+			g.drawSprite(stallSprite4, 5, 15);
 		}
 
 		g.drawSpritePart(genTile.buildingSprite, 0, 0, genTile.buildingSpriteOffsetX, genTile.buildingSpriteOffsetY);

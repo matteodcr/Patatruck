@@ -22,6 +22,7 @@ import static info3.game.graphics.Sprite.Spritesheet.MENU;
 import static info3.game.graphics.Sprite.Spritesheet.RECIPES_;
 import static info3.game.graphics.Sprite.Spritesheet.RED_CAR;
 import static info3.game.graphics.Sprite.Spritesheet.SAUCES;
+import static info3.game.graphics.Sprite.Spritesheet.STALLS;
 import static info3.game.graphics.Sprite.Spritesheet.YELLOW_CAR;
 
 public enum Sprite {
@@ -100,6 +101,15 @@ public enum Sprite {
 	DELIVERY_UPLEFT_ARROW(CITY_ARROWS, 0, 3, 1, 1), DELIVERY_UPRIGHT_ARROW(CITY_ARROWS, 1, 3, 1, 1),
 	DELIVERY_DOWNRIGHT_ARROW(CITY_ARROWS, 2, 3, 1, 1), DELIVERY_DOWNLEFT_ARROW(CITY_ARROWS, 3, 3, 1, 1),
 
+	STALL_GREEN_L(STALLS, 0, 0, 1, 1), STALL_GREEN_T(STALLS, 1, 0, 1, 1), STALL_GREEN_R(STALLS, 2, 0, 1, 1),
+	STALL_GREEN_B(STALLS, 3, 0, 1, 1), STALL_RED_L(STALLS, 4, 0, 1, 1), STALL_RED_T(STALLS, 5, 0, 1, 1),
+	STALL_RED_R(STALLS, 6, 0, 1, 1), STALL_RED_B(STALLS, 7, 0, 1, 1), STALL_BROWN_L_L(STALLS, 0, 1, 1, 1),
+	STALL_BROWN_L_T(STALLS, 1, 1, 1, 1), STALL_BROWN_L_R(STALLS, 2, 1, 1, 1), STALL_BROWN_L_B(STALLS, 3, 1, 1, 1),
+	STALL_BLUE_B(STALLS, 4, 1, 1, 1), STALL_BROWN_T(STALLS, 5, 1, 1, 1), STALL_OTHER_H(STALLS, 6, 1, 1, 1),
+	STALL_OTHER_V(STALLS, 7, 1, 1, 1), STALL_BLUE_V_L(STALLS, 0, 2, 1, 1), STALL_BLUE_V_T(STALLS, 1, 2, 1, 1),
+	STALL_BLUE_V_R(STALLS, 2, 2, 1, 1), STALL_BLUE_V_B(STALLS, 3, 2, 1, 1), STALL_BLUE_L(STALLS, 4, 2, 1, 1),
+	STALL_BROWN_L(STALLS, 5, 2, 1, 1),
+
 	DELIVERY_TILE_FRAME(DELIVERY_BLINK, 0, 0, 1, 1), COOK_END(COOK_END_, 0, 0, 4, 5);
 
 	public static final Sprite[] FULL_INDICATORS = new Sprite[] { FULL_0, FULL_1, FULL_2, FULL_3, FULL_4, FULL_5,
@@ -121,6 +131,19 @@ public enum Sprite {
 	public static final Sprite[] CITY_BAR_2_HORIZ = new Sprite[] { CITY_BAR_2_HORIZ_NORMAL, CITY_BAR_2_HORIZ_DENTED };
 	public static final Sprite[] CITY_BAR_3_VERT = new Sprite[] { CITY_BAR_3_VERT_NORMAL, CITY_BAR_3_VERT_ROUNDED };
 	public static final Sprite[] CITY_BAR_3_HORIZ = new Sprite[] { CITY_BAR_3_HORIZ_NORMAL, CITY_BAR_3_HORIZ_ROUNDED };
+
+	public static final Sprite[] STALLS_L = new Sprite[] { STALL_GREEN_L, STALL_RED_L, STALL_BLUE_V_L, STALL_BLUE_L,
+			STALL_BROWN_L };
+	public static final Sprite[] STALLS_B = new Sprite[] { STALL_GREEN_B, STALL_RED_B, STALL_BLUE_V_B, STALL_BLUE_B };
+	public static final Sprite[] STALLS_R = new Sprite[] { STALL_GREEN_R, STALL_RED_R, STALL_BLUE_V_R };
+	public static final Sprite[] STALLS_T = new Sprite[] { STALL_GREEN_T, STALL_RED_T, STALL_BLUE_V_T, STALL_BROWN_T };
+	public static final Sprite[] STALLS_O = new Sprite[] { STALL_OTHER_H, STALL_OTHER_V };
+	public static final Sprite[] STALLS_LARGE = new Sprite[] { STALL_BROWN_L_L, STALL_BROWN_L_T, STALL_BROWN_L_R,
+			STALL_BROWN_L_B, };
+
+	public static final Sprite[] STALLS_ = new Sprite[] { STALL_GREEN_L, STALL_RED_L, STALL_BLUE_V_L, STALL_BLUE_L,
+			STALL_BROWN_L, STALL_GREEN_B, STALL_RED_B, STALL_BLUE_V_B, STALL_BLUE_B, STALL_GREEN_R, STALL_RED_R,
+			STALL_BLUE_V_R, STALL_GREEN_T, STALL_RED_T, STALL_BLUE_V_T, STALL_BROWN_T, STALL_OTHER_H, STALL_OTHER_V };
 
 	public final Spritesheet spritesheet;
 	public final int u, v, w, h;
@@ -149,7 +172,7 @@ public enum Sprite {
 
 		// Other
 		AUTOMATON_SELECTION("automaton_selection.png", 16), CITY_ARROWS("city-arrows.png", 7),
-		COOK_END_("cook_end.png", 20);
+		COOK_END_("cook_end.png", 20), STALLS("stalls.png", 8);
 
 		public final String filename;
 		public final int tileSize;

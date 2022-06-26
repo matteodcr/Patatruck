@@ -109,6 +109,8 @@ public class CityScene extends Scene {
 			CityTile tile = (CityTile) getTileAt(gridPosToRemove.getX(), gridPosToRemove.getY());
 			if (tile.eSpeedbump != null)
 				removeEntity(tile.eSpeedbump);
+			if (tile.eMarketStall != null)
+				removeEntity(tile.eMarketStall);
 			cachedCityTiles.remove(gridPosToRemove);
 		}
 	}

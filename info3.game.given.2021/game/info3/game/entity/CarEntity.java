@@ -20,6 +20,7 @@ public class CarEntity extends Entity {
 	private Entity entityEncountered;
 	public Physics physics = new PhysicsClassic(15);
 	public int shuffleCooldown; // only for player controlled car
+	public int marketScreamsCooldown;
 	boolean isClassicPhysic = true;
 	// TODO Deplacer hitbox hardocdé et methode de collision (champ ou classe pr pos
 	// bas a droite de l'entite (sinon on garde comme ça si ttes les entites = 4x4)
@@ -117,6 +118,9 @@ public class CarEntity extends Entity {
 
 			if (this.shuffleCooldown > 0)
 				this.shuffleCooldown--;
+			if (this.marketScreamsCooldown > 0)
+				this.marketScreamsCooldown--;
+
 		}
 		KitchenScene kitchenScene = ((KitchenScene) ((GameScreen) this.parentScene.m_game.getScreen())
 				.getKitchenScene());

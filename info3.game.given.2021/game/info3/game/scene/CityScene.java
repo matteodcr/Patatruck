@@ -32,6 +32,7 @@ public class CityScene extends Scene {
 	private PositionI nearestMarketPos = new PositionI(0, 0);
 	private int count = 0;
 	private Map<PositionI, CityTile> cachedCityTiles;
+	public ArrayList<PositionI> cacheMarketVisited;
 
 	public CityScene(int pixelWidth, int pixelHeight, Game g) {
 		super(pixelWidth, pixelHeight, g);
@@ -40,6 +41,7 @@ public class CityScene extends Scene {
 		deliveryTile = new CityDeliveryTile(this);
 		addEntity(deliveryTile);
 		cachedCityTiles = new HashMap<PositionI, CityTile>();
+		cacheMarketVisited = new ArrayList<PositionI>();
 
 	}
 
@@ -294,5 +296,9 @@ public class CityScene extends Scene {
 		if (Math.abs(posFromVanX) > 192f || Math.abs(posFromVanY) > 108f)
 			return true;
 		return false;
+	}
+
+	public void addToMarketCache(int gridX, int gridY) {
+		this.cacheMarketVisited.add(new PositionI(gridX, gridY));
 	}
 }

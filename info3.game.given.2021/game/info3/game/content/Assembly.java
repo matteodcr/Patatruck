@@ -4,14 +4,14 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Map.Entry;
-import java.util.Random;
 import java.util.stream.Collectors;
 
 public class Assembly {
-	private List<Item> items = new ArrayList<>();
+	private final List<Item> items = new ArrayList<>();
 
-	private Map<List<ItemType>, ItemType> ASSEMBLE_RECIPES = new LinkedHashMap<>() {
+	private static final Map<List<ItemType>, ItemType> ASSEMBLE_RECIPES = new LinkedHashMap<>() {
 		private static final long serialVersionUID = 1L;
 
 		{
@@ -70,7 +70,7 @@ public class Assembly {
 	}
 
 	private List<ItemType> getRecipe(ItemType item) {
-		List<ItemType> tmp = new ArrayList<ItemType>();
+		List<ItemType> tmp;
 		for (Entry<List<ItemType>, ItemType> entry : ASSEMBLE_RECIPES.entrySet()) {
 			if (item.equals(entry.getValue())) {
 				tmp = entry.getKey();
@@ -87,8 +87,8 @@ public class Assembly {
 	 *           more complex recipe
 	 */
 	private Sauce explode() {
-		ArrayList<Item> currentItems = new ArrayList<Item>(this.getItems());
-		List<ItemType> tmp = new ArrayList<ItemType>();
+		ArrayList<Item> currentItems = new ArrayList<>(this.getItems());
+		List<ItemType> tmp;
 		Sauce sauce = null;
 
 		for (Item iter : currentItems) {
@@ -96,7 +96,7 @@ public class Assembly {
 				sauce = iter.getSauce();
 				tmp = this.getRecipe(iter.getType());
 				this.removeItem(iter);
-				for (ItemType iter2 : tmp) {
+				for (ItemType iter2 : Objects.requireNonNull(tmp)) {
 					this.getItems().add(new Item(iter2, null)); // on utilise pas addItem
 				}
 			}
@@ -105,21 +105,16 @@ public class Assembly {
 	}
 
 	private boolean equal(List<ItemType> l) {
-		ArrayList<ItemType> x = new ArrayList<ItemType>(this.getItemTypes());
-		ArrayList<ItemType> y = new ArrayList<ItemType>(l);
+		ArrayList<ItemType> x = new ArrayList<>(this.getItemTypes());
+		ArrayList<ItemType> y = new ArrayList<>(l);
 		if (y.size() != x.size()) {
 			return false;
 		}
 		for (ItemType tmp : l) {
 			y.remove(tmp);
-			if (x.contains(tmp)) {
-				x.remove(tmp);
-			}
+			x.remove(tmp);
 		}
-		if (y.size() == x.size()) {
-			return true;
-		}
-		return false;
+		return y.size() == x.size();
 	}
 
 	public void addItem(Item item) {
@@ -147,23 +142,9 @@ public class Assembly {
 	}
 
 	public void addAssembly(Assembly a) {
-		java.util.Iterator<Item> i = a.getItems().iterator();
-		while (i.hasNext()) {
-			this.addItem(i.next());
+		for (Item item : a.getItems()) {
+			this.addItem(item);
 		}
-
-	}
-
-	public Entry<List<ItemType>, ItemType> getRandomRecipe() {
-		Random rand = new Random();
-		int i = rand.nextInt(ASSEMBLE_RECIPES.size());
-		int j = 0;
-		for (Entry<List<ItemType>, ItemType> entry : ASSEMBLE_RECIPES.entrySet()) {
-			if (i == j)
-				return entry;
-			j++;
-		}
-		throw new IllegalStateException("no recipe found");
 	}
 
 }

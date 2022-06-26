@@ -7,9 +7,9 @@ import java.util.Map;
 import java.util.Random;
 
 public class GTransition {
-	public Map<IFunction, Integer> action; // Action et pourcentage
-	public IFunction condition;
-	public GState destination;
+	public final Map<IFunction, Integer> action; // Action et pourcentage
+	public final IFunction condition;
+	public final GState destination;
 
 	public GTransition(Map<IFunction, Integer> action2, IFunction condition, GState destination) {
 		this.action = action2;
@@ -41,7 +41,7 @@ public class GTransition {
 	// Fonction auxilliaire qui return l'action en fonction du % généré
 	// aléatoirement
 	private IFunction sumMap(Map<IFunction, Integer> map, int drawnPercent) {
-		List<IFunction> keys = new ArrayList<IFunction>(map.keySet());
+		List<IFunction> keys = new ArrayList<>(map.keySet());
 		int sum = 0;
 		int cpt = 0;
 		Collection<Integer> percentList = map.values();

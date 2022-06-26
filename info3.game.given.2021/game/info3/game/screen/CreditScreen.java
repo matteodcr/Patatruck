@@ -2,18 +2,16 @@ package info3.game.screen;
 
 import info3.game.Game;
 import info3.game.graphics.Graphics;
-import info3.game.graphics.Graphics.Align;
 import info3.game.graphics.Sprite;
+import info3.game.graphics.Graphics.Align;
 
 public class CreditScreen extends Screen {
 	public CreditScreen(Game game) {
 		super(game);
 	}
 
-	boolean keyPressed = false;
-
 	public void tick(long elapsed) {
-		boolean escapePressed = game.m_listener.isUp("ESCAPE");
+		boolean escapePressed = game.listener.isUp("ESCAPE");
 
 		if (escapePressed) {
 			changeScreen(new StartScreen(game));

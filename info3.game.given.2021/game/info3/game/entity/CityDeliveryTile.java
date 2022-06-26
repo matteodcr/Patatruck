@@ -17,12 +17,8 @@ public class CityDeliveryTile extends CityTile {
 		super(parent, 0, 0);
 	}
 
-	public boolean getBlinkState() {
-		return blinkState;
-	}
-
 	public void delivered() {
-		parentScene.m_game.playSound("delivery");
+		parentScene.game.playSound("delivery");
 		delivered = !delivered;
 	}
 
@@ -80,7 +76,7 @@ public class CityDeliveryTile extends CityTile {
 	@Override
 	public boolean egg(AutDirection direction) {
 		if (parentScene.entityList.size() <= Scene.MAXIMUM_ENTITIES) {
-			Entity newEntity = null;
+			Entity newEntity;
 			newEntity = new CityDeliveryTile(this.parentScene);
 			return this.parentScene.addEntity(newEntity);
 		}

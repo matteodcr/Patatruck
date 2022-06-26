@@ -49,17 +49,17 @@ public class AutomatonSelectionScreen extends Screen {
 
 	@Override
 	public void tick(long elapsed) {
-		boolean upPressed = game.m_listener.isUp("UP");
-		boolean downPressed = game.m_listener.isUp("DOWN");
-		boolean leftPressed = game.m_listener.isUp("LEFT");
-		boolean rightPressed = game.m_listener.isUp("RIGHT");
-		boolean spacePressed = game.m_listener.isUp("SPACE");
-		boolean escapePressed = game.m_listener.isUp("ESCAPE");
-		boolean zPressed = game.m_listener.isUp("Z");
-		boolean sPressed = game.m_listener.isUp("S");
-		boolean qPressed = game.m_listener.isUp("Q");
-		boolean dPressed = game.m_listener.isUp("D");
-		boolean enterPressed = game.m_listener.isUp("ENTER");
+		boolean upPressed = game.listener.isUp("UP");
+		boolean downPressed = game.listener.isUp("DOWN");
+		boolean leftPressed = game.listener.isUp("LEFT");
+		boolean rightPressed = game.listener.isUp("RIGHT");
+		boolean spacePressed = game.listener.isUp("SPACE");
+		boolean escapePressed = game.listener.isUp("ESCAPE");
+		boolean zPressed = game.listener.isUp("Z");
+		boolean sPressed = game.listener.isUp("S");
+		boolean qPressed = game.listener.isUp("Q");
+		boolean dPressed = game.listener.isUp("D");
+		boolean enterPressed = game.listener.isUp("ENTER");
 
 		if (enterPressed) {
 			saveAndClose();

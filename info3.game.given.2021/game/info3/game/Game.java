@@ -34,6 +34,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.TreeMap;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -66,23 +67,20 @@ public class Game {
 	 */
 	private static final int TPS = 40;
 
-	static Game game;
-
-	public static void main(String args[]) {
+	public static void main(String[] args) {
 		try {
 			System.out.println("Game starting...");
-			game = new Game();
+			new Game();
 			System.out.println("Game started.");
 		} catch (Throwable th) {
 			th.printStackTrace(System.err);
 		}
 	}
 
-	JFrame m_frame;
-	JLabel m_text;
-	GameCanvas m_canvas;
-	public final CanvasListener m_listener = new CanvasListener(this);
-	Sound m_music;
+	final JFrame frame;
+	JLabel statusText;
+	final GameCanvas canvas;
+	public final CanvasListener listener = new CanvasListener(this);
 
 	private final Map<String, GAutomaton> automataList; // can be moved
 	public Map<EntityType, GAutomaton> boundAutomata = new HashMap<>();
@@ -105,12 +103,12 @@ public class Game {
 		timerHasBeenSet = false;
 		highScore = loadHighScore();
 		automataList = loadAutomata("data");
-		m_canvas = new GameCanvas(m_listener);
+		canvas = new GameCanvas(listener);
 
 		System.out.println("  - creating frame...");
 		Dimension d = new Dimension(WIDTH * SCALE_FACTOR, HEIGHT * SCALE_FACTOR);
-		m_frame = m_canvas.createFrame(d);
-		m_frame.setResizable(false);
+		frame = canvas.createFrame(d);
+		frame.setResizable(false);
 
 		System.out.println("  - setting up the frame...");
 		setupFrame();
@@ -160,20 +158,20 @@ public class Game {
 	 */
 	private void setupFrame() {
 
-		m_frame.setTitle("Patatruck");
-		m_frame.setLayout(new BorderLayout());
+		frame.setTitle("Patatruck");
+		frame.setLayout(new BorderLayout());
 
-		m_frame.add(m_canvas, BorderLayout.CENTER);
+		frame.add(canvas, BorderLayout.CENTER);
 
-		m_text = new JLabel();
-		m_text.setText("Tick: 0ms FPS=0  Nb_entities=0");
-		m_frame.add(m_text, BorderLayout.NORTH);
+		statusText = new JLabel();
+		statusText.setText("Tick: 0ms FPS=0  Nb_entities=0");
+		frame.add(statusText, BorderLayout.NORTH);
 
 		// center the window on the screen
-		m_frame.setLocationRelativeTo(null);
+		frame.setLocationRelativeTo(null);
 
 		// make the vindow visible
-		m_frame.setVisible(true);
+		frame.setVisible(true);
 	}
 
 	/*
@@ -185,23 +183,23 @@ public class Game {
 
 	/*
 	 * Called from the GameCanvas listener when the frame
-	 */ String m_musicName;
+	 */ String musicName;
 
 	void loadMusic() {
-		m_musicName = m_musicNames[m_musicIndex];
-		String filename = "resources/" + m_musicName + ".ogg";
-		m_musicIndex = (m_musicIndex + 1) % m_musicNames.length;
+		musicName = musicNames[musicIndex];
+		String filename = "resources/" + musicName + ".ogg";
+		musicIndex = (musicIndex + 1) % musicNames.length;
 		try {
 			RandomAccessFile file = new RandomAccessFile(filename, "r");
 			RandomFileInputStream fis = new RandomFileInputStream(file);
-			m_canvas.playMusic(fis, 0, 0.8F);
+			canvas.playMusic(fis, 0, 0.8F);
 		} catch (Throwable th) {
 			th.printStackTrace(System.err);
 			System.exit(-1);
 		}
 	}
 
-	public List<String> currentSounds = new ArrayList<String>();
+	public final List<String> currentSounds = new ArrayList<>();
 
 	public void playSound(String name) {
 		if (!currentSounds.contains(name)) {
@@ -210,7 +208,7 @@ public class Game {
 				RandomAccessFile file = new RandomAccessFile(filename, "r");
 				RandomFileInputStream fis = new RandomFileInputStream(file);
 				currentSounds.add(name);
-				m_canvas.playSound(name, fis, -1, 1.0F);
+				canvas.playSound(name, fis, -1, 1.0F);
 			} catch (Throwable th) {
 				th.printStackTrace(System.err);
 				System.exit(-1);
@@ -218,10 +216,10 @@ public class Game {
 		}
 	}
 
-	private int m_musicIndex = 0;
-	private String[] m_musicNames = new String[] { "foire_saucisse" };
+	private int musicIndex = 0;
+	private final String[] musicNames = new String[] { "foire_saucisse" };
 
-	private long m_textElapsed;
+	private long textElapsed;
 
 	/*
 	 * This method is invoked almost periodically, given the number of milli-seconds
@@ -234,18 +232,18 @@ public class Game {
 
 			// Update every second
 			// the text on top of the frame: tick and fps
-			m_textElapsed += elapsed;
-			if (m_textElapsed > (1000 / TPS)) {
-				m_textElapsed = 0;
-				float period = m_canvas.getTickPeriod();
-				int fps = m_canvas.getFPS();
+			textElapsed += elapsed;
+			if (textElapsed > (1000 / TPS)) {
+				textElapsed = 0;
+				float period = canvas.getTickPeriod();
+				int fps = canvas.getFPS();
 				int nbEntities = screen.getEntityCount();
 				String txt = "Tick=" + period + "ms";
 				while (txt.length() < 15)
 					txt += " ";
 				txt = txt + fps + " fps   ";
 				txt += "Nb_entities=" + nbEntities;
-				m_text.setText(txt);
+				statusText.setText(txt);
 
 				screen.tick(elapsed);
 			}
@@ -280,11 +278,12 @@ public class Game {
 			Map<String, GAutomaton> automata = new TreeMap<>();
 			List<GAutomaton> automataTmp;
 			File folder = new File(filename);
-			for (File file : folder.listFiles()) {
+			for (File file : Objects.requireNonNull(folder.listFiles())) {
 				if (!file.isDirectory()) {
 					try {
 						AST ast = AutomataParser.from_file(file.getAbsolutePath());
 						AutomataGenerator astVisitor = new AutomataGenerator();
+						// noinspection unchecked
 						automataTmp = (List<GAutomaton>) ast.accept(astVisitor);
 
 						automata.putAll(

@@ -11,10 +11,10 @@ public class GFunCall implements IFunction {
 		// Actions
 		POP, WIZZ, MOVE, WAIT, EGG, HIT, JUMP, EXPLODE, PICK, POWER, PROTECT, STORE, TURN, THROW,
 		// Conditions
-		CELL, KEY, TRUE, MYDIR, CLOSEST, GOTPOWER, GOTSTUFF;
+		CELL, KEY, TRUE, MYDIR, CLOSEST, GOTPOWER, GOTSTUFF
 	}
 
-	List<String> params;
+	final List<String> params;
 	int percent;
 	private FunName name;
 
@@ -99,7 +99,6 @@ public class GFunCall implements IFunction {
 			return AutCategory.valueOf(cat);
 	}
 
-	// TODO : add missing actions
 	@Override
 	public boolean eval(AutomatonListener aut) {
 		switch (name) {

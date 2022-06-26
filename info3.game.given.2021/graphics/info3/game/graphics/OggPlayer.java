@@ -762,11 +762,7 @@ public class OggPlayer extends AudioPlayer implements Runnable {
 		 */
 		while ((samples = m_jorbisDspState.synthesis_pcmout(m_pcmInfo, m_pcmIndex)) > 0) {
 			// We need to know for how many samples we are going to process.
-			if (samples < m_convertedBufferSize) {
-				range = samples;
-			} else {
-				range = m_convertedBufferSize;
-			}
+			range = Math.min(samples, m_convertedBufferSize);
 
 			// For each channel...
 			for (int i = 0; i < m_jorbisInfo.channels; i++) {

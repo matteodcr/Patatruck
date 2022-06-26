@@ -1,7 +1,7 @@
 package info3.game.automata;
 
 public class NotCondition implements IFunction {
-	IFunction cond;
+	final IFunction cond;
 
 	public NotCondition(IFunction exp) {
 		cond = exp;

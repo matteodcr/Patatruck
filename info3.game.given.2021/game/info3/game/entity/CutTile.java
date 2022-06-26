@@ -14,15 +14,15 @@ public class CutTile extends KitchenTile {
 
 	@Override
 	public boolean pop(AutDirection direction) {// prend un ingrédient à couper
-		if (player.m_assembly.getItems().size() != 1 || this.item != null) {
+		if (player.assembly.getItems().size() != 1 || this.item != null) {
 			return false;
 		} else {
-			if (player.m_assembly.getItems().get(0).cut() == null) { // est-ce qu'on peut couper?
+			if (player.assembly.getItems().get(0).cut() == null) { // est-ce qu'on peut couper?
 				return false;
 			}
-			parentScene.m_game.playSound("cut");
-			this.item = player.m_assembly.getItems().get(0);
-			player.m_assembly.getItems().clear();
+			parentScene.game.playSound("cut");
+			this.item = player.assembly.getItems().get(0);
+			player.assembly.getItems().clear();
 			this.compteur = 200;
 			return true;
 		}
@@ -35,8 +35,8 @@ public class CutTile extends KitchenTile {
 
 	@Override
 	public boolean wizz(AutDirection direction) {// rend l'ingrédient coupé au joueur
-		parentScene.m_game.playSound("drop");
-		player.m_assembly.addItem(item);
+		parentScene.game.playSound("drop");
+		player.assembly.addItem(item);
 		this.item = null;
 		return true;
 
@@ -64,8 +64,8 @@ public class CutTile extends KitchenTile {
 	@Override
 	public boolean egg(AutDirection direction) {
 		if (parentScene.entityList.size() <= Scene.MAXIMUM_ENTITIES) {
-			Entity newEntity = null;
-			newEntity = new CutTile(this.parentScene, this.gridX, this.gridY, this.m_direction);
+			Entity newEntity;
+			newEntity = new CutTile(this.parentScene, this.gridX, this.gridY, this.direction);
 			return this.parentScene.addEntity(newEntity);
 		}
 		return false;

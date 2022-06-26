@@ -3,6 +3,7 @@ package info3.game.scene;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Random;
 
 import info3.game.Game;
@@ -31,8 +32,8 @@ public class CityScene extends Scene {
 	// on every tick
 	private PositionI nearestMarketPos = new PositionI(0, 0);
 	private int count = 0;
-	private Map<PositionI, CityTile> cachedCityTiles;
-	public ArrayList<PositionI> cacheMarketVisited;
+	private final Map<PositionI, CityTile> cachedCityTiles = new HashMap<>();
+	public final ArrayList<PositionI> cacheMarketVisited = new ArrayList<>();
 
 	public CityScene(int pixelWidth, int pixelHeight, Game g) {
 		super(pixelWidth, pixelHeight, g);
@@ -40,9 +41,6 @@ public class CityScene extends Scene {
 		addEntity(cookCar);
 		deliveryTile = new CityDeliveryTile(this);
 		addEntity(deliveryTile);
-		cachedCityTiles = new HashMap<PositionI, CityTile>();
-		cacheMarketVisited = new ArrayList<PositionI>();
-
 	}
 
 	private void reloadCity() {
@@ -72,7 +70,7 @@ public class CityScene extends Scene {
 			count = 0;
 		}
 		removeUnusedTilesInCache();
-		if (this.m_game.m_listener.isUp("G"))
+		if (this.game.listener.isUp("G"))
 			reloadCity();
 	}
 
@@ -101,7 +99,7 @@ public class CityScene extends Scene {
 
 	private void removeUnusedTilesInCache() {
 		PositionI gridPos = getGridPosFromPosCity(cookCar.getPosition());
-		ArrayList<PositionI> gridPosTilesToRemove = new ArrayList<PositionI>();
+		ArrayList<PositionI> gridPosTilesToRemove = new ArrayList<>();
 		for (PositionI gridPosInCache : cachedCityTiles.keySet()) {
 			PositionI gridPosDiff = gridPos.sub(gridPosInCache);
 			if (Math.abs(gridPosDiff.getX()) > 13 || Math.abs(gridPosDiff.getY()) > 4)
@@ -118,7 +116,7 @@ public class CityScene extends Scene {
 	}
 
 	/* Renvoit la categorie du cadrant de la tuile a cette pos */
-	public AutCategory whatsTheCategoryOfTile(PositionF pos, Entity entity) {
+	public AutCategory whatsTheCategoryOfTile(PositionF pos) {
 		int gX = getGridPosFromPosCity(pos).getX();
 		int gY = getGridPosFromPosCity(pos).getY();
 		CityTile tile = (CityTile) getTileAt(gX, gY);
@@ -228,7 +226,11 @@ public class CityScene extends Scene {
 		PositionI cookCarCell = cookCar.getPosition().divFloor(20);
 		worldGenerator.markMarketAsSeen(cookCarCell.getX(), cookCarCell.getY());
 
-		LocatedMarket market = worldGenerator.locateMarkets(cookCarCell.getX(), cookCarCell.getY()).findFirst().get();
+		Optional<LocatedMarket> optMarket = worldGenerator.locateMarkets(cookCarCell.getX(), cookCarCell.getY())
+				.findFirst();
+
+		assert optMarket.isPresent();
+		LocatedMarket market = optMarket.get();
 		return new PositionI(market.x, market.y);
 	}
 
@@ -293,9 +295,7 @@ public class CityScene extends Scene {
 		PositionF posFromVan = getPosRelativeToVan(entity).sub(center);
 		float posFromVanX = posFromVan.getX();
 		float posFromVanY = posFromVan.getY();
-		if (Math.abs(posFromVanX) > 192f || Math.abs(posFromVanY) > 108f)
-			return true;
-		return false;
+		return Math.abs(posFromVanX) > 192f || Math.abs(posFromVanY) > 108f;
 	}
 
 	public void addToMarketCache(int gridX, int gridY) {

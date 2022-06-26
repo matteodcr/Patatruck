@@ -1,11 +1,5 @@
 package info3.game.entity;
 
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-
-import javax.imageio.ImageIO;
-
 import info3.game.automata.AutomatonListener;
 import info3.game.automata.GAutomaton;
 import info3.game.automata.GState;
@@ -19,17 +13,16 @@ import info3.game.scene.KitchenScene;
 import info3.game.scene.Scene;
 
 public abstract class Entity implements AutomatonListener {
-	Scene parentScene;
+	final Scene parentScene;
 
 	GAutomaton automaton;
 	GState currentState;
 
-	AutDirection m_direction;
+	AutDirection direction;
 	AutCategory category;
 
 	PositionF position;
 
-	int deathTime = 0;
 	long start, finish, timeElapsed, timerToWait = 0;
 
 	// If different from what `getType` returns, we should replace the automaton
@@ -39,9 +32,9 @@ public abstract class Entity implements AutomatonListener {
 	Entity(Scene parent, PositionF pos) {
 		parentScene = parent;
 		position = pos;
-		m_direction = AutDirection.N;
+		direction = AutDirection.N;
 
-		automaton = parentScene.m_game.getBoundAutomaton(getType());
+		automaton = parentScene.game.getBoundAutomaton(getType());
 		currentState = automaton.initial;
 	}
 
@@ -58,7 +51,7 @@ public abstract class Entity implements AutomatonListener {
 	public void tick(long elapsed) {
 		EntityType entityType = getType();
 		if (lastEntityType != entityType) {
-			automaton = parentScene.m_game.getBoundAutomaton(entityType);
+			automaton = parentScene.game.getBoundAutomaton(entityType);
 			currentState = automaton.initial;
 			lastEntityType = entityType;
 		}
@@ -71,48 +64,20 @@ public abstract class Entity implements AutomatonListener {
 			parentScene.removeEntity(this);
 	}
 
-	void destroySpin() {
-		// TODO
-	}
-
-	void destroyCrush() {
-		// TODO
-	}
-
 	public void render(Graphics g) {
 		// TODO
-	}
-
-	public static BufferedImage[] loadSprite(String filename, int nrows, int ncols) throws IOException {
-		File imageFile = new File(filename);
-		if (imageFile.exists()) {
-			BufferedImage image = ImageIO.read(imageFile);
-			int width = image.getWidth(null) / ncols;
-			int height = image.getHeight(null) / nrows;
-
-			BufferedImage[] images = new BufferedImage[nrows * ncols];
-			for (int i = 0; i < nrows; i++) {
-				for (int j = 0; j < ncols; j++) {
-					int x = j * width;
-					int y = i * height;
-					images[(i * ncols) + j] = image.getSubimage(x, y, width, height);
-				}
-			}
-			return images;
-		}
-		return null;
 	}
 
 	public AutDirection convertRelativToAbsolutedir(AutDirection direction) {
 		switch (direction) {
 		case F:
-			return m_direction;
+			return this.direction;
 		case B:
-			return m_direction.twoapart();
+			return this.direction.twoapart();
 		case L:
-			return m_direction.previous();
+			return this.direction.previous();
 		case R:
-			return m_direction.next();
+			return this.direction.next();
 		default:
 			break;
 		}
@@ -126,7 +91,7 @@ public abstract class Entity implements AutomatonListener {
 	public boolean move(AutDirection direction) {
 		finish = System.currentTimeMillis();
 		timeElapsed = finish - start;
-		float shift = 0;
+		float shift;
 		if (parentScene instanceof KitchenScene)
 			shift = parentScene.getTileWidth();
 		else
@@ -134,7 +99,7 @@ public abstract class Entity implements AutomatonListener {
 
 		if (timeElapsed >= timerToWait) {
 			AutDirection newDirection = convertRelativToAbsolutedir(direction);
-			m_direction = newDirection;
+			this.direction = newDirection;
 			switch (newDirection) {
 			case N: {
 				PositionF newPos = new PositionF(0, -shift);
@@ -264,7 +229,7 @@ public abstract class Entity implements AutomatonListener {
 
 	@Override
 	public boolean key(AutKey direction) {
-		return parentScene.m_game.m_listener.isUp(direction.toString());
+		return parentScene.game.listener.isUp(direction.toString());
 	}
 
 	// To handle corner equipments cases in the kitchen
@@ -272,21 +237,21 @@ public abstract class Entity implements AutomatonListener {
 		int gridX = getGridPosFromPos().getX();
 		int gridY = getGridPosFromPos().getY();
 		for (Entity entity : parentScene.entityList) {
-			switch (m_direction) {
+			switch (direction) {
 			case N:
-				if (entity.isItThatGrid(gridY - 1, gridX) && entity.m_direction == AutDirection.S)
+				if (entity.isItThatGrid(gridY - 1, gridX) && entity.direction == AutDirection.S)
 					return entity;
 				break;
 			case W:
-				if (entity.isItThatGrid(gridY, gridX - 1) && entity.m_direction == AutDirection.E)
+				if (entity.isItThatGrid(gridY, gridX - 1) && entity.direction == AutDirection.E)
 					return entity;
 				break;
 			case E:
-				if (entity.isItThatGrid(gridY, gridX + 1) && entity.m_direction == AutDirection.W)
+				if (entity.isItThatGrid(gridY, gridX + 1) && entity.direction == AutDirection.W)
 					return entity;
 				break;
 			case S:
-				if (entity.isItThatGrid(gridY + 1, gridX) && entity.m_direction == AutDirection.N)
+				if (entity.isItThatGrid(gridY + 1, gridX) && entity.direction == AutDirection.N)
 					return entity;
 				break;
 			default:
@@ -297,7 +262,7 @@ public abstract class Entity implements AutomatonListener {
 	}
 
 	public void setDirection(AutDirection absDirection) {
-		this.m_direction = absDirection;
+		this.direction = absDirection;
 	}
 
 	/*
@@ -337,7 +302,7 @@ public abstract class Entity implements AutomatonListener {
 
 	@Override
 	public boolean turn(AutDirection direction) {
-		this.m_direction = convertRelativToAbsolutedir(direction);
+		this.direction = convertRelativToAbsolutedir(direction);
 		return true;
 	}
 
@@ -378,7 +343,7 @@ public abstract class Entity implements AutomatonListener {
 
 	@Override
 	public boolean myDir(AutDirection direction) {
-		return direction == m_direction;
+		return direction == this.direction;
 	}
 
 	/**
@@ -404,10 +369,10 @@ public abstract class Entity implements AutomatonListener {
 				}
 			}
 		}
-		if (closest == null || closestEnt == null || closestEnt.category != category)
+		if (closest == null || closestEnt.category != category)
 			return false;
 		// checking if in the right direction;
-		AutDirection itsDir = null;
+		AutDirection itsDir;
 		if (closest.getY() >= Math.abs(closest.getX()))
 			itsDir = AutDirection.N;
 		else if (Math.abs(closest.getY()) >= Math.abs(closest.getX()))

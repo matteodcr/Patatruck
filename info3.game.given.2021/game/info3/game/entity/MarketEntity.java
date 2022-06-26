@@ -15,18 +15,17 @@ import info3.game.screen.GameScreen;
 
 public class MarketEntity extends Entity {
 
-	private CityTile parentTile;
+	private final CityTile parentTile;
 
-	ItemType items[] = new ItemType[] { ItemType.POTATO, ItemType.SALAD, ItemType.TOMATO, ItemType.MEAT, ItemType.BREAD,
-			ItemType.CHEESE, };
+	final ItemType[] items = new ItemType[] { ItemType.POTATO, ItemType.SALAD, ItemType.TOMATO, ItemType.MEAT,
+			ItemType.BREAD, ItemType.CHEESE, };
 
-	HashMap<ItemType, Integer> loot;
+	final HashMap<ItemType, Integer> loot = new HashMap<>();
 
 	MarketEntity(Scene parent, PositionF pos, CityTile tile) {
 		super(parent, pos);
 		category = AutCategory.P;
 		parentTile = tile;
-		loot = new HashMap<ItemType, Integer>();
 
 		// Generating random loot
 		Random rand = new Random();
@@ -45,17 +44,16 @@ public class MarketEntity extends Entity {
 	@Override
 	public boolean pop(AutDirection direction) {
 		if (((CityScene) parentScene).getCook().marketScreamsCooldown == 0) {
-			parentScene.m_game.playSound("market_crowd_panic");
+			parentScene.game.playSound("market_crowd_panic");
 			((CityScene) parentScene).getCook().marketScreamsCooldown = 50;
 		}
-		KitchenScene kitchenScene = ((KitchenScene) ((GameScreen) this.parentScene.m_game.getScreen())
-				.getKitchenScene());
-		HashMap<ItemType, StockTable> stocktables = new HashMap<ItemType, StockTable>();
+		KitchenScene kitchenScene = ((KitchenScene) ((GameScreen) this.parentScene.game.getScreen()).getKitchenScene());
+		HashMap<ItemType, StockTable> stocktables;
 		stocktables = kitchenScene.getStockTables();
 		for (Map.Entry<ItemType, StockTable> stocktable : stocktables.entrySet()) {
 			for (Map.Entry<ItemType, Integer> itemset : loot.entrySet()) {
 				if (stocktable.getKey().equals(itemset.getKey())) {
-					stocktable.getValue().addStock((int) itemset.getValue());
+					stocktable.getValue().addStock(itemset.getValue());
 				}
 			}
 		}
@@ -82,16 +80,12 @@ public class MarketEntity extends Entity {
 	public boolean cell(AutDirection direction, AutCategory category) {
 		AutDirection newDirection = convertRelativToAbsolutedir(direction);
 		for (Entity entity : parentScene.entityList) {
-			switch (newDirection) {
-			case H: {
+			if (newDirection == AutDirection.H) {
 				if (this.carInsideThisPos(entity) == category) {
 					return true;
 				}
-				break;
-			}
-			default:
+			} else {
 				super.cell(direction, category);
-				break;
 			}
 		}
 		return false;

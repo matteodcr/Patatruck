@@ -6,11 +6,9 @@ import info3.game.position.PositionF;
 public interface Physics {
 
 	/**
-	 * 
 	 * @param absoluteDir
-	 * @param elapsed     time in ms
 	 */
-	public void addForce(AutDirection absoluteDir);
+	void addForce(AutDirection absoluteDir);
 
 	/**
 	 * Returns a PositionF which corresponds to the shift the entity has to do
@@ -18,48 +16,48 @@ public interface Physics {
 	 * @param
 	 * @return
 	 */
-	public PositionF shift();
+	PositionF shift();
 
 	/**
 	 * Reset acc and vel and moves back by the same amount as the last change
 	 * 
 	 * 
 	 */
-	public PositionF bounce();
+	PositionF bounce();
 
 	/**
 	 * returns the velocity but updated to a certain frequency
 	 * 
 	 * @return
 	 */
-	public int getVelocity();
+	int getVelocity();
 
-	public int getInRealTimeVelocity();
+	int getInRealTimeVelocity();
 
-	public double getAccX();
+	double getAccX();
 
-	public double getAccY();
+	double getAccY();
 
-	public double getVelX();
+	double getVelX();
 
-	public double getVelY();
+	double getVelY();
 
-	public double getMaxVel();
+	double getMaxVel();
 
-	public double getAvgVelBuff();
+	double getAvgVelBuff();
 
-	public double getAvgVel();
+	double getAvgVel();
 
-	public int getTimerVel();
+	int getTimerVel();
 
-	public int getTimerMaxVel();
+	int getTimerMaxVel();
 
-	public PositionF getLastPosChange();
+	PositionF getLastPosChange();
 
 	/*
 	 * reinitialize acceleration and reduces speed if no key is pressed
 	 */
 	void removeForce();
 
-	public void stop();
+	void stop();
 }

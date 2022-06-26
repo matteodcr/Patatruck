@@ -11,17 +11,17 @@ import info3.game.position.PositionI;
 
 public abstract class Scene {
 
-	public Game m_game;
+	public final Game game;
 
 	public static final int MAXIMUM_ENTITIES = 30;
 
 	protected final int pixelWidth, pixelHeight;
-	public ArrayList<Entity> entityList = new ArrayList<>();
+	public final ArrayList<Entity> entityList = new ArrayList<>();
 
 	public Scene(int pixelWidth, int pixelHeight, Game g) {
 		this.pixelWidth = pixelWidth;
 		this.pixelHeight = pixelHeight;
-		m_game = g;
+		game = g;
 	}
 
 	public boolean addEntity(Entity entity) {
@@ -33,7 +33,7 @@ public abstract class Scene {
 	}
 
 	public void tick(long elapsed) {
-		ArrayList<Entity> entityListBuffered = new ArrayList<Entity>(entityList);
+		ArrayList<Entity> entityListBuffered = new ArrayList<>(entityList);
 		for (Entity entity : entityListBuffered) {
 			entity.tick(elapsed);
 		}

@@ -23,13 +23,12 @@ package info3.game;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
-import java.util.HashMap;
 import java.util.HashSet;
 
 import info3.game.graphics.GameCanvasListener;
 
 public class CanvasListener implements GameCanvasListener {
-	Game m_game;
+	final Game game;
 
 	private static final int VK_ENTER = '\n';
 	private static final int VK_ESCAPE = 0x1B;
@@ -46,23 +45,10 @@ public class CanvasListener implements GameCanvasListener {
 
 	private boolean spaceUsed = false, escapeUsed = false, enterUsed = false, gUsed = false;
 
-	public HashSet<Integer> keyboard = new HashSet<>();
-	private HashMap<Integer, String> dico = new HashMap<>(); // Only necessary for the debug in the console
+	public final HashSet<Integer> keyboard = new HashSet<>();
 
 	CanvasListener(Game game) {
-		m_game = game;
-		dico.put((int) '\n', "ENTER");
-		dico.put(0x1B, "ESCAPE");
-		dico.put(0x20, "SPACE");
-		dico.put(0x25, "LEFT");
-		dico.put(0x26, "UP");
-		dico.put(0x27, "RIGHT");
-		dico.put(0x28, "DOWN");
-		dico.put(0x5A, "Z");
-		dico.put(0x51, "Q");
-		dico.put(0x53, "S");
-		dico.put(0x44, "D");
-		dico.put(0x47, "G");
+		this.game = game;
 	}
 
 	public boolean isUp(String name) {
@@ -122,77 +108,38 @@ public class CanvasListener implements GameCanvasListener {
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		/*
-		 * System.out.println("Mouse clicked: (" + e.getX() + "," + e.getY() + ")");
-		 * System.out.println("   modifiers=" + e.getModifiersEx());
-		 * System.out.println("   buttons=" + e.getButton());
-		 */
 	}
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		/*
-		 * System.out.println("Mouse pressed: (" + e.getX() + "," + e.getY() + ")");
-		 * System.out.println("   modifiers=" + e.getModifiersEx());
-		 * System.out.println("   buttons=" + e.getButton());
-		 */
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		/*
-		 * System.out.println("Mouse released: (" + e.getX() + "," + e.getY() + ")");
-		 * System.out.println("   modifiers=" + e.getModifiersEx());
-		 * System.out.println("   buttons=" + e.getButton());
-		 */
 	}
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
-		/*
-		 * System.out.println("Mouse entered: (" + e.getX() + "," + e.getY() + ")");
-		 * System.out.println("   modifiers=" + e.getModifiersEx());
-		 * System.out.println("   buttons=" + e.getButton());
-		 */
 	}
 
 	@Override
 	public void mouseExited(MouseEvent e) {
-		/*
-		 * System.out.println("Mouse exited: (" + e.getX() + "," + e.getY() + ")");
-		 * System.out.println("   modifiers=" + e.getModifiersEx());
-		 * System.out.println("   buttons=" + e.getButton());
-		 */
 	}
 
 	@Override
 	public void mouseDragged(MouseEvent e) {
-		/*
-		 * System.out.println("Mouse dragged: (" + e.getX() + "," + e.getY() + ")");
-		 * System.out.println("   modifiers=" + e.getModifiersEx());
-		 * System.out.println("   buttons=" + e.getButton());
-		 */
 	}
 
 	@Override
 	public void mouseMoved(MouseEvent e) {
-		/*
-		 * System.out.println("Mouse moved: (" + e.getX() + "," + e.getY() + ")");
-		 * System.out.println("   modifiers=" + e.getModifiersEx());
-		 * System.out.println("   buttons=" + e.getButton());
-		 */
 	}
 
 	@Override
 	public void keyTyped(KeyEvent e) {
-		// System.out.println("Key typed: " + e.getKeyChar() + " code=" +
-		// e.getKeyCode());
 	}
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		// System.out.println("Key pressed: " + e.getKeyChar() + " code=" +
-		// e.getKeyCode());
 		keyboard.add(e.getKeyCode());
 		if (e.getKeyCode() == VK_ENTER) {
 			enterUsed = false;
@@ -206,13 +153,10 @@ public class CanvasListener implements GameCanvasListener {
 		if (e.getKeyCode() == VK_G) {
 			gUsed = false;
 		}
-		// printKeyboard();
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-		// System.out.println("Key released: " + e.getKeyChar() + " code=" +
-		// e.getKeyCode());
 		keyboard.remove(e.getKeyCode());
 		if (e.getKeyCode() == VK_ENTER) {
 			enterUsed = false;
@@ -226,61 +170,43 @@ public class CanvasListener implements GameCanvasListener {
 		if (e.getKeyCode() == VK_G) {
 			gUsed = false;
 		}
-		// printKeyboard();
-	}
-
-	public void printKeyboard() {
-		boolean hasToPrint = true;
-		for (Object o : keyboard) {
-			if (dico.get(o) != null) {
-				if (hasToPrint) {
-					System.out.print("Keyboard :");
-					hasToPrint = false;
-				}
-				System.out.print(" " + dico.get(o));
-			}
-		}
-		if (!hasToPrint) {
-			System.out.println("");
-		}
 	}
 
 	@Override
 	public void tick(long elapsed) {
-		m_game.tick(elapsed);
+		game.tick(elapsed);
 	}
 
 	@Override
 	public void paint(Graphics g) {
-		m_game.paint(g);
+		game.paint(g);
 	}
 
 	@Override
 	public void windowOpened() {
-		m_game.loadMusic();
-//    m_game.m_canvas.setTimer(6000);
+		game.loadMusic();
 	}
 
 	@Override
 	public void exit() {
 	}
 
-	boolean m_expired;
+	boolean expired;
 
 	@Override
 	public void endOfPlay(String name) {
-		m_game.currentSounds.remove(name);
-		if (m_expired) // only reload if it was a forced reload by timer
-			m_game.loadMusic();
-		m_expired = false;
+		game.currentSounds.remove(name);
+		if (expired) // only reload if it was a forced reload by timer
+			game.loadMusic();
+		expired = false;
 	}
 
 	@Override
 	public void expired() {
 		// will force a change of music, after 6s of play
 		System.out.println("Forcing an ealy change of music");
-		m_expired = true;
-		m_game.loadMusic();
+		expired = true;
+		game.loadMusic();
 	}
 
 }

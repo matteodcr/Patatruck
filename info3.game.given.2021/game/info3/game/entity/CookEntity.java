@@ -1,7 +1,5 @@
 package info3.game.entity;
 
-import java.io.IOException;
-
 import info3.game.content.Assembly;
 import info3.game.content.Item;
 import info3.game.graphics.Graphics;
@@ -14,18 +12,16 @@ import info3.game.scene.Scene;
 
 public class CookEntity extends Entity {
 	private boolean usePopSprite = false;
-	private int timerPopSprite = 0, maxTimerPopSprite = 6;
-	long m_imageElapsed;
-	long m_moveElapsed;
-	int m_imageIndex;
-	Assembly m_assembly;
+	private int timerPopSprite = 0;
+	private final int maxTimerPopSprite = 6;
+	final Assembly assembly;
 
 	public Item item;
 
-	public CookEntity(Scene parent, PositionF position) throws IOException {
+	public CookEntity(Scene parent, PositionF position) {
 		super(parent, position);
 		category = AutCategory.AROBASE;
-		m_assembly = new Assembly();
+		assembly = new Assembly();
 		this.timerToWait = 200;
 	}
 
@@ -50,19 +46,19 @@ public class CookEntity extends Entity {
 	@Override
 	public void render(Graphics g) {
 
-		if (m_direction == AutDirection.N) {
+		if (direction == AutDirection.N) {
 			if (usePopSprite)
 				g.drawSprite(Sprite.PLAYER_POP_N, 0, 0);
 			else
 				g.drawSprite(Sprite.PLAYER_KITCHEN_N, 0, 0);
 
-		} else if (m_direction == AutDirection.E) {
+		} else if (direction == AutDirection.E) {
 			if (usePopSprite)
 				g.drawSprite(Sprite.PLAYER_POP_E, 0, 0);
 			else
 				g.drawSprite(Sprite.PLAYER_KITCHEN_E, 0, 0);
 
-		} else if (m_direction == AutDirection.W) {
+		} else if (direction == AutDirection.W) {
 			if (usePopSprite)
 				g.drawSprite(Sprite.PLAYER_POP_W, 0, 0);
 			else
@@ -75,8 +71,8 @@ public class CookEntity extends Entity {
 				g.drawSprite(Sprite.PLAYER_KITCHEN_S, 0, 0);
 
 		}
-		if (m_assembly.getItems().size() >= 1) {
-			RenderUtils.drawItem(g, m_assembly.getItems().get(0), 0, 0);
+		if (assembly.getItems().size() >= 1) {
+			RenderUtils.drawItem(g, assembly.getItems().get(0), 0, 0);
 		}
 	}
 
@@ -89,7 +85,7 @@ public class CookEntity extends Entity {
 
 	@Override
 	public boolean wizz(AutDirection direction) {
-		parentScene.m_game.playSound("footstep3");
+		parentScene.game.playSound("footstep3");
 		move(direction);
 		return false;
 	}
@@ -97,12 +93,8 @@ public class CookEntity extends Entity {
 	@Override
 	public boolean egg(AutDirection direction) {
 		if (parentScene.entityList.size() <= Scene.MAXIMUM_ENTITIES) {
-			Entity newEntity = null;
-			try {
-				newEntity = new CookEntity(this.parentScene, position);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+			Entity newEntity;
+			newEntity = new CookEntity(this.parentScene, position);
 			return this.parentScene.addEntity(newEntity);
 		}
 		return false;
@@ -110,13 +102,13 @@ public class CookEntity extends Entity {
 
 	@Override
 	public boolean gotStuff() {
-		return (this.item != null || this.m_assembly != null);
+		return (this.item != null || this.assembly != null);
 	}
 
 	@Override
 	public boolean cell(AutDirection direction, AutCategory category) {
 		boolean c = super.cell(direction, category);
-		m_direction = direction;
+		this.direction = direction;
 		return c;
 	}
 }

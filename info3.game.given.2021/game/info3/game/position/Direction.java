@@ -5,12 +5,12 @@ public enum Direction {
 		@Override
 		public Direction next() {
 			return null; // see below for options for this line
-		};
+		}
 
 		@Override
 		public Direction previous() {
 			return null; // see below for options for this line
-		};
+		}
 
 	};
 

@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GState {
-	public List<GTransition> transitions;
-	public String name;
+	public final List<GTransition> transitions;
+	public final String name;
 
 	public GState(List<GTransition> transitions, String name) {
 		this.transitions = transitions;
@@ -13,8 +13,7 @@ public class GState {
 	}
 
 	public GState(String name) {
-		this.transitions = new ArrayList<GTransition>();
-		this.name = name;
+		this(new ArrayList<>(), name);
 	}
 
 	public void addTransition(GTransition transition) {

@@ -5,15 +5,15 @@ public enum AutDirection {
 		@Override
 		public AutDirection next() {
 			return null; //
-		};
+		}
 
 		public AutDirection previous() {
 			return null;
-		};
+		}
 
 		public AutDirection twoapart() {
 			return null;
-		};
+		}
 
 	};
 

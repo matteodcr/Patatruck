@@ -38,12 +38,12 @@ public class CityTile extends Tile {
 				&& !((CityScene) parentScene).cacheMarketVisited.contains(new PositionI(gridX, gridY)))
 			eMarketStall = new MarketEntity(parent, position, this);
 
-		if (genTile.hasMarketPaving == true) {
+		if (genTile.hasMarketPaving) {
 			Random rng = new Random();
-			stallSprite = Sprite.STALLS_[rng.nextInt(Sprite.STALLS_.length)];
-			stallSprite2 = Sprite.STALLS_[rng.nextInt(Sprite.STALLS_.length)];
-			stallSprite3 = Sprite.STALLS_[rng.nextInt(Sprite.STALLS_.length)];
-			stallSprite4 = Sprite.STALLS_[rng.nextInt(Sprite.STALLS_.length)];
+			stallSprite = Sprite.STALLS[rng.nextInt(Sprite.STALLS.length)];
+			stallSprite2 = Sprite.STALLS[rng.nextInt(Sprite.STALLS.length)];
+			stallSprite3 = Sprite.STALLS[rng.nextInt(Sprite.STALLS.length)];
+			stallSprite4 = Sprite.STALLS[rng.nextInt(Sprite.STALLS.length)];
 		}
 	}
 
@@ -75,14 +75,14 @@ public class CityTile extends Tile {
 		if (leftRoadSprite != null) {
 			g.drawSprite(leftRoadSprite, 0, 0);
 		}
-		if (genTile.speedbumpTop == true) {
+		if (genTile.speedbumpTop) {
 			g.drawSprite(Sprite.CITY_SPEEDBUMP_TOP, 0, 0);
 		}
 
-		if (genTile.speedbumpLeft == true) {
+		if (genTile.speedbumpLeft) {
 			g.drawSprite(Sprite.CITY_SPEEDBUMP_LEFT, 0, 0);
 		}
-		if (genTile.hasMarketPaving == true) {
+		if (genTile.hasMarketPaving) {
 			g.drawSprite(stallSprite, 0, 0);
 			g.drawSprite(stallSprite2, 15, 5);
 			g.drawSprite(stallSprite3, 5, 5);

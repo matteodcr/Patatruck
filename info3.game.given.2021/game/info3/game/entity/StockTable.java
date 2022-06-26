@@ -13,6 +13,8 @@ public class StockTable extends KitchenTile {
 	int stock;
 	Sprite stockItem, background = Sprite.STOCK_TABLE;
 	boolean empty;
+	private boolean onWizz = false;
+	private int timerWizz = 0, maxTimerWizz = 10;
 
 	public StockTable(Scene parent, int gridX, int gridY, AutDirection d, Item item, Sprite stockItem) {
 		super(parent, gridX, gridY, null, d);
@@ -75,7 +77,20 @@ public class StockTable extends KitchenTile {
 	}
 
 	@Override
+	public void tick(long elapsed) {
+		super.tick(elapsed);
+		if (onWizz) {
+			timerWizz++;
+			if (timerWizz == maxTimerWizz) {
+				timerWizz = 0;
+				onWizz = false;
+			}
+		}
+	}
+
+	@Override
 	public boolean wizz(AutDirection direction) {
+		onWizz = true;
 		return true;
 	}
 
@@ -92,6 +107,8 @@ public class StockTable extends KitchenTile {
 		g.drawSprite(m_direction == AutDirection.S ? Sprite.STOCK_TABLE : Sprite.STOCK_TABLE_N, 0, 0);
 		if (!empty)
 			g.drawSprite(this.stockItem, 0, 0);
+		if (onWizz)
+			g.drawSprite(Sprite.STOCKTABLE_WIZZ, 0, 0);
 
 		Sprite fullIndicator;
 		if (stock < FULL_INDICATOR_AMOUNTS.length) {

@@ -32,10 +32,11 @@ StockTable(Still){
 * (Still):
 | Cell(F,@) & Key(SPACE) ? Pop(F) :(Still)
 | Cell(F,A) ? Pop(F) : (Still)
-| !GotStuff() ? Wizz(F) :(Empty)
+| !GotStuff() ? :(Empty)
 
 * (Empty):
 | GotStuff() ? :(Full)
+| Cell(F,@) & Key(SPACE) ? Wizz(F) : (Empty)
 | True() ? :(Empty)
 }
 
@@ -53,7 +54,7 @@ BasicTable(Init){
 SauceTable(Still){
     *(Still) 
     |Key(SPACE) & Cell(F,@)? Wizz():(Still)
-    |True ? Pop() :(Still)
+    |Key(SPACE) & Cell(F,@)? 5%Pop():(Still)
 }
 
 CutTable(Init){

@@ -52,6 +52,10 @@ public class PositionF {
 		return new PositionF(this.x * tileWidth, this.y * tileWidth);
 	}
 
+	public double distance(PositionF position) {
+		return Math.hypot(position.x - x, position.y - y);
+	}
+
 	@Override
 	public String toString() {
 		return new String("(" + this.x + "," + this.y + ")");

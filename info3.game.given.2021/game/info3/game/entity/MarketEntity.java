@@ -53,6 +53,12 @@ public class MarketEntity extends Entity {
 
 	@Override
 	public boolean wizz(AutDirection direction) {
+		loot.clear();
+		int randomQuantity;
+		for (ItemType item : items) {
+			randomQuantity = (int) Math.random() * (MAX_QUANTITY - MIN_QUANTITY + 1) + MIN_QUANTITY;
+			loot.put(item, randomQuantity);
+		}
 		return true;
 	}
 

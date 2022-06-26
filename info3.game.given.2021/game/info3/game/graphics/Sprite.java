@@ -7,6 +7,7 @@ import static info3.game.graphics.Sprite.Spritesheet.CITY_ARROWS;
 import static info3.game.graphics.Sprite.Spritesheet.CLOCK_;
 import static info3.game.graphics.Sprite.Spritesheet.COCKROACH;
 import static info3.game.graphics.Sprite.Spritesheet.COCKROACH_POP;
+import static info3.game.graphics.Sprite.Spritesheet.CONES;
 import static info3.game.graphics.Sprite.Spritesheet.COOK;
 import static info3.game.graphics.Sprite.Spritesheet.COOK_END_;
 import static info3.game.graphics.Sprite.Spritesheet.DELIVERY_BLINK;
@@ -41,7 +42,8 @@ public enum Sprite {
 	BASICTABLE_E(KITCHENTILES, 0, 1, 1, 1), BASICTABLE_W(KITCHENTILES, 0, 0, 1, 1),
 	BASICTABLE_S(KITCHENTILES, 2, 0, 1, 1), DELIVERYTILE(KITCHENTILES, 2, 1, 1, 1), ORDER_CARD(MENU, 0, 0, 1, 1),
 	RECIPES(RECIPES_, 0, 0, 32, 9), CLOCK(CLOCK_, 0, 0, 1, 1), INDIC_MAYO_(MAYO_INDIC, 0, 0, 1, 1),
-	INDIC_KETCHUP_(KETCHUP_INDIC, 0, 0, 1, 1),
+	INDIC_KETCHUP_(KETCHUP_INDIC, 0, 0, 1, 1), SAUCE_TABLE_TILE_POP_KETCHUP(KITCHENTILES, 4, 0, 1, 1),
+	SAUCE_TABLE_TILE_POP_MAYO(KITCHENTILES, 5, 0, 1, 1), STOCKTABLE_WIZZ(KITCHENTILES, 4, 1, 1, 1),
 
 	// Kitchen stock table indicators
 	FULL_0(KITCHENTILES, 0, 4, 1, 1), FULL_1(KITCHENTILES, 1, 4, 1, 1), FULL_2(KITCHENTILES, 2, 4, 1, 1),
@@ -74,7 +76,7 @@ public enum Sprite {
 	BLUE_CAR_E(BLUE_CAR, 0, 1, 1, 1), BLUE_CAR_W(BLUE_CAR, 1, 1, 1, 1), RED_CAR_N(RED_CAR, 0, 0, 1, 1),
 	RED_CAR_S(RED_CAR, 1, 1, 1, 1), RED_CAR_E(RED_CAR, 1, 0, 1, 1), RED_CAR_W(RED_CAR, 0, 1, 1, 1),
 	YELLOW_CAR_N(YELLOW_CAR, 0, 0, 1, 1), YELLOW_CAR_S(YELLOW_CAR, 1, 0, 1, 1), YELLOW_CAR_E(YELLOW_CAR, 0, 1, 1, 1),
-	YELLOW_CAR_W(YELLOW_CAR, 1, 1, 1, 1),
+	YELLOW_CAR_W(YELLOW_CAR, 1, 1, 1, 1), CONE(CONES, 0, 0, 1, 1), CONE_WIZZ(CONES, 1, 0, 1, 1),
 
 	// City building sprites
 	CITY_SQUARE_1_SQUARE(CITY, 0, 0, 1, 1), CITY_SQUARE_1_ROUND(CITY, 0, 1, 1, 1),
@@ -139,7 +141,7 @@ public enum Sprite {
 		CITY("city.png", 20), CITYTRUCK("cityTruck.png", 13), SPEEDOMETER_("speedometer.png", 19),
 		SPEEDOMETER_LOW_("speedometerLow.png", 19), SPEEDOMETER_HIGH_("speedometerHigh.png", 19),
 		BLUE_CAR("blue_car.png", 4), RED_CAR("red_car.png", 4), YELLOW_CAR("yellow_car.png", 4),
-		DELIVERY_BLINK("city_delivery_frame.png", 20),
+		DELIVERY_BLINK("city_delivery_frame.png", 20), CONES("cone.png", 4),
 
 		// Other
 		AUTOMATON_SELECTION("automaton_selection.png", 16), CITY_ARROWS("city-arrows.png", 7),

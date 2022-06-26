@@ -9,6 +9,8 @@ import info3.game.scene.Scene;
 public class SauceTableTile extends KitchenTile {
 	Sauce sauce;
 	static final Sprite MAYO = Sprite.MAYONNAISE, KETCHUP = Sprite.KETCHUP;
+	private boolean onPop = false;
+	private int timerPop = 0, maxTimerPop = 20;
 
 	public SauceTableTile(Scene parent, int gridX, int gridY, AutDirection d, Sauce sauce) {
 		super(parent, gridX, gridY, null, d);
@@ -26,14 +28,26 @@ public class SauceTableTile extends KitchenTile {
 	}
 
 	@Override
+	public void tick(long elapsed) {
+		super.tick(elapsed);
+		if (onPop) {
+			timerPop++;
+			if (timerPop == maxTimerPop) {
+				timerPop = 0;
+				onPop = false;
+			}
+		}
+	}
+
+	@Override
 	public boolean pop(AutDirection direction) {
+		onPop = true;
 		return true;
 	}
 
 	@Override
 	public boolean wizz(AutDirection direction) {// mettre la sauce
 		Entity eInteracting = selectEntityToInteractWith();
-
 		if (eInteracting != null && eInteracting instanceof CookEntity) {
 			if (((CookEntity) eInteracting).m_assembly.getItems().size() == 0) {
 				return false;
@@ -47,7 +61,13 @@ public class SauceTableTile extends KitchenTile {
 
 	@Override
 	public void render(Graphics g) {
-		g.drawSprite(Sprite.SAUCE_TABLE_TILE, 0, 0);
+		if (onPop) {
+			if (this.defaultSprite == MAYO)
+				g.drawSprite(Sprite.SAUCE_TABLE_TILE_POP_MAYO, 0, 0);
+			else
+				g.drawSprite(Sprite.SAUCE_TABLE_TILE_POP_KETCHUP, 0, 0);
+		} else
+			g.drawSprite(Sprite.SAUCE_TABLE_TILE, 0, 0);
 		g.drawSprite(defaultSprite, 0, 0);
 	}
 

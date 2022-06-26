@@ -1,6 +1,9 @@
 # GPI & PLA : Le Patatruck
 
+
 [![Gitlab](https://img.shields.io/badge/gitlab-patatruck-orange)](https://gricad-gitlab.univ-grenoble-alpes.fr/PROJET_INFO3/G1/patatruck) [![Journal](https://img.shields.io/badge/-journal-yellow)](https://md.edgar.bzh/W73jFYvDSKieoC6HSvxMvg)
+
+Le lien de la vidéo de présentation du projet patatruck : [https://www.youtube.com/watch?v=2yxyX45a8iQ](https://www.youtube.com/watch?v=2yxyX45a8iQ)
 
 [UML & Doc technique interne](https://md.edgar.bzh/s/LQ3jRvNxH#)
 

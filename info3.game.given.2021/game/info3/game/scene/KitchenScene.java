@@ -196,6 +196,13 @@ public class KitchenScene extends Scene {
 		return stockTables;
 	}
 
+	public void addRandomItem() {
+		Random rdm = new Random();
+		PositionF pos = indexStockEmplacements.get(rdm.nextInt(indexStockEmplacements.size()));
+		StockTable toAdd = (StockTable) (Entity) kitchenGrid[(int) pos.getX()][(int) pos.getY()];
+		toAdd.addStock(2);
+	}
+
 	/**
 	 * Affiche le fond ou la liste des recettes si la touche [ESC] est enclenchée
 	 *

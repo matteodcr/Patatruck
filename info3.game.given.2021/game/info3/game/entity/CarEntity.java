@@ -384,6 +384,8 @@ public class CarEntity extends Entity {
 		this.start = System.currentTimeMillis();
 		carentity.start = System.currentTimeMillis();
 
+		((KitchenScene) ((GameScreen) this.parentScene.m_game.getScreen()).getKitchenScene()).addRandomItem();
+
 	}
 
 }

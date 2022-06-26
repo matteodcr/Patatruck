@@ -149,7 +149,7 @@ public enum Sprite {
 
 		// Other
 		AUTOMATON_SELECTION("automaton_selection.png", 16), CITY_ARROWS("city-arrows.png", 7),
-		COOK_END_("cook_end.png", 20);
+		COOK_END_("cook_end.png", 20), STALLS("stalls.png", 8);
 
 		public final String filename;
 		public final int tileSize;

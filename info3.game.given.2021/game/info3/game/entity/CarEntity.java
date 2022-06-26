@@ -140,7 +140,7 @@ public class CarEntity extends Entity {
 
 	@Override
 	public boolean pop(AutDirection direction) {
-		if (!swapInThisTick && isPlayer && ((CarEntity) entityEncountered).isTruck) {
+		if (!swapInThisTick && isPlayer && entityEncountered != null && ((CarEntity) entityEncountered).isTruck) {
 			parentScene.m_game.playSound("woosh");
 			this.swap((CarEntity) entityEncountered);
 			start = System.currentTimeMillis();

@@ -73,7 +73,7 @@ CutTable(Init){
 
 DeliveryTable(Init){
      *(Init)
-    |GotPower() ? Hit:(Presswait) 
+    |GotPower() ? Hit:(Init) 
     |GotStuff() & Cell(F,@) & Key(SPACE) ? Pop:(Presswait)  
     |Cell(F,@) & Key(SPACE) ? Wizz:(Presswait)       
     |True ?    :(Init)   

@@ -28,14 +28,9 @@ public class CityScene extends Scene {
 	public final WorldGenerator worldGenerator = new WorldGenerator(0);
 	private CarEntity cookCar;
 
-	// Pointing arrows's sprite and position
-	private Sprite deliveryArrowSprite = Sprite.DELIVERY_DOWN_ARROW;
-	private PositionF deliveryArrowPos = new PositionF(-10, -10);
-	private Sprite marketArrowSprite = Sprite.MARKET_DOWN_ARROW;
-	private PositionF marketArrowPos = new PositionF(-10, -10);
 	// Finding nearest market is costly in performance, so we do not want to call it
 	// on every tick
-	private PositionF nearestMarketPos = new PositionF(0, 0);
+	private PositionI nearestMarketPos = new PositionI(0, 0);
 	private int count = 0;
 	private Map<PositionI, CityTile> cachedCityTiles;
 
@@ -61,10 +56,7 @@ public class CityScene extends Scene {
 			count = 0;
 		}
 
-		this.updateArrow();
 		removeUnusedTilesInCache();
-		this.updateMarketArrow();
-		this.updateDeliveryArrow();
 	}
 
 	@Override
@@ -184,11 +176,11 @@ public class CityScene extends Scene {
 			speed = Sprite.SPEEDOMETER_HIGH;
 		}
 		g.drawSprite(speed, 2, 0);
-		g.drawSprite(deliveryArrowSprite, deliveryArrowPos.getX(), deliveryArrowPos.getY());
-		g.drawSprite(marketArrowSprite, marketArrowPos.getX(), marketArrowPos.getY());
 		deliveryTile.render(g);
 		g.drawText(cookCar.physics.getVelocity() + "", Align.CENTER, 12, 18);
 
+		renderArrow(g, nearestMarketPos.toFloat().mul(getTileWidth()), Sprite.CITY_ARROWS_MARKET);
+		renderArrow(g, deliveryTile.getPosition(), Sprite.CITY_ARROWS_DELIVERY);
 	}
 
 	/* Visuellement la fenêtre le van n'est PAS en 0,0 mais en center */
@@ -221,105 +213,54 @@ public class CityScene extends Scene {
 
 	}
 
-	private PositionF getNearestMarketPos() {
+	private PositionI getNearestMarketPos() {
 		PositionI cookCarCell = cookCar.getPosition().divFloor(20);
 		worldGenerator.markMarketAsSeen(cookCarCell.getX(), cookCarCell.getY());
 
 		LocatedMarket market = worldGenerator.locateMarkets(cookCarCell.getX(), cookCarCell.getY()).findFirst().get();
-		return new PositionF(market.x, market.y);
+		return new PositionI(market.x, market.y);
 	}
 
-	public void updateDeliveryArrow() {
-		float xCar = cookCar.getPosition().getX();
-		float yCar = cookCar.getPosition().getY();
-		float xTile = deliveryTile.getPosition().getX();
-		float yTile = deliveryTile.getPosition().getY();
+	public void renderArrow(Graphics g, PositionF pixelPos, Sprite[] arrow) {
+		final float xCar = cookCar.getPosition().getX();
+		final float yCar = cookCar.getPosition().getY();
+		final int xTile = (int) pixelPos.getX();
+		final int yTile = (int) pixelPos.getY();
 
-		if (yTile < yCar - pixelHeight / 2) {
-			if (xTile > xCar + pixelWidth / 2) {
-				deliveryArrowSprite = Sprite.DELIVERY_UPRIGHT_ARROW;
-				deliveryArrowPos = new PositionF(pixelWidth - 10, 0);
-			} else if (xTile < xCar - pixelWidth / 2) {
-				deliveryArrowSprite = Sprite.DELIVERY_UPLEFT_ARROW;
-				deliveryArrowPos = new PositionF(0, 0);
+		int centerW = pixelWidth / 2, centerH = pixelHeight / 2;
+		float absX = Math.abs(xTile - (xCar - centerW));
+		float absY = Math.abs(yTile - yCar + centerH);
+
+		if (yTile < yCar - centerH) {
+			if (xTile > xCar + centerW) {
+				g.drawSprite(arrow[1], pixelWidth - 7, 0);
+			} else if (xTile < xCar - centerW) {
+				g.drawSprite(arrow[7], 0, 0);
 			} else {
-				deliveryArrowSprite = Sprite.DELIVERY_UP_ARROW;
-				deliveryArrowPos = new PositionF(Math.abs(xTile - (xCar - pixelWidth / 2)), 0);
+				g.drawSprite(arrow[0], absX, 0);
 			}
 		}
 
-		else if (yTile > yCar + pixelHeight / 2) {
-			if (xTile > xCar + pixelWidth / 2) {
-				deliveryArrowSprite = Sprite.DELIVERY_DOWNRIGHT_ARROW;
-				deliveryArrowPos = new PositionF(pixelWidth - 10, pixelHeight - 15);
-			} else if (xTile < xCar - pixelWidth / 2) {
-				deliveryArrowSprite = Sprite.DELIVERY_DOWNLEFT_ARROW;
-				deliveryArrowPos = new PositionF(0, pixelHeight - 15);
+		else if (yTile > yCar + centerH) {
+			if (xTile > xCar + centerW) {
+				g.drawSprite(arrow[3], pixelWidth - 7, pixelHeight - 14);
+			} else if (xTile < xCar - centerW) {
+				g.drawSprite(arrow[5], 0, pixelHeight - 14);
 			} else {
-				deliveryArrowSprite = Sprite.DELIVERY_DOWN_ARROW;
-				deliveryArrowPos = new PositionF(Math.abs(xTile - (xCar - pixelWidth / 2)), pixelHeight - 15);
+				g.drawSprite(arrow[4], absX, pixelHeight - 14);
 			}
 		}
 
-		else if (xTile > xCar + pixelWidth / 2) {
-			deliveryArrowSprite = Sprite.DELIVERY_RIGHT_ARROW;
-			deliveryArrowPos = new PositionF(pixelWidth - 10, Math.abs(yTile - yCar + pixelHeight / 2));
+		else if (xTile > xCar + centerW) {
+			g.drawSprite(arrow[2], pixelWidth - 7, absY);
 		}
 
-		else if (xTile < xCar - pixelWidth / 2) {
-			deliveryArrowSprite = Sprite.DELIVERY_LEFT_ARROW;
-			deliveryArrowPos = new PositionF(0, Math.abs(yTile - yCar + pixelHeight / 2));
-		} else {
-			deliveryArrowSprite = Sprite.DELIVERY_DOWN_ARROW;
-			deliveryArrowPos = new PositionF(-10, -10);
-		}
-	}
-
-	public void updateMarketArrow() {
-		float xCar = cookCar.getPosition().getX();
-		float yCar = cookCar.getPosition().getY();
-		float xMarket = nearestMarketPos.getX() * 20;
-		float yMarket = nearestMarketPos.getY() * 20;
-
-		float abs = Math.abs(xMarket - (xCar - pixelWidth / 2));
-
-		if (yMarket < yCar - pixelHeight / 2) {
-			if (xMarket > xCar + pixelWidth / 2) {
-				marketArrowSprite = Sprite.MARKET_UPRIGHT_ARROW;
-				marketArrowPos = new PositionF(pixelWidth - 10, 0);
-			} else if (xMarket < xCar - pixelWidth / 2) {
-				marketArrowSprite = Sprite.MARKET_UPLEFT_ARROW;
-				marketArrowPos = new PositionF(0, 0);
-			} else {
-				marketArrowSprite = Sprite.MARKET_UP_ARROW;
-				marketArrowPos = new PositionF(abs, 0);
-			}
+		else if (xTile < xCar - centerW) {
+			g.drawSprite(arrow[6], 0, absY);
 		}
 
-		else if (yMarket > yCar + pixelHeight / 2) {
-			if (xMarket > xCar + pixelWidth / 2) {
-				marketArrowSprite = Sprite.MARKET_DOWNRIGHT_ARROW;
-				marketArrowPos = new PositionF(pixelWidth - 10, pixelHeight - 15);
-			} else if (xMarket < xCar - pixelWidth / 2) {
-				marketArrowSprite = Sprite.MARKET_DOWNLEFT_ARROW;
-				marketArrowPos = new PositionF(0, pixelHeight - 15);
-			} else {
-				marketArrowSprite = Sprite.MARKET_DOWN_ARROW;
-				marketArrowPos = new PositionF(abs, pixelHeight - 15);
-			}
-		}
-
-		else if (xMarket > xCar + pixelWidth / 2) {
-			marketArrowSprite = Sprite.MARKET_RIGHT_ARROW;
-			marketArrowPos = new PositionF(pixelWidth - 10, Math.abs(yMarket - yCar + pixelHeight / 2));
-		}
-
-		else if (xMarket < xCar - pixelWidth / 2) {
-			marketArrowSprite = Sprite.MARKET_LEFT_ARROW;
-			marketArrowPos = new PositionF(0, Math.abs(yMarket - yCar + pixelHeight / 2));
-		} else {
-			marketArrowSprite = Sprite.MARKET_DOWN_ARROW;
-			marketArrowPos = new PositionF(-10, -10);
+		else {
+			g.drawSprite(arrow[4], -10, -10);
 		}
 	}
 

@@ -39,4 +39,5 @@ public class GameScreen extends Screen {
 		kitchenScene.render(g.window(0, 0, g.getWidth(), half));
 		cityScene.render(g.window(0, half, g.getWidth(), half));
 	}
+
 }

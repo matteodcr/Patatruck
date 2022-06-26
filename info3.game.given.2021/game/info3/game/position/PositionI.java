@@ -29,6 +29,10 @@ public final class PositionI {
 		return new PositionI(this.x + b.x, this.y + b.y);
 	}
 
+	public PositionI sub(PositionI b) {
+		return new PositionI(this.x - b.x, this.y - b.y);
+	}
+
 	public PositionI neg() {
 		return new PositionI(-x, -y);
 	}

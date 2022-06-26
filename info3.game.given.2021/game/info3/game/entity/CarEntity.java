@@ -17,6 +17,7 @@ public class CarEntity extends Entity {
 	private boolean swapInThisTick;
 	private Entity entityEncountered;
 	public Physics physics = new PhysicsClassic(15);
+	public boolean shuffleOnCooldown; // only for player controlled car
 	boolean isClassicPhysic = true;
 	// TODO Deplacer hitbox hardocdé et methode de collision (champ ou classe pr pos
 	// bas a droite de l'entite (sinon on garde comme ça si ttes les entites = 4x4)
@@ -28,6 +29,7 @@ public class CarEntity extends Entity {
 		this.isPlayer = isPlayer;
 		changeCategory();
 		this.swapInThisTick = false;
+		shuffleOnCooldown = false;
 	}
 
 	public boolean canDeliver() {
@@ -164,6 +166,37 @@ public class CarEntity extends Entity {
 	public boolean hit(AutDirection direction) {
 		this.position = this.position.add(physics.bounce());
 		return true;
+	}
+
+	@Override
+	public boolean protect(AutDirection direction) {
+		AutDirection newDirection = convertRelativToAbsolutedir(direction);
+		m_direction = newDirection;
+		switch (newDirection) {
+		case N: {
+			PositionF newPos = new PositionF(0, -0.5f);
+			this.position = position.add(newPos);
+			return true;
+		}
+		case W: {
+			PositionF newPos = new PositionF(-0.5f, 0);
+			this.position = position.add(newPos);
+
+			return true;
+		}
+		case E: {
+			PositionF newPos = new PositionF(0.5f, 0);
+			this.position = position.add(newPos);
+			return true;
+		}
+		case S: {
+			PositionF newPos = new PositionF(0, 0.5f);
+			this.position = position.add(newPos);
+			return true;
+		}
+		default:
+			return false;
+		}
 	}
 
 	@Override

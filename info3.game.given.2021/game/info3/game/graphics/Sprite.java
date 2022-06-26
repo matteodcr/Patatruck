@@ -22,9 +22,6 @@ import static info3.game.graphics.Sprite.Spritesheet.MENU;
 import static info3.game.graphics.Sprite.Spritesheet.RECIPES_;
 import static info3.game.graphics.Sprite.Spritesheet.RED_CAR;
 import static info3.game.graphics.Sprite.Spritesheet.SAUCES;
-import static info3.game.graphics.Sprite.Spritesheet.SPEEDOMETER_;
-import static info3.game.graphics.Sprite.Spritesheet.SPEEDOMETER_HIGH_;
-import static info3.game.graphics.Sprite.Spritesheet.SPEEDOMETER_LOW_;
 import static info3.game.graphics.Sprite.Spritesheet.YELLOW_CAR;
 
 public enum Sprite {
@@ -89,11 +86,9 @@ public enum Sprite {
 	CITY_BAR_3_HORIZ_ROUNDED(CITY, 0, 7, 3, 1), CITY_SQUARE_2_SQUARE(CITY, 6, 0, 2, 2),
 	CITY_SQUARE_2_DENTED(CITY, 6, 2, 2, 2), CITY_SQUARE_2_BISCUIT(CITY, 6, 4, 2, 2), CITY_CORNER_BR(CITY, 12, 0, 2, 2),
 	CITY_CORNER_TL(CITY, 12, 4, 2, 2), CITY_CORNER_BL(CITY, 12, 2, 2, 2), CITY_CORNER_TR(CITY, 12, 6, 2, 2),
-	SPEEDOMETER(SPEEDOMETER_, 0, 0, 1, 1), SPEEDOMETER_LOW(SPEEDOMETER_LOW_, 0, 0, 1, 1),
-	SPEEDOMETER_HIGH(SPEEDOMETER_HIGH_, 0, 0, 1, 1), CITY_MARKET_CROSSING(CITY, 0, 8, 1, 1),
-	CITY_MARKET_T(CITY, 1, 8, 1, 1), CITY_MARKET_L(CITY, 2, 8, 1, 1), CITY_MARKET_TR(CITY, 3, 8, 1, 1),
-	CITY_MARKET_LB(CITY, 4, 8, 1, 1), CITY_MARKET_TL(CITY, 5, 8, 1, 1), CITY_MARKET_LT(CITY, 6, 8, 1, 1),
-	CITY_SPEEDBUMP_TOP(CITY, 0, 9, 1, 1), CITY_SPEEDBUMP_LEFT(CITY, 1, 9, 1, 1),
+	CITY_MARKET_CROSSING(CITY, 0, 8, 1, 1), CITY_MARKET_T(CITY, 1, 8, 1, 1), CITY_MARKET_L(CITY, 2, 8, 1, 1),
+	CITY_MARKET_TR(CITY, 3, 8, 1, 1), CITY_MARKET_LB(CITY, 4, 8, 1, 1), CITY_MARKET_TL(CITY, 5, 8, 1, 1),
+	CITY_MARKET_LT(CITY, 6, 8, 1, 1), CITY_SPEEDBUMP_TOP(CITY, 0, 9, 1, 1), CITY_SPEEDBUMP_LEFT(CITY, 1, 9, 1, 1),
 
 	// City direction arrows sprites
 	MARKET_LEFT_ARROW(CITY_ARROWS, 0, 0, 1, 1), MARKET_UP_ARROW(CITY_ARROWS, 1, 0, 1, 1),
@@ -149,10 +144,8 @@ public enum Sprite {
 		SAUCES("sauces.png", 13),
 
 		// City
-		CITY("city.png", 20), CITYTRUCK("cityTruck.png", 13), SPEEDOMETER_("speedometer.png", 19),
-		SPEEDOMETER_LOW_("speedometerLow.png", 19), SPEEDOMETER_HIGH_("speedometerHigh.png", 19),
-		BLUE_CAR("blue_car.png", 4), RED_CAR("red_car.png", 4), YELLOW_CAR("yellow_car.png", 4),
-		DELIVERY_BLINK("city_delivery_frame.png", 20), CONES("cone.png", 4),
+		CITY("city.png", 20), CITYTRUCK("cityTruck.png", 13), BLUE_CAR("blue_car.png", 4), RED_CAR("red_car.png", 4),
+		YELLOW_CAR("yellow_car.png", 4), DELIVERY_BLINK("city_delivery_frame.png", 20), CONES("cone.png", 4),
 
 		// Other
 		AUTOMATON_SELECTION("automaton_selection.png", 16), CITY_ARROWS("city-arrows.png", 7),

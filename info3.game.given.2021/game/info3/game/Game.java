@@ -137,6 +137,10 @@ public class Game {
 		screen = newScreen;
 	}
 
+	public long getCurrentScore() {
+		return (long) Math.ceil(((double) (System.currentTimeMillis()) - ((double) startTimeGame)) / 1000);
+	}
+
 	public GAutomaton getAutomaton(String name) {
 		GAutomaton a = automataList.get(name);
 
@@ -289,8 +293,7 @@ public class Game {
 
 			if (timeGame <= 0) {
 				timerHasBeenSet = false;
-				long score = (long) Math
-						.ceil(((double) (System.currentTimeMillis()) - ((double) startTimeGame)) / 1000);
+				long score = getCurrentScore();
 				if (score > highScore)
 					storeHighScore(score);
 				changeScreen(new EndScreen(this, score));

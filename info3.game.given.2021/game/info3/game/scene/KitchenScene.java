@@ -23,8 +23,8 @@ import info3.game.entity.StockTable;
 import info3.game.entity.Tile;
 import info3.game.entity.TrashTile;
 import info3.game.graphics.Graphics;
-import info3.game.graphics.Graphics.Align;
 import info3.game.graphics.Sprite;
+import info3.game.graphics.Graphics.Align;
 import info3.game.position.AutDirection;
 import info3.game.position.PositionF;
 import info3.game.position.PositionI;
@@ -232,8 +232,13 @@ public class KitchenScene extends Scene {
 
 		renderCurrentOrder(g);
 
-		g.drawText(String.valueOf((int) m_game.timeGame / 1000), Align.CENTER, 17, 24);
 		g.drawSprite(Sprite.CLOCK, 8, 3);
+		g.drawText(String.valueOf((int) m_game.timeGame / 1000), Align.CENTER, 17, 24);
+
+		long score = m_game.getCurrentScore();
+		g.drawText("Score :", Align.CENTER, 17, 47);
+		g.drawText(String.valueOf(score), Align.CENTER, 17, 55);
+
 		if (smoke || smokeFryingOil) {
 			g.drawSprite(Sprite.KITCHEN_TRUCK_SMOKE, KITCHEN_ORIGIN.getX() - 13, KITCHEN_ORIGIN.getY() - 13);
 

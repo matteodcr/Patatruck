@@ -11,8 +11,8 @@ public class PhysicsNoBrakes extends AveragePhysics {
 	 */
 	public PhysicsNoBrakes(int force) {
 		super(force);
-		this.maxVel = 200;
-		this.friction = 1.15f;
+		this.maxVel = 220;
+		this.friction = 1.1f;
 	}
 
 	/**

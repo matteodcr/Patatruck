@@ -51,6 +51,7 @@ public class KitchenScene extends Scene {
 
 	// Gestion de la fumée
 	public boolean smoke = false;
+	public boolean smokeFryingOil = false;
 	public int smokeCounter = 200;
 
 	private ArrayList<PositionF> indexEmplacements = new ArrayList<>(List.of(new PositionF(0, 1), new PositionF(0, 2),
@@ -226,7 +227,7 @@ public class KitchenScene extends Scene {
 
 		g.drawText(String.valueOf((int) m_game.timeGame / 1000), Align.CENTER, 17, 24);
 		g.drawSprite(Sprite.CLOCK, 8, 3);
-		if (smoke) {
+		if (smoke || smokeFryingOil) {
 			g.drawSprite(Sprite.KITCHEN_TRUCK_SMOKE, KITCHEN_ORIGIN.getX() - 13, KITCHEN_ORIGIN.getY() - 13);
 
 		}
@@ -270,11 +271,12 @@ public class KitchenScene extends Scene {
 		super.tick(elapsed);
 
 		// On réduit le temps qu'il reste pour l'affichage de la fumée
-		if (smoke) {
+		if (smoke || smokeFryingOil) {
 			smokeCounter--;
 		}
 		if (smokeCounter == 0) {
 			smoke = false;
+			smokeFryingOil = false;
 			smokeCounter = 200;
 		}
 

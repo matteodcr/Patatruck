@@ -86,7 +86,7 @@ public class FrieTile extends KitchenTile {
 			this.compteur--;
 			return false;
 		} else {
-			((KitchenScene) parentScene).smoke = true;
+			((KitchenScene) parentScene).smokeFryingOil = true;
 			item = null;
 			return true;
 

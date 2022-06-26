@@ -118,7 +118,10 @@ public class CarEntity extends Entity {
 		if (isClassicPhysic && kitchenScene.smoke) {
 			this.toSmokePhysics();
 			isClassicPhysic = false;
-		} else if (!isClassicPhysic && !kitchenScene.smoke) {
+		} else if (isClassicPhysic && kitchenScene.smokeFryingOil) {
+			this.toNoBrakesPhysics();
+			isClassicPhysic = false;
+		} else if (!isClassicPhysic && !kitchenScene.smoke && !kitchenScene.smokeFryingOil) {
 			this.toClassicPhysics();
 			isClassicPhysic = true;
 		}
@@ -318,7 +321,7 @@ public class CarEntity extends Entity {
 			category = AutCategory.AROBASE;
 	}
 
-	public void toNoBreaksPhysics() {
+	public void toNoBrakesPhysics() {
 		this.physics = new PhysicsNoBrakes(15, this.physics.getAccX(), this.physics.getAccY(), this.physics.getVelX(),
 				this.physics.getVelY(), this.physics.getMaxVel(), this.physics.getAvgVelBuff(),
 				this.physics.getAvgVel(), this.physics.getTimerVel(), this.physics.getTimerMaxVel(),

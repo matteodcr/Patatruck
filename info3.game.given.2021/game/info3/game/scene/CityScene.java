@@ -12,8 +12,8 @@ import info3.game.entity.CityTile;
 import info3.game.entity.Entity;
 import info3.game.entity.Tile;
 import info3.game.graphics.Graphics;
-import info3.game.graphics.Sprite;
 import info3.game.graphics.Graphics.Align;
+import info3.game.graphics.Sprite;
 import info3.game.position.AutCategory;
 import info3.game.position.PositionF;
 import info3.game.position.PositionI;
@@ -44,6 +44,21 @@ public class CityScene extends Scene {
 
 	}
 
+	private void reloadCity() {
+		Random rdm = new Random(System.currentTimeMillis());
+		this.worldGenerator.changeSeed(rdm.nextLong());
+		this.cachedCityTiles.clear();
+		vanPosition = PositionF.ZERO;
+		while (!((CityTile) (getTileAt((int) vanPosition.getX(), (int) vanPosition.getY()))).getGenTile().hasRoad()) {
+			vanPosition = vanPosition.add(new PositionF(getTileWidth(), 0));
+		}
+		this.nearestMarketPos = this.getNearestMarketPos();
+		this.entityList.clear();
+		addEntity(cookCar);
+		deliveryTile = new CityDeliveryTile(this);
+		addEntity(deliveryTile);
+	}
+
 	@Override
 	public void tick(long elapsed) {
 		super.tick(elapsed);
@@ -55,8 +70,9 @@ public class CityScene extends Scene {
 			nearestMarketPos = this.getNearestMarketPos();
 			count = 0;
 		}
-
 		removeUnusedTilesInCache();
+		if (this.m_game.m_listener.isUp("G"))
+			reloadCity();
 	}
 
 	@Override

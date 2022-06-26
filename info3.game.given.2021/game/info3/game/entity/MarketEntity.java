@@ -7,7 +7,6 @@ import info3.game.content.ItemType;
 import info3.game.position.AutCategory;
 import info3.game.position.AutDirection;
 import info3.game.position.PositionF;
-import info3.game.scene.CityScene;
 import info3.game.scene.KitchenScene;
 import info3.game.scene.Scene;
 
@@ -41,7 +40,6 @@ public class MarketEntity extends Entity {
 
 	@Override
 	public boolean pop(AutDirection direction) {
-		((CityScene)parentScene).worldGenerator.markMarketAsSeen((int)position.getX(), (int)position.getX());
 		HashMap<ItemType, StockTable> stocktables = ((KitchenScene) this.parentScene).getStockTables();
 		for (Map.Entry<ItemType, StockTable> stocktable : stocktables.entrySet()) {
 			for (Map.Entry<ItemType, Integer> itemset : loot.entrySet()) {

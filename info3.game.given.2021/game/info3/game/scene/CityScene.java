@@ -12,8 +12,8 @@ import info3.game.entity.CityTile;
 import info3.game.entity.Entity;
 import info3.game.entity.Tile;
 import info3.game.graphics.Graphics;
-import info3.game.graphics.Graphics.Align;
 import info3.game.graphics.Sprite;
+import info3.game.graphics.Graphics.Align;
 import info3.game.position.AutCategory;
 import info3.game.position.PositionF;
 import info3.game.position.PositionI;
@@ -33,7 +33,8 @@ public class CityScene extends Scene {
 	private PositionF deliveryArrowPos = new PositionF(-10, -10);
 	private Sprite marketArrowSprite = Sprite.MARKET_DOWN_ARROW;
 	private PositionF marketArrowPos = new PositionF(-10, -10);
-	// Finding nearest market is costly in performance, so we do not want to call it on every tick
+	// Finding nearest market is costly in performance, so we do not want to call it
+	// on every tick
 	private PositionF nearestMarketPos = new PositionF(0, 0);
 	private int count = 0;
 	private Map<PositionI, CityTile> cachedCityTiles;
@@ -57,8 +58,6 @@ public class CityScene extends Scene {
 		count += 1;
 		if (count == 100) {
 			nearestMarketPos = this.getNearestMarketPos();
-			System.out.println("MARKET POS : ("+nearestMarketPos.getX()+", "+nearestMarketPos.getY()+")");
-			System.out.println("TRUCK POS : ("+cookCar.getPosition().getX()+", "+cookCar.getPosition().getY()+")");
 			count = 0;
 		}
 
@@ -223,10 +222,10 @@ public class CityScene extends Scene {
 	}
 
 	private PositionF getNearestMarketPos() {
-		int truckX = (int)(cookCar.getPosition().getX());
-		int truckY = (int)(cookCar.getPosition().getY());
+		PositionI cookCarCell = cookCar.getPosition().divFloor(20);
+		worldGenerator.markMarketAsSeen(cookCarCell.getX(), cookCarCell.getY());
 
-		LocatedMarket market = worldGenerator.locateMarkets(truckX, truckY).findFirst().get();
+		LocatedMarket market = worldGenerator.locateMarkets(cookCarCell.getX(), cookCarCell.getY()).findFirst().get();
 		return new PositionF(market.x, market.y);
 	}
 
@@ -279,8 +278,10 @@ public class CityScene extends Scene {
 	public void updateMarketArrow() {
 		float xCar = cookCar.getPosition().getX();
 		float yCar = cookCar.getPosition().getY();
-		float xMarket = nearestMarketPos.getX();
-		float yMarket = nearestMarketPos.getY();
+		float xMarket = nearestMarketPos.getX() * 20;
+		float yMarket = nearestMarketPos.getY() * 20;
+
+		float abs = Math.abs(xMarket - (xCar - pixelWidth / 2));
 
 		if (yMarket < yCar - pixelHeight / 2) {
 			if (xMarket > xCar + pixelWidth / 2) {
@@ -291,7 +292,7 @@ public class CityScene extends Scene {
 				marketArrowPos = new PositionF(0, 0);
 			} else {
 				marketArrowSprite = Sprite.MARKET_UP_ARROW;
-				marketArrowPos = new PositionF(Math.abs(xMarket - (xCar - pixelWidth / 2)), 0);
+				marketArrowPos = new PositionF(abs, 0);
 			}
 		}
 
@@ -304,7 +305,7 @@ public class CityScene extends Scene {
 				marketArrowPos = new PositionF(0, pixelHeight - 15);
 			} else {
 				marketArrowSprite = Sprite.MARKET_DOWN_ARROW;
-				marketArrowPos = new PositionF(Math.abs(xMarket - (xCar - pixelWidth / 2)), pixelHeight - 15);
+				marketArrowPos = new PositionF(abs, pixelHeight - 15);
 			}
 		}
 

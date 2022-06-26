@@ -1,6 +1,11 @@
 TrafficCone(Still){
   * (Still):
-  | Cell(H,_) ? Pop(F) :()
-  | True ? Wizz(F) :(Still)
+  | Cell(H,O) ? Hit : (Still)
+  | Cell(H,@) ? Pop(N) :(Still)
+  | Cell(N,@) ? Pop(S) :(Still)
+  | Cell(S,@) ? Pop(N) :(Still)
+  | Cell(E,@) ? Pop(W) :(Still)
+  | Cell(W,@) ? Pop(E) :(Still)
+  | True ? :(Still)
   * ()
 }

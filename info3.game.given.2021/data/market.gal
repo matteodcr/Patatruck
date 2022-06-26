@@ -1,6 +1,6 @@
 Market(Still){
   * (Still) 
   | Cell(H,@) ? Pop(F)  :()
-  | True ? Wizz(F) :(Still)
+  | True ? 1%Wizz(F) :(Still)
   * ()
 }

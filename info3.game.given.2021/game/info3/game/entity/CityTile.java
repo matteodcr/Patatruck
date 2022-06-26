@@ -72,8 +72,9 @@ public class CityTile extends Tile {
 
 	@Override
 	public boolean pop(AutDirection direction) {
-		// FIXME: Don't know what to do with this method
-		return false;
+		this.parentScene.addEntity(new CarEntity(this.parentScene,
+				new PositionF(gridX * parentScene.getTileWidth(), gridY * parentScene.getTileWidth()), true, false));
+		return true;
 	}
 
 	@Override
@@ -85,8 +86,6 @@ public class CityTile extends Tile {
 
 	@Override
 	public boolean egg(AutDirection direction) {
-		this.parentScene.addEntity(new CarEntity(this.parentScene,
-				new PositionF(gridX * parentScene.getTileWidth(), gridY * parentScene.getTileWidth()), true, false));
-		return true;
+		return false;
 	}
 }

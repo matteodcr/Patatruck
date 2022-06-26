@@ -10,6 +10,7 @@ import static info3.game.graphics.Sprite.Spritesheet.COCKROACH_POP;
 import static info3.game.graphics.Sprite.Spritesheet.CONES;
 import static info3.game.graphics.Sprite.Spritesheet.COOK;
 import static info3.game.graphics.Sprite.Spritesheet.COOK_END_;
+import static info3.game.graphics.Sprite.Spritesheet.COOK_POP;
 import static info3.game.graphics.Sprite.Spritesheet.DELIVERY_BLINK;
 import static info3.game.graphics.Sprite.Spritesheet.INGREDIENTS;
 import static info3.game.graphics.Sprite.Spritesheet.KETCHUP_INDIC;
@@ -68,7 +69,8 @@ public enum Sprite {
 
 	// Entities
 	PLAYER_KITCHEN_N(COOK, 1, 0, 1, 1), PLAYER_KITCHEN_E(COOK, 0, 0, 1, 1), PLAYER_KITCHEN_W(COOK, 1, 1, 1, 1),
-	PLAYER_KITCHEN_S(COOK, 0, 1, 1, 1), COCKROACH_POP_N(COCKROACH_POP, 1, 0, 1, 1),
+	PLAYER_KITCHEN_S(COOK, 0, 1, 1, 1), PLAYER_POP_N(COOK_POP, 1, 0, 1, 1), PLAYER_POP_E(COOK_POP, 0, 0, 1, 1),
+	PLAYER_POP_W(COOK_POP, 1, 1, 1, 1), PLAYER_POP_S(COOK_POP, 0, 1, 1, 1), COCKROACH_POP_N(COCKROACH_POP, 1, 0, 1, 1),
 	COCKROACH_POP_S(COCKROACH_POP, 0, 1, 1, 1), COCKROACH_POP_E(COCKROACH_POP, 0, 0, 1, 1),
 	COCKROACH_POP_W(COCKROACH_POP, 1, 0, 1, 1), COCKROACH_ENTITY_N(COCKROACH, 1, 0, 1, 1),
 	COCKROACH_ENTITY_E(COCKROACH, 0, 0, 1, 1), COCKROACH_ENTITY_W(COCKROACH, 1, 1, 1, 1),
@@ -142,8 +144,9 @@ public enum Sprite {
 		KITCHENTILES("kitchen_tiles.png", 13), KITCHEN_TRUCK("kitchen.png", 256), COOK("cook.png", 13),
 		KITCHEN("kitchen.png", 13), COCKROACH("cockroach.png", 13), MENU("menu.png", 69),
 		COCKROACH_POP("cockroach_pop.png", 13), RECIPES_("Recipes.png", 8), INGREDIENTS("ingredients.png", 13),
-		CLOCK_("clock.png", 19), MAYO_INDIC("indic_mayo.png", 13), KETCHUP_INDIC("indic_ketchup.png", 13),
-		KETCHUP_MAYO_INDIC("indic_mayo_ketchup.png", 13), SAUCES("sauces.png", 13),
+		COOK_POP("cook_pop.png", 13), CLOCK_("clock.png", 19), MAYO_INDIC("indic_mayo.png", 13),
+		KETCHUP_INDIC("indic_ketchup.png", 13), KETCHUP_MAYO_INDIC("indic_mayo_ketchup.png", 13),
+		SAUCES("sauces.png", 13),
 
 		// City
 		CITY("city.png", 20), CITYTRUCK("cityTruck.png", 13), SPEEDOMETER_("speedometer.png", 19),

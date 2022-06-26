@@ -196,6 +196,13 @@ public class KitchenScene extends Scene {
 		return stockTables;
 	}
 
+	public void addRandomItem() {
+		Random rdm = new Random();
+		Object[] values = stockTables.values().toArray();
+		StockTable randomStockTable = (StockTable) values[rdm.nextInt(values.length)];
+		randomStockTable.addStock(1);
+	}
+
 	/**
 	 * Affiche le fond ou la liste des recettes si la touche [ESC] est enclenchée
 	 *

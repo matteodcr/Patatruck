@@ -40,7 +40,7 @@ public class WorldGenerator {
 	}
 
 	public Stream<LocatedMarket> locateMarkets(int centerX, int centerY) {
-		return SpiralStream.create(centerX, centerY).filter(pos -> markets.getAt(seed, pos))
+		return SpiralStream.create(centerX, centerY).filter(pos -> inner.getAt(seed, pos).hasMarketPaving)
 				.filter(Predicate.not(seenMarketTiles::contains)).map(pos -> new LocatedMarket(pos.x, pos.y));
 	}
 

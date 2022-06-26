@@ -5,7 +5,6 @@ import info3.game.content.Item;
 import info3.game.graphics.Graphics;
 import info3.game.graphics.Sprite;
 import info3.game.position.AutDirection;
-import info3.game.position.Direction;
 import info3.game.scene.CityScene;
 import info3.game.scene.KitchenScene;
 import info3.game.scene.Scene;
@@ -87,40 +86,35 @@ public class KitchenDeliveryTile extends KitchenTile {
 
 	@Override
 	public boolean hit(AutDirection direction) {
-		Entity eInteracting = selectEntityToInteractWith();
-		if (eInteracting instanceof CookEntity && ((CookEntity) eInteracting) != null) {
+		CityScene cityScene = ((CityScene) ((GameScreen) this.parentScene.m_game.getScreen()).getCityScene());
 
-			CityScene cityScene = ((CityScene)((GameScreen)this.parentScene.m_game.getScreen()).getCityScene());
+		if (recetteReady(((KitchenScene) parentScene).currentOrder0) && cityScene.getCook().canDeliver()) {
+			((KitchenScene) parentScene).currentOrder0 = Item.getRandomItem();
+			assembly.getItems().clear();
+			parentScene.m_game.addTime(50);
+			// Indicates that the delivery has been done
+			((CityScene) ((GameScreen) this.parentScene.m_game.getScreen()).getCityScene()).getDeliveryTile()
+					.delivered();
+			return true;
+		}
 
-			if (recetteReady(((KitchenScene) parentScene).currentOrder0) && cityScene.getCook().canDeliver()) {
-				((KitchenScene) parentScene).currentOrder0 = Item.getRandomItem();
-				assembly.getItems().clear();
-				parentScene.m_game.timeGame += 30000;
-				// Indicates that the delivery has been done
-				((CityScene)((GameScreen)this.parentScene.m_game.getScreen()).getCityScene()).getDeliveryTile().delivered();
-				return true;
-			}
-
-			if (recetteReady(((KitchenScene) parentScene).currentOrder1) && cityScene.getCook().canDeliver()) {
-				((KitchenScene) parentScene).currentOrder1 = Item.getRandomItem();
-				assembly.getItems().clear();
-				parentScene.m_game.timeGame += 30000;
-				// Indicates that the delivery has been done
-				((CityScene)((GameScreen)this.parentScene.m_game.getScreen()).getCityScene()).getDeliveryTile().delivered();
-				return true;
-			}
+		if (recetteReady(((KitchenScene) parentScene).currentOrder1) && cityScene.getCook().canDeliver()) {
+			((KitchenScene) parentScene).currentOrder1 = Item.getRandomItem();
+			assembly.getItems().clear();
+			parentScene.m_game.addTime(50);
+			// Indicates that the delivery has been done
+			((CityScene) ((GameScreen) this.parentScene.m_game.getScreen()).getCityScene()).getDeliveryTile()
+					.delivered();
+			return true;
 		}
 		return false;
 	}
 
 	@Override
 	public boolean gotPower() {
-		Entity eInteracting = selectEntityToInteractWith();
-		if (eInteracting instanceof CookEntity && ((CookEntity) eInteracting) != null) {
-			if (recetteReady(((KitchenScene) parentScene).currentOrder0)
-					|| recetteReady(((KitchenScene) parentScene).currentOrder1)) {
-				return true;
-			}
+		if (recetteReady(((KitchenScene) parentScene).currentOrder0)
+				|| recetteReady(((KitchenScene) parentScene).currentOrder1)) {
+			return true;
 		}
 		return false;
 	}

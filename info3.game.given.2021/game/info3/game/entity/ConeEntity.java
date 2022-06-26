@@ -84,8 +84,6 @@ public class ConeEntity extends Entity {
 
 	@Override
 	public boolean cell(AutDirection direction, AutCategory category) {
-		int gridX = ((CityScene) parentScene).getGridPosFromPosCity(position).getX();
-		int gridY = ((CityScene) parentScene).getGridPosFromPosCity(position).getY();
 		AutDirection newDirection = convertRelativToAbsolutedir(direction);
 		// Les entités qui bougent
 		for (Entity entity : parentScene.entityList) {

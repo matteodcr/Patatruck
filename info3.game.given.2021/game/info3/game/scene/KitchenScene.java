@@ -198,9 +198,9 @@ public class KitchenScene extends Scene {
 
 	public void addRandomItem() {
 		Random rdm = new Random();
-		Object[] values = stockTables.values().toArray();
-		StockTable randomStockTable = (StockTable) values[rdm.nextInt(values.length)];
-		randomStockTable.addStock(1);
+		PositionF pos = indexStockEmplacements.get(rdm.nextInt(indexStockEmplacements.size()));
+		StockTable toAdd = (StockTable) (Entity) kitchenGrid[(int) pos.getX()][(int) pos.getY()];
+		toAdd.addStock(2);
 	}
 
 	/**

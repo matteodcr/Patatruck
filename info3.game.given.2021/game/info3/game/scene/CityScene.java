@@ -12,7 +12,6 @@ import info3.game.entity.CityTile;
 import info3.game.entity.Entity;
 import info3.game.entity.Tile;
 import info3.game.graphics.Graphics;
-import info3.game.graphics.Graphics.Align;
 import info3.game.graphics.Sprite;
 import info3.game.position.AutCategory;
 import info3.game.position.PositionF;
@@ -185,15 +184,7 @@ public class CityScene extends Scene {
 			entity.render(subGraphics);
 		}
 
-		Sprite speed = Sprite.SPEEDOMETER;
-		if (cookCar.physics.getVelocity() < 20) {
-			speed = Sprite.SPEEDOMETER_LOW;
-		} else if (cookCar.physics.getVelocity() > 50) {
-			speed = Sprite.SPEEDOMETER_HIGH;
-		}
-		g.drawSprite(speed, 2, 0);
 		deliveryTile.render(g);
-		g.drawText(cookCar.physics.getVelocity() + "", Align.CENTER, 12, 18);
 
 		renderArrow(g, nearestMarketPos.toFloat().mul(getTileWidth()), Sprite.CITY_ARROWS_MARKET);
 		renderArrow(g, deliveryTile.getPosition(), Sprite.CITY_ARROWS_DELIVERY);

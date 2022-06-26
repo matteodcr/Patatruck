@@ -20,6 +20,7 @@ public class CutTile extends KitchenTile {
 			if (player.m_assembly.getItems().get(0).cut() == null) { // est-ce qu'on peut couper?
 				return false;
 			}
+			parentScene.m_game.playSound("cut");
 			this.item = player.m_assembly.getItems().get(0);
 			player.m_assembly.getItems().clear();
 			this.compteur = 200;
@@ -34,6 +35,7 @@ public class CutTile extends KitchenTile {
 
 	@Override
 	public boolean wizz(AutDirection direction) {// rend l'ingrédient coupé au joueur
+		parentScene.m_game.playSound("drop");
 		player.m_assembly.addItem(item);
 		this.item = null;
 		return true;

@@ -2,7 +2,6 @@ package info3.game.entity;
 
 import info3.game.graphics.Graphics;
 import info3.game.graphics.Sprite;
-import info3.game.position.AutCategory;
 import info3.game.position.AutDirection;
 import info3.game.position.PositionF;
 import info3.game.scene.Scene;
@@ -23,11 +22,13 @@ public class CityDeliveryTile extends CityTile {
 	}
 
 	public void delivered() {
+		parentScene.m_game.playSound("delivery");
 		delivered = !delivered;
 	}
 
 	@Override
-	public boolean pop(AutDirection direction) { // Update the boolean used to display a blinking frame indicating the delivery area
+	public boolean pop(AutDirection direction) { // Update the boolean used to display a blinking frame indicating the
+													// delivery area
 		count += 1;
 		if (count == 5) {
 			blinkState = !blinkState;
@@ -51,11 +52,12 @@ public class CityDeliveryTile extends CityTile {
 			a = (Math.random() * 2 * 3.14);
 			r = 10 + (RADIUS * Math.sqrt(Math.random()));
 
-			x = (float)(r * Math.cos(a));
-			y = (float)(r * Math.sin(a));
+			x = (float) (r * Math.cos(a));
+			y = (float) (r * Math.sin(a));
 		}
 
-		this.setPosition(new PositionF(Math.abs(gridX + x) * parentScene.getTileWidth(), Math.abs(gridY + y) * parentScene.getTileWidth()));
+		this.setPosition(new PositionF(Math.abs(gridX + x) * parentScene.getTileWidth(),
+				Math.abs(gridY + y) * parentScene.getTileWidth()));
 
 		return true;
 	}
@@ -63,8 +65,8 @@ public class CityDeliveryTile extends CityTile {
 	@Override
 	public void render(Graphics g) {
 		if (blinkState) {
-			int gX = (int)(this.position.getX()-parentScene.getOriginOffset().getX());
-	        int gY = (int)(this.position.getY()-parentScene.getOriginOffset().getY());
+			int gX = (int) (this.position.getX() - parentScene.getOriginOffset().getX());
+			int gY = (int) (this.position.getY() - parentScene.getOriginOffset().getY());
 			g.drawSprite(Sprite.DELIVERY_TILE_FRAME, gX, gY);
 		}
 	}

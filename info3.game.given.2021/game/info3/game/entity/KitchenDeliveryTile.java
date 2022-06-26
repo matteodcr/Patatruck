@@ -47,6 +47,7 @@ public class KitchenDeliveryTile extends KitchenTile {
 			if (player.m_assembly.getItems().isEmpty()) {
 				return false;
 			} else {
+				parentScene.m_game.playSound("drop");
 				assembly.addAssembly(player.m_assembly);
 				player.m_assembly.getItems().clear();
 

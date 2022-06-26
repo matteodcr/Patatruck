@@ -22,8 +22,8 @@ public class TrashTile extends KitchenTile {
 	public boolean pop(AutDirection direction) {
 		Entity eInteracting = selectEntityToInteractWith();
 		if (eInteracting instanceof CookEntity && ((CookEntity) eInteracting) != null) {
-
 			if (((CookEntity) eInteracting).m_assembly.getItems().size() != 0) {
+				parentScene.m_game.playSound("trash");
 				((CookEntity) eInteracting).m_assembly.getItems().clear();
 				this.defaultSprite = full;
 				return true;
@@ -38,8 +38,8 @@ public class TrashTile extends KitchenTile {
 
 		Entity eInteracting = selectEntityToInteractWith();
 		if (eInteracting instanceof CookEntity && ((CookEntity) eInteracting) != null) {
-
 			if (((CookEntity) eInteracting).m_assembly.getItems().size() != 0) {
+				parentScene.m_game.playSound("trash");
 				((CookEntity) eInteracting).m_assembly.getItems().clear();
 				return true;
 			}

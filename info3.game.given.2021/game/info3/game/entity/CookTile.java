@@ -32,6 +32,7 @@ public class CookTile extends KitchenTile {
 			player.m_assembly.getItems().clear();
 			this.compteur = 200;
 			defaultSprite = FULL;
+			parentScene.m_game.playSound("cooking");
 			return true;
 		}
 	}
@@ -80,6 +81,7 @@ public class CookTile extends KitchenTile {
 			this.compteur--;
 			return false;
 		} else {
+			parentScene.m_game.playSound("kitchen_fail");
 			((KitchenScene) parentScene).smoke = true;
 			item = null;
 			return true;

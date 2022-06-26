@@ -23,6 +23,8 @@ public class BasicTableTile extends KitchenTile {
 
 	@Override
 	public boolean pop(AutDirection direction) {// poser
+
+		parentScene.m_game.playSound("drop");
 		Entity eInteracting = selectEntityToInteractWith();
 		if (eInteracting instanceof CookEntity && ((CookEntity) eInteracting) != null) {
 			if (((CookEntity) eInteracting).m_assembly.getItems().size() == 0) {
@@ -39,7 +41,9 @@ public class BasicTableTile extends KitchenTile {
 	}
 
 	@Override
-	public boolean wizz(AutDirection direction) {
+	public boolean wizz(AutDirection direction) {// rendre au player si fini / donner si pas fini
+
+		parentScene.m_game.playSound("drop");
 		Entity eInteracting = selectEntityToInteractWith();
 		if (eInteracting instanceof CookEntity && ((CookEntity) eInteracting) != null) {
 

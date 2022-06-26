@@ -89,6 +89,7 @@ public class CookEntity extends Entity {
 
 	@Override
 	public boolean wizz(AutDirection direction) {
+		parentScene.m_game.playSound("footstep3");
 		move(direction);
 		return false;
 	}

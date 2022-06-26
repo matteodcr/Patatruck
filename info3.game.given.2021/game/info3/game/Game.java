@@ -194,10 +194,27 @@ public class Game {
 		try {
 			RandomAccessFile file = new RandomAccessFile(filename, "r");
 			RandomFileInputStream fis = new RandomFileInputStream(file);
-			m_canvas.playMusic(fis, 0, 1.0F);
+			m_canvas.playMusic(fis, 0, 0.8F);
 		} catch (Throwable th) {
 			th.printStackTrace(System.err);
 			System.exit(-1);
+		}
+	}
+
+	public List<String> currentSounds = new ArrayList<String>();
+
+	public void playSound(String name) {
+		if (!currentSounds.contains(name)) {
+			String filename = "sounds/" + name + ".ogg";
+			try {
+				RandomAccessFile file = new RandomAccessFile(filename, "r");
+				RandomFileInputStream fis = new RandomFileInputStream(file);
+				currentSounds.add(name);
+				m_canvas.playSound(name, fis, -1, 1.0F);
+			} catch (Throwable th) {
+				th.printStackTrace(System.err);
+				System.exit(-1);
+			}
 		}
 	}
 

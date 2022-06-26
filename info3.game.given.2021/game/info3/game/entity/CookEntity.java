@@ -13,6 +13,8 @@ import info3.game.position.PositionF;
 import info3.game.scene.Scene;
 
 public class CookEntity extends Entity {
+	private boolean usePopSprite = false;
+	private int timerPopSprite = 0, maxTimerPopSprite = 6;
 	long m_imageElapsed;
 	long m_moveElapsed;
 	int m_imageIndex;
@@ -33,16 +35,45 @@ public class CookEntity extends Entity {
 	}
 
 	@Override
+	public void tick(long elapsed) {
+		super.tick(elapsed);
+		if (usePopSprite) {
+			if (timerPopSprite > 0) {
+				timerPopSprite--;
+			} else {
+				timerPopSprite = maxTimerPopSprite;
+				usePopSprite = false;
+			}
+		}
+	}
+
+	@Override
 	public void render(Graphics g) {
 
 		if (m_direction == AutDirection.N) {
-			g.drawSprite(Sprite.PLAYER_KITCHEN_N, 0, 0);
+			if (usePopSprite)
+				g.drawSprite(Sprite.PLAYER_POP_N, 0, 0);
+			else
+				g.drawSprite(Sprite.PLAYER_KITCHEN_N, 0, 0);
+
 		} else if (m_direction == AutDirection.E) {
-			g.drawSprite(Sprite.PLAYER_KITCHEN_E, 0, 0);
+			if (usePopSprite)
+				g.drawSprite(Sprite.PLAYER_POP_E, 0, 0);
+			else
+				g.drawSprite(Sprite.PLAYER_KITCHEN_E, 0, 0);
+
 		} else if (m_direction == AutDirection.W) {
-			g.drawSprite(Sprite.PLAYER_KITCHEN_W, 0, 0);
+			if (usePopSprite)
+				g.drawSprite(Sprite.PLAYER_POP_W, 0, 0);
+			else
+				g.drawSprite(Sprite.PLAYER_KITCHEN_W, 0, 0);
+
 		} else {
-			g.drawSprite(Sprite.PLAYER_KITCHEN_S, 0, 0);
+			if (usePopSprite)
+				g.drawSprite(Sprite.PLAYER_POP_S, 0, 0);
+			else
+				g.drawSprite(Sprite.PLAYER_KITCHEN_S, 0, 0);
+
 		}
 		if (m_assembly.getItems().size() >= 1) {
 			RenderUtils.drawItem(g, m_assembly.getItems().get(0), 0, 0);
@@ -51,8 +82,9 @@ public class CookEntity extends Entity {
 
 	@Override
 	public boolean pop(AutDirection direction) {
-		// changer le sprite
-		return false;
+		timerPopSprite = maxTimerPopSprite;
+		usePopSprite = true;
+		return true;
 	}
 
 	@Override

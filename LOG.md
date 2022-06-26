@@ -511,7 +511,7 @@ J'ai également travaillé sur les collisions entre les différents véhicules d
 
 Mise à jour du system de physique pour répondre aux collisions et légers réglages dans les équations de mouvements. Ajout de fonctions à la physique pour pouvoir intervertir parmi les avatars plus facilement. Mise à jour de cityScene pour pouvoir utiliser un automate sur un carEntity pour déplacer le joueur dans la ville. Mise à jour du canvasListener pour pouvoir comprendre lorsqu'un automate veut détecter les flèches du clavier.
 
-### Elise
+### Elise & Aurélien
 
 Generation de recette et de sauce aléatoire.
 Debug de l'ajout de sauce à une recette.
@@ -520,10 +520,217 @@ Debug de l'ajout de sauce à une recette.
 
 Affichage des recettes à réaliser. Gestion de l'échange d'automate lorsque le joueur veut changer de camion.
 
+#### Matteo
+
+Discussion avec Elise sur l'implementation de assembly, détection de multiples bugs liées à cette classe et correction
+Merge request sur master
+Equilibrage du jeu
+Fix du cafard
+Fix de certains automates
+Play Testing
+Discussion avec Mathis sur l'interaction entre les deux scènes : signaux à envoeyr/recevoir.
+
 ### Tests à réaliser
 
 - La ville se génère d'une façon cohérente `DONE`
-- Les collisions des bâtiments sont correctes `NOT_DONE` (c'est à l'équipe véhicule de faire ça)
+- Les collisions des bâtiments sont correctes dans la ville procédurale `NOT_DONE` (c'est à l'équipe véhicule de faire ça)
 - Vérifier que on détecte bien les collisions entre 2 véhicules `DONE`
 - Le camion contrôlé par le joueur ne doit pas passer à travers les batiments `DONE`
 - Utilisation d'un automate pour déplacer le camion dans la ville et vérifier les collisions `DONE`
+
+
+## 23 Juin
+
+On a maintenant le code de génération aléatoire.
+
+### Réflexions en cours
+
+Il faut modifier un peu le code des collisions et gérer le viewport dans la ville procédurale.
+
+### Plan de codage / des tâches
+
+#### Elise & Aurélien
+
+Ajout des frites cuites en Item final que l'on peut avoir dans les recettes.
+Fix issue 14 avec le code de Graphics.
+Ajout d'un bouton quitter dans le menu principal.
+
+#### Mathis
+
+Implémentation des DeliveryTile, et de l'interaction entre les deux scènes.
+
+#### Paul
+
+Création du visuel avec les recettes pour les afficher en cours de jeu.
+Tentative de création des spritesheets pour regrouper les sprites mais abandon à la fin car ils n'utilisaient pas la bonne palette de couleurs et donc perte du travail.
+
+#### Vincent
+
+Fix pour que les entités s'affichent toujours en 0,0 de leur propre sous-graphique (qu'on place donc au bon endroit lors du render de la scène).
+Récupération du code de génération aléatoire d'Edgar pour l'intégrer avec le système de déplacement et de collisions des véhicules.
+Intégration du viewport qui suit le camion du joueur.
+Fix des noms de variables dans la partie automate
+
+### Mattéo
+
+J'ai refactor le code lié à la cuisine en entier:
+* code commenté
+* code simplifié
+* variable renommées
+
+Résolution de certains problèmes liés aux sauces.
+J'ai découvert un grand problème : je n'utilisais pas assez la puissance des automates. Il y avait trop de code dans les fonctions associées aux automates et on faisait tres peu de transisitions différentes
+
+#### Loric
+
+Ajout de la possibilité de changer de camion avec un échange d'automate entre le camion que l'on controle et un gérer automatiquement. Gestion de la transition de l'écran de fin vers l'écran de début. Ajout de l'arret du jeu en cas d'exception.
+
+#### Edgar
+
+Implémentation de collisions sur les bâtiments et gestion du dépôt.
+
+### Tests à réaliser
+
+- Les collisions des bâtiments sont correctes dans la ville procédurale `DONE`
+- Ajout de tests dans le fichier de test des recettes et vérifier que ce dernier est validé lorsqu'on le lance `DONE`
+
+
+## 24 Juin
+
+Le groupe est au complet en présentiel pour la première fois depuis une semaine (merci le covid). La partie cuisine est finie et fonctionnelle. Il faut encore générer les marchés, les voitures et les zones de livraisons sur la ville.
+
+### Réflexions en cours
+
+Comment récupérer le marché le plus proche ? Faire un cache avec toutes les tuiles du marché ? (Au final pas la solution retenue)
+On va également modifier la physique de déplacement car actuellement c'est trop compliqué de se déplacer dans la ville (on atteint trop vite la vitesse max et on ne peut pas faire de tout petit déplacements).
+
+### Plan de codage / des tâches
+
+#### Aurélien + Elise
+
+Finitions du scénario de la démo (ajout du texte voix off)
+Implémentation des sons (à finir ce week end)
+Aide pour le logo et les sprites
+
+#### Mattéo
+
+J'ai réussi à trouver des solutions à mon problème. Utilisation de GotStuff et GotPower pour effectuer des actions différentes dans des transitions différentes. J'ai augmenté la part d'automate dans mon code ce qui le rend plus robuste
+
+J'ai commencé à monter et filmer la vidéo.
+
+#### Vincent
+
+Réparation des erreurs que j'ai introduites lors des MR. (Spoiler : j'en ai créés encore plus et au final j'ai quasiment tout cassé)
+
+Travail sur les 3 physiques pour les rendre bien distinctes et (relativement) agréable à jouer
+
+#### Edgar
+
+Implémentation de la création marchés dans le `WorldGenerator`, à l'aide d'un bruit OpenSimplex2. Création d'une fonction de localisation des marchés par ordre de proximité à un point donné, en prévision d'une flèche en périphérie du viewport qui indique le marché le plus proche.
+
+#### Mathis
+
+Affichage des flèches indiquant la zone de livraison
+
+#### Loric
+Création de sprite pour l'écran de fin. Réparation d'erreurs d'affichage
+
+#### Paul
+
+Création de sprite pour le pop du cafard et pour le logo du jeu. (en attente d'implémentation)
+
+### Tests à réaliser
+
+- Vérifier que la flèche de direction du lieu de livraison pointe bien au bon endroit et qu'elle disparaît si il apparait dans notre viewport. `DONE`
+- Vérifier que les physiques sont bien distinctes les unes des autres et (relativement) bien contrôlables par le joueur. `DONE`
+- Le localisateur de marché marche bien. `DONE` (la réponse est non)
+
+## 25 & 26 Juin
+
+Dernière ligne droite, on a dressé une liste de tout ce qu'il reste à faire d'ici à la fin du week-end.
+
+### Réflexions en cours
+
+* Récupérer les nouveaux sprites voiture/camion `DONE`
+* Permettre aux entités associés de tourner (visuellement) `DONE`
+* Gérer l'apparition des marchés, des points de livraison et des ralentisseurs sur la map `DONE`
+* Gérer les fonctionnalités liées aux ralentisseurs `DONE`
+* Physique à 60 FPS / 40 TPS `DONE`
+* Gérer l'apparition des voitures (possiblement en passant le bon automate à CityTile et en stockant qq une sur lesquelles executee des ticks) `DONE (mais pas comme dit ici`
+* Gérer la disparition des voitures/camions si elles sortent trop loin du viewport `DONE`
+* 2-3 améliorations à l'écran de début / fin (permettre à l'autre joueur de se déplacer, afficher le score au début et revoir le texte à la fin) `DONE`
+* Gérer le passage d'une phyisque à une autre (en appelant correctement les méthodes) lorsqu'on fait des erreurs dans la cuisine (actuellement on a que smoke, dc on peut pas savoir si c'est une erreur de cuisson = lent ou friture = rapide ) `DONE`
+* Appelez la méthode addTime de Game lorsqu'on a livré une recette, avec des tps différents en fct des recettes / extras (ex: +15s tomate et salde, +10s sauce, +20s frites, +40s burger classique...).  `DONE (mais temps unique +50s`
+* Voir ce qu'on fait de l'espace en dessous du timer `DONE (score)`
+* Intégrer les sons manquants au jeu et essayer de voir si c'est possible de réduire le délai. `DONE (mais toujours un délai)`
+* Implémenter des méthodes au niveau le plus haut possible pour le + d'actions possible pr assurer la compatibilité avec d'autres automates `DONE`
+* Refaire l'affichage des recettes `DONE`
+* Corriger les collisions de certains batiments en L `DONE`
+* Nettoyer le code, l'anglicisé, le réorganiser (si besoin). `DONE`
+* Récupérer les sprites sur quelques spritesheet aptement nommée `DONE`
+* Faire la vidéo de présentation `DONE`
+
+### Plan de codage / des tâches
+
+#### Paul
+
+Ajout des sprites des camions (joueur ou non) et amélioration de celui des voitures.
+Rassemblement des sprites en plusieurs spritesheets.
+Mise à jour du sprite des recettes lors du jeu.
+Implémentation à plus haut niveau des fonctions des automates pour pouvoir l'utiliser sur plus d'entités.
+Ajout d'un personnage sur les écrans de début et de fin.
+Ajout d'une fonctionnalité pour regénérer le monde à la volée (changement de seed) à l'appui de la touche G.
+
+#### Mathis
+
+Correction et tests des zones de livraison (dans la cuisine et dans la ville).
+Implémentation sommaire dee MarketEntity.
+
+#### Aurélien & Elise
+
+Fix des sons, ajout de quelques nouveaux sons manquants.
+Dernière review du scénario de démo avec le texte de la voix off.
+Relecture du code écrit pour ajouter des commentaires et réorganiser au besoin.
+
+#### Vincent
+
+Samedi :
+* Physique à 60 FPS / 40 TPS.
+* Apparition et disparition de voitures
+* Améliorations sur les écrans de démarrage / de fin.
+* Ajout des ralentisseurs et de leurs fonctionnalités.
+* Modification de la génération de l'aléatoire dans la génération du monde.
+* Travail sur les collisions entre les différents véhicules de la ville.
+
+Dimanche
+* Fin du travail sur la génération avec l'aide de Edgar
+* Fix collisions des speedbumps et des marketEntity
+* Ajout de la possibilité de passer à la physique No Brakes
+* Intégration des derniers sons
+* Génération des entités étals de marchés et de leurs sprites
+* Multiples fix (livraison uniquement si le joueur était prêt du lieu de livraison, swap infinis pour restocker tous les ingrédients)
+
+#### Loric
+
+Gestion du changement de physique en cas de fumée.
+Fix le fait que les caches de la génération du monde n'étaient pas bien vidés.
+
+#### Mattéo
+
+Préparation des séquences de gameplay, enregistrement du texte et montage de la vidéo de présentation.
+
+#### Edgar
+
+* Beaucoup de merge / rebase / nettoyage des branches
+* Fix du localisateur de marché et implémentation de celui-ci dans la branche de Mathis qui ajoute les flèches de directions.
+* Grand nettoyage du code du dépôt à la fin, en suivant les conseils d'IntelliJ Idea et de Checkstyle
+
+### Tests à réaliser
+
+- Apparition et déplacement corrects des zones de livraison `DONE`
+- Affichage du cadre clignotant des zones de livraison `DONE`
+- Interaction entre la cuisine et le camion dans la ville quant aux livraisons `DONE`
+- Fonctionnement correct du localisateur de marché `DONE`
+- Génération correctes des étals de marchés et des ralentisseurs `DONE`
+- Comportement corrects des étals de marchés et des ralentisseurs `DONE`
+- Les inspections d'IntelliJ Idea ne renvoient plus autant d'erreur et de warning qu'avant `DONE`

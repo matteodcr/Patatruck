@@ -24,6 +24,7 @@ public class CityTile extends Tile {
 
 	public CityTile(Scene parent, int gridX, int gridY) {
 		super(parent, gridX, gridY);
+		position = new PositionF(gridX * parentScene.getTileWidth(), gridY * parentScene.getTileWidth());
 		genTile = ((CityScene) parent).worldGenerator.generate(gridX, gridY);
 		topRoadSprite = genTile.marketPavingTop == null ? null : MARKET_SPRITE_TOP.get(genTile.marketPavingTop);
 		leftRoadSprite = genTile.marketPavingLeft == null ? null : MARKET_SPRITE_LEFT.get(genTile.marketPavingLeft);
@@ -60,11 +61,11 @@ public class CityTile extends Tile {
 			g.drawSprite(leftRoadSprite, 0, 0);
 		}
 		if (genTile.speedbumpTop == true) {
-			g.drawSprite(Sprite.TOMATO, 10, 0);
+			g.drawSprite(Sprite.CITY_SPEEDBUMP_TOP, 0, 0);
 		}
 
 		if (genTile.speedbumpLeft == true) {
-			g.drawSprite(Sprite.TOMATO, 0, 10);
+			g.drawSprite(Sprite.CITY_SPEEDBUMP_LEFT, 0, 0);
 		}
 
 		g.drawSpritePart(genTile.buildingSprite, 0, 0, genTile.buildingSpriteOffsetX, genTile.buildingSpriteOffsetY);

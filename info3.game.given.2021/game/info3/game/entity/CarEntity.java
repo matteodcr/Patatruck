@@ -21,8 +21,8 @@ public class CarEntity extends Entity {
 	public Physics physics = new PhysicsClassic(15);
 	public int shuffleCooldown; // only for player controlled car
 	boolean isClassicPhysic = true;
-	// TODO Deplacer hitbox hardocdé et methode de collision (champ ou classe pr pos
-	// bas a droite de l'entite (sinon on garde comme ça si ttes les entites = 4x4)
+
+	boolean truckHasStock;
 
 	public CarEntity(Scene parent, PositionF position, boolean isTruck, boolean isPlayer) {
 		super(parent, position);
@@ -32,6 +32,7 @@ public class CarEntity extends Entity {
 		changeCategory();
 		this.swapInThisTick = false;
 		shuffleCooldown = 0;
+		truckHasStock = true;
 	}
 
 	public boolean canDeliver() {
@@ -233,7 +234,7 @@ public class CarEntity extends Entity {
 		return false;
 	}
 
-	// TODO Point de collision pr l'instant HARDCODE a l'entite CarEntity
+	// Point de collision pr l'instant HARDCODE a l'entite CarEntity
 	@Override
 	public boolean cell(AutDirection direction, AutCategory category) {
 		AutDirection newDirection = convertRelativToAbsolutedir(direction);
@@ -381,16 +382,18 @@ public class CarEntity extends Entity {
 		this.physics = carentity.physics;
 		carentity.physics = physics;
 
-		carentity.swapInThisTick = true;
-		this.swapInThisTick = true;
 		carentity.physics.bounce();
 		this.physics.bounce();
 
+		carentity.swapInThisTick = true;
+		this.swapInThisTick = true;
 		this.start = System.currentTimeMillis();
 		carentity.start = System.currentTimeMillis();
 
-		((KitchenScene) ((GameScreen) this.parentScene.m_game.getScreen()).getKitchenScene()).addRandomItem();
-
+		if (this.truckHasStock) {
+			((KitchenScene) ((GameScreen) this.parentScene.m_game.getScreen()).getKitchenScene()).addRandomItem();
+			this.truckHasStock = false;
+		}
 	}
 
 }

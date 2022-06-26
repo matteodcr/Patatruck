@@ -8,6 +8,7 @@ import info3.game.content.ItemType;
 import info3.game.position.AutCategory;
 import info3.game.position.AutDirection;
 import info3.game.position.PositionF;
+import info3.game.scene.CityScene;
 import info3.game.scene.KitchenScene;
 import info3.game.scene.Scene;
 import info3.game.screen.GameScreen;
@@ -43,6 +44,10 @@ public class MarketEntity extends Entity {
 
 	@Override
 	public boolean pop(AutDirection direction) {
+		if (((CityScene) parentScene).getCook().marketScreamsCooldown == 0) {
+			parentScene.m_game.playSound("market_crowd_panic");
+			((CityScene) parentScene).getCook().marketScreamsCooldown = 50;
+		}
 		KitchenScene kitchenScene = ((KitchenScene) ((GameScreen) this.parentScene.m_game.getScreen())
 				.getKitchenScene());
 		HashMap<ItemType, StockTable> stocktables = new HashMap<ItemType, StockTable>();
@@ -54,6 +59,7 @@ public class MarketEntity extends Entity {
 				}
 			}
 		}
+		((CityScene) parentScene).addToMarketCache(parentTile.gridX, parentTile.gridY);
 		return true;
 	}
 
@@ -62,7 +68,7 @@ public class MarketEntity extends Entity {
 		loot.clear();
 		Random rand = new Random();
 		for (ItemType item : items) {
-			int randomQuantity = rand.nextInt(4);
+			int randomQuantity = rand.nextInt(2);
 			loot.put(item, randomQuantity);
 		}
 		return true;

@@ -7,6 +7,7 @@ import info3.game.graphics.Graphics;
 import info3.game.graphics.Sprite;
 import info3.game.position.AutDirection;
 import info3.game.position.PositionF;
+import info3.game.position.PositionI;
 import info3.game.scene.CityScene;
 import info3.game.scene.Scene;
 import info3.game.worldgen.GenTile;
@@ -33,7 +34,8 @@ public class CityTile extends Tile {
 		leftRoadSprite = genTile.marketPavingLeft == null ? null : MARKET_SPRITE_LEFT.get(genTile.marketPavingLeft);
 		if (genTile.speedbumpLeft || genTile.speedbumpTop)
 			eSpeedbump = new SpeedBumpEntity(parent, position, this);
-		if (genTile.hasMarketPaving)
+		if (genTile.hasMarketPaving
+				&& !((CityScene) parentScene).cacheMarketVisited.contains(new PositionI(gridX, gridY)))
 			eMarketStall = new MarketEntity(parent, position, this);
 
 		if (genTile.hasMarketPaving == true) {

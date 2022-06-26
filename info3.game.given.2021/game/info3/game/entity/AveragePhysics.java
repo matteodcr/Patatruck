@@ -81,6 +81,14 @@ public class AveragePhysics implements Physics {
 	}
 
 	@Override
+	public void stop() {
+		accY = 0;
+		accY = 0;
+		velX = 0;
+		velY = 0;
+	}
+
+	@Override
 	public PositionF shift() {
 		float shiftX = 0, shiftY = 0;
 

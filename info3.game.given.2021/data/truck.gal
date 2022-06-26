@@ -1,6 +1,7 @@
 Truck(Init){
   * (Init):
-  | Cell(H,O) ? Hit : (Init)
+  | Cell(H,O)  ? Hit : (Init)
+  | Cell(H,A) ? Jump : (Init)
   | Key(FU) ? Wizz(N) :(Init)
   | Key(FD) ? Wizz(S) :(Init)
   | Key(FL) ? Wizz(W) :(Init)

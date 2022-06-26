@@ -60,4 +60,6 @@ public interface Physics {
 	 * reinitialize acceleration and reduces speed if no key is pressed
 	 */
 	void removeForce();
+
+	public void stop();
 }

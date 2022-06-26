@@ -36,6 +36,7 @@ public class StockTable extends KitchenTile {
 		Entity eInteracting = selectEntityToInteractWith();
 		if (eInteracting instanceof CookEntity && ((CookEntity) eInteracting) != null) {
 			if (((CookEntity) eInteracting).m_assembly.getItems().size() != 0) {
+				parentScene.m_game.playSound("pick");
 				return false;
 			} else {
 				if (stock == 0) {

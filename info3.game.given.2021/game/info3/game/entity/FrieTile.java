@@ -34,12 +34,14 @@ public class FrieTile extends KitchenTile {
 			player.m_assembly.getItems().clear();
 			this.compteur = 200;
 			defaultSprite = FULL;
+			parentScene.m_game.playSound("frying");
 			return true;
 		}
 	}
 
 	@Override
 	public boolean wizz(AutDirection direction) {// rend l'ingrédient cuit au joueur
+		parentScene.m_game.playSound("drop");
 		player.m_assembly.addItem(item);
 		this.item = null;
 		return true;
@@ -86,6 +88,7 @@ public class FrieTile extends KitchenTile {
 			this.compteur--;
 			return false;
 		} else {
+			parentScene.m_game.playSound("kitchen_fail");
 			((KitchenScene) parentScene).smokeFryingOil = true;
 			item = null;
 			return true;

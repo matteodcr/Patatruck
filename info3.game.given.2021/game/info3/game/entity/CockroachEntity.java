@@ -92,6 +92,12 @@ public class CockroachEntity extends Entity {
 	}
 
 	@Override
+	public boolean explode() {
+		parentScene.m_game.playSound("crunch_cockroach");
+		return true;
+	}
+
+	@Override
 	public boolean cell(AutDirection direction, AutCategory category) {
 		boolean c = super.cell(direction, category);
 		return c;

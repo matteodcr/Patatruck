@@ -136,6 +136,7 @@ public class CarEntity extends Entity {
 	@Override
 	public boolean pop(AutDirection direction) {
 		if (!swapInThisTick && isPlayer && ((CarEntity) entityEncountered).isTruck) {
+			parentScene.m_game.playSound("woosh");
 			this.swap((CarEntity) entityEncountered);
 			start = System.currentTimeMillis();
 		}
@@ -172,6 +173,7 @@ public class CarEntity extends Entity {
 
 	@Override
 	public boolean hit(AutDirection direction) {
+		parentScene.m_game.playSound("crash");
 		this.position = this.position.add(physics.bounce());
 		return true;
 	}

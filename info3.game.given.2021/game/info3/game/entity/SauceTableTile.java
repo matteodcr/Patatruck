@@ -52,6 +52,7 @@ public class SauceTableTile extends KitchenTile {
 			if (((CookEntity) eInteracting).m_assembly.getItems().size() == 0) {
 				return false;
 			} else {
+				parentScene.m_game.playSound("sauce");
 				((CookEntity) eInteracting).m_assembly.getItems().get(0).setSauce(sauce);
 				return true;
 			}

@@ -265,20 +265,22 @@ public class CanvasListener implements GameCanvasListener {
 	public void exit() {
 	}
 
-//  boolean m_expired;
+	boolean m_expired;
+
 	@Override
 	public void endOfPlay(String name) {
-//    if (!m_expired) // only reload if it was a forced reload by timer
-		m_game.loadMusic();
-//    m_expired = false;
+		m_game.currentSounds.remove(name);
+		if (m_expired) // only reload if it was a forced reload by timer
+			m_game.loadMusic();
+		m_expired = false;
 	}
 
 	@Override
 	public void expired() {
 		// will force a change of music, after 6s of play
-//    System.out.println("Forcing an ealy change of music");
-//    m_expired = true;
-//    m_game.loadMusic();    
+		System.out.println("Forcing an ealy change of music");
+		m_expired = true;
+		m_game.loadMusic();
 	}
 
 }

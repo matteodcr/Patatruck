@@ -47,7 +47,6 @@ public class KitchenScene extends Scene {
 
 	// Les deux entités qui bougent dans la cuisine
 	private CookEntity cook;
-	private CockroachEntity cockroach;
 
 	// Gestion de la fumée
 	public boolean smoke = false;
@@ -65,10 +64,6 @@ public class KitchenScene extends Scene {
 					new PositionF(KITCHEN_ORIGIN.getX() + getTileWidth(), KITCHEN_ORIGIN.getY() + getTileWidth()));
 			addEntity(cook);
 
-			cockroach = new CockroachEntity(this, new PositionF(KITCHEN_ORIGIN.getX() + getTileWidth() * 2,
-					KITCHEN_ORIGIN.getY() + getTileWidth() * 2));
-
-			addEntity(cockroach);
 			currentOrder0 = Item.getRandomItem();
 			currentOrder1 = Item.getRandomItem();
 			m_game.setTimer();
@@ -105,6 +100,7 @@ public class KitchenScene extends Scene {
 	 * Echange aléatoirement les KitchenTiles entre elles
 	 */
 	public void shuffle() {
+		m_game.playSound("kitchen_shuffle");
 		// generate future emplacements
 		Random rdm = new Random();
 		int[] movedTiles = new int[10], movedStockTables = new int[6];
@@ -164,6 +160,7 @@ public class KitchenScene extends Scene {
 			futureKitchenGrid[(int) futurePos.getX()][(int) futurePos.getY()] = toMove;
 		}
 		this.kitchenGrid = futureKitchenGrid;
+		this.m_game.playSound("kitchen_shuffle");
 	}
 
 	@Override

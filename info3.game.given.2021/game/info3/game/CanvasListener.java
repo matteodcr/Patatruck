@@ -42,8 +42,9 @@ public class CanvasListener implements GameCanvasListener {
 	private static final int VK_Q = 0x51;
 	private static final int VK_S = 0x53;
 	private static final int VK_D = 0x44;
-	
-	private boolean spaceUsed = false, escapeUsed = false, enterUsed = false;
+	private static final int VK_G = 0x47;
+
+	private boolean spaceUsed = false, escapeUsed = false, enterUsed = false, gUsed = false;
 
 	public HashSet<Integer> keyboard = new HashSet<>();
 	private HashMap<Integer, String> dico = new HashMap<>(); // Only necessary for the debug in the console
@@ -61,29 +62,30 @@ public class CanvasListener implements GameCanvasListener {
 		dico.put(0x51, "Q");
 		dico.put(0x53, "S");
 		dico.put(0x44, "D");
+		dico.put(0x47, "G");
 	}
 
 	public boolean isUp(String name) {
 		switch (name) {
 		case "ENTER":
-			if(keyboard.contains(VK_ENTER)&&!enterUsed) {
+			if (keyboard.contains(VK_ENTER) && !enterUsed) {
 				enterUsed = true;
 				return true;
-			}else {
+			} else {
 				return false;
 			}
 		case "ESCAPE":
-			if(keyboard.contains(VK_ESCAPE)&&!enterUsed) {
+			if (keyboard.contains(VK_ESCAPE) && !enterUsed) {
 				escapeUsed = true;
 				return true;
-			}else {
+			} else {
 				return false;
 			}
 		case "SPACE":
-			if(keyboard.contains(VK_SPACE)&&!enterUsed) {
+			if (keyboard.contains(VK_SPACE) && !enterUsed) {
 				spaceUsed = true;
 				return true;
-			}else {
+			} else {
 				return false;
 			}
 		case "FU":
@@ -106,6 +108,13 @@ public class CanvasListener implements GameCanvasListener {
 			return keyboard.contains(VK_S);
 		case "D":
 			return keyboard.contains(VK_D);
+		case "G":
+			if (keyboard.contains(VK_G) && !gUsed) {
+				gUsed = true;
+				return true;
+			} else {
+				return false;
+			}
 		default:
 			return false;
 		}
@@ -185,14 +194,17 @@ public class CanvasListener implements GameCanvasListener {
 		// System.out.println("Key pressed: " + e.getKeyChar() + " code=" +
 		// e.getKeyCode());
 		keyboard.add(e.getKeyCode());
-		if(e.getKeyCode()==VK_ENTER){
+		if (e.getKeyCode() == VK_ENTER) {
 			enterUsed = false;
 		}
-		if(e.getKeyCode()==VK_SPACE){
+		if (e.getKeyCode() == VK_SPACE) {
 			spaceUsed = false;
 		}
-		if(e.getKeyCode()==VK_ESCAPE){
+		if (e.getKeyCode() == VK_ESCAPE) {
 			escapeUsed = false;
+		}
+		if (e.getKeyCode() == VK_G) {
+			gUsed = false;
 		}
 		// printKeyboard();
 	}
@@ -210,6 +222,9 @@ public class CanvasListener implements GameCanvasListener {
 		}
 		if (e.getKeyCode() == VK_ESCAPE) {
 			escapeUsed = false;
+		}
+		if (e.getKeyCode() == VK_G) {
+			gUsed = false;
 		}
 		// printKeyboard();
 	}

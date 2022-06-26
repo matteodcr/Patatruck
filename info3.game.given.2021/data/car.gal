@@ -1,7 +1,7 @@
 Car(Drive) {
     * (Drive) 
     | Cell(H,@) ? Wait :(Stop) 
-    | Cell(H,D) ? Wizz(F) :(Slow)
+    | Cell(H,D) ? Protect(F) :(Slow)
     | Cell(F,O) & (!Cell(R,O)) ? Move(R) :(Drive)                                          
     | Cell(F,O) & (!Cell(L,O)) ? Move(L) :(Drive)
     | (!Cell(F,O)) & (!Cell(L,O)) ? 1%Move(L) / Move(F) :(Drive) 
@@ -12,6 +12,10 @@ Car(Drive) {
     | True ? :(Drive) 
     
     * (Slow)
-    | Cell(H,D) ? Wizz(F) :(Slow)  
+    | Cell(H,@) ? Wait :(Stop)   
+    | Cell(H,D) & Cell(F,O) & (!Cell(R,O)) ? Protect(R) :(Slow)                                          
+    | Cell(H,D) & Cell(F,O) & (!Cell(L,O)) ? Protect(L) :(Slow)
+    | Cell(H,D) & (!Cell(F,O)) & (!Cell(L,O)) ? 5%Protect(L) / Protect(F) :(Slow) 
+    | Cell(H,D) & (!Cell(F,O)) & (!Cell(R,O)) ? 5%Protect(R) / Protect(F) :(Slow)
     | True ? :(Drive) 
 }

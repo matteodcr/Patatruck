@@ -1,5 +1,8 @@
 package info3.game.scene;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 import info3.game.Game;
@@ -25,6 +28,7 @@ public class CityScene extends Scene {
 	private CarEntity cookCar;
 	private Sprite deliveryArrowSprite = Sprite.DELIVERY_DOWN_ARROW;
 	private PositionF deliveryArrowPos = new PositionF(-10, -10);
+	private Map<PositionI, CityTile> cachedCityTiles;
 
 	public CityScene(int pixelWidth, int pixelHeight, Game g) {
 		super(pixelWidth, pixelHeight, g);
@@ -32,6 +36,7 @@ public class CityScene extends Scene {
 		addEntity(cookCar);
 		deliveryTile = new CityDeliveryTile(this);
 		addEntity(deliveryTile);
+		cachedCityTiles = new HashMap<PositionI, CityTile>();
 
 	}
 
@@ -42,6 +47,7 @@ public class CityScene extends Scene {
 			getRandomTileNearViewport().tick(elapsed);
 
 		this.updateArrow();
+		removeUnusedTilesInCache();
 	}
 
 	@Override
@@ -56,8 +62,31 @@ public class CityScene extends Scene {
 
 	@Override
 	public Tile getTileAt(int gridX, int gridY) {
-		Tile tile = new CityTile(this, gridX, gridY);
-		return tile;
+		PositionI posGrid = new PositionI(gridX, gridY);
+		CityTile storedTile = cachedCityTiles.get(posGrid);
+		if (storedTile != null) {
+			return storedTile;
+		} else {
+			CityTile newTile = new CityTile(this, gridX, gridY);
+			cachedCityTiles.put(posGrid, newTile);
+			return newTile;
+		}
+	}
+
+	private void removeUnusedTilesInCache() {
+		PositionI gridPos = getGridPosFromPosCity(cookCar.getPosition());
+		ArrayList<PositionI> gridPosTilesToRemove = new ArrayList<PositionI>();
+		for (PositionI gridPosInCache : cachedCityTiles.keySet()) {
+			PositionI gridPosDiff = gridPos.sub(gridPosInCache);
+			if (Math.abs(gridPosDiff.getX()) > 13 || Math.abs(gridPosDiff.getY()) > 4)
+				gridPosTilesToRemove.add(gridPosInCache);
+		}
+		for (PositionI gridPosToRemove : gridPosTilesToRemove) {
+			CityTile tile = (CityTile) getTileAt(gridPosToRemove.getX(), gridPosToRemove.getY());
+			if (tile.eSpeedbump != null)
+				removeEntity(tile.eSpeedbump);
+			cachedCityTiles.remove(gridPosToRemove);
+		}
 	}
 
 	/* Renvoit la categorie du cadrant de la tuile a cette pos */

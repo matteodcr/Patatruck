@@ -31,7 +31,9 @@ public enum EntityType {
 
 	TILE_TRASH("poubelle", "TrashTable"),
 
-	TRUCK("camion du joueur", "Truck");
+	TRUCK("camion du joueur", "Truck"),
+
+	SPEEDBUMP("ralentisseur", "Speedbump");
 
 	public final String displayName;
 	public final String defaultAutomaton;

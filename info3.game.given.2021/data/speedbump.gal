@@ -1,3 +1,6 @@
-SpeedBump(Still) {
-    * (Still)
+Speedbump(Still){
+  * (Still) 
+  | Cell(H,@) ? Pop(F)  :(Still)
+  | True ? Wizz(F) :(Still)
+  * ()
 }

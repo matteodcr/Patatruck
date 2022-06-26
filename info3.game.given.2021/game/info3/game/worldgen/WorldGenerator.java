@@ -21,7 +21,7 @@ public class WorldGenerator {
 		this.seed = new Random(seed).nextLong();
 
 		// FIXME: speed bumps never appear
-		Layer<Boolean> speedBumps = new ThresholdLayer(new PointSamplerLayer(), 0.5F);
+		Layer<Boolean> speedBumps = new ThresholdLayer(new PointSamplerLayer(), 0.9F);
 		Layer<Boolean> markets = new ThresholdLayer(new NoiseSamplerLayer(24), 0.9F);
 		Layer<GenTile> buildings = new ChunkSamplerLayer(new Cache<>(new ChunkLayer()));
 

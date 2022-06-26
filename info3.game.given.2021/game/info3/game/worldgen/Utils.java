@@ -4,7 +4,9 @@ import java.util.Random;
 
 class Utils {
 	public static Random seedRandom(long seed, GridPos pos) {
-		return new Random((seed * 31L + pos.x) * 31L + pos.y);
+		Random rng = new Random((seed * 31L + pos.x) * 31L + pos.y);
+		rng.nextLong();
+		return rng;
 	}
 
 	public static <T> T chooseRandom(T[] array, Random rng) {

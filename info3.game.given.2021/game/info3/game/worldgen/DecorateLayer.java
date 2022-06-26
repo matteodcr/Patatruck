@@ -17,7 +17,7 @@ public class DecorateLayer implements Layer<GenTile> {
 	@Override
 	public GenTile getAt(long seed, GridPos pos) {
 		boolean speedBumpTop = speedBumps.getAt(seed, pos);
-		boolean speedBumpLeft = speedBumps.getAt(seed * 2147483647, pos);
+		boolean speedBumpLeft = speedBumps.getAt(seed * 3 + pos.x, pos);
 		return builtTiles.getAt(seed, pos).withDecoration(markets.getAt(seed, pos), speedBumpTop, speedBumpLeft);
 	}
 

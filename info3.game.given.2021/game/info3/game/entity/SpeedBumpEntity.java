@@ -11,6 +11,10 @@ import info3.game.screen.GameScreen;
 public class SpeedBumpEntity extends Entity {
 
 	private CityTile parentTile;
+	int startPosX;
+	int startPosY;
+	int endPosX;
+	int endPosY;
 
 	SpeedBumpEntity(Scene parent, PositionF pos, CityTile tile) {
 		super(parent, pos);
@@ -30,28 +34,16 @@ public class SpeedBumpEntity extends Entity {
 	public void tick(long elapsed) {
 		super.tick(elapsed);
 
-		finish = System.currentTimeMillis();
-		if (start != -1)
-			timeElapsed = finish - start;
-
-		if (timeElapsed >= 2000) {
-			((CityScene) parentScene).getCook().shuffleOnCooldown = false;
-			start = -1;
-			timeElapsed = 0;
-
-		}
-
 	}
 
 	@Override
 	public boolean pop(AutDirection direction) {
 		CarEntity cookCar = ((CityScene) parentScene).getCook();
-		if (cookCar.physics.getVelocity() >= 40 && !cookCar.shuffleOnCooldown) {
+		if (cookCar.physics.getVelocity() >= 40 && cookCar.shuffleCooldown == 0) {
 			KitchenScene kitchenScene = ((KitchenScene) ((GameScreen) this.parentScene.m_game.getScreen())
 					.getKitchenScene());
 			kitchenScene.shuffle();
-			cookCar.shuffleOnCooldown = true;
-			start = System.currentTimeMillis();
+			cookCar.shuffleCooldown = 100;
 			return true;
 		}
 		return false;
@@ -69,58 +61,33 @@ public class SpeedBumpEntity extends Entity {
 		AutDirection newDirection = convertRelativToAbsolutedir(direction);
 		for (Entity entity : parentScene.entityList) {
 			do {
-				int endPosX, endPosY;
 				if (top) {
-					endPosX = 10;
+					startPosX = 9;
+					startPosY = 0;
+					endPosX = 19;
 					endPosY = 8;
 					top = false;
 				} else {
+					startPosX = 0;
+					startPosY = 9;
 					endPosX = 8;
-					endPosY = 10;
+					endPosY = 19;
 					left = false;
 				}
 				switch (newDirection) {
-				case N: {
-					if (entity.catAtThisPos(position.add(new PositionF(0, -1))) == category
-							|| entity.catAtThisPos(position.add(new PositionF(endPosX, -1))) == category) {
-						return true;
-					}
-					break;
-				}
-				case W: {
-					if (entity.catAtThisPos(position.add(new PositionF(-1, 0))) == category
-							|| entity.catAtThisPos(position.add(new PositionF(-1, endPosY))) == category) {
-						return true;
-					}
-					break;
-				}
-				case E: {
-					if (entity.catAtThisPos(position.add(new PositionF(endPosX + 1, 0))) == category
-							|| entity.catAtThisPos(position.add(new PositionF(endPosX + 1, endPosY))) == category) {
-						return true;
-					}
-					break;
-				}
-				case S: {
-					if (entity.catAtThisPos(position.add(new PositionF(0, endPosY + 1))) == category
-							|| entity.catAtThisPos(position.add(new PositionF(endPosX, endPosY + 1))) == category) {
-						return true;
-					}
-					break;
-				}
 				case H: {
-					if (entity.catAtThisPos(position.add(new PositionF(0, 0))) == category
-							|| entity.catAtThisPos(position.add(new PositionF(endPosX, 0))) == category
-							|| entity.catAtThisPos(position.add(new PositionF(0, endPosY))) == category
-							|| entity.catAtThisPos(position.add(new PositionF(endPosX, endPosY))) == category) {
+					if (this.carInsideThisPos(entity) == category) {
 						return true;
 					}
 					break;
 				}
 				default:
+					super.cell(direction, category);
 					break;
 				}
 			} while (left || top);
+			top = parentTile.genTile.speedbumpTop;
+			left = parentTile.genTile.speedbumpLeft;
 		}
 		return false;
 
@@ -167,6 +134,23 @@ public class SpeedBumpEntity extends Entity {
 		float posY = position.getY();
 		if (posX <= pos.getX() && pos.getX() <= posX + 19 && posY <= pos.getY() && pos.getY() <= posY + 19)
 			return category;
+		return null;
+	}
+
+	/*
+	 * fct HARDCODE pour les comparaisons avec les voitures
+	 */
+	public AutCategory carInsideThisPos(Entity entity) {
+		float posX = entity.getPosition().getX();
+		float posY = entity.getPosition().getY();
+		float sbStartPosX = this.position.getX() + startPosX;
+		float sbStartPosY = this.position.getY() + startPosY;
+		float sbEndPosX = this.position.getX() + endPosX;
+		float sbEndPosY = this.position.getY() + endPosY;
+		if ((sbStartPosX <= posX && posX <= sbEndPosX && sbStartPosY <= posY && posY <= sbEndPosY)
+				|| (sbStartPosX <= posX + 3 && posX + 3 <= sbEndPosX && sbStartPosY <= posY + 3
+						&& posY + 3 <= sbEndPosY))
+			return entity.category;
 		return null;
 	}
 

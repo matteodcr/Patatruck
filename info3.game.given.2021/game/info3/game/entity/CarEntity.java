@@ -19,7 +19,7 @@ public class CarEntity extends Entity {
 	private boolean swapInThisTick;
 	private Entity entityEncountered;
 	public Physics physics = new PhysicsClassic(15);
-	public boolean shuffleOnCooldown; // only for player controlled car
+	public int shuffleCooldown; // only for player controlled car
 	boolean isClassicPhysic = true;
 	// TODO Deplacer hitbox hardocdé et methode de collision (champ ou classe pr pos
 	// bas a droite de l'entite (sinon on garde comme ça si ttes les entites = 4x4)
@@ -31,7 +31,7 @@ public class CarEntity extends Entity {
 		this.isPlayer = isPlayer;
 		changeCategory();
 		this.swapInThisTick = false;
-		shuffleOnCooldown = false;
+		shuffleCooldown = 0;
 	}
 
 	public boolean canDeliver() {
@@ -114,6 +114,9 @@ public class CarEntity extends Entity {
 			if (timeElapsed >= 1000) {
 				this.swapInThisTick = false;
 			}
+
+			if (this.shuffleCooldown > 0)
+				this.shuffleCooldown--;
 		}
 		KitchenScene kitchenScene = ((KitchenScene) ((GameScreen) this.parentScene.m_game.getScreen())
 				.getKitchenScene());
